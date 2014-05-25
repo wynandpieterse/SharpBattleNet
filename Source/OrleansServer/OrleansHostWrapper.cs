@@ -150,7 +150,7 @@
                 }
                 else
                 {
-                    Console.WriteLine("Too many command line arguments supplied: " + a);
+                    Console.WriteLine("Too many command line arguments supplied: " + argument);
                     return false;
                 }
             }

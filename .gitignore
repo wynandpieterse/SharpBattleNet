@@ -1,11 +1,13 @@
 # Some Windows related stuff that needs not to be here
 Thumbs.db
+Desktop.ini
 *.exe
 *.dll
 
 # Build system ignores
 bin/
 obj/
+Intermediate/
 *.obj
 *.pdb
 *.user

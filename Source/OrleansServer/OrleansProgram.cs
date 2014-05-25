@@ -10,7 +10,7 @@
 
         private static void Startup(string[] commandArguments)
         {
-            Console.Title = "SharpBattleNet - Master Server";
+            Console.Title = "SharpBattleNet - Orleans Server";
             Console.WindowWidth = 120;
             Console.WindowHeight = 40;
 

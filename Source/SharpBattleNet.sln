@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30324.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{12FF1884-F3A4-4D26-BE78-F1A5C8DBA33D}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{1430B1F1-11ED-4051-B1F4-D8304F9AF715}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Servers", "Servers", "{B8200D93-916B-4CC2-ADE0-6F0B4466386A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{D7133F8D-49F7-4D74-BD07-E96B8124C177}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleNetServer", "BattleNetServer\BattleNetServer.csproj", "{D40EE1B5-3BB9-4EF6-AFEB-825379914887}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiabloIIRealmServer", "DiabloIIRealmServer\DiabloIIRealmServer.csproj", "{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reaper.SharpBattleNet.Framework", "Reaper.SharpBattleNet.Framework\Reaper.SharpBattleNet.Framework.csproj", "{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{5E899FB9-1537-4C9E-8B0D-6986D12A830B}"
+	ProjectSection(SolutionItems) = preProject
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D40EE1B5-3BB9-4EF6-AFEB-825379914887}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D40EE1B5-3BB9-4EF6-AFEB-825379914887}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D40EE1B5-3BB9-4EF6-AFEB-825379914887}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D40EE1B5-3BB9-4EF6-AFEB-825379914887}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{12FF1884-F3A4-4D26-BE78-F1A5C8DBA33D} = {5E899FB9-1537-4C9E-8B0D-6986D12A830B}
+		{D40EE1B5-3BB9-4EF6-AFEB-825379914887} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
+		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
+		{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7} = {1430B1F1-11ED-4051-B1F4-D8304F9AF715}
+	EndGlobalSection
+EndGlobal

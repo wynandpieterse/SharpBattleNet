@@ -1,0 +1,29 @@
+# Some Windows related stuff that needs not to be here
+Thumbs.db
+*.exe
+*.dll
+
+# Build system ignores
+bin/
+obj/
+*.obj
+*.pdb
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+*.lib
+*.sbr
+*.CodeAnalysisLog.*
+*.lastcodeanalysissucceeded
+*.manifest

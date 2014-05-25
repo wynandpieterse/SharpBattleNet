@@ -8,6 +8,7 @@ Desktop.ini
 bin/
 obj/
 Intermediate/
+Source/packages/
 *.obj
 *.pdb
 *.user

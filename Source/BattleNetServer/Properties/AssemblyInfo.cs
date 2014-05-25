@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("SharpBattle.net Server")]
+[assembly: AssemblyTitle("SharpBattle.net - Master Server")]
 [assembly: AssemblyDescription("This is the main server executable that needs to be run to host most of the services of Battle.net")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Reaper Interactive")]

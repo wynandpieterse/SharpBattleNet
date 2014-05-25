@@ -8,7 +8,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    internal static sealed class BNSProgramReaper
+    internal static class BNSProgramReaper
     {
         private static void Setup()
         {

@@ -20,6 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{D7133F8D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleNetServer", "BattleNetServer\BattleNetServer.csproj", "{D40EE1B5-3BB9-4EF6-AFEB-825379914887}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiabloIIRealmServer", "DiabloIIRealmServer\DiabloIIRealmServer.csproj", "{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{D40EE1B5-3BB9-4EF6-AFEB-825379914887}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D40EE1B5-3BB9-4EF6-AFEB-825379914887}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D40EE1B5-3BB9-4EF6-AFEB-825379914887}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,5 +43,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{12FF1884-F3A4-4D26-BE78-F1A5C8DBA33D} = {D2CEE7C0-B524-4248-8F48-50591C338A63}
 		{D40EE1B5-3BB9-4EF6-AFEB-825379914887} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
+		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
 	EndGlobalSection
 EndGlobal

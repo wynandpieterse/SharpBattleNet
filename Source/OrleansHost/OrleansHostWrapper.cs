@@ -1,50 +1,70 @@
-﻿using System;
-using System.Net;
-
-using Orleans.Host.SiloHost;
-
-namespace OrleansHost
+﻿namespace Reaper.SharpBattleNet.BattleNetServer
 {
+    using System;
+    using System.Net;
+
+    using Orleans;
+    using Orleans.Host;
+    using Orleans.Host.SiloHost;
+
     internal class OrleansHostWrapper : IDisposable
     {
-        public bool Debug
-        {
-            get { return siloHost != null && siloHost.Debug; }
-            set { siloHost.Debug = value; }
-        }
-
-        private OrleansSiloHost siloHost;
+        private OrleansSiloHost _siloHost;
 
         public OrleansHostWrapper(string[] args)
         {
             ParseArguments(args);
-            Init();
+            Setup();
+
+            return;
+        }
+
+        public bool Debug
+        {
+            get 
+            {
+                return _siloHost != null && _siloHost.Debug; 
+            }
+
+            set
+            {
+                _siloHost.Debug = value;
+                return;
+            }
+        }
+
+        private void Setup()
+        {
+            _siloHost.LoadOrleansConfig();
+
+            return;
         }
 
         public bool Run()
         {
             bool ok = false;
+            string message = "";
 
             try
             {
-                siloHost.InitializeOrleansSilo();
+                _siloHost.InitializeOrleansSilo();
 
-                ok = siloHost.StartOrleansSilo();
+                ok = _siloHost.StartOrleansSilo();
 
-                if(ok)
+                if(true == ok)
                 {
-                    Console.WriteLine(string.Format("Successfully started Orleans silo '{0}' as a {1} node.", siloHost.SiloName, siloHost.SiloType));
+                    Console.WriteLine(string.Format("Successfully started Orleans silo '{0}' as a {1} node.", _siloHost.SiloName, _siloHost.SiloType));
                 }
                 else
                 {
-                    throw new SystemException(string.Format("Failed to start Orleans silo '{0}' as a {1} node.", siloHost.SiloName, siloHost.SiloType));
+                    throw new SystemException(string.Format("Failed to start Orleans silo '{0}' as a {1} node.", _siloHost.SiloName, _siloHost.SiloType));
                 }
             }
             catch(Exception exc)
             {
-                siloHost.ReportStartupError(exc);
-                var msg = string.Format("{0}:\n{1}\n{2}", exc.GetType().FullName, exc.Message, exc.StackTrace);
-                Console.WriteLine(msg);
+                _siloHost.ReportStartupError(exc);
+                message = string.Format("{0}:\n{1}\n{2}", exc.GetType().FullName, exc.Message, exc.StackTrace);
+                Console.WriteLine(message);
             }
 
             return ok;
@@ -53,129 +73,125 @@ namespace OrleansHost
         public bool Stop()
         {
             bool ok = false;
+            string message = "";
 
             try
             {
-                siloHost.StopOrleansSilo();
+                _siloHost.StopOrleansSilo();
 
-                Console.WriteLine(string.Format("Orleans silo '{0}' shutdown.", siloHost.SiloName));
+                Console.WriteLine(string.Format("Orleans silo '{0}' shutdown.", _siloHost.SiloName));
             }
             catch(Exception exc)
             {
-                siloHost.ReportStartupError(exc);
-                var msg = string.Format("{0}:\n{1}\n{2}", exc.GetType().FullName, exc.Message, exc.StackTrace);
-                Console.WriteLine(msg);
+                _siloHost.ReportStartupError(exc);
+                message = string.Format("{0}:\n{1}\n{2}", exc.GetType().FullName, exc.Message, exc.StackTrace);
+                Console.WriteLine(message);
             }
 
             return ok;
         }
 
-        private void Init()
-        {
-            siloHost.LoadOrleansConfig();
-        }
-
         private bool ParseArguments(string[] args)
         {
-            bool debug = false;
             string deploymentId = null;
-
             string configFileName = "DevTestServerConfiguration.xml";
             string siloName = Dns.GetHostName(); // Default to machine name
-
             int argPos = 1;
-            for(int i = 0; i < args.Length; i++)
+            string argument = "";
+            string[] split = null;
+
+            for(int count = 0; count < args.Length; count++)
             {
-                string a = args[i];
-                if(a.StartsWith("-") || a.StartsWith("/"))
+                argument = args[count];
+                if(argument.StartsWith("-") || argument.StartsWith("/"))
                 {
-                    switch(a.ToLowerInvariant())
+                    switch(argument.ToLowerInvariant())
                     {
                         case "/?":
                         case "/help":
                         case "-?":
                         case "-help":
-                            // Query usage help
                             return false;
-                        case "/debug":
-                            debug = true;
-                            break;
+
                         default:
-                            Console.WriteLine("Bad command line arguments supplied: " + a);
+                            Console.WriteLine("Bad command line arguments supplied: " + argument);
                             return false;
                     }
                 }
-                else if(a.Contains("="))
+                else if(argument.Contains("="))
                 {
-                    string[] split = a.Split('=');
+                    split = argument.Split('=');
                     if(String.IsNullOrEmpty(split[1]))
                     {
-                        Console.WriteLine("Bad command line arguments supplied: " + a);
+                        Console.WriteLine("Bad command line arguments supplied: " + argument);
                         return false;
                     }
+
                     switch(split[0].ToLowerInvariant())
                     {
                         case "deploymentid":
                             deploymentId = split[1];
                             break;
-                        case "deploymentgroup":
-                            // TODO: Remove this at some point in future
-                            Console.WriteLine("Ignoring deprecated command line argument: " + a);
-                            break;
+
                         default:
-                            Console.WriteLine("Bad command line arguments supplied: " + a);
+                            Console.WriteLine("Bad command line arguments supplied: " + argument);
                             return false;
                     }
                 }
-                // unqualified arguments below
                 else if(argPos == 1)
                 {
-                    siloName = a;
+                    siloName = argument;
                     argPos++;
                 }
                 else if(argPos == 2)
                 {
-                    configFileName = a;
+                    configFileName = argument;
                     argPos++;
                 }
                 else
                 {
-                    // Too many command line arguments
                     Console.WriteLine("Too many command line arguments supplied: " + a);
                     return false;
                 }
             }
 
-            siloHost = new OrleansSiloHost(siloName);
-            siloHost.ConfigFileName = configFileName;
-            if(deploymentId != null)
-                siloHost.DeploymentId = deploymentId;
+            _siloHost = new OrleansSiloHost(siloName);
+            _siloHost.ConfigFileName = configFileName;
+            if(null != deploymentId)
+            {
+                _siloHost.DeploymentId = deploymentId;
+            }
 
             return true;
         }
 
-        public void PrintUsage()
+        private void PrintUsage()
         {
             Console.WriteLine(
-@"USAGE: 
-    OrleansHost.exe [<siloName> [<configFile>]] [DeploymentId=<idString>] [/debug]
-Where:
-    <siloName>      - Name of this silo in the Config file list (optional)
-    <configFile>    - Path to the Config file to use (optional)
-    DeploymentId=<idString> 
-                    - Which deployment group this host instance should run in (optional)
-    /debug          - Turn on extra debug output during host startup (optional)");
+                @"USAGE: 
+                    OrleansHost.exe [<siloName> [<configFile>]] [DeploymentId=<idString>] [/debug]
+                Where:
+                    <siloName>              - Name of this silo in the Config file list (optional)
+                    <configFile>            - Path to the Config file to use (optional)
+                    DeploymentId=<idString> - Which deployment group this host instance should run in (optional)
+                    /debug                  - Turn on extra debug output during host startup (optional)");
+
+            return;
         }
 
         public void Dispose()
         {
             Dispose(true);
+
+            return;
         }
 
         protected virtual void Dispose(bool dispose)
         {
-            siloHost.Dispose();
-            siloHost = null;
+            _siloHost.Dispose();
+            _siloHost = null;
+
+            return;
         }
     }
 }

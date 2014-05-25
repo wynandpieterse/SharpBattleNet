@@ -30,4 +30,4 @@ If you wish to contribute ideas or code, please fork this repository and make a 
 Reporting issues should be done with the GitHub issue tracker. Fixes should be a forker repo and a pull request should be
 sent for it.
 
-Version 0.0.1
+Version 0.0.2

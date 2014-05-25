@@ -22,7 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleNetServer", "BattleNe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiabloIIRealmServer", "DiabloIIRealmServer\DiabloIIRealmServer.csproj", "{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework", "Framework\Framework.csproj", "{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reaper.SharpBattleNet.Framework", "Reaper.SharpBattleNet.Framework\Reaper.SharpBattleNet.Framework.csproj", "{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

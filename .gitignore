@@ -1,0 +1,3 @@
+# Some Windows related stuff that needs not to be here
+*.exe
+*.dll

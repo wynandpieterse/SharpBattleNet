@@ -86,6 +86,12 @@
   <ItemGroup>
     <Content Include="BattleNet.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Reaper.SharpBattleNet.Framework\Reaper.SharpBattleNet.Framework.csproj">
+      <Project>{fdb8d2c5-fd13-40e7-b629-ce71a68bb7b7}</Project>
+      <Name>Reaper.SharpBattleNet.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -22,10 +22,10 @@
 
             processInstaller.Account = ServiceAccount.LocalService;
 
-            serviceInstaller.DisplayName = "SharpBattleNet - Diablo II Realm Server";
-            serviceInstaller.StartType = ServiceStartMode.Manual;
-
             serviceInstaller.ServiceName = "D2RSService";
+            serviceInstaller.DisplayName = "SharpBattleNet - Diablo II Realm Server";
+            serviceInstaller.Description = "Diablo II Realm Server";
+            serviceInstaller.StartType = ServiceStartMode.Automatic;
 
             this.Installers.Add(processInstaller);
             this.Installers.Add(serviceInstaller);

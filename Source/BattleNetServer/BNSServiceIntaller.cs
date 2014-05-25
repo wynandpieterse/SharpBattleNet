@@ -22,10 +22,10 @@
 
             processInstaller.Account = ServiceAccount.LocalService;
 
-            serviceInstaller.DisplayName = "SharpBattleNet - Master Server";
-            serviceInstaller.StartType = ServiceStartMode.Manual;
-
             serviceInstaller.ServiceName = "BNSService";
+            serviceInstaller.DisplayName = "SharpBattleNet - Master Server";
+            serviceInstaller.Description = "Master Server";
+            serviceInstaller.StartType = ServiceStartMode.Automatic;
 
             this.Installers.Add(processInstaller);
             this.Installers.Add(serviceInstaller);

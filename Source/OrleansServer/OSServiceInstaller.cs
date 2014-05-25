@@ -22,10 +22,10 @@
 
             processInstaller.Account = ServiceAccount.LocalService;
 
-            serviceInstaller.DisplayName = "SharpBattleNet - Orleans Host Server";
-            serviceInstaller.StartType = ServiceStartMode.Manual;
-
             serviceInstaller.ServiceName = "OSService";
+            serviceInstaller.DisplayName = "SharpBattleNet - Orleans Host Server";
+            serviceInstaller.Description = "Orleans Host Server";
+            serviceInstaller.StartType = ServiceStartMode.Automatic;
 
             this.Installers.Add(processInstaller);
             this.Installers.Add(serviceInstaller);

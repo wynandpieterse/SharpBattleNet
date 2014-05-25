@@ -5,6 +5,7 @@ Desktop.ini
 *.dll
 
 # Build system ignores
+[Bb]inaries/
 [Bb]in/
 [Oo]bj/
 [Ii]ntermediate/

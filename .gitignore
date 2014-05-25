@@ -1,5 +1,6 @@
 # Some Windows related stuff that needs not to be here
 Thumbs.db
+Desktop.ini
 *.exe
 *.dll
 

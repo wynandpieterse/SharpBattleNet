@@ -3,13 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30324.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{12FF1884-F3A4-4D26-BE78-F1A5C8DBA33D}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{1430B1F1-11ED-4051-B1F4-D8304F9AF715}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Servers", "Servers", "{B8200D93-916B-4CC2-ADE0-6F0B4466386A}"
@@ -30,6 +23,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Grains", "Grains", "{E1FB8AAA-6EDA-4C00-B1F9-4EC77A329644}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansServer", "OrleansServer\OrleansServer.csproj", "{847B1D9F-806B-41EA-9924-A2CB50B03450}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{0BAF346C-D65D-4508-9C8E-E5DFC1996742}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet\NuGet.Config = NuGet\NuGet.Config
+		NuGet\NuGet.exe = NuGet\NuGet.exe
+		NuGet\NuGet.targets = NuGet\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,10 +58,10 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{12FF1884-F3A4-4D26-BE78-F1A5C8DBA33D} = {5E899FB9-1537-4C9E-8B0D-6986D12A830B}
 		{D40EE1B5-3BB9-4EF6-AFEB-825379914887} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
 		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
 		{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7} = {1430B1F1-11ED-4051-B1F4-D8304F9AF715}
 		{847B1D9F-806B-41EA-9924-A2CB50B03450} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
+		{0BAF346C-D65D-4508-9C8E-E5DFC1996742} = {5E899FB9-1537-4C9E-8B0D-6986D12A830B}
 	EndGlobalSection
 EndGlobal

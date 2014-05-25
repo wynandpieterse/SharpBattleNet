@@ -6,6 +6,7 @@ Thumbs.db
 # Build system ignores
 bin/
 obj/
+Intermediate/
 *.obj
 *.pdb
 *.user

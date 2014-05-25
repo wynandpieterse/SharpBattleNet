@@ -64,7 +64,9 @@
       <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -73,6 +75,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="D2RSProgram.cs" />
+    <Compile Include="D2RSService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="D2ServiceInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

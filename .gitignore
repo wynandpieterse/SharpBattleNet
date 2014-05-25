@@ -5,10 +5,10 @@ Desktop.ini
 *.dll
 
 # Build system ignores
-bin/
-obj/
-Intermediate/
-Source/packages/
+[Bb]in/
+[Oo]bj/
+[Ii]ntermediate/
+[Ss]ource/[Pp]ackages/
 *.obj
 *.pdb
 *.user

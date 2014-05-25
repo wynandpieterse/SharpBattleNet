@@ -51,6 +51,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>BattleNet.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -80,6 +83,15 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BattleNet.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Reaper.SharpBattleNet.Framework\Reaper.SharpBattleNet.Framework.csproj">
+      <Project>{fdb8d2c5-fd13-40e7-b629-ce71a68bb7b7}</Project>
+      <Name>Reaper.SharpBattleNet.Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

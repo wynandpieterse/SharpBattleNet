@@ -3,7 +3,7 @@
     using System;
     using Orleans;
 
-    internal static class OrleansHostProgram
+    internal static class OSProgram
     {
         private static OrleansHostWrapper _hostWrapper = null;
         private static AppDomain _hostDomain = null;

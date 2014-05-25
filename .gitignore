@@ -7,5 +7,4 @@ bin/
 obj/
 *.CodeAnalysisLog.*
 *.lastcodeanalysissucceeded
-*.vshost.*
-
+*.manifest

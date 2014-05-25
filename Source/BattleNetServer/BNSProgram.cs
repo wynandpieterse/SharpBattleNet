@@ -12,7 +12,7 @@
     {
         private static void Setup()
         {
-            Console.Title = "SharpBattleNet Server";
+            Console.Title = "SharpBattleNet - Master Server";
             Console.WindowWidth = 120;
             Console.WindowHeight = 40;
 

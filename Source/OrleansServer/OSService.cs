@@ -9,7 +9,7 @@
     using System.Threading.Tasks;
     using System.ServiceProcess;
 
-    internal class D2RSService : ServiceBase
+    internal class OSService : ServiceBase
     {
         protected override void OnStart(string[] args)
         {

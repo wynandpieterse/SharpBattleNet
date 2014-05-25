@@ -13,9 +13,9 @@
     using System.Configuration.Install;
 
     [RunInstaller(runInstaller: true)]
-    public class D2RSServiceIntaller : Installer
+    public class OSServiceIntaller : Installer
     {
-        public D2RSServiceIntaller()
+        public OSServiceIntaller()
         {
             var processInstaller = new ServiceProcessInstaller();
             var serviceInstaller = new ServiceInstaller();

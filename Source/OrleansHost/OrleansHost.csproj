@@ -60,10 +60,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BattleNet.ico" />
-    <Content Include="OrleansClientConfiguration.xml">
+    <Content Include="OrleansConfigurationClient.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="OrleansServerConfiguration.xml">
+    <Content Include="OrleansConfigurationServer.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

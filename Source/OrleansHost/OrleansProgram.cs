@@ -29,7 +29,7 @@
 
             _hostDomain = AppDomain.CreateDomain("OrleansHost", null, appSetup);
 
-            OrleansClient.Initialize("DevTestClientConfiguration.xml");
+            OrleansClient.Initialize("OrleansConfigurationClient.xml");
 
             return;
         }

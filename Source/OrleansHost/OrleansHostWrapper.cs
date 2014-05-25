@@ -94,7 +94,7 @@
         private bool ParseArguments(string[] args)
         {
             string deploymentId = null;
-            string configFileName = "OrleansServerConfiguration.xml";
+            string configFileName = "OrleansConfigurationServer.xml";
             string siloName = Dns.GetHostName(); // Default to machine name
             int argPos = 1;
             string argument = "";

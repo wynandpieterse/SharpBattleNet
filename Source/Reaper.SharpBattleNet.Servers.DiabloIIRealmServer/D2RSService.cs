@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.DiabloIIRealmServer
+namespace Reaper.SharpBattleNet.Servers.DiabloIIRealmServer
 {
     using System;
     using System.Linq;

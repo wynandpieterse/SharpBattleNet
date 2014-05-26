@@ -21,24 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{5E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Grains", "Grains", "{E1FB8AAA-6EDA-4C00-B1F9-4EC77A329644}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansServer", "OrleansServer\OrleansServer.csproj", "{847B1D9F-806B-41EA-9924-A2CB50B03450}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{F9C13DB9-49FB-4909-8078-10BB0434DEDF}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrleansServer", "OrleansServer", "{B370B8FF-AD2C-4CE6-B396-75E586DA2845}"
-	ProjectSection(SolutionItems) = preProject
-		..\Configuration\OrleansServer\OrleansConfigurationClient.xml = ..\Configuration\OrleansServer\OrleansConfigurationClient.xml
-		..\Configuration\OrleansServer\OrleansConfigurationServer.xml = ..\Configuration\OrleansServer\OrleansConfigurationServer.xml
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{1131F284-EF4A-4F68-9562-1E659E14F34E}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{9405CB68-6F1E-4066-925E-BA5A73C50321}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Icons", "Icons", "{22725746-04AE-4B37-836E-ED5A3106091E}"
-	ProjectSection(SolutionItems) = preProject
-		..\Assets\Images\Icons\BattleNet.ico = ..\Assets\Images\Icons\BattleNet.ico
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,10 +41,6 @@ Global
 		{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{847B1D9F-806B-41EA-9924-A2CB50B03450}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{847B1D9F-806B-41EA-9924-A2CB50B03450}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{847B1D9F-806B-41EA-9924-A2CB50B03450}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{847B1D9F-806B-41EA-9924-A2CB50B03450}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,9 +49,5 @@ Global
 		{D40EE1B5-3BB9-4EF6-AFEB-825379914887} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
 		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
 		{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7} = {1430B1F1-11ED-4051-B1F4-D8304F9AF715}
-		{847B1D9F-806B-41EA-9924-A2CB50B03450} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
-		{B370B8FF-AD2C-4CE6-B396-75E586DA2845} = {F9C13DB9-49FB-4909-8078-10BB0434DEDF}
-		{9405CB68-6F1E-4066-925E-BA5A73C50321} = {1131F284-EF4A-4F68-9562-1E659E14F34E}
-		{22725746-04AE-4B37-836E-ED5A3106091E} = {9405CB68-6F1E-4066-925E-BA5A73C50321}
 	EndGlobalSection
 EndGlobal

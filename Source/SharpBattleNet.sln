@@ -15,8 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{5E
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Grains", "Grains", "{E1FB8AAA-6EDA-4C00-B1F9-4EC77A329644}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{F9C13DB9-49FB-4909-8078-10BB0434DEDF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reaper.SharpBattleNet.Servers.BattleNetServer", "Reaper.SharpBattleNet.Servers.BattleNetServer\Reaper.SharpBattleNet.Servers.BattleNetServer.csproj", "{D40EE1B5-3BB9-4EF6-AFEB-825379914887}"

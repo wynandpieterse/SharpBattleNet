@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.BattleNetServer
+namespace Reaper.SharpBattleNet.Servers.BattleNetServer
 {
     using System;
     using System.Linq;

@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.DiabloIIRealmServer
+namespace Reaper.SharpBattleNet.Servers.BattleNetServer
 {
     using System;
     using System.Linq;
@@ -8,11 +8,11 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    internal static class BNSProgramReaper
+    internal static class BNSProgram
     {
         private static void Setup()
         {
-            Console.Title = "SharpBattleNet - Diablo II Realm Server";
+            Console.Title = "SharpBattleNet - Master Server";
             Console.WindowWidth = 120;
             Console.WindowHeight = 40;
 

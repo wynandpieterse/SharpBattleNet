@@ -17,7 +17,6 @@
     {
         public void Start(string[] commandArguments)
         {
-            Console.WriteLine("In startup");
             return;
         }
 

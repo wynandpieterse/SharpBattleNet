@@ -32,12 +32,13 @@
             return;
         }
 
-        public void Start(string[] commandArguments)
+        public async Task Start(string[] commandArguments)
         {
+            _logger.Info("Welcome");
             return;
         }
 
-        public void Stop()
+        public async Task Stop()
         {
             return;
         }

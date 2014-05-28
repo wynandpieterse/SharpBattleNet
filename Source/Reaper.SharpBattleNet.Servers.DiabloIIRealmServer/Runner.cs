@@ -25,14 +25,14 @@
             _injectionKernel = new StandardKernel(new FrameworkModule("../../../Configuration/DiabloIIRealmServer.ini"), new DiabloIIRealmServerModule());
             _server = _injectionKernel.Get<IDiabloIIRealmServer>();
 
-            _server.Start(commandArguments);
+            _server.Start(commandArguments).Wait();
 
             return;
         }
 
         public static void Stop()
         {
-            _server.Stop();
+            _server.Stop().Wait();
 
             return;
         }

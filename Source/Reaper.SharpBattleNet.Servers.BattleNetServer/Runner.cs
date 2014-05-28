@@ -25,14 +25,14 @@
             _injectionKernel = new StandardKernel(new FrameworkModule("../../../Configuration/BattleNetServer.ini") ,new BattleNetServerModule());
             _server = _injectionKernel.Get<IBattleNetServer>();
 
-            _server.Start(commandArguments);
+            _server.Start(commandArguments).Wait();
 
             return;
         }
 
         public static void Stop()
         {
-            _server.Stop();
+            _server.Stop().Wait();
 
             return;
         }

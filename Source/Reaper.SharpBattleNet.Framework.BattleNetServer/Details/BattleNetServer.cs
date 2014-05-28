@@ -8,6 +8,11 @@
     using System.Threading;
     using System.Threading.Tasks;
 
+    using Nini;
+    using Nini.Config;
+    using Nini.Ini;
+    using Nini.Util;
+
     using Reaper;
     using Reaper.SharpBattleNet;
     using Reaper.SharpBattleNet.Framework;
@@ -15,8 +20,18 @@
 
     internal class BattleNetServer : IBattleNetServer
     {
+        private readonly IConfigSource _configuration = null;
+
+        public BattleNetServer(IConfigSource configuration)
+        {
+            _configuration = configuration;
+
+            return;
+        }
+
         public void Start(string[] commandArguments)
         {
+
             return;
         }
 

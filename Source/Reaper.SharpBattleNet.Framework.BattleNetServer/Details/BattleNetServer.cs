@@ -34,8 +34,6 @@
 
         public void Start(string[] commandArguments)
         {
-            _logger.Info("Hello, World");
-
             return;
         }
 

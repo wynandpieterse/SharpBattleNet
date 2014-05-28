@@ -15,12 +15,16 @@ namespace Reaper.SharpBattleNet.Servers.DiabloIIRealmServer
         {
             base.OnStart(args);
 
+            Runner.Start(args);
+
             return;
         }
 
         protected override void OnStop()
         {
             base.OnStop();
+
+            Runner.Stop();
 
             return;
         }

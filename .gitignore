@@ -4,6 +4,9 @@ Desktop.ini
 *.exe
 *.dll
 
+# Logging stuff
+[Ll]ogs/
+
 # Build system ignores
 [Bb]inaries/
 [Bb]in/

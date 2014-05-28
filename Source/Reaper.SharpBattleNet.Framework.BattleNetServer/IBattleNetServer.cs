@@ -10,7 +10,7 @@
 
     public interface IBattleNetServer
     {
-        void Start(string[] commandArguments);
-        void Stop();
+        Task Start(string[] commandArguments);
+        Task Stop();
     }
 }

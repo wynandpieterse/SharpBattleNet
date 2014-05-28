@@ -2,8 +2,8 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("SharpBattle.net - Master Server Library")]
-[assembly: AssemblyDescription("Contains all the logic for hosting most if not all the services that is part of Battle.net")]
+[assembly: AssemblyTitle("SharpBattle.net - Diablo II Realm Server Library")]
+[assembly: AssemblyDescription("Contains logic to host a Diablo II realm server")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Reaper Interactive")]
 [assembly: AssemblyProduct("SharpBattle.net")]

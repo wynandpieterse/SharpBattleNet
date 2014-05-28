@@ -110,6 +110,10 @@
     <Content Include="BattleNet.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Reaper.SharpBattleNet.Framework.DiabloIIRealmServer\Reaper.SharpBattleNet.Framework.DiabloIIRealmServer.csproj">
+      <Project>{72992102-9792-4899-b500-c0dc47736529}</Project>
+      <Name>Reaper.SharpBattleNet.Framework.DiabloIIRealmServer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Reaper.SharpBattleNet.Framework\Reaper.SharpBattleNet.Framework.csproj">
       <Project>{fdb8d2c5-fd13-40e7-b629-ce71a68bb7b7}</Project>
       <Name>Reaper.SharpBattleNet.Framework</Name>

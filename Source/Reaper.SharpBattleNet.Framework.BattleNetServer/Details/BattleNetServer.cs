@@ -13,6 +13,8 @@
     using Nini.Ini;
     using Nini.Util;
 
+    using NLog;
+
     using Reaper;
     using Reaper.SharpBattleNet;
     using Reaper.SharpBattleNet.Framework;
@@ -21,6 +23,7 @@
     internal class BattleNetServer : IBattleNetServer
     {
         private readonly IConfigSource _configuration = null;
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public BattleNetServer(IConfigSource configuration)
         {
@@ -31,6 +34,7 @@
 
         public void Start(string[] commandArguments)
         {
+            _logger.Info("Hello, World");
 
             return;
         }

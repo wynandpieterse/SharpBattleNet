@@ -63,7 +63,7 @@
     <None Include="Packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Details\" />
+    <Folder Include="Logging\Details\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

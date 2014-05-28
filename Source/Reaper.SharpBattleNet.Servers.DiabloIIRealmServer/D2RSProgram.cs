@@ -10,11 +10,20 @@ namespace Reaper.SharpBattleNet.Servers.DiabloIIRealmServer
 
     internal static class D2RSProgram
     {
-        private static void Setup()
+        private static void Start(string[] commandArguments)
         {
             Console.Title = "SharpBattleNet - Diablo II Realm Server";
             Console.WindowWidth = 120;
             Console.WindowHeight = 40;
+
+            Runner.Start(commandArguments);
+
+            return;
+        }
+
+        private static void Stop()
+        {
+            Runner.Stop();
 
             return;
         }
@@ -43,9 +52,9 @@ namespace Reaper.SharpBattleNet.Servers.DiabloIIRealmServer
 
         private static void Main(string[] args)
         {
-            Setup();
-
+            Start(args);
             Pause();
+            Stop();
             return;
         }
     }

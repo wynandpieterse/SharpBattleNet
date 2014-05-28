@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Details\DiabloIIRealmServer.cs" />
+    <Compile Include="DiabloIIRealmServerModule.cs" />
+    <Compile Include="IDiabloIIRealmServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

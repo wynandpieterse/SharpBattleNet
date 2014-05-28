@@ -22,7 +22,7 @@
 
         public static void Start(string[] commandArguments)
         {
-            _injectionKernel = new StandardKernel(new BattleNetServerModule());
+            _injectionKernel = new StandardKernel(new FrameworkModule() ,new BattleNetServerModule());
             _server = _injectionKernel.Get<IBattleNetServer>();
 
             _server.Start(commandArguments);

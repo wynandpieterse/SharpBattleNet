@@ -17,8 +17,15 @@
 
     public class FrameworkModule : NinjectModule
     {
+        private void ConfigureLogging()
+        {
+            return;
+        }
+
         public override void Load()
         {
+            ConfigureLogging();
+
             return;
         }
     }

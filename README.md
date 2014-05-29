@@ -27,6 +27,25 @@ If you wish to contribute ideas or code, please fork this repository and make a 
  + Compiler: Visual Studio 2013 or higher, Mono for Linux and MacOS X
  + SQL Server: MSSQL, MySQL, PostgreSQL or SQLite
 
+## Building
+
+### Windows
+
+ 1. Clone this repo to a local directory
+ 2. If you have Visual Studio, open the solution file located inside the Source folder. Compile and run.
+ 3. If you dont have Visual Studio, run the Build.bat file. Locate the binaries inside the Binaries folder and run.
+
+### Linux and MacOS X
+
+ 1. Clone this repo to a local directory
+ 2. Enter the directory and run the Build.sh file. This will create all the executables inside the Binaries folder.
+ 3. Run each of the required server files by starting the batch file in the root directory.
+ 4. NOTE : Mono is required on the host system to run SharpBattleNet
+
+### Running notes
+Note, some configuration may be required. The configuration files are all located inside the public shared folder under SharpBattleNet.
+The default values will make it run, but fine-tuning may help the servers perform more optimaly.
+
 ## Notes
 
 Reporting issues should be done with the GitHub issue tracker. Fixes should be a forker repo and a pull request should be

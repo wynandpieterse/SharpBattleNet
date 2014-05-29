@@ -9,7 +9,7 @@ namespace Reaper.SharpBattleNet.Servers.BattleNetServer
     using System.Threading.Tasks;
     using System.ServiceProcess;
 
-    internal class BNSService : ServiceBase
+    internal sealed class BNSService : ServiceBase
     {
         protected override void OnStart(string[] args)
         {

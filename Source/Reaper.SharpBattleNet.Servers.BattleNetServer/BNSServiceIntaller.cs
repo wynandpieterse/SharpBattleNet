@@ -19,7 +19,7 @@ namespace Reaper.SharpBattleNet.Servers.BattleNetServer
     using Reaper.SharpBattleNet.Framework.Extensions;
 
     [RunInstaller(runInstaller: true)]
-    public class BNSServiceIntaller : Installer
+    public sealed class BNSServiceIntaller : Installer
     {
         public BNSServiceIntaller()
         {

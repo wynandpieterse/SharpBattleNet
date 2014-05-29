@@ -11,7 +11,19 @@
     using System.Net;
     using System.Net.Sockets;
 
+    public enum ClientMode
+    {
+        None = 0,
+        TCP = 1,
+        UDP = 2
+    }
+
     public interface IClient
     {
+        Socket Socket { get; set; }
+        ClientMode Mode { get; set; }
+
+        Task Start();
+        Task Stop();
     }
 }

@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reaper.SharpBattleNet.Frame
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reaper.SharpBattleNet.Framework.DiabloIIRealmServer", "Reaper.SharpBattleNet.Framework.DiabloIIRealmServer\Reaper.SharpBattleNet.Framework.DiabloIIRealmServer.csproj", "{72992102-9792-4899-B500-C0DC47736529}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reaper.SharpBattleNet.Framework.Networking", "Reaper.SharpBattleNet.Framework.Networking\Reaper.SharpBattleNet.Framework.Networking.csproj", "{B838D207-FAD1-4EE1-95B5-DCB240D1A0AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{72992102-9792-4899-B500-C0DC47736529}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72992102-9792-4899-B500-C0DC47736529}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72992102-9792-4899-B500-C0DC47736529}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B838D207-FAD1-4EE1-95B5-DCB240D1A0AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B838D207-FAD1-4EE1-95B5-DCB240D1A0AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B838D207-FAD1-4EE1-95B5-DCB240D1A0AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B838D207-FAD1-4EE1-95B5-DCB240D1A0AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,5 +70,6 @@ Global
 		{EA306AEF-D55C-4C28-ABD6-C3F0EF804138} = {1430B1F1-11ED-4051-B1F4-D8304F9AF715}
 		{51A40588-DE5A-4EC8-8809-5C27C4851E52} = {EA306AEF-D55C-4C28-ABD6-C3F0EF804138}
 		{72992102-9792-4899-B500-C0DC47736529} = {EA306AEF-D55C-4C28-ABD6-C3F0EF804138}
+		{B838D207-FAD1-4EE1-95B5-DCB240D1A0AA} = {1430B1F1-11ED-4051-B1F4-D8304F9AF715}
 	EndGlobalSection
 EndGlobal

@@ -14,14 +14,17 @@
     using Reaper;
     using Reaper.SharpBattleNet;
     using Reaper.SharpBattleNet.Framework;
+    using Reaper.SharpBattleNet.Framework.Networking;
     using Reaper.SharpBattleNet.Framework.BattleNetServer;
     using Reaper.SharpBattleNet.Framework.BattleNetServer.Details;
+    using Reaper.SharpBattleNet.Framework.BattleNetServer.Details.Networking;
 
     public sealed class BattleNetServerModule : NinjectModule
     {
         public override void Load()
         {
             Bind<IBattleNetServer>().To<BattleNetServer>().InSingletonScope();
+            Bind<IClientFactory>().To<BNClientFactory>().InSingletonScope();
 
             return;
         }

@@ -26,9 +26,9 @@
     {
         public override void Load()
         {
-            Bind<ITCPListenerFactory>().To<TCPListenerFactory>();
-            Bind<IUDPListenerFactory>().To<UDPListenerFactory>();
-            Bind<INetworkManager>().To<NetworkManager>();
+            Bind<ITCPListenerFactory>().To<TCPListenerFactory>().InSingletonScope();
+            Bind<IUDPListenerFactory>().To<UDPListenerFactory>().InSingletonScope();
+            Bind<INetworkManager>().To<NetworkManager>().InSingletonScope();
 
             return;
         }

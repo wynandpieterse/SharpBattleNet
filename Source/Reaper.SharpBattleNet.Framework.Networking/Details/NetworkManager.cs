@@ -108,6 +108,8 @@
 
         private async Task StartTCPNetwork(IConfig configurationContainer)
         {
+            var listeningPort = configurationContainer.GetInt("TCPListenPort", 6112);
+
             if(true == configurationContainer.GetBoolean("TCPListenOnAllInterfaces", false))
             {
                 var allAdapters = NetworkInterface.GetAllNetworkInterfaces();
@@ -116,18 +118,34 @@
                 {
                     foreach(var address in adapter.GetIPProperties().UnicastAddresses)
                     {
-                        // Dont really care to bind to IPv6 addresses here, as all BNv1 games uses that anyway, just
-                        // here for completeness
+                        try
+                        {
+                            // Dont really care to bind to IPv6 addresses here, as all BNv1 games uses that anyway, just
+                            // here for completeness
 
-                        var listener = await CreateTCPListener(address.Address, configurationContainer.GetInt("TCPListenPort", 6112));
-                        _tcpListeners.Add(listener);
+                            var listener = await CreateTCPListener(address.Address, listeningPort);
+                            _tcpListeners.Add(listener);
+                        }
+                        catch(SocketException ex)
+                        {
+                            _logger.WarnException(String.Format("Failed to start listening for TCP connections on {0}:{1}", address.Address, listeningPort), ex);
+                        }
                     }
                 }
             }
             else
             {
-                var listener = await CreateTCPListener(IPAddress.Parse(configurationContainer.Get("TCPListenAddress", "0.0.0.0")), configurationContainer.GetInt("TCPListenPort", 6112));
-                _tcpListeners.Add(listener);
+                var ipAddress = configurationContainer.Get("TCPListenAddress", "0.0.0.0");
+
+                try
+                {
+                    var listener = await CreateTCPListener(IPAddress.Parse(ipAddress), listeningPort);
+                    _tcpListeners.Add(listener);
+                }
+                catch(SocketException ex)
+                {
+                    _logger.WarnException(String.Format("Failed to start listening for TCP connections on {0}:{1}. No networking will be available for TCP connections.", ipAddress, listeningPort), ex);
+                }
             }
 
             return;
@@ -135,6 +153,8 @@
 
         private async Task StartUDPNetwork(IConfig configurationContainer)
         {
+            var listeningPort = configurationContainer.GetInt("UDPListenPort", 6112);
+
             if(true == configurationContainer.GetBoolean("UDPListenOnAllInterfaces", false))
             {
                 var allAdapters = NetworkInterface.GetAllNetworkInterfaces();
@@ -143,18 +163,34 @@
                 {
                     foreach(var address in adapter.GetIPProperties().UnicastAddresses)
                     {
-                        // Dont really care to bind to IPv6 addresses here, as all BNv1 games uses that anyway, just
-                        // here for completeness
+                        try
+                        {
+                            // Dont really care to bind to IPv6 addresses here, as all BNv1 games uses that anyway, just
+                            // here for completeness
 
-                        var listener = await CreateUDPListener(address.Address, configurationContainer.GetInt("TCPListenPort", 6112));
-                        _udpListeners.Add(listener);
+                            var listener = await CreateUDPListener(address.Address, listeningPort);
+                            _udpListeners.Add(listener);
+                        }
+                        catch(SocketException ex)
+                        {
+                            _logger.WarnException(String.Format("Failed to start listening for UDP connections on {0}:{1}", address.Address, listeningPort), ex);
+                        }
                     }
                 }
             }
             else
             {
-                var listener = await CreateUDPListener(IPAddress.Parse(configurationContainer.Get("TCPListenAddress", "0.0.0.0")), configurationContainer.GetInt("TCPListenPort", 6112));
-                _udpListeners.Add(listener);
+                var ipAddress = configurationContainer.Get("UDPListenAddress", "0.0.0.0");
+
+                try
+                {
+                    var listener = await CreateUDPListener(IPAddress.Parse(ipAddress), listeningPort);
+                    _udpListeners.Add(listener);
+                }
+                catch(SocketException ex)
+                {
+                    _logger.WarnException(String.Format("Failed to start listening for UDP connections on {0}:{1}. No networking will be available for UDP connections.", ipAddress, listeningPort), ex);
+                }
             }
 
             return;

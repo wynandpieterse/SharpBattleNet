@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="BattleNetServerModule.cs" />
     <Compile Include="Details\BattleNetServer.cs" />
+    <Compile Include="Details\Networking\BattleNetClient.cs" />
     <Compile Include="Details\Networking\BNClient.cs" />
     <Compile Include="Details\Networking\BNClientFactory.cs" />
     <Compile Include="IBattleNetServer.cs" />

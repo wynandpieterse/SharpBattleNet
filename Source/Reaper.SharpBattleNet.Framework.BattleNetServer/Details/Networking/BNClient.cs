@@ -15,14 +15,6 @@
     using Reaper.SharpBattleNet.Framework;
     using Reaper.SharpBattleNet.Framework.Networking;
 
-    internal enum BattleNetClient
-    {
-        None = 0,
-        Game = 1,
-        FileTransfer = 2,
-        Telnet = 3
-    }
-
     internal sealed class BNClient : BaseClient
     {
         private bool _clientTypeSelected = false;
@@ -69,7 +61,6 @@
                 if(_nextPacketID == 0)
                 {
                     _nextPacketID = buffer[0];
-                    _logger.Debug("Next Packet ID : {0}", _nextPacketID);
                     return 1;
                 }
 
@@ -83,7 +74,6 @@
                         lengthBuffer[1] = buffer[1];
 
                         _nextPacketLength = BitConverter.ToInt16(lengthBuffer, 0);
-                        _logger.Debug("Next Packet Lenght : {0}", _nextPacketLength);
                         return 2;
                     }
                     else
@@ -94,8 +84,6 @@
 
                 if(length >= (_nextPacketLength - 4))
                 {
-                    _logger.Debug("YAY");
-
                     var packetLength = _nextPacketLength - 4;
 
                     _newPacketRead = false;
@@ -110,3 +98,4 @@
         }
     }
 }
+

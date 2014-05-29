@@ -1,6 +1,7 @@
-﻿namespace Reaper.SharpBattleNet.Framework.Networking
+﻿namespace Reaper.SharpBattleNet.Framework.Networking.UDP.Details
 {
     using System;
+    using System.Reflection;
     using System.Linq;
     using System.Text;
     using System.Collections;
@@ -10,10 +11,7 @@
     using System.Net;
     using System.Net.Sockets;
 
-    public interface ITCPServer
+    class UDPListener
     {
-        Task Start(ITCPClientFactory clientFactory, IPAddress listenAddress, short listeningPort);
-        Task Stop();
     }
 }
-

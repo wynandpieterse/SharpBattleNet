@@ -25,7 +25,7 @@
     using Reaper.SharpBattleNet;
     using Reaper.SharpBattleNet.Framework;
 
-    public class FrameworkModule : NinjectModule
+    public sealed class FrameworkModule : NinjectModule
     {
         private readonly string _configurationFile = "";
 

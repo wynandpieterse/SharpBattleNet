@@ -75,7 +75,7 @@
                     var consoleTarget = new ColoredConsoleTarget();
                     config.AddTarget("console", consoleTarget);
 
-                    consoleTarget.Layout = @"${date:format=HH\\:MM\\:ss} ${logger} ${message}";
+                    consoleTarget.Layout = @"${date:format=HH\\:MM\\:ss} ${message}";
 
                     var consoleRule = new LoggingRule("*", GetLogLevel(source.Get("LogConsoleLevel")), consoleTarget);
                     config.LoggingRules.Add(consoleRule);

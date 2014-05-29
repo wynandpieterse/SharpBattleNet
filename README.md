@@ -48,8 +48,8 @@ The default values will make it run, but fine-tuning may help the servers perfor
 
 ## Notes
 
-Reporting issues should be done with the GitHub issue tracker. Fixes should be a forker repo and a pull request should be
-sent for it.
+ + Reporting issues should be done with the GitHub issue tracker.
+ + Any fixes should come from a pull request.
 
 Version 0.0.5
 

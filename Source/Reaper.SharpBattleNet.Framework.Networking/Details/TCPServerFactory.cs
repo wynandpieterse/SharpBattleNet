@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.Framework.BattleNetServer.Details.Networking
+﻿namespace Reaper.SharpBattleNet.Framework.Networking.Details
 {
     using System;
     using System.Linq;
@@ -10,18 +10,20 @@
     using System.Net;
     using System.Net.Sockets;
 
+    using NLog;
+
     using Reaper;
     using Reaper.SharpBattleNet;
     using Reaper.SharpBattleNet.Framework;
     using Reaper.SharpBattleNet.Framework.Networking;
 
-    internal class TCPClientFactory : ITCPClientFactory
+    internal class TCPServerFactory : ITCPServerFactory
     {
-        public Task<ITCPClient> CreateClient()
+        public Task<ITCPServer> CreateServer()
         {
             return Task.Factory.StartNew(() =>
                     {
-                        return (ITCPClient)new TCPClient();
+                        return (ITCPServer)new TCPServer();
                     }
                 );
         }

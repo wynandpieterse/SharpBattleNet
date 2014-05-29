@@ -24,18 +24,20 @@
         private CancellationTokenSource _cancelToken = null;
         private Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public async Task Start(ITCPClientFactory clientFactory, IPAddress listenAddress, short listeningPort)
+        public Task Start(ITCPClientFactory clientFactory, IPAddress listenAddress, short listeningPort)
         {
-            _clientFactory = clientFactory;
-            _cancelToken = new CancellationTokenSource();
-            _listener = new TcpListener(listenAddress, Convert.ToInt32(listeningPort));
+            return Task.Factory.StartNew(() =>
+                    {
+                        _clientFactory = clientFactory;
+                        _cancelToken = new CancellationTokenSource();
+                        _listener = new TcpListener(listenAddress, Convert.ToInt32(listeningPort));
 
-            _listener.Start();
-            Task.Factory.StartNew(AcceptConnections);
+                        _listener.Start();
+                        Task.Factory.StartNew(AcceptConnections);
 
-            _logger.Info("Started listening for TCP connections on {0}:{1}", listenAddress, listeningPort);
-
-            return;
+                        _logger.Info("Started listening for TCP connections on {0}:{1}", listenAddress, listeningPort);
+                    }
+                );
         }
 
         public async void AcceptConnections()
@@ -63,12 +65,14 @@
             return;
         }
 
-        public async Task Stop()
+        public Task Stop()
         {
-            _cancelToken.Cancel();
-            _listener.Stop();
-
-            return;
+            return Task.Factory.StartNew(() =>
+                    {
+                        _cancelToken.Cancel();
+                        _listener.Stop();
+                    }
+                );
         }
     }
 }

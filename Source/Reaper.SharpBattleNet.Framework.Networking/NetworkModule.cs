@@ -22,7 +22,7 @@
     {
         public override void Load()
         {
-            Bind<ITCPServer>().To<TCPServer>();
+            Bind<ITCPServerFactory>().To<TCPServerFactory>();
 
             return;
         }

@@ -34,7 +34,6 @@
 
         public async Task Start(string[] commandArguments)
         {
-            _logger.Info("Welcome");
             return;
         }
 

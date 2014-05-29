@@ -87,22 +87,14 @@
 
         private void ConfigureFileLogging(LoggingConfiguration config)
         {
-            var configSource = Kernel.Get<IConfigSource>();
-            var source = configSource.Configs["General"];
-            if(null != source)
-            {
-                if(true == source.GetBoolean("LogFile"))
-                {
-                    var fileTarget = new FileTarget();
-                    config.AddTarget("file", fileTarget);
+            var fileTarget = new FileTarget();
+            config.AddTarget("file", fileTarget);
 
-                    fileTarget.FileName = String.Format("{0}Log{1}.log", GetLogLevel(source.Get("LogFileLevel")), DateTime.Now);
-                    fileTarget.Layout = @"${date:format=HH\\:MM\\:ss} ${logger} ${message}";
+            fileTarget.FileName = String.Format("{0}Log{1}.log", GetLogLevel(source.Get("LogFileLevel")), DateTime.Now);
+            fileTarget.Layout = @"${date:format=HH\\:MM\\:ss} ${logger} ${message}";
 
-                    var fileRule = new LoggingRule("*", LogLevel.Debug, fileTarget);
-                    config.LoggingRules.Add(fileRule);
-                }
-            }
+            var fileRule = new LoggingRule("*", LogLevel.Debug, fileTarget);
+            config.LoggingRules.Add(fileRule);
 
             return;
         }

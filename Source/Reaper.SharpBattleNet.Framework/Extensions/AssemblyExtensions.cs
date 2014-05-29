@@ -14,7 +14,7 @@
 
     public static class AssemblyExtensions
     {
-        public string GetAssemblyTitle(this Assembly assembly)
+        public static string GetAssemblyTitle(this Assembly assembly)
         {
             var query = from titles in assembly.GetCustomAttributes<AssemblyTitleAttribute>()
                         select titles;
@@ -27,7 +27,7 @@
             return "";
         }
 
-        public string GetAssemblyDescription(this Assembly assembly)
+        public static string GetAssemblyDescription(this Assembly assembly)
         {
             var query = from descriptions in assembly.GetCustomAttributes<AssemblyDescriptionAttribute>()
                         select descriptions;
@@ -40,7 +40,7 @@
             return "";
         }
 
-        public string GetAssemblyConfiguration(this Assembly assembly)
+        public static string GetAssemblyConfiguration(this Assembly assembly)
         {
             var query = from configurations in assembly.GetCustomAttributes<AssemblyConfigurationAttribute>()
                         select configurations;
@@ -53,7 +53,7 @@
             return "";
         }
 
-        public string GetAssemblyCompany(this Assembly assembly)
+        public static string GetAssemblyCompany(this Assembly assembly)
         {
             var query = from companies in assembly.GetCustomAttributes<AssemblyCompanyAttribute>()
                         select companies;
@@ -66,7 +66,7 @@
             return "";
         }
 
-        public string GetAssemblyProduct(this Assembly assembly)
+        public static string GetAssemblyProduct(this Assembly assembly)
         {
             var query = from products in assembly.GetCustomAttributes<AssemblyProductAttribute>()
                         select products;
@@ -79,7 +79,7 @@
             return "";
         }
 
-        public string GetAssemblyCopyright(this Assembly assembly)
+        public static string GetAssemblyCopyright(this Assembly assembly)
         {
             var query = from copyrights in assembly.GetCustomAttributes<AssemblyCopyrightAttribute>()
                         select copyrights;
@@ -92,7 +92,7 @@
             return "";
         }
 
-        public string GetAssemblyTrademark(this Assembly assembly)
+        public static string GetAssemblyTrademark(this Assembly assembly)
         {
             var query = from trademarks in assembly.GetCustomAttributes<AssemblyTrademarkAttribute>()
                         select trademarks;
@@ -105,7 +105,7 @@
             return "";
         }
 
-        public string GetAssemblyCulture(this Assembly assembly)
+        public static string GetAssemblyCulture(this Assembly assembly)
         {
             var query = from cultures in assembly.GetCustomAttributes<AssemblyCultureAttribute>()
                         select cultures;
@@ -118,7 +118,7 @@
             return "";
         }
 
-        public bool IsAssemblyCOMVisible(this Assembly assembly)
+        public static bool IsAssemblyCOMVisible(this Assembly assembly)
         {
             var query = from visibles in assembly.GetCustomAttributes<ComVisibleAttribute>()
                         select visibles;
@@ -131,7 +131,7 @@
             return false;
         }
 
-        public string GetAssemblyGUID(this Assembly assembly)
+        public static string GetAssemblyGUID(this Assembly assembly)
         {
             var query = from guids in assembly.GetCustomAttributes<GuidAttribute>()
                         select guids;
@@ -144,7 +144,7 @@
             return "";
         }
 
-        public string GetAssemblyVersion(this Assembly assembly)
+        public static string GetAssemblyVersion(this Assembly assembly)
         {
             var query = from versions in assembly.GetCustomAttributes<AssemblyVersionAttribute>()
                         select versions;
@@ -157,7 +157,7 @@
             return "";
         }
 
-        public string GetAssemblyFileVersion(this Assembly assembly)
+        public static string GetAssemblyFileVersion(this Assembly assembly)
         {
             var query = from versions in assembly.GetCustomAttributes<AssemblyFileVersionAttribute>()
                         select versions;

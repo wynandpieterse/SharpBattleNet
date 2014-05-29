@@ -57,5 +57,5 @@ downloaded if required.
  + Reporting issues should be done with the GitHub issue tracker.
  + Any fixes should come from a pull request.
 
-Version 0.0.5
+Version 0.0.6
 

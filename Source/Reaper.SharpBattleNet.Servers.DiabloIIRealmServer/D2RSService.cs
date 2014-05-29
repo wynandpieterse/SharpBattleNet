@@ -9,7 +9,7 @@ namespace Reaper.SharpBattleNet.Servers.DiabloIIRealmServer
     using System.Threading.Tasks;
     using System.ServiceProcess;
 
-    internal class D2RSService : ServiceBase
+    internal sealed class D2RSService : ServiceBase
     {
         protected override void OnStart(string[] args)
         {

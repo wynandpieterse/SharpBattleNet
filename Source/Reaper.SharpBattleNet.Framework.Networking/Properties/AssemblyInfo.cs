@@ -2,8 +2,8 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("SharpBattle.net - Master Server")]
-[assembly: AssemblyDescription("This is the main server executable that needs to be run to host most of the services of Battle.net")]
+[assembly: AssemblyTitle("SharpBattle.net Server - Network Framework")]
+[assembly: AssemblyDescription("Allows programs to host networking servers")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Reaper Interactive")]
 [assembly: AssemblyProduct("SharpBattle.net")]
@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
-[assembly: Guid("15cfeb6c-439d-4da4-9abe-f50568be5306")]
+[assembly: Guid("dafa7b7d-c510-4d5b-bf2b-ee7b9e0358a5")]
 [assembly: AssemblyVersion("0.0.5.0")]
 [assembly: AssemblyFileVersion("0.0.5.0")]
 

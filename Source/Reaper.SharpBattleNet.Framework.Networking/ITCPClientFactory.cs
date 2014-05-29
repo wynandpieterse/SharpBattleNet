@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.Framework.BattleNetServer
+﻿namespace Reaper.SharpBattleNet.Framework.Networking
 {
     using System;
     using System.Linq;
@@ -7,11 +7,12 @@
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Net;
+    using System.Net.Sockets;
 
-    public interface IBattleNetServer
+    public interface ITCPClientFactory
     {
-        Task Start(string[] commandArguments);
-        Task Stop();
+        ITCPClient CreateClient();
     }
 }
 

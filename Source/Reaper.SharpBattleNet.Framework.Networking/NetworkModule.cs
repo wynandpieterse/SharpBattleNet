@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.Framework.BattleNetServer
+﻿namespace Reaper.SharpBattleNet.Framework.Networking
 {
     using System;
     using System.Linq;
@@ -10,18 +10,19 @@
 
     using Ninject;
     using Ninject.Modules;
+    using Ninject.Activation;
 
     using Reaper;
     using Reaper.SharpBattleNet;
     using Reaper.SharpBattleNet.Framework;
-    using Reaper.SharpBattleNet.Framework.BattleNetServer;
-    using Reaper.SharpBattleNet.Framework.BattleNetServer.Details;
+    using Reaper.SharpBattleNet.Framework.Networking;
+    using Reaper.SharpBattleNet.Framework.Networking.Details;
 
-    public sealed class BattleNetServerModule : NinjectModule
+    public sealed class NetworkModule : NinjectModule
     {
         public override void Load()
         {
-            Bind<IBattleNetServer>().To<BattleNetServer>().InSingletonScope();
+            Bind<ITCPServerFactory>().To<TCPServerFactory>();
 
             return;
         }

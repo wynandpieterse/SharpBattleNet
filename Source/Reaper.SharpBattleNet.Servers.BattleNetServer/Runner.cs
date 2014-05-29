@@ -14,6 +14,7 @@
     using Reaper.SharpBattleNet;
     using Reaper.SharpBattleNet.Framework;
     using Reaper.SharpBattleNet.Framework.BattleNetServer;
+    using Reaper.SharpBattleNet.Framework.Networking;
 
     internal static class Runner
     {
@@ -22,7 +23,7 @@
 
         public static void Start(string[] commandArguments)
         {
-            _injectionKernel = new StandardKernel(new FrameworkModule("../../../Configuration/BattleNetServer.ini") ,new BattleNetServerModule());
+            _injectionKernel = new StandardKernel(new FrameworkModule("../../../Configuration/BattleNetServer.ini"), new NetworkModule(), new BattleNetServerModule());
             _server = _injectionKernel.Get<IBattleNetServer>();
 
             _server.Start(commandArguments).Wait();
@@ -38,3 +39,4 @@
         }
     }
 }
+

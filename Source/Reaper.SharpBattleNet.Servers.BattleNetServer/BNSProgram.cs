@@ -1,6 +1,7 @@
 namespace Reaper.SharpBattleNet.Servers.BattleNetServer
 {
     using System;
+    using System.Reflection;
     using System.Linq;
     using System.Text;
     using System.Collections;
@@ -8,11 +9,18 @@ namespace Reaper.SharpBattleNet.Servers.BattleNetServer
     using System.Threading;
     using System.Threading.Tasks;
 
+    using Reaper;
+    using Reaper.SharpBattleNet;
+    using Reaper.SharpBattleNet.Framework;
+    using Reaper.SharpBattleNet.Framework.Extensions;
+
     internal static class BNSProgram
     {
         private static void Start(string[] commandArguments)
         {
-            Console.Title = "SharpBattleNet - Master Server";
+            var currentAssembly = Assembly.GetExecutingAssembly();
+
+            Console.Title = String.Format("{0} - {1}", currentAssembly.GetAssemblyTitle(), currentAssembly.GetAssemblyFileVersion());
             Console.WindowWidth = 120;
             Console.WindowHeight = 40;
 
@@ -59,3 +67,4 @@ namespace Reaper.SharpBattleNet.Servers.BattleNetServer
         }
     }
 }
+

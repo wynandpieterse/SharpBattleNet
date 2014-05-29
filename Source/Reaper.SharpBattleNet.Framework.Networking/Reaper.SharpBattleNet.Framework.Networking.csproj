@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{72992102-9792-4899-B500-C0DC47736529}</ProjectGuid>
+    <ProjectGuid>{B838D207-FAD1-4EE1-95B5-DCB240D1A0AA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Reaper.SharpBattleNet.Framework.DiabloIIRealmServer</RootNamespace>
-    <AssemblyName>Reaper.SharpBattleNet.Framework.DiabloIIRealmServer</AssemblyName>
+    <RootNamespace>Reaper.SharpBattleNet.Framework.Networking</RootNamespace>
+    <AssemblyName>Reaper.SharpBattleNet.Framework.Networking</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -22,27 +22,30 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <BaseIntermediateOutputPath>../../Intermediate/Reaper.SharpBattleNet.Framework.DiabloIIRealmServer/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/Reaper.SharpBattleNet.Framework.Networking/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Binaries\Debug\Libraries\</OutputPath>
+    <OutputPath>..\..\Binaries\Release\Libraries\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <BaseIntermediateOutputPath>../../Intermediate/Reaper.SharpBattleNet.Framework.DiabloIIRealmServer/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/Reaper.SharpBattleNet.Framework.Networking/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Nini">
+    <Reference Include="Nini, Version=1.1.0.0, Culture=neutral, PublicKeyToken=691faec150a7fa7b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Trove.Nini.1.1.0.0\lib\net20\Nini.dll</HintPath>
     </Reference>
-    <Reference Include="Ninject">
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
-    <Reference Include="NLog">
+    <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -54,23 +57,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Details\DiabloIIRealmServer.cs" />
-    <Compile Include="DiabloIIRealmServerModule.cs" />
-    <Compile Include="IDiabloIIRealmServer.cs" />
+    <Compile Include="Details\TCPServer.cs" />
+    <Compile Include="Details\TCPServerFactory.cs" />
+    <Compile Include="ITCPClient.cs" />
+    <Compile Include="ITCPClientFactory.cs" />
+    <Compile Include="ITCPServer.cs" />
+    <Compile Include="ITCPServerFactory.cs" />
+    <Compile Include="NetworkModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Reaper.SharpBattleNet.Framework.Networking\Reaper.SharpBattleNet.Framework.Networking.csproj">
-      <Project>{b838d207-fad1-4ee1-95b5-dcb240d1a0aa}</Project>
-      <Name>Reaper.SharpBattleNet.Framework.Networking</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Reaper.SharpBattleNet.Framework\Reaper.SharpBattleNet.Framework.csproj">
-      <Project>{fdb8d2c5-fd13-40e7-b629-ce71a68bb7b7}</Project>
-      <Name>Reaper.SharpBattleNet.Framework</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

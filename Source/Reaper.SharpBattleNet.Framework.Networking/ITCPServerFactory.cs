@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.Framework.BattleNetServer
+﻿namespace Reaper.SharpBattleNet.Framework.Networking
 {
     using System;
     using System.Linq;
@@ -8,10 +8,9 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    public interface IBattleNetServer
+    public interface ITCPServerFactory
     {
-        Task Start(string[] commandArguments);
-        Task Stop();
+        ITCPServer CreateServer();
     }
 }
 

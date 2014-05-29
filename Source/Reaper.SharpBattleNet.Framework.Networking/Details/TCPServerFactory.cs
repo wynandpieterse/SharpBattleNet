@@ -19,13 +19,9 @@
 
     internal class TCPServerFactory : ITCPServerFactory
     {
-        public Task<ITCPServer> CreateServer()
+        public ITCPServer CreateServer()
         {
-            return Task.Factory.StartNew(() =>
-                    {
-                        return (ITCPServer)new TCPServer();
-                    }
-                );
+            return new TCPServer();
         }
     }
 }

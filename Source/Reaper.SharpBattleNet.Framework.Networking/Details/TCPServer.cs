@@ -50,7 +50,7 @@
 
                     if(null != clientSocket)
                     {
-                        var client = await _clientFactory.CreateClient();
+                        var client = _clientFactory.CreateClient();
 
                         _logger.Debug("New TCP client connected from {0}", clientSocket.RemoteEndPoint);
 

@@ -17,13 +17,9 @@
 
     internal class TCPClientFactory : ITCPClientFactory
     {
-        public Task<ITCPClient> CreateClient()
+        public ITCPClient CreateClient()
         {
-            return Task.Factory.StartNew(() =>
-                    {
-                        return (ITCPClient)new TCPClient();
-                    }
-                );
+            return new TCPClient();
         }
     }
 }

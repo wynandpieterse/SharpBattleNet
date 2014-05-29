@@ -10,6 +10,6 @@
 
     public interface ITCPServerFactory
     {
-        Task<ITCPServer> CreateServer();
+        ITCPServer CreateServer();
     }
 }

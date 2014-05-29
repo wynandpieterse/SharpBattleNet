@@ -100,7 +100,7 @@
 
         private async Task StartNetworkListener(IPAddress address, short port)
         {
-            var listener = await _serverFactory.CreateServer();
+            var listener = _serverFactory.CreateServer();
 
             await listener.Start(_clientFactory, address, port);
 

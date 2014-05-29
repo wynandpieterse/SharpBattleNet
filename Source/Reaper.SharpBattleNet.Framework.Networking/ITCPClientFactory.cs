@@ -12,6 +12,6 @@
 
     public interface ITCPClientFactory
     {
-        Task<ITCPClient> CreateClient();
+        ITCPClient CreateClient();
     }
 }

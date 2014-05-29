@@ -17,7 +17,7 @@
     using Reaper.SharpBattleNet.Framework.DiabloIIRealmServer;
     using Reaper.SharpBattleNet.Framework.DiabloIIRealmServer.Details;
 
-    public class DiabloIIRealmServerModule : NinjectModule
+    public sealed class DiabloIIRealmServerModule : NinjectModule
     {
         public override void Load()
         {

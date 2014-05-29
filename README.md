@@ -2,7 +2,8 @@
 
 ## Introduction
 
-SharpBattle.net aims to be a complete emulator for Blizzard games that run on Battle.net V1. These include the following games:
+SharpBattle.net aims to be a complete emulator for Battle.net V1 and all the games that ran on it. These games include the
+following:
 
  + StarCraft
  + StarCraft - Broodwar
@@ -13,7 +14,8 @@ SharpBattle.net aims to be a complete emulator for Blizzard games that run on Ba
  + WarCraft 3
  + WarCraft 3 - Frozen Throne
 
-It follows in the same vein as [PvPGN](http://pvpgn.berlios.de/) but written in C#.
+It follows in the same vein as [PvPGN](http://pvpgn.berlios.de/) but written in C#. This is intended to be a fun and learning
+experience. What people do with this is their own resposibility. I do not endores piracy.
 
 This project is completely open source, and community involvement is highly encouraged.
 

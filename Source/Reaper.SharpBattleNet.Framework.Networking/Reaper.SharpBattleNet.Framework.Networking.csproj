@@ -57,6 +57,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Details\TCPServer.cs" />
+    <Compile Include="ITCPClient.cs" />
+    <Compile Include="ITCPClientFactory.cs" />
+    <Compile Include="ITCPServer.cs" />
     <Compile Include="NetworkModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

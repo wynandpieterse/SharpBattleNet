@@ -15,11 +15,15 @@
     using Reaper;
     using Reaper.SharpBattleNet;
     using Reaper.SharpBattleNet.Framework;
+    using Reaper.SharpBattleNet.Framework.Networking;
+    using Reaper.SharpBattleNet.Framework.Networking.Details;
 
     public class NetworkModule : NinjectModule
     {
         public override void Load()
         {
+            Bind<ITCPServer>().To<TCPServer>();
+
             return;
         }
     }

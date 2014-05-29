@@ -14,6 +14,7 @@
     using Reaper.SharpBattleNet;
     using Reaper.SharpBattleNet.Framework;
     using Reaper.SharpBattleNet.Framework.DiabloIIRealmServer;
+    using Reaper.SharpBattleNet.Framework.Networking;
 
     internal static class Runner
     {
@@ -22,7 +23,7 @@
 
         public static void Start(string[] commandArguments)
         {
-            _injectionKernel = new StandardKernel(new FrameworkModule("../../../Configuration/DiabloIIRealmServer.ini"), new DiabloIIRealmServerModule());
+            _injectionKernel = new StandardKernel(new FrameworkModule("../../../Configuration/DiabloIIRealmServer.ini"), new NetworkModule(), new DiabloIIRealmServerModule());
             _server = _injectionKernel.Get<IDiabloIIRealmServer>();
 
             _server.Start(commandArguments).Wait();

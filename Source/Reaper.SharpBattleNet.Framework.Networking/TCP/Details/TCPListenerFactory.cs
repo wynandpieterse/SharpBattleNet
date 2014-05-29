@@ -13,9 +13,18 @@
 
     internal sealed class TCPListenerFactory : ITCPListenerFactory
     {
+        private readonly IClientFactory _clientFactory = null;
+
+        public TCPListenerFactory(IClientFactory clientFactory)
+        {
+            _clientFactory = clientFactory;
+
+            return;
+        }
+
         public ITCPListener Create()
         {
-            return new TCPListener();
+            return new TCPListener(_clientFactory);
         }
     }
 }

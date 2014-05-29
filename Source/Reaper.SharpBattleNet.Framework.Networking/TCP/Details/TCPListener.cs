@@ -13,5 +13,25 @@
 
     internal sealed class TCPListener : ITCPListener
     {
+        private readonly IClientFactory _clientFactory = null;
+
+        private TcpListener _listener = null;
+
+        public TCPListener(IClientFactory clientFactory)
+        {
+            _clientFactory = clientFactory;
+
+            return;
+        }
+
+        public async Task Start(IPAddress address, int port)
+        {
+            return;
+        }
+
+        public async Task Stop()
+        {
+            return;
+        }
     }
 }

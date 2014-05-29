@@ -13,9 +13,18 @@
 
     internal sealed class UDPListenerFactory : IUDPListenerFactory
     {
+        private readonly IClientFactory _clientFactory = null;
+
+        public UDPListenerFactory(IClientFactory clientFactory)
+        {
+            _clientFactory = clientFactory;
+
+            return;
+        }
+
         public IUDPListener Create()
         {
-            return new UDPListener();
+            return new UDPListener(_clientFactory);
         }
     }
 }

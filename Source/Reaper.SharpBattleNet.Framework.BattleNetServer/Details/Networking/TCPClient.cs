@@ -24,7 +24,7 @@
 
         public TCPClient()
         {
-            _dataBuffer = new byte[2048];
+            _dataBuffer = new byte[128];
 
             return;
         }
@@ -62,7 +62,7 @@
                     if(0 != receivedBytes)
                     {
                         // Process the packet here
-                        _logger.Info("Got packet from {0} - {1}", Socket.RemoteEndPoint, _dataBuffer.ToString());
+                        _logger.Info("Got packet from {0} - {1}", Socket.RemoteEndPoint, _dataBuffer.Aggregate("", (current, b) => current + " " + b.ToString("X2")));
 
                         Socket.ReceiveAsync(args);
                     }

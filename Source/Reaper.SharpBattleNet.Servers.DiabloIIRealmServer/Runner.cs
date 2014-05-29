@@ -23,7 +23,7 @@
 
         public static void Start(string[] commandArguments)
         {
-            _injectionKernel = new StandardKernel(new FrameworkModule("../../../Configuration/DiabloIIRealmServer.ini"), new NetworkModule(), new DiabloIIRealmServerModule());
+            _injectionKernel = new StandardKernel(new FrameworkModule("DiabloIIRealmServer"), new NetworkModule(), new DiabloIIRealmServerModule());
             _server = _injectionKernel.Get<IDiabloIIRealmServer>();
 
             _server.Start(commandArguments).Wait();

@@ -1,6 +1,7 @@
-﻿namespace Reaper.SharpBattleNet.Framework.Networking
+﻿namespace Reaper.SharpBattleNet.Framework.Networking.Packet
 {
     using System;
+    using System.Reflection;
     using System.Linq;
     using System.Text;
     using System.Collections;
@@ -10,9 +11,7 @@
     using System.Net;
     using System.Net.Sockets;
 
-    public interface ITCPClientFactory
+    public class PacketHandlerServer<Packet> : IPacketHandler<Packet>
     {
-        ITCPClient CreateClient();
     }
 }
-

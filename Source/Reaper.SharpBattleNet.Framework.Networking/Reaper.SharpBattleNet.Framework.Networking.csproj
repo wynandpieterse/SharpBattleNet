@@ -57,17 +57,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Details\TCPServer.cs" />
-    <Compile Include="Details\TCPServerFactory.cs" />
-    <Compile Include="ITCPClient.cs" />
-    <Compile Include="ITCPClientFactory.cs" />
-    <Compile Include="ITCPServer.cs" />
-    <Compile Include="ITCPServerFactory.cs" />
+    <Compile Include="BaseClient.cs" />
+    <Compile Include="ClientMode.cs" />
+    <Compile Include="Details\NetworkManager.cs" />
+    <Compile Include="IClient.cs" />
+    <Compile Include="IClientFactory.cs" />
+    <Compile Include="INetworkManager.cs" />
     <Compile Include="NetworkModule.cs" />
+    <Compile Include="Packet\IPacketDispatcher.cs" />
+    <Compile Include="Packet\IPacketHandler.cs" />
+    <Compile Include="Packet\PacketHandlerServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TCP\Details\TCPListener.cs" />
+    <Compile Include="TCP\Details\TCPListenerFactory.cs" />
+    <Compile Include="TCP\ITCPListener.cs" />
+    <Compile Include="TCP\ITCPListenerFactory.cs" />
+    <Compile Include="UDP\Details\UDPListener.cs" />
+    <Compile Include="UDP\Details\UDPListenerFactory.cs" />
+    <Compile Include="UDP\IUDPListener.cs" />
+    <Compile Include="UDP\IUDPListenerFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Packet\Detail\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

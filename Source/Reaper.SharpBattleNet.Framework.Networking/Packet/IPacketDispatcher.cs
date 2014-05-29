@@ -1,6 +1,7 @@
-﻿namespace Reaper.SharpBattleNet.Framework.Networking
+﻿namespace Reaper.SharpBattleNet.Framework.Networking.Packet
 {
     using System;
+    using System.Reflection;
     using System.Linq;
     using System.Text;
     using System.Collections;
@@ -10,12 +11,8 @@
     using System.Net;
     using System.Net.Sockets;
 
-    public interface ITCPClient
+    public interface IPacketDispatcher
     {
-        Socket Socket { get; set; }
-        CancellationTokenSource CancelToken { get; set; }
-
-        void Accepted();
+        Task Dispatch(int protocol, int game, int version, byte[] packet);
     }
 }
-

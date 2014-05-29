@@ -57,8 +57,9 @@
   <ItemGroup>
     <Compile Include="BattleNetServerModule.cs" />
     <Compile Include="Details\BattleNetServer.cs" />
-    <Compile Include="Details\Networking\TCPClient.cs" />
-    <Compile Include="Details\Networking\TCPClientFactory.cs" />
+    <Compile Include="Details\Networking\BattleNetClient.cs" />
+    <Compile Include="Details\Networking\BNClient.cs" />
+    <Compile Include="Details\Networking\BNClientFactory.cs" />
     <Compile Include="IBattleNetServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

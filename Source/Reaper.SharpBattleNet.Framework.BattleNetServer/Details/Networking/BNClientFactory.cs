@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.Framework.Networking.Details
+﻿namespace Reaper.SharpBattleNet.Framework.BattleNetServer.Details.Networking
 {
     using System;
     using System.Linq;
@@ -7,21 +7,20 @@
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using System.Net;
-    using System.Net.Sockets;
 
-    using NLog;
+    using Ninject;
+    using Ninject.Modules;
 
     using Reaper;
     using Reaper.SharpBattleNet;
     using Reaper.SharpBattleNet.Framework;
     using Reaper.SharpBattleNet.Framework.Networking;
 
-    internal sealed class TCPServerFactory : ITCPServerFactory
+    internal sealed class BNClientFactory : IClientFactory
     {
-        public ITCPServer CreateServer()
+        public IClient CreateClient()
         {
-            return new TCPServer();
+            return new BNClient();
         }
     }
 }

@@ -17,12 +17,18 @@
     using Reaper.SharpBattleNet.Framework;
     using Reaper.SharpBattleNet.Framework.Networking;
     using Reaper.SharpBattleNet.Framework.Networking.Details;
+    using Reaper.SharpBattleNet.Framework.Networking.TCP;
+    using Reaper.SharpBattleNet.Framework.Networking.TCP.Details;
+    using Reaper.SharpBattleNet.Framework.Networking.UDP;
+    using Reaper.SharpBattleNet.Framework.Networking.UDP.Details;
 
     public sealed class NetworkModule : NinjectModule
     {
         public override void Load()
         {
-            Bind<ITCPServerFactory>().To<TCPServerFactory>();
+            Bind<ITCPListenerFactory>().To<TCPListenerFactory>().InSingletonScope();
+            Bind<IUDPListenerFactory>().To<UDPListenerFactory>().InSingletonScope();
+            Bind<INetworkManager>().To<NetworkManager>().InSingletonScope();
 
             return;
         }

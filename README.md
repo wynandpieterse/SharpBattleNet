@@ -23,8 +23,8 @@ If you wish to contribute ideas or code, please fork this repository and make a 
 
 ## Requirements
 
- + Platform: Windows
- + Compiler: Visual Studio Professional 2013 or higher
+ + Platform: Windows, Linux, MacOS X
+ + Compiler: Visual Studio 2013 or higher, Mono for Linux and MacOS X
  + SQL Server: MSSQL, MySQL, PostgreSQL or SQLite
 
 ## Notes

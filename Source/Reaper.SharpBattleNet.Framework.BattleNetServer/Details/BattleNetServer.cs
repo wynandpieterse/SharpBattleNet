@@ -68,7 +68,7 @@
                     {
                         if(address.Address.AddressFamily == AddressFamily.InterNetwork)
                         {
-                            await StartNetworkListener(address.Address, 6220);
+                            await StartNetworkListener(address.Address, 6112);
                         }
                     }
                 }
@@ -84,14 +84,14 @@
                         {
                             if(address.Address.AddressFamily == AddressFamily.InterNetwork)
                             {
-                                await StartNetworkListener(address.Address, Convert.ToInt16(section.GetInt("ListenPort", 6220)));
+                                await StartNetworkListener(address.Address, Convert.ToInt16(section.GetInt("ListenPort", 6112)));
                             }
                         }
                     }
                 }
                 else
                 {
-                    await StartNetworkListener(IPAddress.Parse(section.Get("ListenAddress", "0.0.0.0")), Convert.ToInt16(section.GetInt("ListenPort", 6220)));
+                    await StartNetworkListener(IPAddress.Parse(section.Get("ListenAddress", "0.0.0.0")), Convert.ToInt16(section.GetInt("ListenPort", 6112)));
                 }
             }
 
@@ -100,11 +100,19 @@
 
         private async Task StartNetworkListener(IPAddress address, short port)
         {
-            var listener = _serverFactory.CreateServer();
+            try
+            {
+                var listener = _serverFactory.CreateServer();
 
-            await listener.Start(_clientFactory, address, port);
+                await listener.Start(_clientFactory, address, port);
 
-            _listeners.Add(listener);
+                _listeners.Add(listener);
+            }
+            catch(Exception ex)
+            {
+                _logger.WarnException(String.Format("Failed to create listener for {0}:{1}", address, port), ex);
+            }
+
             return;
         }
 

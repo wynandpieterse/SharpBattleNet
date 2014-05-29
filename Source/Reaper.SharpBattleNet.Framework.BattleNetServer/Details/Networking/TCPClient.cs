@@ -39,7 +39,10 @@
             socketAsyncArgs.SetBuffer(_dataBuffer, 0, _dataBuffer.Length);
             socketAsyncArgs.Completed += Process;
 
-            Socket.ReceiveAsync(socketAsyncArgs);
+            if(false == CancelToken.IsCancellationRequested)
+            {
+                Socket.ReceiveAsync(socketAsyncArgs);
+            }
 
             return;
         }

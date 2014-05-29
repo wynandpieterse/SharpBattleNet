@@ -11,13 +11,6 @@
     using System.Net;
     using System.Net.Sockets;
 
-    public enum ClientMode
-    {
-        None = 0,
-        TCP = 1,
-        UDP = 2
-    }
-
     public interface IClient
     {
         Socket Socket { get; set; }
@@ -27,3 +20,4 @@
         Task Stop();
     }
 }
+

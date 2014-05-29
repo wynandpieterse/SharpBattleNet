@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseClient.cs" />
+    <Compile Include="ClientMode.cs" />
     <Compile Include="Details\NetworkManager.cs" />
     <Compile Include="IClient.cs" />
     <Compile Include="IClientFactory.cs" />

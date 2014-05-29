@@ -26,7 +26,7 @@
     using Reaper.SharpBattleNet.Framework.Networking.TCP;
     using Reaper.SharpBattleNet.Framework.Networking.UDP;
 
-    internal class NetworkManager : INetworkManager
+    internal sealed class NetworkManager : INetworkManager
     {
         private readonly IConfigSource _configuration = null;
         private readonly ITCPListenerFactory _tcpFactory = null;
@@ -215,3 +215,4 @@
         }
     }
 }
+

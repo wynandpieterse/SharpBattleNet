@@ -1,6 +1,8 @@
 ﻿namespace Reaper.SharpBattleNet.Framework
 {
     using System;
+    using System.Reflection;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Collections;
@@ -24,14 +26,32 @@
     using Reaper;
     using Reaper.SharpBattleNet;
     using Reaper.SharpBattleNet.Framework;
+    using Reaper.SharpBattleNet.Framework.Extensions;
 
     public sealed class FrameworkModule : NinjectModule
     {
         private readonly string _configurationFile = "";
 
+        private string _writeDirectory = "";
+
         public FrameworkModule(string configurationFile)
         {
             _configurationFile = configurationFile;
+
+            return;
+        }
+
+        private void ConfigureWriteDirectory()
+        {
+            Assembly entryAssembly = null;
+
+            entryAssembly = Assembly.GetEntryAssembly();
+
+            _writeDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "SharpBattleNet");
+            _writeDirectory = Path.Combine(_writeDirectory, entryAssembly.GetAssemblyProduct());
+
+            // Check for exceptions here, please
+            Directory.CreateDirectory(_writeDirectory);
 
             return;
         }
@@ -87,10 +107,18 @@
 
         private void ConfigureFileLogging(LoggingConfiguration config)
         {
+            string logDirectory = Path.Combine(_writeDirectory, "Logs");
+            DateTime currentTime = DateTime.Now;
+            string logDate = String.Format("{0}-{1}-{2}-{3}-{4}-{5}", currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Second);
+            string logFilename = Path.Combine(logDirectory, String.Format("Log-{0}.log", logDate));
+
+            // Check for exceptions here please
+            Directory.CreateDirectory(logDirectory);
+
             var fileTarget = new FileTarget();
             config.AddTarget("file", fileTarget);
 
-            fileTarget.FileName = String.Format("{0}Log{1}.log", GetLogLevel(source.Get("LogFileLevel")), DateTime.Now);
+            fileTarget.FileName = logFilename;
             fileTarget.Layout = @"${date:format=HH\\:MM\\:ss} ${logger} ${message}";
 
             var fileRule = new LoggingRule("*", LogLevel.Debug, fileTarget);
@@ -113,6 +141,7 @@
 
         public override void Load()
         {
+            ConfigureWriteDirectory();
             ConfigureConfiguration();
             ConfigureLogging();
 

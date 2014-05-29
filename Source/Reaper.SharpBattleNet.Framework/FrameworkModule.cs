@@ -30,13 +30,13 @@
 
     public sealed class FrameworkModule : NinjectModule
     {
-        private readonly string _configurationFile = "";
+        private readonly string _applicationName = "";
 
         private string _writeDirectory = "";
 
-        public FrameworkModule(string configurationFile)
+        public FrameworkModule(string applicationName)
         {
-            _configurationFile = configurationFile;
+            _applicationName = applicationName;
 
             return;
         }
@@ -48,7 +48,7 @@
             entryAssembly = Assembly.GetEntryAssembly();
 
             _writeDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "SharpBattleNet");
-            _writeDirectory = Path.Combine(_writeDirectory, entryAssembly.GetAssemblyProduct());
+            _writeDirectory = Path.Combine(_writeDirectory, _applicationName);
 
             // Check for exceptions here, please
             Directory.CreateDirectory(_writeDirectory);
@@ -58,7 +58,20 @@
 
         private void ConfigureConfiguration()
         {
-            Bind<IConfigSource>().ToMethod<IniConfigSource>(context => new IniConfigSource(_configurationFile)).InSingletonScope();
+            string configurationDirectory = Path.Combine(_writeDirectory, "Configuration");
+            string configurationFilename = Path.Combine(configurationDirectory, String.Format("{0}.ini", _applicationName));
+
+            // Check for exceptions here, please
+            Directory.CreateDirectory(configurationDirectory);
+
+            // check to see if configuration file already exist there
+            if(false == File.Exists(configurationFilename))
+            {
+                // copy configuration file over
+                File.Copy(String.Format("../../../Configuration/{0}.ini", _applicationName), configurationFilename);
+            }
+
+            Bind<IConfigSource>().ToMethod<IniConfigSource>(context => new IniConfigSource(configurationFilename)).InSingletonScope();
 
             return;
         }

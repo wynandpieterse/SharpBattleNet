@@ -13,5 +13,7 @@
 
     public interface ITCPListener
     {
+        Task Start(IPAddress address, int port);
+        Task Stop();
     }
 }

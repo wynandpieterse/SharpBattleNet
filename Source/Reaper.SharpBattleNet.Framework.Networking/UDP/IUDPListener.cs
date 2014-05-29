@@ -13,6 +13,7 @@
 
     public interface IUDPListener
     {
-        
+        Task Start(IPAddress adddress, int port);
+        Task Stop();
     }
 }

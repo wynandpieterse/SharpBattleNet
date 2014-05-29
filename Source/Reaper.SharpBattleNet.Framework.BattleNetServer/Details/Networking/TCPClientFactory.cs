@@ -15,7 +15,7 @@
     using Reaper.SharpBattleNet.Framework;
     using Reaper.SharpBattleNet.Framework.Networking;
 
-    internal class TCPClientFactory : ITCPClientFactory
+    internal sealed class TCPClientFactory : ITCPClientFactory
     {
         public ITCPClient CreateClient()
         {

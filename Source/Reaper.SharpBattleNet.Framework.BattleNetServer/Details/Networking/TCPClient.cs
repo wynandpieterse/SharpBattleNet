@@ -17,7 +17,7 @@
     using Reaper.SharpBattleNet.Framework;
     using Reaper.SharpBattleNet.Framework.Networking;
 
-    internal class TCPClient : ITCPClient
+    internal sealed class TCPClient : ITCPClient
     {
         private byte[] _dataBuffer = null;
         private Logger _logger = LogManager.GetCurrentClassLogger();

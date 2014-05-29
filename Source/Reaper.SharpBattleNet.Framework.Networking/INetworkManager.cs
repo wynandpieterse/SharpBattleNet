@@ -22,9 +22,10 @@
     {
         Task ScanAssemblyForPacketHandlers(Assembly assembly);
 
-        ITCPListener CreateTCPListener(IPAddress address, int port);
-        IUDPListener CreateUDPListener(IPAddress address, int port);
+        Task<ITCPListener> CreateTCPListener(IPAddress address, int port);
+        Task<IUDPListener> CreateUDPListener(IPAddress address, int port);
 
         Task StartNetworking();
+        Task StopNetworking();
     }
 }

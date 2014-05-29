@@ -11,7 +11,7 @@
     using System.Net;
     using System.Net.Sockets;
 
-    public interface IUDPListenerFactory
+    internal interface IUDPListenerFactory
     {
         IUDPListener Create();
     }

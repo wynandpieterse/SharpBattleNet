@@ -11,7 +11,7 @@
     using System.Net;
     using System.Net.Sockets;
 
-    public interface ITCPListenerFactory
+    internal interface ITCPListenerFactory
     {
         ITCPListener Create();
     }

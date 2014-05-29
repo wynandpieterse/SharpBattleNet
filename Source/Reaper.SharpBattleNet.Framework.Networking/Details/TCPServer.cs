@@ -17,7 +17,7 @@
     using Reaper.SharpBattleNet.Framework;
     using Reaper.SharpBattleNet.Framework.Networking;
 
-    internal class TCPServer : ITCPServer
+    internal sealed class TCPServer : ITCPServer
     {
         private TcpListener _listener = null;
         private ITCPClientFactory _clientFactory = null;
@@ -40,7 +40,7 @@
                 );
         }
 
-        public async void AcceptConnections()
+        private async void AcceptConnections()
         {
             while(false == _cancelToken.IsCancellationRequested)
             {
@@ -76,3 +76,4 @@
         }
     }
 }
+

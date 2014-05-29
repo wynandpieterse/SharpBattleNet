@@ -17,7 +17,7 @@
     using Reaper.SharpBattleNet.Framework.BattleNetServer;
     using Reaper.SharpBattleNet.Framework.BattleNetServer.Details;
 
-    public class BattleNetServerModule : NinjectModule
+    public sealed class BattleNetServerModule : NinjectModule
     {
         public override void Load()
         {
@@ -27,3 +27,4 @@
         }
     }
 }
+

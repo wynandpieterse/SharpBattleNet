@@ -19,7 +19,7 @@ namespace Reaper.SharpBattleNet.Servers.DiabloIIRealmServer
     using Reaper.SharpBattleNet.Framework.Extensions;
 
     [RunInstaller(runInstaller: true)]
-    public class D2RSServiceIntaller : Installer
+    public sealed class D2RSServiceIntaller : Installer
     {
         public D2RSServiceIntaller()
         {
@@ -41,3 +41,4 @@ namespace Reaper.SharpBattleNet.Servers.DiabloIIRealmServer
         }
     }
 }
+

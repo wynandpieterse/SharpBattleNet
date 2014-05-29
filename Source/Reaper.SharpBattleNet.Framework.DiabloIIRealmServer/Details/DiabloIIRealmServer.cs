@@ -20,7 +20,7 @@
     using Reaper.SharpBattleNet.Framework;
     using Reaper.SharpBattleNet.Framework.DiabloIIRealmServer;
 
-    internal class DiabloIIRealmServer : IDiabloIIRealmServer
+    internal sealed class DiabloIIRealmServer : IDiabloIIRealmServer
     {
         private readonly IConfigSource _configuration = null;
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
@@ -43,3 +43,4 @@
         }
     }
 }
+

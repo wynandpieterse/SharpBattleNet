@@ -18,7 +18,7 @@
     using Reaper.SharpBattleNet.Framework.Networking;
     using Reaper.SharpBattleNet.Framework.Networking.Details;
 
-    public class NetworkModule : NinjectModule
+    public sealed class NetworkModule : NinjectModule
     {
         public override void Load()
         {
@@ -28,3 +28,4 @@
         }
     }
 }
+

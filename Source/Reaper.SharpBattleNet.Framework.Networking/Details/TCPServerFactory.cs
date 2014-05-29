@@ -17,7 +17,7 @@
     using Reaper.SharpBattleNet.Framework;
     using Reaper.SharpBattleNet.Framework.Networking;
 
-    internal class TCPServerFactory : ITCPServerFactory
+    internal sealed class TCPServerFactory : ITCPServerFactory
     {
         public ITCPServer CreateServer()
         {
@@ -25,3 +25,4 @@
         }
     }
 }
+

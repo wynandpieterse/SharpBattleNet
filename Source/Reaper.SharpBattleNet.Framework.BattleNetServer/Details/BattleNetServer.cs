@@ -26,7 +26,7 @@
     using Reaper.SharpBattleNet.Framework.BattleNetServer.Details;
     using Reaper.SharpBattleNet.Framework.BattleNetServer.Details.Networking;
 
-    internal class BattleNetServer : IBattleNetServer
+    internal sealed class BattleNetServer : IBattleNetServer
     {
         private readonly IConfigSource _configuration = null;
         private readonly ITCPServerFactory _serverFactory = null;
@@ -127,3 +127,4 @@
         }
     }
 }
+

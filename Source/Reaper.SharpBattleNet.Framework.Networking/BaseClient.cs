@@ -13,15 +13,22 @@
 
     using NLog;
 
-    public class BaseClient : IClient
+    public abstract class BaseClient : IClient
     {
         private readonly byte[] _dataBuffer = null;
 
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
+        private byte[] _readBufferBackup = null;
+        private byte[] _readBuffer = null;
+        private int _readBufferPosition = 0;
+
         public BaseClient()
         {
-            _dataBuffer = new byte[0xFF];
+            _dataBuffer = new byte[256];
+            _readBufferBackup = new byte[512];
+            _readBuffer = new byte[512];
+            _readBufferPosition = 0;
 
             return;
         }
@@ -45,9 +52,12 @@
             return;
         }
 
+        public abstract int ProcessBuffer(byte[] buffer, int length);
+
         private void ProcessEvent(object sender, SocketAsyncEventArgs args)
         {
             int processedBytes = 0;
+            int handledBytes = 0;
 
             try
             {
@@ -55,7 +65,22 @@
 
                 if(0 != processedBytes)
                 {
-                    _logger.Debug("Got packet from {0}", Socket.RemoteEndPoint);
+                    _logger.Debug("Got {0} bytes from {1}", processedBytes, Socket.RemoteEndPoint);
+
+                    Array.Copy(_dataBuffer, 0, _readBuffer, _readBufferPosition, processedBytes);
+                    _readBufferPosition += processedBytes;
+
+                    do
+                    {
+                        handledBytes = ProcessBuffer(_readBuffer, _readBufferPosition);
+
+                        Array.Copy(_readBuffer, 0, _readBufferBackup, 0, _readBuffer.Length);
+                        _readBuffer.Initialize();
+
+                        Array.Copy(_readBufferBackup, handledBytes, _readBuffer, 0, _readBufferPosition - handledBytes);
+
+                        _readBufferPosition -= handledBytes;
+                    } while(handledBytes < _readBufferPosition);
 
                     Socket.ReceiveAsync(args);
                 }

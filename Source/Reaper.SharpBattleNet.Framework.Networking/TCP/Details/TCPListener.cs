@@ -11,7 +11,7 @@
     using System.Net;
     using System.Net.Sockets;
 
-    class TCPListener
+    internal sealed class TCPListener : ITCPListener
     {
     }
 }

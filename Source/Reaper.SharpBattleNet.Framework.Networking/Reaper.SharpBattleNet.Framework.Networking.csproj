@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Details\NetworkManager.cs" />
     <Compile Include="INetworkManager.cs" />
     <Compile Include="NetworkModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

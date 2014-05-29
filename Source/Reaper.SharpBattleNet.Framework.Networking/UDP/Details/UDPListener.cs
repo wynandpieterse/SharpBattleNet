@@ -11,7 +11,7 @@
     using System.Net;
     using System.Net.Sockets;
 
-    class UDPListener
+    internal sealed class UDPListener : IUDPListener
     {
     }
 }

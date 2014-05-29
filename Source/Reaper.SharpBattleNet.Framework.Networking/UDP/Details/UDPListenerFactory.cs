@@ -11,7 +11,11 @@
     using System.Net;
     using System.Net.Sockets;
 
-    class UDPListenerFactory
+    internal sealed class UDPListenerFactory : IUDPListenerFactory
     {
+        public IUDPListener Create()
+        {
+            return new UDPListener();
+        }
     }
 }

@@ -11,7 +11,11 @@
     using System.Net;
     using System.Net.Sockets;
 
-    class TCPListenerFactory
+    internal sealed class TCPListenerFactory : ITCPListenerFactory
     {
+        public ITCPListener Create()
+        {
+            return new TCPListener();
+        }
     }
 }

@@ -16,6 +16,7 @@
     using Reaper.SharpBattleNet;
     using Reaper.SharpBattleNet.Framework;
     using Reaper.SharpBattleNet.Framework.Networking;
+    using Reaper.SharpBattleNet.Framework.Networking.Details;
     using Reaper.SharpBattleNet.Framework.Networking.TCP;
     using Reaper.SharpBattleNet.Framework.Networking.TCP.Details;
     using Reaper.SharpBattleNet.Framework.Networking.UDP;
@@ -25,7 +26,9 @@
     {
         public override void Load()
         {
-            
+            Bind<ITCPListenerFactory>().To<TCPListenerFactory>();
+            Bind<IUDPListenerFactory>().To<UDPListenerFactory>();
+            Bind<INetworkManager>().To<NetworkManager>();
 
             return;
         }

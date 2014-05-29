@@ -13,5 +13,6 @@
 
     public interface IPacketDispatcher
     {
+        Task Dispatch(int protocol, int game, int version, byte[] packet);
     }
 }

@@ -11,7 +11,7 @@
     using System.Net;
     using System.Net.Sockets;
 
-    public class PacketHandlerServer : IPacketHandler
+    public class PacketHandlerServer<Packet> : IPacketHandler<Packet>
     {
     }
 }

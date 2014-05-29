@@ -2,8 +2,8 @@
 
 ## Introduction
 
-SharpBattle.net aims to be a complete emulator for Battle.net V1 and all the games that ran on it. These games include the
-following:
+SharpBattle.net aims to be a complete emulator for Battle.net V1 and all the games that ran on it. These games
+include the following:
 
  + StarCraft
  + StarCraft - Broodwar
@@ -14,8 +14,8 @@ following:
  + WarCraft 3
  + WarCraft 3 - Frozen Throne
 
-It follows in the same vein as [PvPGN](http://pvpgn.berlios.de/) but written in C#. This is intended to be a fun and learning
-experience. What people do with this is their own resposibility. I do not endores piracy.
+It follows in the same vein as [PvPGN](http://pvpgn.berlios.de/) but written in C#. This is intended to be a fun
+and learning experience. What people do with this is their own resposibility. I do not endores piracy.
 
 This project is completely open source, and community involvement is highly encouraged.
 
@@ -42,9 +42,15 @@ If you wish to contribute ideas or code, please fork this repository and make a 
  3. Run each of the required server files by starting the batch file in the root directory.
  4. NOTE : Mono is required on the host system to run SharpBattleNet
 
-### Running notes
-Note, some configuration may be required. The configuration files are all located inside the public shared folder under SharpBattleNet.
-The default values will make it run, but fine-tuning may help the servers perform more optimaly.
+### Running Notes
+
+Note, some configuration may be required. The configuration files are all located inside the public shared folder
+under SharpBattleNet. The default values will make it run, but fine-tuning may help the servers perform more optimaly.
+
+### Other Notes
+
+The solution files uses NuGet as a package manager, thus all of the required dependancies will automatically be 
+downloaded if required.
 
 ## Notes
 

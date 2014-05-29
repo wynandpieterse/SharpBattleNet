@@ -57,6 +57,8 @@
   <ItemGroup>
     <Compile Include="BattleNetServerModule.cs" />
     <Compile Include="Details\BattleNetServer.cs" />
+    <Compile Include="Details\Networking\TCPClient.cs" />
+    <Compile Include="Details\Networking\TCPClientFactory.cs" />
     <Compile Include="IBattleNetServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -73,6 +75,7 @@
       <Name>Reaper.SharpBattleNet.Framework</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -2,7 +2,7 @@
 {
     using System;
 
-    internal enum BattleNetClient
+    internal enum ClientType
     {
         None = 0,
         Game = 1,

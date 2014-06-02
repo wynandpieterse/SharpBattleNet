@@ -18,7 +18,7 @@
     internal sealed class BNClient : BaseClient
     {
         private bool _clientTypeSelected = false;
-        private BattleNetClient _clientType = BattleNetClient.None;
+        private ClientType _clientType = ClientType.None;
 
         private bool _newPacketRead = false;
         private int _nextPacketID = 0;
@@ -34,13 +34,13 @@
                 switch(clientType)
                 {
                     case 1:
-                        _clientType = BattleNetClient.Game;
+                        _clientType = ClientType.Game;
                         break;
                     case 2:
-                        _clientType = BattleNetClient.FileTransfer;
+                        _clientType = ClientType.FileTransfer;
                         break;
                     case 3:
-                        _clientType = BattleNetClient.Telnet;
+                        _clientType = ClientType.Telnet;
                         break;
                     default:
                         throw new Exception(String.Format("Unknown client type selected for {0} - {1}", Socket.RemoteEndPoint, clientType));

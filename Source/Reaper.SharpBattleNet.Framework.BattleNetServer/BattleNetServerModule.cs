@@ -24,7 +24,7 @@
         public override void Load()
         {
             Bind<IBattleNetServer>().To<BattleNetServer>().InSingletonScope();
-            Bind<IClientFactory>().To<BNClientFactory>().InSingletonScope();
+            Bind<IClientFactory>().To<BattleNetClientFactory>().InSingletonScope();
 
             return;
         }

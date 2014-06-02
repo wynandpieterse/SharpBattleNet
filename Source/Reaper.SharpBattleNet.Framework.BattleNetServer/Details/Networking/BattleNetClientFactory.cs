@@ -16,11 +16,11 @@
     using Reaper.SharpBattleNet.Framework;
     using Reaper.SharpBattleNet.Framework.Networking;
 
-    internal sealed class BNClientFactory : IClientFactory
+    internal sealed class BattleNetClientFactory : IClientFactory
     {
         public IClient CreateClient()
         {
-            return new BNClient();
+            return new BattleNetClient();
         }
     }
 }

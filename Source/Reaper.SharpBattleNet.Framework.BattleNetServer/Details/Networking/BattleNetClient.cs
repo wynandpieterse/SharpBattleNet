@@ -15,7 +15,7 @@
     using Reaper.SharpBattleNet.Framework;
     using Reaper.SharpBattleNet.Framework.Networking;
 
-    internal sealed class BNClient : BaseClient
+    internal sealed class BattleNetClient : BaseClient
     {
         private bool _clientTypeSelected = false;
         private ClientType _clientType = ClientType.None;

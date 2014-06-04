@@ -11,7 +11,7 @@
     public class Default
     {
         [TestMethod]
-        public void Default()
+        public void TestBob()
         {
         }
     }

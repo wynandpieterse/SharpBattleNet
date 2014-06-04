@@ -1,4 +1,4 @@
-﻿namespace SharpBattleNet.BattleNetServer.Tests
+﻿namespace SharpBattleNet.Server.BattleNetServer.Tests
 {
     using System;
 
@@ -11,7 +11,7 @@
     public class Default
     {
         [TestMethod]
-        public void Default()
+        public void TestBob()
         {
         }
     }

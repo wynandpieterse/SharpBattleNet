@@ -41,6 +41,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Framework.Ne
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Framework.Tests", "SharpBattleNet.Framework.Tests\SharpBattleNet.Framework.Tests.csproj", "{2818570E-133B-425F-B8F9-3943B8C9F823}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Server.BattleNetServer.Tests", "SharpBattleNet.Server.BattleNetServer.Tests\SharpBattleNet.Server.BattleNetServer.Tests.csproj", "{F2B57B16-58FA-4CD2-910F-51E66392A9CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Server.DiabloIIRealmServer.Tests", "SharpBattleNet.Server.DiabloIIRealmServer.Tests\SharpBattleNet.Server.DiabloIIRealmServer.Tests.csproj", "{58D62051-C926-413B-A5AD-DBC33F5F482F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +91,14 @@ Global
 		{2818570E-133B-425F-B8F9-3943B8C9F823}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2818570E-133B-425F-B8F9-3943B8C9F823}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2818570E-133B-425F-B8F9-3943B8C9F823}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2B57B16-58FA-4CD2-910F-51E66392A9CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2B57B16-58FA-4CD2-910F-51E66392A9CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2B57B16-58FA-4CD2-910F-51E66392A9CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2B57B16-58FA-4CD2-910F-51E66392A9CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58D62051-C926-413B-A5AD-DBC33F5F482F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58D62051-C926-413B-A5AD-DBC33F5F482F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58D62051-C926-413B-A5AD-DBC33F5F482F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58D62051-C926-413B-A5AD-DBC33F5F482F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -103,5 +115,7 @@ Global
 		{71A7EA7C-7CA7-44E5-8006-2C783DB923A9} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
 		{B732D200-F2D4-4270-9579-E4D7FE82545F} = {1430B1F1-11ED-4051-B1F4-D8304F9AF715}
 		{2818570E-133B-425F-B8F9-3943B8C9F823} = {1430B1F1-11ED-4051-B1F4-D8304F9AF715}
+		{F2B57B16-58FA-4CD2-910F-51E66392A9CD} = {EA306AEF-D55C-4C28-ABD6-C3F0EF804138}
+		{58D62051-C926-413B-A5AD-DBC33F5F482F} = {EA306AEF-D55C-4C28-ABD6-C3F0EF804138}
 	EndGlobalSection
 EndGlobal

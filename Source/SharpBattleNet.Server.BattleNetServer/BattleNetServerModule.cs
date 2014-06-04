@@ -12,9 +12,11 @@
     using Ninject.Modules;
 
     using SharpBattleNet;
+
     using SharpBattleNet.Framework;
     using SharpBattleNet.Framework.Networking;
 
+    using SharpBattleNet.Server;
     using SharpBattleNet.Server.BattleNetServer;
     using SharpBattleNet.Server.BattleNetServer.Details;
     using SharpBattleNet.Server.BattleNetServer.Details.Networking;

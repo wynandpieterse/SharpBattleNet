@@ -59,7 +59,11 @@ downloaded if required.
 Go to the directory 'C:\ProgramData\SharpBattleNet' and enter the desired server you wish to configure. Look inside
 the Configuration directory for all the configurable variables.
 
+### Linux and MacOS X
 
+Go to the '/shared' folder and enter the SharpBattleNet folder. After that, enter the desired directory of the server
+you wish to configure. Look for the Configuration folder inside that and edit the desired configuration file according
+to you're needs.
 
 ## Notes
 

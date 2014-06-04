@@ -1,4 +1,4 @@
-﻿namespace SharpBattleNet.Framework.BattleNetServer.Details
+﻿namespace SharpBattleNet.Server.DiabloIIRealmServer.Details
 {
     using System;
     using System.Linq;
@@ -7,9 +7,6 @@
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using System.Net;
-    using System.Net.Sockets;
-    using System.Net.NetworkInformation;
 
     using Nini;
     using Nini.Config;
@@ -21,17 +18,17 @@
     using SharpBattleNet;
     using SharpBattleNet.Framework;
     using SharpBattleNet.Framework.Networking;
-    using SharpBattleNet.Framework.BattleNetServer;
-    using SharpBattleNet.Framework.BattleNetServer.Details;
 
-    internal sealed class BattleNetServer : IBattleNetServer
+    using SharpBattleNet.Server.DiabloIIRealmServer;
+
+    internal sealed class DiabloIIRealmServer : IDiabloIIRealmServer
     {
         private readonly IConfigSource _configuration = null;
         private readonly INetworkManager _networkManager = null;
 
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public BattleNetServer(IConfigSource configuration, INetworkManager networkManager)
+        public DiabloIIRealmServer(IConfigSource configuration, INetworkManager networkManager)
         {
             _configuration = configuration;
             _networkManager = networkManager;

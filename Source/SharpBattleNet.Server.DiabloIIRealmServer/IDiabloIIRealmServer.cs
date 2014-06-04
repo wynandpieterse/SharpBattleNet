@@ -1,4 +1,4 @@
-﻿namespace SharpBattleNet.Framework.BattleNetServer
+﻿namespace SharpBattleNet.Server.DiabloIIRealmServer
 {
     using System;
     using System.Linq;
@@ -8,7 +8,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    public interface IBattleNetServer
+    public interface IDiabloIIRealmServer
     {
         Task Start(string[] commandArguments);
         Task Stop();

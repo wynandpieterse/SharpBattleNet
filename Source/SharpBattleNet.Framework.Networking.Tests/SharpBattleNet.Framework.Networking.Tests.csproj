@@ -57,6 +57,12 @@
     <Compile Include="Default.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharpBattleNet.Framework.Networking\SharpBattleNet.Framework.Networking.csproj">
+      <Project>{b838d207-fad1-4ee1-95b5-dcb240d1a0aa}</Project>
+      <Name>SharpBattleNet.Framework.Networking</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

@@ -21,10 +21,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configurat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Servers", "Servers", "{EA306AEF-D55C-4C28-ABD6-C3F0EF804138}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Servers.BattleNetServer", "SharpBattleNet.Servers.BattleNetServer\SharpBattleNet.Servers.BattleNetServer.csproj", "{D40EE1B5-3BB9-4EF6-AFEB-825379914887}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Servers.DiabloIIRealmServer", "SharpBattleNet.Servers.DiabloIIRealmServer\SharpBattleNet.Servers.DiabloIIRealmServer.csproj", "{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Framework.BattleNetServer", "SharpBattleNet.Framework.BattleNetServer\SharpBattleNet.Framework.BattleNetServer.csproj", "{51A40588-DE5A-4EC8-8809-5C27C4851E52}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Framework.DiabloIIRealmServer", "SharpBattleNet.Framework.DiabloIIRealmServer\SharpBattleNet.Framework.DiabloIIRealmServer.csproj", "{72992102-9792-4899-B500-C0DC47736529}"
@@ -33,20 +29,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Framework.Ne
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Framework", "SharpBattleNet.Framework\SharpBattleNet.Framework.csproj", "{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.BattleNetServer", "SharpBattleNet.BattleNetServer\SharpBattleNet.BattleNetServer.csproj", "{D40EE1B5-3BB9-4EF6-AFEB-825379914887}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.DiabloIIRealmServer", "SharpBattleNet.DiabloIIRealmServer\SharpBattleNet.DiabloIIRealmServer.csproj", "{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D40EE1B5-3BB9-4EF6-AFEB-825379914887}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D40EE1B5-3BB9-4EF6-AFEB-825379914887}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D40EE1B5-3BB9-4EF6-AFEB-825379914887}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D40EE1B5-3BB9-4EF6-AFEB-825379914887}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{51A40588-DE5A-4EC8-8809-5C27C4851E52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{51A40588-DE5A-4EC8-8809-5C27C4851E52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51A40588-DE5A-4EC8-8809-5C27C4851E52}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -63,17 +55,25 @@ Global
 		{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D40EE1B5-3BB9-4EF6-AFEB-825379914887}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D40EE1B5-3BB9-4EF6-AFEB-825379914887}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D40EE1B5-3BB9-4EF6-AFEB-825379914887}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D40EE1B5-3BB9-4EF6-AFEB-825379914887}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{EA306AEF-D55C-4C28-ABD6-C3F0EF804138} = {1430B1F1-11ED-4051-B1F4-D8304F9AF715}
-		{D40EE1B5-3BB9-4EF6-AFEB-825379914887} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
-		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
 		{51A40588-DE5A-4EC8-8809-5C27C4851E52} = {EA306AEF-D55C-4C28-ABD6-C3F0EF804138}
 		{72992102-9792-4899-B500-C0DC47736529} = {EA306AEF-D55C-4C28-ABD6-C3F0EF804138}
 		{B838D207-FAD1-4EE1-95B5-DCB240D1A0AA} = {1430B1F1-11ED-4051-B1F4-D8304F9AF715}
 		{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7} = {1430B1F1-11ED-4051-B1F4-D8304F9AF715}
+		{D40EE1B5-3BB9-4EF6-AFEB-825379914887} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
+		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
 	EndGlobalSection
 EndGlobal

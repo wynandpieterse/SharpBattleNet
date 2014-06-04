@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.Framework.DiabloIIRealmServer
+﻿namespace SharpBattleNet.Framework.DiabloIIRealmServer
 {
     using System;
     using System.Linq;
@@ -11,11 +11,10 @@
     using Ninject;
     using Ninject.Modules;
 
-    using Reaper;
-    using Reaper.SharpBattleNet;
-    using Reaper.SharpBattleNet.Framework;
-    using Reaper.SharpBattleNet.Framework.DiabloIIRealmServer;
-    using Reaper.SharpBattleNet.Framework.DiabloIIRealmServer.Details;
+    using SharpBattleNet;
+    using SharpBattleNet.Framework;
+    using SharpBattleNet.Framework.DiabloIIRealmServer;
+    using SharpBattleNet.Framework.DiabloIIRealmServer.Details;
 
     public sealed class DiabloIIRealmServerModule : NinjectModule
     {

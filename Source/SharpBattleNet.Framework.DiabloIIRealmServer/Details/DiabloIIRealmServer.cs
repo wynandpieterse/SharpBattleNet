@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.Framework.DiabloIIRealmServer.Details
+﻿namespace SharpBattleNet.Framework.DiabloIIRealmServer.Details
 {
     using System;
     using System.Linq;
@@ -15,11 +15,10 @@
 
     using NLog;
 
-    using Reaper;
-    using Reaper.SharpBattleNet;
-    using Reaper.SharpBattleNet.Framework;
-    using Reaper.SharpBattleNet.Framework.Networking;
-    using Reaper.SharpBattleNet.Framework.DiabloIIRealmServer;
+    using SharpBattleNet;
+    using SharpBattleNet.Framework;
+    using SharpBattleNet.Framework.Networking;
+    using SharpBattleNet.Framework.DiabloIIRealmServer;
 
     internal sealed class DiabloIIRealmServer : IDiabloIIRealmServer
     {

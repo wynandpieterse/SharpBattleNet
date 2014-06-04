@@ -35,25 +35,25 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Binaries\Debug\DiabloIIRealmServer\</OutputPath>
+    <OutputPath>..\..\BinariesDebug\DiabloIIRealmServer\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <BaseIntermediateOutputPath>../../Intermediate/SharpBattleNet.DiabloIIRealmServer/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/Code/Binaries/SharpBattleNet.DiabloIIRealmServer/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Binaries\Release\DiabloIIRealmServer\</OutputPath>
+    <OutputPath>..\..\Binaries\DiabloIIRealmServer\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <BaseIntermediateOutputPath>../../Intermediate/SharpBattleNet.DiabloIIRealmServer/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/Code/Binaries/SharpBattleNet.DiabloIIRealmServer/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup>

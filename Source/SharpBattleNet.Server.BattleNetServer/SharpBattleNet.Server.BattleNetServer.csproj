@@ -18,21 +18,21 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Binaries\Debug\Libraries\</OutputPath>
+    <OutputPath>..\..\BinariesDebug\Libraries\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <BaseIntermediateOutputPath>../../Intermediate/SharpBattleNet.Server.BattleNetServer/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/Code/Libraries/SharpBattleNet.Server.BattleNetServer/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Binaries\Release\Libraries\</OutputPath>
+    <OutputPath>..\..\Binaries\Libraries\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <BaseIntermediateOutputPath>../../Intermediate/SharpBattleNet.Server.BattleNetServer/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/Code/Libraries/SharpBattleNet.Server.BattleNetServer/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>

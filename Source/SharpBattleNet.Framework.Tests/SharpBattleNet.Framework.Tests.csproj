@@ -21,21 +21,21 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Binaries\Debug\Tests\</OutputPath>
+    <OutputPath>..\..\BinariesDebug\Tests\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <BaseIntermediateOutputPath>../../Intermediate/SharpBattleNet.Framework.Tests/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/Code/Tests/SharpBattleNet.Framework.Tests/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Binaries\Release\Tests\</OutputPath>
+    <OutputPath>..\..\Binaries\Tests\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <BaseIntermediateOutputPath>../../Intermediate/SharpBattleNet.Framework.Tests/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/Code/Tests/SharpBattleNet.Framework.Tests/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>

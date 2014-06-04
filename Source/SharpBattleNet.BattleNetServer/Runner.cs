@@ -12,8 +12,9 @@
 
     using SharpBattleNet;
     using SharpBattleNet.Framework;
-    using SharpBattleNet.Framework.BattleNetServer;
     using SharpBattleNet.Framework.Networking;
+
+    using SharpBattleNet.Server.BattleNetServer;
 
     internal static class Runner
     {

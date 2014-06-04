@@ -12,8 +12,9 @@
 
     using SharpBattleNet;
     using SharpBattleNet.Framework;
-    using SharpBattleNet.Framework.DiabloIIRealmServer;
     using SharpBattleNet.Framework.Networking;
+
+    using SharpBattleNet.Server.DiabloIIRealmServer;
 
     internal static class Runner
     {

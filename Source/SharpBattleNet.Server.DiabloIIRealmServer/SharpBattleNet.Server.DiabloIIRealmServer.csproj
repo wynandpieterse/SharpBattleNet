@@ -7,8 +7,8 @@
     <ProjectGuid>{72992102-9792-4899-B500-C0DC47736529}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharpBattleNet.Framework.DiabloIIRealmServer</RootNamespace>
-    <AssemblyName>SharpBattleNet.Framework.DiabloIIRealmServer</AssemblyName>
+    <RootNamespace>SharpBattleNet.Server.DiabloIIRealmServer</RootNamespace>
+    <AssemblyName>SharpBattleNet.Server.DiabloIIRealmServer</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -22,7 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <BaseIntermediateOutputPath>../../Intermediate/SharpBattleNet.Framework.DiabloIIRealmServer/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/SharpBattleNet.Server.DiabloIIRealmServer/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -32,7 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <BaseIntermediateOutputPath>../../Intermediate/SharpBattleNet.Framework.DiabloIIRealmServer/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/SharpBattleNet.Server.DiabloIIRealmServer/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>

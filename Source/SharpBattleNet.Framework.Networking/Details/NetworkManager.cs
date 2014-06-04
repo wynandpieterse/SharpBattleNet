@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.Framework.Networking.Details
+﻿namespace SharpBattleNet.Framework.Networking.Details
 {
     using System;
     using System.Reflection;
@@ -19,12 +19,11 @@
     using Nini.Ini;
     using Nini.Util;
 
-    using Reaper;
-    using Reaper.SharpBattleNet;
-    using Reaper.SharpBattleNet.Framework;
-    using Reaper.SharpBattleNet.Framework.Networking;
-    using Reaper.SharpBattleNet.Framework.Networking.TCP;
-    using Reaper.SharpBattleNet.Framework.Networking.UDP;
+    using SharpBattleNet;
+    using SharpBattleNet.Framework;
+    using SharpBattleNet.Framework.Networking;
+    using SharpBattleNet.Framework.Networking.TCP;
+    using SharpBattleNet.Framework.Networking.UDP;
 
     internal sealed class NetworkManager : INetworkManager
     {

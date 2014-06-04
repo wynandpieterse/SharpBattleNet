@@ -33,6 +33,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Server.Battl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Server.DiabloIIRealmServer", "SharpBattleNet.Server.DiabloIIRealmServer\SharpBattleNet.Server.DiabloIIRealmServer.csproj", "{72992102-9792-4899-B500-C0DC47736529}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.BattleNetServer.Tests", "SharpBattleNet.BattleNetServer.Tests\SharpBattleNet.BattleNetServer.Tests.csproj", "{AE52D7BE-B9D5-49CC-B58F-ECE851DD53B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.DiabloIIRealmServer.Tests", "SharpBattleNet.DiabloIIRealmServer.Tests\SharpBattleNet.DiabloIIRealmServer.Tests.csproj", "{71A7EA7C-7CA7-44E5-8006-2C783DB923A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,14 @@ Global
 		{72992102-9792-4899-B500-C0DC47736529}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72992102-9792-4899-B500-C0DC47736529}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72992102-9792-4899-B500-C0DC47736529}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE52D7BE-B9D5-49CC-B58F-ECE851DD53B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE52D7BE-B9D5-49CC-B58F-ECE851DD53B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE52D7BE-B9D5-49CC-B58F-ECE851DD53B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE52D7BE-B9D5-49CC-B58F-ECE851DD53B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71A7EA7C-7CA7-44E5-8006-2C783DB923A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71A7EA7C-7CA7-44E5-8006-2C783DB923A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71A7EA7C-7CA7-44E5-8006-2C783DB923A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71A7EA7C-7CA7-44E5-8006-2C783DB923A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,5 +87,7 @@ Global
 		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
 		{51A40588-DE5A-4EC8-8809-5C27C4851E52} = {EA306AEF-D55C-4C28-ABD6-C3F0EF804138}
 		{72992102-9792-4899-B500-C0DC47736529} = {EA306AEF-D55C-4C28-ABD6-C3F0EF804138}
+		{AE52D7BE-B9D5-49CC-B58F-ECE851DD53B8} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
+		{71A7EA7C-7CA7-44E5-8006-2C783DB923A9} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
 	EndGlobalSection
 EndGlobal

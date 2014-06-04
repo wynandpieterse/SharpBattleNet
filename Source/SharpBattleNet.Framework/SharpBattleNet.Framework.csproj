@@ -7,8 +7,8 @@
     <ProjectGuid>{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Reaper.SharpBattleNet.Framework</RootNamespace>
-    <AssemblyName>Reaper.SharpBattleNet.Framework</AssemblyName>
+    <RootNamespace>SharpBattleNet.Framework</RootNamespace>
+    <AssemblyName>SharpBattleNet.Framework</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -23,7 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <BaseIntermediateOutputPath>../../Intermediate/Reaper.SharpBattleNet.Framework/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/SharpBattleNet.Framework/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -33,7 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <BaseIntermediateOutputPath>../../Intermediate/Reaper.SharpBattleNet.Framework/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/SharpBattleNet.Framework/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>

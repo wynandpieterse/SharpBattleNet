@@ -7,8 +7,8 @@
     <ProjectGuid>{D40EE1B5-3BB9-4EF6-AFEB-825379914887}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Reaper.SharpBattleNet.Servers.BattleNetServer</RootNamespace>
-    <AssemblyName>Reaper.SharpBattleNet.Servers.BattleNetServer</AssemblyName>
+    <RootNamespace>SharpBattleNet.Servers.BattleNetServer</RootNamespace>
+    <AssemblyName>SharpBattleNet.Servers.BattleNetServer</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,7 +43,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <BaseIntermediateOutputPath>../../Intermediate/Reaper.SharpBattleNet.Servers.BattleNetServer/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/SharpBattleNet.Servers.BattleNetServer/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -54,7 +54,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <BaseIntermediateOutputPath>../../Intermediate/Reaper.SharpBattleNet.Servers.BattleNetServer/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/SharpBattleNet.Servers.BattleNetServer/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup>
@@ -112,17 +112,17 @@
     <Content Include="BattleNet.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Reaper.SharpBattleNet.Framework.BattleNetServer\Reaper.SharpBattleNet.Framework.BattleNetServer.csproj">
+    <ProjectReference Include="..\SharpBattleNet.Framework.BattleNetServer\SharpBattleNet.Framework.BattleNetServer.csproj">
       <Project>{51a40588-de5a-4ec8-8809-5c27c4851e52}</Project>
-      <Name>Reaper.SharpBattleNet.Framework.BattleNetServer</Name>
+      <Name>SharpBattleNet.Framework.BattleNetServer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Reaper.SharpBattleNet.Framework.Networking\Reaper.SharpBattleNet.Framework.Networking.csproj">
+    <ProjectReference Include="..\SharpBattleNet.Framework.Networking\SharpBattleNet.Framework.Networking.csproj">
       <Project>{b838d207-fad1-4ee1-95b5-dcb240d1a0aa}</Project>
-      <Name>Reaper.SharpBattleNet.Framework.Networking</Name>
+      <Name>SharpBattleNet.Framework.Networking</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Reaper.SharpBattleNet.Framework\Reaper.SharpBattleNet.Framework.csproj">
+    <ProjectReference Include="..\SharpBattleNet.Framework\SharpBattleNet.Framework.csproj">
       <Project>{fdb8d2c5-fd13-40e7-b629-ce71a68bb7b7}</Project>
-      <Name>Reaper.SharpBattleNet.Framework</Name>
+      <Name>SharpBattleNet.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

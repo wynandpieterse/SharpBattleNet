@@ -4,60 +4,36 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{51A40588-DE5A-4EC8-8809-5C27C4851E52}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Reaper.SharpBattleNet.Servers.DiabloIIRealmServer</RootNamespace>
-    <AssemblyName>Reaper.SharpBattleNet.Servers.DiabloIIRealmServer</AssemblyName>
+    <RootNamespace>SharpBattleNet.Framework.BattleNetServer</RootNamespace>
+    <AssemblyName>SharpBattleNet.Framework.BattleNetServer</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Binaries\Debug\DiabloIIRealmServer\</OutputPath>
+    <OutputPath>..\..\Binaries\Debug\Libraries\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <RunCodeAnalysis>false</RunCodeAnalysis>
-    <BaseIntermediateOutputPath>../../Intermediate/Reaper.SharpBattleNet.Servers.DiabloIIRealmServer/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/SharpBattleNet.Framework.BattleNetServer/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Binaries\Release\DiabloIIRealmServer\</OutputPath>
+    <OutputPath>..\..\Binaries\Release\Libraries\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <BaseIntermediateOutputPath>../../Intermediate/Reaper.SharpBattleNet.Servers.DiabloIIRealmServer/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/SharpBattleNet.Framework.BattleNetServer/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>BattleNet.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Nini">
@@ -66,13 +42,12 @@
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
-    <Reference Include="NLog">
+    <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
-    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -80,53 +55,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="D2RSProgram.cs" />
-    <Compile Include="D2RSService.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="D2ServiceInstaller.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="BattleNetServerModule.cs" />
+    <Compile Include="Details\BattleNetServer.cs" />
+    <Compile Include="Details\Networking\ClientType.cs" />
+    <Compile Include="Details\Networking\BattleNetClient.cs" />
+    <Compile Include="Details\Networking\BattleNetClientFactory.cs" />
+    <Compile Include="IBattleNetServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Runner.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5.1 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="BattleNet.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Reaper.SharpBattleNet.Framework.DiabloIIRealmServer\Reaper.SharpBattleNet.Framework.DiabloIIRealmServer.csproj">
-      <Project>{72992102-9792-4899-b500-c0dc47736529}</Project>
-      <Name>Reaper.SharpBattleNet.Framework.DiabloIIRealmServer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Reaper.SharpBattleNet.Framework.Networking\Reaper.SharpBattleNet.Framework.Networking.csproj">
-      <Project>{b838d207-fad1-4ee1-95b5-dcb240d1a0aa}</Project>
-      <Name>Reaper.SharpBattleNet.Framework.Networking</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Reaper.SharpBattleNet.Framework\Reaper.SharpBattleNet.Framework.csproj">
-      <Project>{fdb8d2c5-fd13-40e7-b629-ce71a68bb7b7}</Project>
-      <Name>Reaper.SharpBattleNet.Framework</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharpBattleNet.Framework.Networking\SharpBattleNet.Framework.Networking.csproj">
+      <Project>{b838d207-fad1-4ee1-95b5-dcb240d1a0aa}</Project>
+      <Name>SharpBattleNet.Framework.Networking</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharpBattleNet.Framework\SharpBattleNet.Framework.csproj">
+      <Project>{fdb8d2c5-fd13-40e7-b629-ce71a68bb7b7}</Project>
+      <Name>SharpBattleNet.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

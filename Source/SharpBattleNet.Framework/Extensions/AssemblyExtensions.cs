@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.Framework.Extensions
+﻿namespace SharpBattleNet.Framework.Extensions
 {
     using System;
     using System.Linq;

@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.Framework
+﻿namespace SharpBattleNet.Framework
 {
     using System;
     using System.Reflection;
@@ -23,10 +23,9 @@
     using NLog.Targets;
     using NLog.Config;
 
-    using Reaper;
-    using Reaper.SharpBattleNet;
-    using Reaper.SharpBattleNet.Framework;
-    using Reaper.SharpBattleNet.Framework.Extensions;
+    using SharpBattleNet;
+    using SharpBattleNet.Framework;
+    using SharpBattleNet.Framework.Extensions;
 
     public sealed class FrameworkModule : NinjectModule
     {

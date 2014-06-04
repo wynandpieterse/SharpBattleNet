@@ -13,8 +13,9 @@
 
     using SharpBattleNet;
     using SharpBattleNet.Framework;
-    using SharpBattleNet.Framework.DiabloIIRealmServer;
-    using SharpBattleNet.Framework.DiabloIIRealmServer.Details;
+
+    using SharpBattleNet.Server.DiabloIIRealmServer;
+    using SharpBattleNet.Server.DiabloIIRealmServer.Details;
 
     public sealed class DiabloIIRealmServerModule : NinjectModule
     {

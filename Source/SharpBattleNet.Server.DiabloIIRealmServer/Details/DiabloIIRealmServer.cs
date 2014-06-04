@@ -18,7 +18,8 @@
     using SharpBattleNet;
     using SharpBattleNet.Framework;
     using SharpBattleNet.Framework.Networking;
-    using SharpBattleNet.Framework.DiabloIIRealmServer;
+
+    using SharpBattleNet.Server.DiabloIIRealmServer;
 
     internal sealed class DiabloIIRealmServer : IDiabloIIRealmServer
     {

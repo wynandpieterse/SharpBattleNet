@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.Servers.BattleNetServer
+﻿namespace SharpBattleNet.Servers.BattleNetServer
 {
     using System;
     using System.Linq;
@@ -10,11 +10,10 @@
 
     using Ninject;
 
-    using Reaper;
-    using Reaper.SharpBattleNet;
-    using Reaper.SharpBattleNet.Framework;
-    using Reaper.SharpBattleNet.Framework.BattleNetServer;
-    using Reaper.SharpBattleNet.Framework.Networking;
+    using SharpBattleNet;
+    using SharpBattleNet.Framework;
+    using SharpBattleNet.Framework.BattleNetServer;
+    using SharpBattleNet.Framework.Networking;
 
     internal static class Runner
     {

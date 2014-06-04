@@ -1,4 +1,4 @@
-﻿namespace SharpBattleNet.Framework.BattleNetServer
+﻿namespace SharpBattleNet.Server.BattleNetServer
 {
     using System;
     using System.Linq;
@@ -14,9 +14,10 @@
     using SharpBattleNet;
     using SharpBattleNet.Framework;
     using SharpBattleNet.Framework.Networking;
-    using SharpBattleNet.Framework.BattleNetServer;
-    using SharpBattleNet.Framework.BattleNetServer.Details;
-    using SharpBattleNet.Framework.BattleNetServer.Details.Networking;
+
+    using SharpBattleNet.Server.BattleNetServer;
+    using SharpBattleNet.Server.BattleNetServer.Details;
+    using SharpBattleNet.Server.BattleNetServer.Details.Networking;
 
     public sealed class BattleNetServerModule : NinjectModule
     {

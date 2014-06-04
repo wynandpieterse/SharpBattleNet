@@ -1,4 +1,4 @@
-﻿namespace SharpBattleNet.Framework.DiabloIIRealmServer.Details
+﻿namespace SharpBattleNet.Server.DiabloIIRealmServer.Details
 {
     using System;
     using System.Linq;

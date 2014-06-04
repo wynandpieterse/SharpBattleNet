@@ -1,4 +1,4 @@
-﻿namespace SharpBattleNet.Framework.BattleNetServer.Details
+﻿namespace SharpBattleNet.Server.BattleNetServer.Details
 {
     using System;
     using System.Linq;
@@ -21,8 +21,9 @@
     using SharpBattleNet;
     using SharpBattleNet.Framework;
     using SharpBattleNet.Framework.Networking;
-    using SharpBattleNet.Framework.BattleNetServer;
-    using SharpBattleNet.Framework.BattleNetServer.Details;
+
+    using SharpBattleNet.Server.BattleNetServer;
+    using SharpBattleNet.Server.BattleNetServer.Details;
 
     internal sealed class BattleNetServer : IBattleNetServer
     {

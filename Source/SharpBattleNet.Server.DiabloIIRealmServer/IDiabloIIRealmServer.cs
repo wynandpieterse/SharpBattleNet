@@ -1,4 +1,4 @@
-﻿namespace SharpBattleNet.Framework.DiabloIIRealmServer
+﻿namespace SharpBattleNet.Server.DiabloIIRealmServer
 {
     using System;
     using System.Linq;

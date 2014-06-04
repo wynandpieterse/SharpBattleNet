@@ -1,4 +1,4 @@
-﻿namespace SharpBattleNet.Framework.BattleNetServer
+﻿namespace SharpBattleNet.Server.BattleNetServer
 {
     using System;
     using System.Linq;

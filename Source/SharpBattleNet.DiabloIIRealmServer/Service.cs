@@ -1,4 +1,4 @@
-namespace SharpBattleNet.Servers.BattleNetServer
+namespace SharpBattleNet.Servers.DiabloIIRealmServer
 {
     using System;
     using System.Linq;
@@ -9,7 +9,7 @@ namespace SharpBattleNet.Servers.BattleNetServer
     using System.Threading.Tasks;
     using System.ServiceProcess;
 
-    internal sealed class BNSService : ServiceBase
+    internal sealed class Service : ServiceBase
     {
         protected override void OnStart(string[] args)
         {

@@ -13,7 +13,7 @@ namespace SharpBattleNet.Servers.DiabloIIRealmServer
     using SharpBattleNet.Framework;
     using SharpBattleNet.Framework.Extensions;
 
-    internal static class D2RSProgram
+    internal static class Program
     {
         private static void Start(string[] commandArguments)
         {

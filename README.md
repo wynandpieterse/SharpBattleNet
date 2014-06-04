@@ -52,6 +52,15 @@ under SharpBattleNet. The default values will make it run, but fine-tuning may h
 The solution files uses NuGet as a package manager, thus all of the required dependancies will automatically be 
 downloaded if required.
 
+## Configuration
+
+### Windows
+
+Go to the directory 'C:\ProgramData\SharpBattleNet' and enter the desired server you wish to configure. Look inside
+the Configuration directory for all the configurable variables.
+
+
+
 ## Notes
 
  + Reporting issues should be done with the GitHub issue tracker.

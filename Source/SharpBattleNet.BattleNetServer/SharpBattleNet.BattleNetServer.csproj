@@ -112,6 +112,9 @@
     <Content Include="BattleNet.ico" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\SharpBattleNet.Framework.Networking\SharpBattleNet.Framework.Networking.csproj">
       <Project>{b838d207-fad1-4ee1-95b5-dcb240d1a0aa}</Project>
       <Name>SharpBattleNet.Framework.Networking</Name>
@@ -124,9 +127,6 @@
       <Project>{51a40588-de5a-4ec8-8809-5c27c4851e52}</Project>
       <Name>SharpBattleNet.Server.BattleNetServer</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

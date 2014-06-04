@@ -111,20 +111,6 @@
     <Content Include="BattleNet.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SharpBattleNet.Framework.Networking\SharpBattleNet.Framework.Networking.csproj">
-      <Project>{b838d207-fad1-4ee1-95b5-dcb240d1a0aa}</Project>
-      <Name>SharpBattleNet.Framework.Networking</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharpBattleNet.Framework\SharpBattleNet.Framework.csproj">
-      <Project>{fdb8d2c5-fd13-40e7-b629-ce71a68bb7b7}</Project>
-      <Name>SharpBattleNet.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharpBattleNet.Server.DiabloIIRealmServer\SharpBattleNet.Server.DiabloIIRealmServer.csproj">
-      <Project>{72992102-9792-4899-b500-c0dc47736529}</Project>
-      <Name>SharpBattleNet.Server.DiabloIIRealmServer</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

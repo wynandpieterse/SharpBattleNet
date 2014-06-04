@@ -57,12 +57,6 @@
     <Compile Include="Default.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SharpBattleNet.Server.DiabloIIRealmServer\SharpBattleNet.Server.DiabloIIRealmServer.csproj">
-      <Project>{72992102-9792-4899-b500-c0dc47736529}</Project>
-      <Name>SharpBattleNet.Server.DiabloIIRealmServer</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

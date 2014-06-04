@@ -57,12 +57,6 @@
     <Compile Include="Default.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SharpBattleNet.Server.BattleNetServer\SharpBattleNet.Server.BattleNetServer.csproj">
-      <Project>{51a40588-de5a-4ec8-8809-5c27c4851e52}</Project>
-      <Name>SharpBattleNet.Server.BattleNetServer</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

@@ -111,10 +111,6 @@
     <Content Include="BattleNet.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SharpBattleNet.Framework.DiabloIIRealmServer\SharpBattleNet.Framework.DiabloIIRealmServer.csproj">
-      <Project>{72992102-9792-4899-b500-c0dc47736529}</Project>
-      <Name>SharpBattleNet.Framework.DiabloIIRealmServer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SharpBattleNet.Framework.Networking\SharpBattleNet.Framework.Networking.csproj">
       <Project>{b838d207-fad1-4ee1-95b5-dcb240d1a0aa}</Project>
       <Name>SharpBattleNet.Framework.Networking</Name>

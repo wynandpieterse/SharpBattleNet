@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.Framework.BattleNetServer.Details
+﻿namespace SharpBattleNet.Framework.BattleNetServer.Details
 {
     using System;
     using System.Linq;
@@ -18,12 +18,11 @@
 
     using NLog;
 
-    using Reaper;
-    using Reaper.SharpBattleNet;
-    using Reaper.SharpBattleNet.Framework;
-    using Reaper.SharpBattleNet.Framework.Networking;
-    using Reaper.SharpBattleNet.Framework.BattleNetServer;
-    using Reaper.SharpBattleNet.Framework.BattleNetServer.Details;
+    using SharpBattleNet;
+    using SharpBattleNet.Framework;
+    using SharpBattleNet.Framework.Networking;
+    using SharpBattleNet.Framework.BattleNetServer;
+    using SharpBattleNet.Framework.BattleNetServer.Details;
 
     internal sealed class BattleNetServer : IBattleNetServer
     {

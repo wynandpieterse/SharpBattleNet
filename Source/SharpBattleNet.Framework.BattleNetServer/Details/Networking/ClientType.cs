@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.Framework.BattleNetServer.Details.Networking
+﻿namespace SharpBattleNet.Framework.BattleNetServer.Details.Networking
 {
     using System;
 

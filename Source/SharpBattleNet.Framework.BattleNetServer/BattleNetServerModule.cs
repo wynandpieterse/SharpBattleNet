@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.Framework.BattleNetServer
+﻿namespace SharpBattleNet.Framework.BattleNetServer
 {
     using System;
     using System.Linq;
@@ -11,13 +11,12 @@
     using Ninject;
     using Ninject.Modules;
 
-    using Reaper;
-    using Reaper.SharpBattleNet;
-    using Reaper.SharpBattleNet.Framework;
-    using Reaper.SharpBattleNet.Framework.Networking;
-    using Reaper.SharpBattleNet.Framework.BattleNetServer;
-    using Reaper.SharpBattleNet.Framework.BattleNetServer.Details;
-    using Reaper.SharpBattleNet.Framework.BattleNetServer.Details.Networking;
+    using SharpBattleNet;
+    using SharpBattleNet.Framework;
+    using SharpBattleNet.Framework.Networking;
+    using SharpBattleNet.Framework.BattleNetServer;
+    using SharpBattleNet.Framework.BattleNetServer.Details;
+    using SharpBattleNet.Framework.BattleNetServer.Details.Networking;
 
     public sealed class BattleNetServerModule : NinjectModule
     {

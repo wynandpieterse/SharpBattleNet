@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.Framework.BattleNetServer.Details.Networking
+﻿namespace SharpBattleNet.Framework.BattleNetServer.Details.Networking
 {
     using System;
     using System.Linq;
@@ -10,10 +10,9 @@
 
     using NLog;
 
-    using Reaper;
-    using Reaper.SharpBattleNet;
-    using Reaper.SharpBattleNet.Framework;
-    using Reaper.SharpBattleNet.Framework.Networking;
+    using SharpBattleNet;
+    using SharpBattleNet.Framework;
+    using SharpBattleNet.Framework.Networking;
 
     internal sealed class BattleNetClient : BaseClient
     {

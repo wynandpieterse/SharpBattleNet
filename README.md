@@ -63,6 +63,10 @@ If you built it with the batch file, go to the run scripts directory and run the
 2 ways. The first is to run it in a command window, and the other is running it as a Windows service. Select the
 desired mode and double click.
 
+### Linux and MacOS X
+
+Go to the Scripts/Run directory and start the desired shell script in the mode you wish to run it.
+
 ## Notes
 
  + Reporting issues should be done with the GitHub issue tracker.

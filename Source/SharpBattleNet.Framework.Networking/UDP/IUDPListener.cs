@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.Framework.Networking.UDP
+﻿namespace SharpBattleNet.Framework.Networking.UDP
 {
     using System;
     using System.Reflection;

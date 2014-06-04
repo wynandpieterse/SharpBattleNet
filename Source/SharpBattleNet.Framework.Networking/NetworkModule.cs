@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.Framework.Networking
+﻿namespace SharpBattleNet.Framework.Networking
 {
     using System;
     using System.Linq;
@@ -12,15 +12,14 @@
     using Ninject.Modules;
     using Ninject.Activation;
 
-    using Reaper;
-    using Reaper.SharpBattleNet;
-    using Reaper.SharpBattleNet.Framework;
-    using Reaper.SharpBattleNet.Framework.Networking;
-    using Reaper.SharpBattleNet.Framework.Networking.Details;
-    using Reaper.SharpBattleNet.Framework.Networking.TCP;
-    using Reaper.SharpBattleNet.Framework.Networking.TCP.Details;
-    using Reaper.SharpBattleNet.Framework.Networking.UDP;
-    using Reaper.SharpBattleNet.Framework.Networking.UDP.Details;
+    using SharpBattleNet;
+    using SharpBattleNet.Framework;
+    using SharpBattleNet.Framework.Networking;
+    using SharpBattleNet.Framework.Networking.Details;
+    using SharpBattleNet.Framework.Networking.TCP;
+    using SharpBattleNet.Framework.Networking.TCP.Details;
+    using SharpBattleNet.Framework.Networking.UDP;
+    using SharpBattleNet.Framework.Networking.UDP.Details;
 
     public sealed class NetworkModule : NinjectModule
     {

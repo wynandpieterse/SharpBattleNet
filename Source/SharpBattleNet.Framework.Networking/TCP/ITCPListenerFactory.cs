@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.Framework.Networking.TCP
+﻿namespace SharpBattleNet.Framework.Networking.TCP
 {
     using System;
     using System.Reflection;

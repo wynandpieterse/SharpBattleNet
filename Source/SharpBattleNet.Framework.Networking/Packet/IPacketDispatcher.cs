@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.Framework.Networking.Packet
+﻿namespace SharpBattleNet.Framework.Networking.Packet
 {
     using System;
     using System.Reflection;

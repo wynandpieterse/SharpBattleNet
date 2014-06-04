@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.Framework.Networking
+﻿namespace SharpBattleNet.Framework.Networking
 {
     using System;
     using System.Reflection;
@@ -11,12 +11,11 @@
     using System.Net;
     using System.Net.Sockets;
 
-    using Reaper;
-    using Reaper.SharpBattleNet;
-    using Reaper.SharpBattleNet.Framework;
-    using Reaper.SharpBattleNet.Framework.Networking;
-    using Reaper.SharpBattleNet.Framework.Networking.TCP;
-    using Reaper.SharpBattleNet.Framework.Networking.UDP;
+    using SharpBattleNet;
+    using SharpBattleNet.Framework;
+    using SharpBattleNet.Framework.Networking;
+    using SharpBattleNet.Framework.Networking.TCP;
+    using SharpBattleNet.Framework.Networking.UDP;
 
     public interface INetworkManager
     {

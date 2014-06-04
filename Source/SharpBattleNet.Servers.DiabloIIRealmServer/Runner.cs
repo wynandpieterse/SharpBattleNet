@@ -1,4 +1,4 @@
-﻿namespace Reaper.SharpBattleNet.Servers.DiabloIIRealmServer
+﻿namespace SharpBattleNet.Servers.DiabloIIRealmServer
 {
     using System;
     using System.Linq;
@@ -10,11 +10,10 @@
 
     using Ninject;
 
-    using Reaper;
-    using Reaper.SharpBattleNet;
-    using Reaper.SharpBattleNet.Framework;
-    using Reaper.SharpBattleNet.Framework.DiabloIIRealmServer;
-    using Reaper.SharpBattleNet.Framework.Networking;
+    using SharpBattleNet;
+    using SharpBattleNet.Framework;
+    using SharpBattleNet.Framework.DiabloIIRealmServer;
+    using SharpBattleNet.Framework.Networking;
 
     internal static class Runner
     {

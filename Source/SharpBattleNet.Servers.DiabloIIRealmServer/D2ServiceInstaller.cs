@@ -1,4 +1,4 @@
-namespace Reaper.SharpBattleNet.Servers.DiabloIIRealmServer
+namespace SharpBattleNet.Servers.DiabloIIRealmServer
 {
     using System;
     using System.Reflection;
@@ -13,10 +13,9 @@ namespace Reaper.SharpBattleNet.Servers.DiabloIIRealmServer
     using System.Configuration;
     using System.Configuration.Install;
 
-    using Reaper;
-    using Reaper.SharpBattleNet;
-    using Reaper.SharpBattleNet.Framework;
-    using Reaper.SharpBattleNet.Framework.Extensions;
+    using SharpBattleNet;
+    using SharpBattleNet.Framework;
+    using SharpBattleNet.Framework.Extensions;
 
     [RunInstaller(runInstaller: true)]
     public sealed class D2RSServiceIntaller : Installer

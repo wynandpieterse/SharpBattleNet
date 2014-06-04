@@ -13,7 +13,7 @@ namespace SharpBattleNet.Servers.BattleNetServer
     using SharpBattleNet.Framework;
     using SharpBattleNet.Framework.Extensions;
 
-    internal static class BNSProgram
+    internal static class Program
     {
         private static void Start(string[] commandArguments)
         {

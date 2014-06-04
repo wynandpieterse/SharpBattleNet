@@ -80,11 +80,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="D2RSProgram.cs" />
-    <Compile Include="D2RSService.cs">
+    <Compile Include="Program.cs" />
+    <Compile Include="Service.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="D2ServiceInstaller.cs">
+    <Compile Include="ServiceInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

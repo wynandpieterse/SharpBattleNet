@@ -81,11 +81,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BNSProgram.cs" />
-    <Compile Include="BNSService.cs">
+    <Compile Include="Program.cs" />
+    <Compile Include="Service.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="BNSServiceIntaller.cs">
+    <Compile Include="ServiceIntaller.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

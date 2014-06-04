@@ -1,9 +1,9 @@
-namespace SharpBattleNet.Servers.BattleNetServer
+namespace SharpBattleNet.Servers.DiabloIIRealmServer
 {
     using System;
+    using System.Reflection;
     using System.Linq;
     using System.Text;
-    using System.Reflection;
     using System.ComponentModel;
     using System.ServiceProcess;
     using System.Collections;
@@ -18,9 +18,9 @@ namespace SharpBattleNet.Servers.BattleNetServer
     using SharpBattleNet.Framework.Extensions;
 
     [RunInstaller(runInstaller: true)]
-    public sealed class BNSServiceIntaller : Installer
+    public sealed class ServiceIntaller : Installer
     {
-        public BNSServiceIntaller()
+        public ServiceIntaller()
         {
             var processInstaller = new ServiceProcessInstaller();
             var serviceInstaller = new ServiceInstaller();
@@ -28,7 +28,7 @@ namespace SharpBattleNet.Servers.BattleNetServer
 
             processInstaller.Account = ServiceAccount.LocalService;
 
-            serviceInstaller.ServiceName = "BNSService";
+            serviceInstaller.ServiceName = "Service";
             serviceInstaller.DisplayName = String.Format("{0} - {1}", currentAssembly.GetAssemblyTitle(), currentAssembly.GetAssemblyFileVersion());
             serviceInstaller.Description = currentAssembly.GetAssemblyDescription();
             serviceInstaller.StartType = ServiceStartMode.Automatic;

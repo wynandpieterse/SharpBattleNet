@@ -21,6 +21,8 @@ This project is completely open source, and community involvement is highly enco
 
 If you wish to contribute ideas or code, please fork this repository and make a pull request.
 
+More documentation can be found at the [Wiki](https://github.com/wpieterse/SharpBattleNet/wiki).
+
 ## Requirements
 
  + Platform: Windows, Linux, MacOS X

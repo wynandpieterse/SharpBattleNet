@@ -54,6 +54,21 @@ under SharpBattleNet. The default values will make it run, but fine-tuning may h
 The solution files uses NuGet as a package manager, thus all of the required dependancies will automatically be 
 downloaded if required.
 
+## Running
+
+### Windows
+
+If you compiled the executables via Visual Studio, just tap on the executable you want to run, right click and say
+'Select As Startup Project' and press F5 to debug with Visual Studio.
+
+If you built it with the batch file, go to the run scripts directory and run the desired server. There should be
+2 ways. The first is to run it in a command window, and the other is running it as a Windows service. Select the
+desired mode and double click.
+
+### Linux and MacOS X
+
+Go to the Scripts/Run directory and start the desired shell script in the mode you wish to run it.
+
 ## Notes
 
  + Reporting issues should be done with the GitHub issue tracker.

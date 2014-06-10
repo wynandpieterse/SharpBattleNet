@@ -2,6 +2,10 @@
 
 ## Introduction
 
+Current build status:
+
+[![Build status](https://ci.appveyor.com/api/projects/status/u180fx2lfy7bbesr)](https://ci.appveyor.com/project/wpieterse/sharpbattlenet)
+
 SharpBattle.net aims to be a complete emulator for Battle.net V1 and all the games that ran on it. These games
 include the following:
 

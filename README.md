@@ -2,6 +2,10 @@
 
 ## Introduction
 
+Current build status:
+
+[![Build status](https://ci.appveyor.com/api/projects/status/u180fx2lfy7bbesr)](https://ci.appveyor.com/project/wpieterse/sharpbattlenet)
+
 SharpBattle.net aims to be a complete emulator for Battle.net V1 and all the games that ran on it. These games
 include the following:
 
@@ -20,6 +24,8 @@ and learning experience. What people do with this is their own resposibility. I 
 This project is completely open source, and community involvement is highly encouraged.
 
 If you wish to contribute ideas or code, please fork this repository and make a pull request.
+
+More documentation can be found at the [Wiki](https://github.com/wpieterse/SharpBattleNet/wiki).
 
 ## Requirements
 
@@ -52,10 +58,38 @@ under SharpBattleNet. The default values will make it run, but fine-tuning may h
 The solution files uses NuGet as a package manager, thus all of the required dependancies will automatically be 
 downloaded if required.
 
+## Running
+
+### Windows
+
+If you compiled the executables via Visual Studio, just tap on the executable you want to run, right click and say
+'Select As Startup Project' and press F5 to debug with Visual Studio.
+
+If you built it with the batch file, go to the run scripts directory and run the desired server. There should be
+2 ways. The first is to run it in a command window, and the other is running it as a Windows service. Select the
+desired mode and double click.
+
+### Linux and MacOS X
+
+Go to the Scripts/Run directory and start the desired shell script in the mode you wish to run it.
+
+## Configuration
+
+### Windows
+
+Go to the directory 'C:\ProgramData\SharpBattleNet' and enter the desired server you wish to configure. Look inside
+the Configuration directory for all the configurable variables.
+
+### Linux and MacOS X
+
+Go to the '/shared' folder and enter the SharpBattleNet folder. After that, enter the desired directory of the server
+you wish to configure. Look for the Configuration folder inside that and edit the desired configuration file according
+to you're needs.
+
 ## Notes
 
  + Reporting issues should be done with the GitHub issue tracker.
  + Any fixes should come from a pull request.
 
-Version 0.0.6
+Version 0.0.7
 

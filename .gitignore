@@ -9,6 +9,7 @@ Desktop.ini
 
 # Build system ignores
 [Bb]inaries/
+[Bb]inariesDebug/
 [Bb]in/
 [Oo]bj/
 [Ii]ntermediate/

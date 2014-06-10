@@ -8,8 +8,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Servers", "Servers", "{B820
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{D7133F8D-49F7-4D74-BD07-E96B8124C177}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reaper.SharpBattleNet.Framework", "Reaper.SharpBattleNet.Framework\Reaper.SharpBattleNet.Framework.csproj", "{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{5E899FB9-1537-4C9E-8B0D-6986D12A830B}"
 	ProjectSection(SolutionItems) = preProject
 		..\README.md = ..\README.md
@@ -21,17 +19,31 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configurat
 		..\Configuration\DiabloIIRealmServer.ini = ..\Configuration\DiabloIIRealmServer.ini
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reaper.SharpBattleNet.Servers.BattleNetServer", "Reaper.SharpBattleNet.Servers.BattleNetServer\Reaper.SharpBattleNet.Servers.BattleNetServer.csproj", "{D40EE1B5-3BB9-4EF6-AFEB-825379914887}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reapaer.SharpBattleNet.Servers.DiabloIIRealmServer", "Reaper.SharpBattleNet.Servers.DiabloIIRealmServer\Reapaer.SharpBattleNet.Servers.DiabloIIRealmServer.csproj", "{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Servers", "Servers", "{EA306AEF-D55C-4C28-ABD6-C3F0EF804138}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reaper.SharpBattleNet.Framework.BattleNetServer", "Reaper.SharpBattleNet.Framework.BattleNetServer\Reaper.SharpBattleNet.Framework.BattleNetServer.csproj", "{51A40588-DE5A-4EC8-8809-5C27C4851E52}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Framework.Networking", "SharpBattleNet.Framework.Networking\SharpBattleNet.Framework.Networking.csproj", "{B838D207-FAD1-4EE1-95B5-DCB240D1A0AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reaper.SharpBattleNet.Framework.DiabloIIRealmServer", "Reaper.SharpBattleNet.Framework.DiabloIIRealmServer\Reaper.SharpBattleNet.Framework.DiabloIIRealmServer.csproj", "{72992102-9792-4899-B500-C0DC47736529}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Framework", "SharpBattleNet.Framework\SharpBattleNet.Framework.csproj", "{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reaper.SharpBattleNet.Framework.Networking", "Reaper.SharpBattleNet.Framework.Networking\Reaper.SharpBattleNet.Framework.Networking.csproj", "{B838D207-FAD1-4EE1-95B5-DCB240D1A0AA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.BattleNetServer", "SharpBattleNet.BattleNetServer\SharpBattleNet.BattleNetServer.csproj", "{D40EE1B5-3BB9-4EF6-AFEB-825379914887}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.DiabloIIRealmServer", "SharpBattleNet.DiabloIIRealmServer\SharpBattleNet.DiabloIIRealmServer.csproj", "{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Server.BattleNetServer", "SharpBattleNet.Server.BattleNetServer\SharpBattleNet.Server.BattleNetServer.csproj", "{51A40588-DE5A-4EC8-8809-5C27C4851E52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Server.DiabloIIRealmServer", "SharpBattleNet.Server.DiabloIIRealmServer\SharpBattleNet.Server.DiabloIIRealmServer.csproj", "{72992102-9792-4899-B500-C0DC47736529}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.BattleNetServer.Tests", "SharpBattleNet.BattleNetServer.Tests\SharpBattleNet.BattleNetServer.Tests.csproj", "{AE52D7BE-B9D5-49CC-B58F-ECE851DD53B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.DiabloIIRealmServer.Tests", "SharpBattleNet.DiabloIIRealmServer.Tests\SharpBattleNet.DiabloIIRealmServer.Tests.csproj", "{71A7EA7C-7CA7-44E5-8006-2C783DB923A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Framework.Networking.Tests", "SharpBattleNet.Framework.Networking.Tests\SharpBattleNet.Framework.Networking.Tests.csproj", "{B732D200-F2D4-4270-9579-E4D7FE82545F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Framework.Tests", "SharpBattleNet.Framework.Tests\SharpBattleNet.Framework.Tests.csproj", "{2818570E-133B-425F-B8F9-3943B8C9F823}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Server.BattleNetServer.Tests", "SharpBattleNet.Server.BattleNetServer.Tests\SharpBattleNet.Server.BattleNetServer.Tests.csproj", "{F2B57B16-58FA-4CD2-910F-51E66392A9CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Server.DiabloIIRealmServer.Tests", "SharpBattleNet.Server.DiabloIIRealmServer.Tests\SharpBattleNet.Server.DiabloIIRealmServer.Tests.csproj", "{58D62051-C926-413B-A5AD-DBC33F5F482F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +51,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B838D207-FAD1-4EE1-95B5-DCB240D1A0AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B838D207-FAD1-4EE1-95B5-DCB240D1A0AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B838D207-FAD1-4EE1-95B5-DCB240D1A0AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B838D207-FAD1-4EE1-95B5-DCB240D1A0AA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -59,21 +75,47 @@ Global
 		{72992102-9792-4899-B500-C0DC47736529}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72992102-9792-4899-B500-C0DC47736529}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72992102-9792-4899-B500-C0DC47736529}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B838D207-FAD1-4EE1-95B5-DCB240D1A0AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B838D207-FAD1-4EE1-95B5-DCB240D1A0AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B838D207-FAD1-4EE1-95B5-DCB240D1A0AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B838D207-FAD1-4EE1-95B5-DCB240D1A0AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE52D7BE-B9D5-49CC-B58F-ECE851DD53B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE52D7BE-B9D5-49CC-B58F-ECE851DD53B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE52D7BE-B9D5-49CC-B58F-ECE851DD53B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE52D7BE-B9D5-49CC-B58F-ECE851DD53B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71A7EA7C-7CA7-44E5-8006-2C783DB923A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71A7EA7C-7CA7-44E5-8006-2C783DB923A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71A7EA7C-7CA7-44E5-8006-2C783DB923A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71A7EA7C-7CA7-44E5-8006-2C783DB923A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B732D200-F2D4-4270-9579-E4D7FE82545F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B732D200-F2D4-4270-9579-E4D7FE82545F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B732D200-F2D4-4270-9579-E4D7FE82545F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B732D200-F2D4-4270-9579-E4D7FE82545F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2818570E-133B-425F-B8F9-3943B8C9F823}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2818570E-133B-425F-B8F9-3943B8C9F823}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2818570E-133B-425F-B8F9-3943B8C9F823}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2818570E-133B-425F-B8F9-3943B8C9F823}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2B57B16-58FA-4CD2-910F-51E66392A9CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2B57B16-58FA-4CD2-910F-51E66392A9CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2B57B16-58FA-4CD2-910F-51E66392A9CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2B57B16-58FA-4CD2-910F-51E66392A9CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58D62051-C926-413B-A5AD-DBC33F5F482F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58D62051-C926-413B-A5AD-DBC33F5F482F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58D62051-C926-413B-A5AD-DBC33F5F482F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58D62051-C926-413B-A5AD-DBC33F5F482F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{EA306AEF-D55C-4C28-ABD6-C3F0EF804138} = {1430B1F1-11ED-4051-B1F4-D8304F9AF715}
+		{B838D207-FAD1-4EE1-95B5-DCB240D1A0AA} = {1430B1F1-11ED-4051-B1F4-D8304F9AF715}
 		{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7} = {1430B1F1-11ED-4051-B1F4-D8304F9AF715}
 		{D40EE1B5-3BB9-4EF6-AFEB-825379914887} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
 		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
-		{EA306AEF-D55C-4C28-ABD6-C3F0EF804138} = {1430B1F1-11ED-4051-B1F4-D8304F9AF715}
 		{51A40588-DE5A-4EC8-8809-5C27C4851E52} = {EA306AEF-D55C-4C28-ABD6-C3F0EF804138}
 		{72992102-9792-4899-B500-C0DC47736529} = {EA306AEF-D55C-4C28-ABD6-C3F0EF804138}
-		{B838D207-FAD1-4EE1-95B5-DCB240D1A0AA} = {1430B1F1-11ED-4051-B1F4-D8304F9AF715}
+		{AE52D7BE-B9D5-49CC-B58F-ECE851DD53B8} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
+		{71A7EA7C-7CA7-44E5-8006-2C783DB923A9} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
+		{B732D200-F2D4-4270-9579-E4D7FE82545F} = {1430B1F1-11ED-4051-B1F4-D8304F9AF715}
+		{2818570E-133B-425F-B8F9-3943B8C9F823} = {1430B1F1-11ED-4051-B1F4-D8304F9AF715}
+		{F2B57B16-58FA-4CD2-910F-51E66392A9CD} = {EA306AEF-D55C-4C28-ABD6-C3F0EF804138}
+		{58D62051-C926-413B-A5AD-DBC33F5F482F} = {EA306AEF-D55C-4C28-ABD6-C3F0EF804138}
 	EndGlobalSection
 EndGlobal

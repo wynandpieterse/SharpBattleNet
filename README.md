@@ -69,6 +69,19 @@ desired mode and double click.
 
 Go to the Scripts/Run directory and start the desired shell script in the mode you wish to run it.
 
+## Configuration
+
+### Windows
+
+Go to the directory 'C:\ProgramData\SharpBattleNet' and enter the desired server you wish to configure. Look inside
+the Configuration directory for all the configurable variables.
+
+### Linux and MacOS X
+
+Go to the '/shared' folder and enter the SharpBattleNet folder. After that, enter the desired directory of the server
+you wish to configure. Look for the Configuration folder inside that and edit the desired configuration file according
+to you're needs.
+
 ## Notes
 
  + Reporting issues should be done with the GitHub issue tracker.

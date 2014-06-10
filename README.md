@@ -91,5 +91,5 @@ to you're needs.
  + Reporting issues should be done with the GitHub issue tracker.
  + Any fixes should come from a pull request.
 
-Version 0.0.6
+Version 0.0.7
 

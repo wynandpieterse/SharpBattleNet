@@ -11,9 +11,13 @@
     using System.Net;
     using System.Net.Sockets;
 
+    using NLog;
+
     internal sealed class UDPListenerFactory : IUDPListenerFactory
     {
         private readonly IClientFactory _clientFactory = null;
+
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public UDPListenerFactory(IClientFactory clientFactory)
         {

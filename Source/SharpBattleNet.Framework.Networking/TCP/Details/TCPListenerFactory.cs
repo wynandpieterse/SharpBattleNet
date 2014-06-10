@@ -11,9 +11,13 @@
     using System.Net;
     using System.Net.Sockets;
 
+    using NLog;
+
     internal sealed class TCPListenerFactory : ITCPListenerFactory
     {
         private readonly IClientFactory _clientFactory = null;
+
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public TCPListenerFactory(IClientFactory clientFactory)
         {

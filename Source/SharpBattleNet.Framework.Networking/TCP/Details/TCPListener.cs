@@ -20,9 +20,9 @@
         private readonly CancellationTokenSource _cancelToken = null;
         private readonly ConcurrentBag<IClient> _clients = null;
 
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
         private TcpListener _listener = null;
+
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public TCPListener(IClientFactory clientFactory)
         {

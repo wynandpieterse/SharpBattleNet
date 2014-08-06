@@ -35,3 +35,6 @@ Desktop.ini
 *.CodeAnalysisLog.*
 *.lastcodeanalysissucceeded
 *.manifest
+*.chk
+*.jrs
+*.ide

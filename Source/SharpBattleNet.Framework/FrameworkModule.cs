@@ -1,40 +1,64 @@
-﻿namespace SharpBattleNet.Framework
+﻿#region Header
+//
+//    _  _   ____        _   _   _         _   _      _   
+//  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
+// |_  .. _ |  _ \ / _` | __| __| |/ _ \  |  \| |/ _ \ __|
+// |_      _| |_) | (_| | |_| |_| |  __/_ | |\  |  __/ |_ 
+//   |_||_| |____/ \__,_|\__|\__|_|\___(_)_ | \_|\___|\__|
+//
+// The MIT License
+// 
+// Copyright(c) 2014 Wynand Pieters. https://github.com/wpieterse/SharpBattleNet
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
+#endregion
+
+namespace SharpBattleNet.Framework
 {
+    #region Usings
     using System;
-    using System.Reflection;
     using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
 
     using Ninject;
     using Ninject.Modules;
-    using Ninject.Activation;
-
-    using Nini;
     using Nini.Config;
-    using Nini.Ini;
-    using Nini.Util;
 
     using NLog;
     using NLog.Targets;
     using NLog.Config;
 
-    using SharpBattleNet;
-    using SharpBattleNet.Framework;
-    using SharpBattleNet.Framework.Extensions;
+    using SharpBattleNet.Framework.Utilities.Debugging;
+    #endregion
 
     public sealed class FrameworkModule : NinjectModule
     {
         private readonly string _applicationName = "";
 
         private string _writeDirectory = "";
+        private bool _writeDirectorySuccessfull = false;
 
         public FrameworkModule(string applicationName)
         {
+            Guard.AgainstNull(applicationName);
+            Guard.AgainstEmptyString(applicationName);
+
             _applicationName = applicationName;
 
             return;
@@ -42,15 +66,22 @@
 
         private void ConfigureWriteDirectory()
         {
-            Assembly entryAssembly = null;
+            try
+            {
+                _writeDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "SharpBattleNet");
+                _writeDirectory = Path.Combine(_writeDirectory, _applicationName);
 
-            entryAssembly = Assembly.GetEntryAssembly();
+                Directory.CreateDirectory(_writeDirectory);
 
-            _writeDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "SharpBattleNet");
-            _writeDirectory = Path.Combine(_writeDirectory, _applicationName);
+                _writeDirectorySuccessfull = true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Failed to create write directory for {0}", _applicationName);
+                Console.WriteLine(ex.Message);
 
-            // Check for exceptions here, please
-            Directory.CreateDirectory(_writeDirectory);
+                _writeDirectorySuccessfull = false;
+            }
 
             return;
         }
@@ -58,26 +89,46 @@
         private void ConfigureConfiguration()
         {
             string configurationDirectory = Path.Combine(_writeDirectory, "Configuration");
-            string configurationFilename = Path.Combine(configurationDirectory, String.Format("{0}.ini", _applicationName));
+            string configurationFilename = Path.Combine(configurationDirectory, string.Format("{0}.ini", _applicationName));
 
-            // Check for exceptions here, please
-            Directory.CreateDirectory(configurationDirectory);
-
-            // check to see if configuration file already exist there
-            if(false == File.Exists(configurationFilename))
+            if (true == _writeDirectorySuccessfull)
             {
-                // copy configuration file over
-                File.Copy(String.Format("../../../Configuration/{0}.ini", _applicationName), configurationFilename);
+                Directory.CreateDirectory(configurationDirectory);
+
+                // check to see if configuration file already exist there
+                if (false == File.Exists(configurationFilename))
+                {
+                    try
+                    {
+                        // copy configuration file over
+                        File.Copy(string.Format("../../../Configuration/{0}.ini", _applicationName), configurationFilename);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Failed to copy over configuration to the specified application directory. Using default!!!");
+                        Console.WriteLine(ex.Message);
+
+                        configurationFilename = string.Format("../../../Configuration/{0}.ini");
+                    }
+                }
+            }
+            else
+            {
+                // If we failed to create the write directory, use the default configuration.
+                configurationFilename = string.Format("../../../Configuration/{0}.ini", _applicationName);
             }
 
-            Bind<IConfigSource>().ToMethod<IniConfigSource>(context => new IniConfigSource(configurationFilename)).InSingletonScope();
+            Bind<IConfigSource>().ToMethod(context => new IniConfigSource(configurationFilename)).InSingletonScope();
 
             return;
         }
 
         private LogLevel GetLogLevel(string level)
         {
-            switch(level)
+            Guard.AgainstNull(level);
+            Guard.AgainstEmptyString(level);
+
+            switch (level)
             {
                 case "Trace":
                     return LogLevel.Trace;
@@ -98,6 +149,8 @@
 
         private void ConfigureConsoleLogging(LoggingConfiguration config)
         {
+            Guard.AgainstNull(config);
+
             var configSource = Kernel.Get<IConfigSource>();
             var source = configSource.Configs["General"];
             if(null != source)
@@ -119,22 +172,36 @@
 
         private void ConfigureFileLogging(LoggingConfiguration config)
         {
-            string logDirectory = Path.Combine(_writeDirectory, "Logs");
-            DateTime currentTime = DateTime.Now;
-            string logDate = String.Format("{0}-{1}-{2}-{3}-{4}-{5}", currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Second);
-            string logFilename = Path.Combine(logDirectory, String.Format("Log-{0}.log", logDate));
+            Guard.AgainstNull(config);
 
-            // Check for exceptions here please
-            Directory.CreateDirectory(logDirectory);
+            if (true == _writeDirectorySuccessfull)
+            {
+                string logDirectory = Path.Combine(_writeDirectory, "Logs");
+                DateTime currentTime = DateTime.Now;
+                string logDate = string.Format("{0}-{1}-{2}-{3}-{4}-{5}", currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Second);
+                string logFilename = Path.Combine(logDirectory, string.Format("Log-{0}.log", logDate));
 
-            var fileTarget = new FileTarget();
-            config.AddTarget("file", fileTarget);
+                try
+                {
+                    Directory.CreateDirectory(logDirectory);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Failed to create log directory. File logs will not be written");
+                    Console.WriteLine(ex.Message);
 
-            fileTarget.FileName = logFilename;
-            fileTarget.Layout = @"${date:format=HH\\:MM\\:ss} ${logger} ${message}";
+                    return;
+                }
 
-            var fileRule = new LoggingRule("*", LogLevel.Debug, fileTarget);
-            config.LoggingRules.Add(fileRule);
+                var fileTarget = new FileTarget();
+                config.AddTarget("file", fileTarget);
+
+                fileTarget.FileName = logFilename;
+                fileTarget.Layout = @"${date:format=HH\\:MM\\:ss} ${logger} ${message}";
+
+                var fileRule = new LoggingRule("*", LogLevel.Debug, fileTarget);
+                config.LoggingRules.Add(fileRule);
+            }
 
             return;
         }
@@ -153,9 +220,16 @@
 
         public override void Load()
         {
-            ConfigureWriteDirectory();
-            ConfigureConfiguration();
-            ConfigureLogging();
+            try
+            {
+                ConfigureWriteDirectory();
+                ConfigureConfiguration();
+                ConfigureLogging();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to configure framework. Can't continue. See internal exception for more details", ex);
+            }
 
             return;
         }

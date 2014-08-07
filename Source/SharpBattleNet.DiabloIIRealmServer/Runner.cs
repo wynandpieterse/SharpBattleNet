@@ -19,22 +19,16 @@
     internal static class Runner
     {
         private static IKernel _injectionKernel = null;
-        private static IDiabloIIRealmServer _server = null;
 
         public static void Start(string[] commandArguments)
         {
             _injectionKernel = new StandardKernel(new FrameworkModule("DiabloIIRealmServer"), new NetworkModule(), new DiabloIIRealmServerModule());
-            _server = _injectionKernel.Get<IDiabloIIRealmServer>();
-
-            _server.Start(commandArguments).Wait();
 
             return;
         }
 
         public static void Stop()
         {
-            _server.Stop().Wait();
-
             return;
         }
     }

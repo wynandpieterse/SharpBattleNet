@@ -19,22 +19,16 @@
     internal static class Runner
     {
         private static IKernel _injectionKernel = null;
-        private static IBattleNetServer _server = null;
 
         public static void Start(string[] commandArguments)
         {
             _injectionKernel = new StandardKernel(new FrameworkModule("BattleNetServer"), new NetworkModule(), new BattleNetServerModule());
-            _server = _injectionKernel.Get<IBattleNetServer>();
-
-            _server.Start(commandArguments).Wait();
 
             return;
         }
 
         public static void Stop()
         {
-            _server.Stop().Wait();
-
             return;
         }
     }

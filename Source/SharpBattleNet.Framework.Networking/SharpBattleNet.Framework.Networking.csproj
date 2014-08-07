@@ -78,6 +78,7 @@
     <Compile Include="Server\Details\TCPListenerFactory.cs" />
     <Compile Include="Server\ITCPListener.cs" />
     <Compile Include="Server\ITCPListenerFactory.cs" />
+    <Compile Include="Utilities\SocketEventBag.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Packages.config" />

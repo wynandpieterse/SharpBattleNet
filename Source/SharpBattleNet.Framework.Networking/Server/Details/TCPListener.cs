@@ -36,7 +36,9 @@ namespace SharpBattleNet.Framework.Networking.Server.Details
     using System;
     using System.Net;
     using System.Net.Sockets;
+    using NLog;
     using SharpBattleNet.Framework.Utilities.Debugging;
+    using SharpBattleNet.Framework.Networking.Utilities;
     #endregion
 
     internal sealed class TCPListener : ITCPListener
@@ -44,34 +46,86 @@ namespace SharpBattleNet.Framework.Networking.Server.Details
         private Action<Socket> _acceptedCallback = null;
 
         private Socket _listenSocket = null;
+        private SocketEventBag _socketEventBag = null;
+
+        private Logger _logger = LogManager.GetCurrentClassLogger();
 
         public TCPListener()
         {
+            _socketEventBag = new SocketEventBag();
+
             return;
         }
 
-        private void OnAccepted(object sender, SocketAsyncEventArgs e)
+        private void HandleBadAccept(SocketAsyncEventArgs socketEvent)
         {
-            if (SocketError.Success != e.SocketError)
-            {
+            Guard.AgainstNull(socketEvent);
 
+            _logger.Warn("Connection from {0} was bad. Stated socket reason is : {1}", socketEvent.AcceptSocket.RemoteEndPoint, socketEvent.SocketError);
+
+            socketEvent.AcceptSocket.Close();
+
+            _socketEventBag.Add(socketEvent);
+
+            return;
+        }
+
+        private void ProcessAccept(SocketAsyncEventArgs socketEvent)
+        {
+            Guard.AgainstNull(socketEvent);
+
+            _logger.Debug("Got new connection from {0}", socketEvent.AcceptSocket.RemoteEndPoint);
+
+            StartAccepting();
+
+            if (socketEvent.SocketError != SocketError.Success)
+            {
+                HandleBadAccept(socketEvent);
+                return;
             }
             else
             {
-                _acceptedCallback(e.AcceptSocket);
-                e.AcceptSocket = null;
+                _acceptedCallback(socketEvent.AcceptSocket);
 
-                StartAccepting(e);
+                socketEvent.AcceptSocket = null;
+                _socketEventBag.Add(socketEvent);
             }
 
             return;
         }
 
-        private void StartAccepting(SocketAsyncEventArgs e)
+        private void AsynchronousAccept(object sender, SocketAsyncEventArgs socketEvent)
         {
-            while (false == _listenSocket.AcceptAsync(e))
+            Guard.AgainstNull(socketEvent);
+
+            ProcessAccept(socketEvent);
+
+            return;
+        }
+
+        private SocketAsyncEventArgs ConstructAcceptOperation()
+        {
+            SocketAsyncEventArgs socketEvent = null;
+
+            socketEvent.Completed += AsynchronousAccept;
+
+            return socketEvent;
+        }
+
+        private void StartAccepting()
+        {
+            SocketAsyncEventArgs socketEvent = null;
+            bool willRaiseEvent = false;
+
+            if (false == _socketEventBag.TryTake(out socketEvent))
             {
-                OnAccepted(_listenSocket, e);
+                socketEvent = ConstructAcceptOperation();
+            }
+
+            willRaiseEvent = _listenSocket.AcceptAsync(socketEvent);
+            if (false == willRaiseEvent)
+            {
+                ProcessAccept(socketEvent);
             }
 
             return;
@@ -81,33 +135,24 @@ namespace SharpBattleNet.Framework.Networking.Server.Details
 
         public void Start(IPEndPoint address, Action<Socket> acceptedCallback)
         {
-            SocketAsyncEventArgs socketEvents = null;
-
             Guard.AgainstNull(address);
             Guard.AgainstNull(acceptedCallback);
 
-            _acceptedCallback = acceptedCallback;
-
-            socketEvents = new SocketAsyncEventArgs();
-            socketEvents.Completed += OnAccepted;
-
-            if (address.AddressFamily == AddressFamily.InterNetworkV6)
+            if (address.AddressFamily != AddressFamily.InterNetwork || address.AddressFamily != AddressFamily.InterNetworkV6)
             {
-                _listenSocket = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
-            }
-            else if(address.AddressFamily == AddressFamily.InterNetwork)
-            {
-                _listenSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                throw new InvalidOperationException("TCP listener currently only support IPv4 and IPv6 sockets.");
             }
             else
             {
-                throw new InvalidOperationException("TCPListener only support IPv4 and IPv6 sockets.");
+                _listenSocket = new Socket(address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+
+                _listenSocket.Bind(address);
+                _listenSocket.Listen(64);
+
+                _logger.Debug("Started new TCP listener on {0}", address);
+
+                StartAccepting();
             }
-
-            _listenSocket.Bind(address);
-            _listenSocket.Listen(16);
-
-            StartAccepting(socketEvents);
 
             return;
         }

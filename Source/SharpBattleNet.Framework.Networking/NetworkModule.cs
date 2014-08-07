@@ -41,6 +41,7 @@ namespace SharpBattleNet.Framework.Networking
     using SharpBattleNet.Framework.Networking.Connections.UDP;
     using SharpBattleNet.Framework.Networking.Connections.TCP.Details;
     using SharpBattleNet.Framework.Networking.Connections.UDP.Details;
+    using SharpBattleNet.Framework.Networking.Utilities;
     #endregion
 
     public sealed class NetworkModule : NinjectModule

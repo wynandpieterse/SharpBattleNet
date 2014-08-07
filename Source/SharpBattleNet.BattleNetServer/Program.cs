@@ -2,11 +2,12 @@ namespace SharpBattleNet.Servers.BattleNetServer
 {
     using System;
     using System.Reflection;
-    using Framework;
-    using Framework.Extensions;
+
     using Ninject;
-    using Framework.Networking;
-    using Server.BattleNetServer;
+
+    using SharpBattleNet.Framework;
+    using SharpBattleNet.Framework.Extensions;
+    using SharpBattleNet.Server.BattleNetServer;
 
     internal static class Program
     {
@@ -37,7 +38,7 @@ namespace SharpBattleNet.Servers.BattleNetServer
 
             PrintHeader(currentAssembly);
 
-            _injectionKernel = new StandardKernel(new FrameworkModule("BattleNetServer"), new NetworkModule(), new BattleNetServerModule());
+            _injectionKernel = new StandardKernel(new FrameworkModule("BattleNetServer"), new BattleNetServerModule());
 
             return;
         }

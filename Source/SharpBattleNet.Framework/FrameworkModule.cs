@@ -10,7 +10,8 @@
     using NLog;
     using NLog.Targets;
     using NLog.Config;
-    using Utilities.Debugging;
+
+    using SharpBattleNet.Framework.Utilities.Debugging;
 
     public sealed class FrameworkModule : NinjectModule
     {

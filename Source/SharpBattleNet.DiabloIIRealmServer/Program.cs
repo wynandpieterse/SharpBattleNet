@@ -2,18 +2,11 @@ namespace SharpBattleNet.Servers.DiabloIIRealmServer
 {
     using System;
     using System.Reflection;
-    using System.Linq;
-    using System.Text;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
 
-    using SharpBattleNet;
+    using Ninject;
+
     using SharpBattleNet.Framework;
     using SharpBattleNet.Framework.Extensions;
-    using Ninject;
-    using SharpBattleNet.Framework.Networking;
     using SharpBattleNet.Server.DiabloIIRealmServer;
 
     internal static class Program
@@ -45,7 +38,7 @@ namespace SharpBattleNet.Servers.DiabloIIRealmServer
 
             PrintHeader(currentAssembly);
 
-            _injectionKernel = new StandardKernel(new FrameworkModule("DiabloIIRealmServer"), new NetworkModule(), new DiabloIIRealmServerModule());
+            _injectionKernel = new StandardKernel(new FrameworkModule("DiabloIIRealmServer"), new DiabloIIRealmServerModule());
 
             return;
         }

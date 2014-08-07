@@ -35,7 +35,7 @@ namespace SharpBattleNet.Servers.BattleNetServer
 
         private static void Stop()
         {
-            Runner.Stop();
+            _injectionKernel.Dispose();
 
             return;
         }

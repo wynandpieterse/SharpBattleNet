@@ -36,7 +36,7 @@ namespace SharpBattleNet.Framework.Networking.Connections.TCP
     using System;
     #endregion
 
-    public interface ITCPConnection
+    public interface ITCPConnection : IConnection
     {
     }
 }

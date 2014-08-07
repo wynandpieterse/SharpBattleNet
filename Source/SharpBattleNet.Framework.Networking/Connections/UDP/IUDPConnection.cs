@@ -36,7 +36,7 @@ namespace SharpBattleNet.Framework.Networking.Connections.UDP
     using System;
     #endregion
 
-    public interface IUDPConnection
+    public interface IUDPConnection : IConnection
     {
     }
 }

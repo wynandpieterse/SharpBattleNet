@@ -57,9 +57,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connections\Details\Connection.cs" />
     <Compile Include="Connections\IConnection.cs" />
+    <Compile Include="Connections\TCP\Details\TCPConnection.cs" />
+    <Compile Include="Connections\TCP\Details\TCPConnectionFactory.cs" />
     <Compile Include="Connections\TCP\ITCPConnection.cs" />
+    <Compile Include="Connections\TCP\ITCPConnectionFactory.cs" />
+    <Compile Include="Connections\UDP\Details\UDPConnection.cs" />
+    <Compile Include="Connections\UDP\Details\UDPConnectionFactory.cs" />
     <Compile Include="Connections\UDP\IUDPConnection.cs" />
+    <Compile Include="Connections\UDP\IUDPConnectionFactory.cs" />
     <Compile Include="NetworkModule.cs" />
     <Compile Include="Packets\IPacket.cs" />
     <Compile Include="Packets\IPacketCodec.cs" />
@@ -67,19 +74,17 @@
     <Compile Include="Packets\IPacketExecutor.cs" />
     <Compile Include="Packets\IPacketHeaderExecutor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Server\IListener.cs" />
-    <Compile Include="Server\IServer.cs" />
+    <Compile Include="Server\Details\TCPListener.cs" />
+    <Compile Include="Server\Details\TCPListenerFactory.cs" />
+    <Compile Include="Server\ITCPListener.cs" />
+    <Compile Include="Server\ITCPListenerFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Connections\Details\" />
-    <Folder Include="Connections\TCP\Details\" />
-    <Folder Include="Connections\UDP\Details\" />
     <Folder Include="Packets\Attributes\" />
     <Folder Include="Packets\Details\" />
-    <Folder Include="Server\Details\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharpBattleNet.Framework\SharpBattleNet.Framework.csproj">

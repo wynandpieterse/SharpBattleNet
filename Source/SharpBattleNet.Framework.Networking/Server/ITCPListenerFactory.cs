@@ -36,7 +36,8 @@ namespace SharpBattleNet.Framework.Networking.Server
     using System;
     #endregion
 
-    public interface IServer
+    public interface ITCPListenerFactory
     {
+        ITCPListener Create();
     }
 }

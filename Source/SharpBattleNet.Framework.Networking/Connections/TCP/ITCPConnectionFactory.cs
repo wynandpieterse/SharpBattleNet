@@ -30,13 +30,14 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Networking.Server
+namespace SharpBattleNet.Framework.Networking.Connections.TCP
 {
     #region Usings
     using System;
     #endregion
 
-    public interface IListener
+    public interface ITCPConnectionFactory
     {
+        ITCPConnection Create();
     }
 }

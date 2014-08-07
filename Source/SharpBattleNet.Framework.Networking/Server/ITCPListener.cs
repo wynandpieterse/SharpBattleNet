@@ -30,30 +30,16 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Networking
+namespace SharpBattleNet.Framework.Networking.Server
 {
     #region Usings
     using System;
-    using Ninject.Modules;
-    using SharpBattleNet.Framework.Networking.Server;
-    using SharpBattleNet.Framework.Networking.Server.Details;
-    using SharpBattleNet.Framework.Networking.Connections.TCP;
-    using SharpBattleNet.Framework.Networking.Connections.UDP;
-    using SharpBattleNet.Framework.Networking.Connections.TCP.Details;
-    using SharpBattleNet.Framework.Networking.Connections.UDP.Details;
+    using System.Net;
+    using System.Net.Sockets;
     #endregion
 
-    public sealed class NetworkModule : NinjectModule
+    public interface ITCPListener
     {
-        public override void Load()
-        {
-            Bind<ITCPListenerFactory>().To<TCPListenerFactory>();
-
-            Bind<ITCPConnectionFactory>().To<TCPConnectionFactory>();
-            Bind<IUDPConnectionFactory>().To<UDPConnectionFactory>();
-
-            return;
-        }
+        void Start(IPEndPoint address, Action<Socket> acceptedCallback);
     }
 }
-

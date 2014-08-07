@@ -12,9 +12,14 @@ namespace SharpBattleNet.Servers.BattleNetServer
     using SharpBattleNet;
     using SharpBattleNet.Framework;
     using SharpBattleNet.Framework.Extensions;
+    using Ninject;
+    using SharpBattleNet.Framework.Networking;
+    using SharpBattleNet.Server.BattleNetServer;
 
     internal static class Program
     {
+        private static IKernel _injectionKernel = null;
+
         private static void Start(string[] commandArguments)
         {
             var currentAssembly = Assembly.GetExecutingAssembly();
@@ -23,7 +28,7 @@ namespace SharpBattleNet.Servers.BattleNetServer
             Console.WindowWidth = 120;
             Console.WindowHeight = 40;
 
-            Runner.Start(commandArguments);
+            _injectionKernel = new StandardKernel(new FrameworkModule("BattleNetServer"), new NetworkModule(), new BattleNetServerModule());
 
             return;
         }

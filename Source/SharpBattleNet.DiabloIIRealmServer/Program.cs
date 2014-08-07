@@ -12,9 +12,14 @@ namespace SharpBattleNet.Servers.DiabloIIRealmServer
     using SharpBattleNet;
     using SharpBattleNet.Framework;
     using SharpBattleNet.Framework.Extensions;
+    using Ninject;
+    using SharpBattleNet.Framework.Networking;
+    using SharpBattleNet.Server.DiabloIIRealmServer;
 
     internal static class Program
     {
+        private static IKernel _injectionKernel = null;
+
         private static void Start(string[] commandArguments)
         {
             var currentAssembly = Assembly.GetExecutingAssembly();
@@ -23,14 +28,14 @@ namespace SharpBattleNet.Servers.DiabloIIRealmServer
             Console.WindowWidth = 120;
             Console.WindowHeight = 40;
 
-            Runner.Start(commandArguments);
+            _injectionKernel = new StandardKernel(new FrameworkModule("DiabloIIRealmServer"), new NetworkModule(), new DiabloIIRealmServerModule());
 
             return;
         }
 
         private static void Stop()
         {
-            Runner.Stop();
+            _injectionKernel.Dispose();
 
             return;
         }

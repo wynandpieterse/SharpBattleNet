@@ -47,10 +47,10 @@ namespace SharpBattleNet.Framework.Networking
     {
         public override void Load()
         {
-            Bind<ITCPListenerFactory>().To<TCPListenerFactory>();
+            Bind<ITCPListenerFactory>().To<TCPListenerFactory>().InSingletonScope();
 
-            Bind<ITCPConnectionFactory>().To<TCPConnectionFactory>();
-            Bind<IUDPConnectionFactory>().To<UDPConnectionFactory>();
+            Bind<ITCPConnectionFactory>().To<TCPConnectionFactory>().InSingletonScope();
+            Bind<IUDPConnectionFactory>().To<UDPConnectionFactory>().InSingletonScope();
 
             return;
         }

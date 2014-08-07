@@ -43,6 +43,8 @@ namespace SharpBattleNet.Framework.Networking.Server.Details
 
     internal sealed class TCPListener : ITCPListener
     {
+        private readonly long ListenBacklog = 64;
+
         private Action<Socket> _acceptedCallback = null;
 
         private Socket _listenSocket = null;
@@ -61,11 +63,19 @@ namespace SharpBattleNet.Framework.Networking.Server.Details
         {
             Guard.AgainstNull(socketEvent);
 
-            _logger.Warn("Connection from {0} was bad. Stated socket reason is : {1}", socketEvent.AcceptSocket.RemoteEndPoint, socketEvent.SocketError);
+            _logger.Warn("Connection from {0} was bad on listener {1}. Stated socket reason is : {2}", socketEvent.AcceptSocket.RemoteEndPoint, _listenSocket.LocalEndPoint, socketEvent.SocketError);
 
-            socketEvent.AcceptSocket.Close();
+            try
+            {
+                socketEvent.AcceptSocket.Close();
+                _socketEventBag.Add(socketEvent);
+            }
+            catch
+            {
+                // We swallow the exception here because this was a bad accept anyway. So if cant close the socket, or add it to the bag, let the GC
+                // deal with it and free it before it breaks something else.
+            }
 
-            _socketEventBag.Add(socketEvent);
 
             return;
         }
@@ -74,7 +84,7 @@ namespace SharpBattleNet.Framework.Networking.Server.Details
         {
             Guard.AgainstNull(socketEvent);
 
-            _logger.Debug("Got new connection from {0}", socketEvent.AcceptSocket.RemoteEndPoint);
+            _logger.Debug("Got new connection from {0} on listener {1}", socketEvent.AcceptSocket.RemoteEndPoint, _listenSocket.LocalEndPoint);
 
             StartAccepting();
 
@@ -85,7 +95,24 @@ namespace SharpBattleNet.Framework.Networking.Server.Details
             }
             else
             {
-                _acceptedCallback(socketEvent.AcceptSocket);
+                try
+                {
+                    _acceptedCallback(socketEvent.AcceptSocket);
+                }
+                catch (Exception ex)
+                {
+                    _logger.DebugException(string.Format("Exception raised inside accept callback for listener {0}", _listenSocket.LocalEndPoint), ex);
+
+                    // In case the socket is by some magical chance still open, close it.
+                    try
+                    {
+                        socketEvent.AcceptSocket.Close();
+                    }
+                    catch
+                    {
+                        // No need to worry about this, it's gone in anycase.
+                    }
+                }
 
                 socketEvent.AcceptSocket = null;
                 _socketEventBag.Add(socketEvent);
@@ -105,7 +132,7 @@ namespace SharpBattleNet.Framework.Networking.Server.Details
 
         private SocketAsyncEventArgs ConstructAcceptOperation()
         {
-            SocketAsyncEventArgs socketEvent = null;
+            SocketAsyncEventArgs socketEvent = new SocketAsyncEventArgs();
 
             socketEvent.Completed += AsynchronousAccept;
 
@@ -122,10 +149,17 @@ namespace SharpBattleNet.Framework.Networking.Server.Details
                 socketEvent = ConstructAcceptOperation();
             }
 
-            willRaiseEvent = _listenSocket.AcceptAsync(socketEvent);
-            if (false == willRaiseEvent)
+            try
             {
-                ProcessAccept(socketEvent);
+                willRaiseEvent = _listenSocket.AcceptAsync(socketEvent);
+                if (false == willRaiseEvent)
+                {
+                    ProcessAccept(socketEvent);
+                }
+            }
+            catch (ObjectDisposedException ex)
+            {
+                _logger.Debug("Object disposed exception. Usually happens when program closes and network loop still runs.", ex);
             }
 
             return;
@@ -147,7 +181,7 @@ namespace SharpBattleNet.Framework.Networking.Server.Details
                 _listenSocket = new Socket(address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
                 _listenSocket.Bind(address);
-                _listenSocket.Listen(64);
+                _listenSocket.Listen((int)ListenBacklog);
 
                 _logger.Debug("Started new TCP listener on {0}", address);
 

@@ -2,20 +2,11 @@ namespace SharpBattleNet.Servers.BattleNetServer
 {
     using System;
     using System.Reflection;
-    using System.Linq;
-    using System.Text;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
-
-    using SharpBattleNet;
-    using SharpBattleNet.Framework;
-    using SharpBattleNet.Framework.Extensions;
+    using Framework;
+    using Framework.Extensions;
     using Ninject;
-    using SharpBattleNet.Framework.Networking;
-    using SharpBattleNet.Server.BattleNetServer;
-    using System.Diagnostics;
+    using Framework.Networking;
+    using Server.BattleNetServer;
 
     internal static class Program
     {
@@ -26,7 +17,7 @@ namespace SharpBattleNet.Servers.BattleNetServer
             Console.WriteLine(@"    _  _   ____        _   _   _         _   _      _    ");
             Console.WriteLine(@"  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_  ");
             Console.WriteLine(@" |_  .. _ |  _ \ / _` | __| __| |/ _ \  |  \| |/ _ \ __| ");
-            Console.WriteLine(@" |_      _| |_) | (_| | |_| |_| |  __/ _| |\  |  __/ |_  ");
+            Console.WriteLine(@" |_      _| |_) | (_| | |_| |_| |  __/_ | |\  |  __/ |_  ");
             Console.WriteLine(@"   |_||_| |____/ \__,_|\__|\__|_|\___(_)_ | \_|\___|\__| ");
 
             Console.WriteLine();
@@ -40,7 +31,7 @@ namespace SharpBattleNet.Servers.BattleNetServer
         {
             var currentAssembly = Assembly.GetExecutingAssembly();
 
-            Console.Title = String.Format("{ 0} - {1}", currentAssembly.GetAssemblyTitle(), currentAssembly.GetAssemblyFileVersion());
+            Console.Title = string.Format("{0} - {1}", currentAssembly.GetAssemblyTitle(), currentAssembly.GetAssemblyFileVersion());
             Console.WindowWidth = 120;
             Console.WindowHeight = 40;
 
@@ -80,8 +71,7 @@ namespace SharpBattleNet.Servers.BattleNetServer
             return;
         }
 
-        [Conditional("DEBUG")]
-        private static void DebugMain(string[] args)
+        private static void Run(string[] args)
         {
             Start(args);
             Pause();
@@ -90,14 +80,11 @@ namespace SharpBattleNet.Servers.BattleNetServer
             return;
         }
 
-        [Conditional("RELEASE")]
-        private static void ReleaseMain(string[] args)
+        private static void GuardedRun(string[] args)
         {
             try
             {
-                Start(args);
-                Pause();
-                Stop();
+                Run(args);
             }
             catch (Exception ex)
             {
@@ -115,8 +102,11 @@ namespace SharpBattleNet.Servers.BattleNetServer
 
         private static void Main(string[] args)
         {
-            DebugMain(args);
-            ReleaseMain(args);
+            #if DEBUG == true
+            Run(args);
+            #else
+            GuardedRun(args);
+            #endif
 
             return;
         }

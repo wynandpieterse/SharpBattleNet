@@ -3,29 +3,15 @@
     using System;
     using System.Reflection;
     using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
 
     using Ninject;
     using Ninject.Modules;
-    using Ninject.Activation;
-
-    using Nini;
     using Nini.Config;
-    using Nini.Ini;
-    using Nini.Util;
 
     using NLog;
     using NLog.Targets;
     using NLog.Config;
-
-    using SharpBattleNet;
-    using SharpBattleNet.Framework;
-    using SharpBattleNet.Framework.Extensions;
+    using SharpBattleNet.Framework.Utilities.Debugging;
 
     public sealed class FrameworkModule : NinjectModule
     {
@@ -35,6 +21,9 @@
 
         public FrameworkModule(string applicationName)
         {
+            Guard.AgainstNull(applicationName);
+            Guard.AgainstEmptyString(applicationName);
+
             _applicationName = applicationName;
 
             return;
@@ -42,14 +31,9 @@
 
         private void ConfigureWriteDirectory()
         {
-            Assembly entryAssembly = null;
-
-            entryAssembly = Assembly.GetEntryAssembly();
-
             _writeDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "SharpBattleNet");
             _writeDirectory = Path.Combine(_writeDirectory, _applicationName);
 
-            // Check for exceptions here, please
             Directory.CreateDirectory(_writeDirectory);
 
             return;
@@ -60,7 +44,6 @@
             string configurationDirectory = Path.Combine(_writeDirectory, "Configuration");
             string configurationFilename = Path.Combine(configurationDirectory, String.Format("{0}.ini", _applicationName));
 
-            // Check for exceptions here, please
             Directory.CreateDirectory(configurationDirectory);
 
             // check to see if configuration file already exist there
@@ -124,7 +107,6 @@
             string logDate = String.Format("{0}-{1}-{2}-{3}-{4}-{5}", currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Second);
             string logFilename = Path.Combine(logDirectory, String.Format("Log-{0}.log", logDate));
 
-            // Check for exceptions here please
             Directory.CreateDirectory(logDirectory);
 
             var fileTarget = new FileTarget();

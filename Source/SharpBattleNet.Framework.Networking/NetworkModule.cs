@@ -34,14 +34,17 @@ namespace SharpBattleNet.Framework.Networking
 {
     #region Usings
     using System;
-
     using Ninject.Modules;
+    using SharpBattleNet.Framework.Networking.Server;
+    using SharpBattleNet.Framework.Networking.Server.Details;
     #endregion
 
     public sealed class NetworkModule : NinjectModule
     {
         public override void Load()
         {
+            Bind<ITCPListener>().To<TCPListener>();
+
             return;
         }
     }

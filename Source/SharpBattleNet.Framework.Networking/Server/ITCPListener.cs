@@ -34,9 +34,12 @@ namespace SharpBattleNet.Framework.Networking.Server
 {
     #region Usings
     using System;
+    using System.Net;
+    using System.Net.Sockets;
     #endregion
 
-    public interface IListener
+    public interface ITCPListener
     {
+        void Start(IPEndPoint address, Action<Socket> acceptedCallback);
     }
 }

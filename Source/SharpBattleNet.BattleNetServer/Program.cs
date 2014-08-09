@@ -72,7 +72,7 @@ namespace SharpBattleNet.MasterServer
 
             PrintHeader(currentAssembly);
 
-            _injectionKernel = new StandardKernel(new FrameworkModule("BattleNetServer"), new MasterServerModule());
+            _injectionKernel = new StandardKernel(new FrameworkModule("MasterServer"), new MasterServerModule());
 
             return;
         }

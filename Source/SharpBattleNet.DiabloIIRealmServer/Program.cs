@@ -123,13 +123,19 @@ namespace SharpBattleNet.Servers.DiabloIIRealmServer
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Internal server error:");
+                // Can't really use NLogger here because I dont know if it was configured correctly
+                // by this time
+                Console.WriteLine();
+                Console.WriteLine("INTERNAL SERVER ERROR:");
                 Console.WriteLine(" - {0}", ex.Message);
 
                 if (null != ex.InnerException)
                 {
                     Console.WriteLine(" - {0}", ex.InnerException.Message);
                 }
+
+                Console.WriteLine();
+                Pause();
             }
 
             return;

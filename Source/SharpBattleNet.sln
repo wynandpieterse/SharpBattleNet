@@ -16,8 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{5E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{F9C13DB9-49FB-4909-8078-10BB0434DEDF}"
 	ProjectSection(SolutionItems) = preProject
-		..\Configuration\BattleNetServer.ini = ..\Configuration\BattleNetServer.ini
 		..\Configuration\DiabloIIRealmServer.ini = ..\Configuration\DiabloIIRealmServer.ini
+		..\Configuration\MasterServer.ini = ..\Configuration\MasterServer.ini
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Servers", "Servers", "{EA306AEF-D55C-4C28-ABD6-C3F0EF804138}"

@@ -101,21 +101,21 @@ namespace SharpBattleNet.Framework
                     try
                     {
                         // copy configuration file over
-                        File.Copy(string.Format("../../../Configuration/{0}.ini", _applicationName), configurationFilename);
+                        File.Copy(string.Format("../Configuration/{0}.ini", _applicationName), configurationFilename);
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine("Failed to copy over configuration to the specified application directory. Using default!!!");
                         Console.WriteLine(ex.Message);
 
-                        configurationFilename = string.Format("../../../Configuration/{0}.ini");
+                        configurationFilename = string.Format("../Configuration/{0}.ini");
                     }
                 }
             }
             else
             {
                 // If we failed to create the write directory, use the default configuration.
-                configurationFilename = string.Format("../../../Configuration/{0}.ini", _applicationName);
+                configurationFilename = string.Format("../Configuration/{0}.ini", _applicationName);
             }
 
             Bind<IConfigSource>().ToMethod(context => new IniConfigSource(configurationFilename)).InSingletonScope();

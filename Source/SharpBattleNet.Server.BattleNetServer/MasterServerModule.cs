@@ -30,20 +30,21 @@
 //
 #endregion
 
-namespace SharpBattleNet.Server.BattleNetServer
+namespace SharpBattleNet.Server.MasterServer
 {
     #region Usings
     using System;
 
     using Ninject.Modules;
-    using SharpBattleNet.Server.BattleNetServer.Server;
+    using SharpBattleNet.Server.MasterServer.Server;
+    using SharpBattleNet.Server.MasterServer.Server.Details;
     #endregion
 
-    public sealed class BattleNetServerModule : NinjectModule
+    public sealed class MasterServerModule : NinjectModule
     {
         public override void Load()
         {
-            Bind<IBattleNetServer>().To<BattleNetServer>();
+            Bind<IMasterServerProgram>().To<MasterServerProgram>();
 
             return;
         }

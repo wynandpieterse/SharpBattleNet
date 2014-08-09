@@ -30,7 +30,7 @@
 //
 #endregion
 
-namespace SharpBattleNet.Servers.BattleNetServer
+namespace SharpBattleNet.MasterServer
 {
     #region Usings
     using System;
@@ -40,7 +40,7 @@ namespace SharpBattleNet.Servers.BattleNetServer
 
     using SharpBattleNet.Framework;
     using SharpBattleNet.Framework.Utilities.Extensions;
-    using SharpBattleNet.Server.BattleNetServer;
+    using SharpBattleNet.Server.MasterServer;
     #endregion
 
     internal static class Program
@@ -72,7 +72,7 @@ namespace SharpBattleNet.Servers.BattleNetServer
 
             PrintHeader(currentAssembly);
 
-            _injectionKernel = new StandardKernel(new FrameworkModule("BattleNetServer"), new BattleNetServerModule());
+            _injectionKernel = new StandardKernel(new FrameworkModule("MasterServer"), new MasterServerModule());
 
             return;
         }
@@ -123,13 +123,19 @@ namespace SharpBattleNet.Servers.BattleNetServer
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Internal server error:");
+                // Can't really use NLogger here because I dont know if it was configured correctly
+                // by this time
+                Console.WriteLine();
+                Console.WriteLine("INTERNAL SERVER ERROR:");
                 Console.WriteLine(" - {0}", ex.Message);
 
                 if (null != ex.InnerException)
                 {
                     Console.WriteLine(" - {0}", ex.InnerException.Message);
                 }
+
+                Console.WriteLine();
+                Pause();
             }
 
             return;

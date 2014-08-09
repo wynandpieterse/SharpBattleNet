@@ -36,12 +36,15 @@ namespace SharpBattleNet.Server.BattleNetServer
     using System;
 
     using Ninject.Modules;
+    using SharpBattleNet.Server.BattleNetServer.Server;
     #endregion
 
     public sealed class BattleNetServerModule : NinjectModule
     {
         public override void Load()
         {
+            Bind<IBattleNetServer>().To<BattleNetServer>();
+
             return;
         }
     }

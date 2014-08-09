@@ -38,6 +38,6 @@ namespace SharpBattleNet.Framework.Networking.Connections.TCP
 
     public interface ITCPConnectionFactory
     {
-        ITCPConnection Create();
+        IUDPConnection Create();
     }
 }

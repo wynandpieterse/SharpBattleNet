@@ -220,16 +220,9 @@ namespace SharpBattleNet.Framework
 
         public override void Load()
         {
-            try
-            {
-                ConfigureWriteDirectory();
-                ConfigureConfiguration();
-                ConfigureLogging();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to configure framework. Can't continue. See internal exception for more details", ex);
-            }
+            ConfigureWriteDirectory();
+            ConfigureConfiguration();
+            ConfigureLogging();
 
             return;
         }

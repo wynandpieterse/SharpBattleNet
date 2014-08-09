@@ -67,8 +67,8 @@ namespace SharpBattleNet.Servers.DiabloIIRealmServer
             var currentAssembly = Assembly.GetExecutingAssembly();
 
             Console.Title = String.Format("{0} - {1}", currentAssembly.GetAssemblyTitle(), currentAssembly.GetAssemblyFileVersion());
-            Console.WindowWidth = 120;
-            Console.WindowHeight = 40;
+            Console.WindowWidth = 180;
+            Console.WindowHeight = 60;
 
             PrintHeader(currentAssembly);
 

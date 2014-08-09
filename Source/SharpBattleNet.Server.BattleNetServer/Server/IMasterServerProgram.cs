@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharpBattleNet.Server.MasterServer.Server
 {
-    public interface IMasterServer
+    public interface IMasterServerProgram
     {
         void Start();
         void Stop();

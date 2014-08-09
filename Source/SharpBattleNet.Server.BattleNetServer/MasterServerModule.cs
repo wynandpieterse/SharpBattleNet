@@ -37,13 +37,14 @@ namespace SharpBattleNet.Server.MasterServer
 
     using Ninject.Modules;
     using SharpBattleNet.Server.MasterServer.Server;
+    using SharpBattleNet.Server.MasterServer.Server.Details;
     #endregion
 
     public sealed class MasterServerModule : NinjectModule
     {
         public override void Load()
         {
-            Bind<IMasterServer>().To<BattleNetServer>();
+            Bind<IMasterServerProgram>().To<MasterServerProgram>();
 
             return;
         }

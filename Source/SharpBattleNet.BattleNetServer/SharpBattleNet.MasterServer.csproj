@@ -57,6 +57,7 @@
     <BaseIntermediateOutputPath>../../Intermediate/Code/Binaries/SharpBattleNet.BattleNetServer/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>BattleNet.ico</ApplicationIcon>

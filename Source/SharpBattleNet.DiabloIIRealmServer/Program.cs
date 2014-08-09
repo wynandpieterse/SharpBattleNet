@@ -39,7 +39,7 @@ namespace SharpBattleNet.Servers.DiabloIIRealmServer
     using Ninject;
 
     using SharpBattleNet.Framework;
-    using SharpBattleNet.Framework.Extensions;
+    using SharpBattleNet.Framework.Utilities.Extensions;
     using SharpBattleNet.Server.DiabloIIRealmServer;
     #endregion
 

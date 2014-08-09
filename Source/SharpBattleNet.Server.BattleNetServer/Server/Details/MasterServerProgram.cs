@@ -10,12 +10,13 @@ namespace SharpBattleNet.Server.MasterServer.Server.Details
     {
         public void Start()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Hello, World");
+            return;
         }
 
         public void Stop()
         {
-            throw new NotImplementedException();
+            return;
         }
     }
 }

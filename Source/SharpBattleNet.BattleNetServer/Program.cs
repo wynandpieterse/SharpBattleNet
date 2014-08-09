@@ -41,11 +41,13 @@ namespace SharpBattleNet.MasterServer
     using SharpBattleNet.Framework;
     using SharpBattleNet.Framework.Utilities.Extensions;
     using SharpBattleNet.Server.MasterServer;
+    using SharpBattleNet.Server.MasterServer.Server;
     #endregion
 
     internal static class Program
     {
         private static IKernel _injectionKernel = null;
+        private static IMasterServerProgram _server = null;
 
         private static void PrintHeader(Assembly currentAssembly)
         {
@@ -73,12 +75,17 @@ namespace SharpBattleNet.MasterServer
             PrintHeader(currentAssembly);
 
             _injectionKernel = new StandardKernel(new FrameworkModule("MasterServer"), new MasterServerModule());
+            _server = _injectionKernel.Get<IMasterServerProgram>();
+
+            _server.Start();
 
             return;
         }
 
         private static void Stop()
         {
+            _server.Stop();
+
             _injectionKernel.Dispose();
 
             return;

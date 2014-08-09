@@ -26,11 +26,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Framework.Ne
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Framework", "SharpBattleNet.Framework\SharpBattleNet.Framework.csproj", "{FDB8D2C5-FD13-40E7-B629-CE71A68BB7B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.BattleNetServer", "SharpBattleNet.BattleNetServer\SharpBattleNet.BattleNetServer.csproj", "{D40EE1B5-3BB9-4EF6-AFEB-825379914887}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.MasterServer", "SharpBattleNet.BattleNetServer\SharpBattleNet.MasterServer.csproj", "{D40EE1B5-3BB9-4EF6-AFEB-825379914887}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.DiabloIIRealmServer", "SharpBattleNet.DiabloIIRealmServer\SharpBattleNet.DiabloIIRealmServer.csproj", "{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Server.BattleNetServer", "SharpBattleNet.Server.BattleNetServer\SharpBattleNet.Server.BattleNetServer.csproj", "{51A40588-DE5A-4EC8-8809-5C27C4851E52}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Server.MasterServer", "SharpBattleNet.Server.BattleNetServer\SharpBattleNet.Server.MasterServer.csproj", "{51A40588-DE5A-4EC8-8809-5C27C4851E52}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Server.DiabloIIRealmServer", "SharpBattleNet.Server.DiabloIIRealmServer\SharpBattleNet.Server.DiabloIIRealmServer.csproj", "{72992102-9792-4899-B500-C0DC47736529}"
 EndProject

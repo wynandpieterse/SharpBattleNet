@@ -30,7 +30,7 @@
 //
 #endregion
 
-namespace SharpBattleNet.Servers.BattleNetServer
+namespace SharpBattleNet.Servers.MasterServer
 {
     #region Usings
     using System;
@@ -72,7 +72,7 @@ namespace SharpBattleNet.Servers.BattleNetServer
 
             PrintHeader(currentAssembly);
 
-            _injectionKernel = new StandardKernel(new FrameworkModule("BattleNetServer"), new BattleNetServerModule());
+            _injectionKernel = new StandardKernel(new FrameworkModule("BattleNetServer"), new MasterServerModule());
 
             return;
         }
@@ -130,6 +130,8 @@ namespace SharpBattleNet.Servers.BattleNetServer
                 {
                     Console.WriteLine(" - {0}", ex.InnerException.Message);
                 }
+
+                Pause();
             }
 
             return;

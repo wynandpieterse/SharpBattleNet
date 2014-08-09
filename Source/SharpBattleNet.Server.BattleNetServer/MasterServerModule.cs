@@ -39,11 +39,11 @@ namespace SharpBattleNet.Server.BattleNetServer
     using SharpBattleNet.Server.BattleNetServer.Server;
     #endregion
 
-    public sealed class BattleNetServerModule : NinjectModule
+    public sealed class MasterServerModule : NinjectModule
     {
         public override void Load()
         {
-            Bind<IBattleNetServer>().To<BattleNetServer>();
+            Bind<IMasterServer>().To<BattleNetServer>();
 
             return;
         }

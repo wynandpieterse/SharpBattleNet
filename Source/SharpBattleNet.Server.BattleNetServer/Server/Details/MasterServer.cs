@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharpBattleNet.Server.BattleNetServer.Server
+namespace SharpBattleNet.Server.BattleNetServer.Server.Details
 {
-    public interface IBattleNetServer
+    internal sealed class MasterServer : IMasterServer
     {
-        void Start();
-        void Stop();
     }
 }

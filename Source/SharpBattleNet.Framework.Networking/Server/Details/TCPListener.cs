@@ -36,42 +36,130 @@ namespace SharpBattleNet.Framework.Networking.Server.Details
     using System;
     using System.Net;
     using System.Net.Sockets;
+    using NLog;
     using SharpBattleNet.Framework.Utilities.Debugging;
+    using SharpBattleNet.Framework.Networking.Utilities;
     #endregion
 
     internal sealed class TCPListener : ITCPListener
     {
+        private readonly long ListenBacklog = 64;
+
         private Action<Socket> _acceptedCallback = null;
 
         private Socket _listenSocket = null;
+        private SocketEventBag _socketEventBag = null;
+
+        private Logger _logger = LogManager.GetCurrentClassLogger();
 
         public TCPListener()
         {
+            _socketEventBag = new SocketEventBag();
+
             return;
         }
 
-        private void OnAccepted(object sender, SocketAsyncEventArgs e)
+        private void HandleBadAccept(SocketAsyncEventArgs socketEvent)
         {
-            if (SocketError.Success != e.SocketError)
-            {
+            Guard.AgainstNull(socketEvent);
 
+            _logger.Warn("Connection from {0} was bad on listener {1}. Stated socket reason is : {2}", socketEvent.AcceptSocket.RemoteEndPoint, _listenSocket.LocalEndPoint, socketEvent.SocketError);
+
+            try
+            {
+                socketEvent.AcceptSocket.Close();
+                _socketEventBag.Add(socketEvent);
+            }
+            catch
+            {
+                // We swallow the exception here because this was a bad accept anyway. So if cant close the socket, or add it to the bag, let the GC
+                // deal with it and free it before it breaks something else.
+            }
+
+
+            return;
+        }
+
+        private void ProcessAccept(SocketAsyncEventArgs socketEvent)
+        {
+            Guard.AgainstNull(socketEvent);
+
+            _logger.Debug("Got new connection from {0} on listener {1}", socketEvent.AcceptSocket.RemoteEndPoint, _listenSocket.LocalEndPoint);
+
+            StartAccepting();
+
+            if (socketEvent.SocketError != SocketError.Success)
+            {
+                HandleBadAccept(socketEvent);
+                return;
             }
             else
             {
-                _acceptedCallback(e.AcceptSocket);
-                e.AcceptSocket = null;
+                try
+                {
+                    _acceptedCallback(socketEvent.AcceptSocket);
+                }
+                catch (Exception ex)
+                {
+                    _logger.DebugException(string.Format("Exception raised inside accept callback for listener {0}", _listenSocket.LocalEndPoint), ex);
 
-                StartAccepting(e);
+                    // In case the socket is by some magical chance still open, close it.
+                    try
+                    {
+                        socketEvent.AcceptSocket.Close();
+                    }
+                    catch
+                    {
+                        // No need to worry about this, it's gone in anycase.
+                    }
+                }
+
+                socketEvent.AcceptSocket = null;
+                _socketEventBag.Add(socketEvent);
             }
 
             return;
         }
 
-        private void StartAccepting(SocketAsyncEventArgs e)
+        private void AsynchronousAccept(object sender, SocketAsyncEventArgs socketEvent)
         {
-            while (false == _listenSocket.AcceptAsync(e))
+            Guard.AgainstNull(socketEvent);
+
+            ProcessAccept(socketEvent);
+
+            return;
+        }
+
+        private SocketAsyncEventArgs ConstructAcceptOperation()
+        {
+            SocketAsyncEventArgs socketEvent = new SocketAsyncEventArgs();
+
+            socketEvent.Completed += AsynchronousAccept;
+
+            return socketEvent;
+        }
+
+        private void StartAccepting()
+        {
+            SocketAsyncEventArgs socketEvent = null;
+            bool willRaiseEvent = false;
+
+            if (false == _socketEventBag.TryTake(out socketEvent))
             {
-                OnAccepted(_listenSocket, e);
+                socketEvent = ConstructAcceptOperation();
+            }
+
+            try
+            {
+                willRaiseEvent = _listenSocket.AcceptAsync(socketEvent);
+                if (false == willRaiseEvent)
+                {
+                    ProcessAccept(socketEvent);
+                }
+            }
+            catch (ObjectDisposedException ex)
+            {
+                _logger.Debug("Object disposed exception. Usually happens when program closes and network loop still runs.", ex);
             }
 
             return;
@@ -81,33 +169,24 @@ namespace SharpBattleNet.Framework.Networking.Server.Details
 
         public void Start(IPEndPoint address, Action<Socket> acceptedCallback)
         {
-            SocketAsyncEventArgs socketEvents = null;
-
             Guard.AgainstNull(address);
             Guard.AgainstNull(acceptedCallback);
 
-            _acceptedCallback = acceptedCallback;
-
-            socketEvents = new SocketAsyncEventArgs();
-            socketEvents.Completed += OnAccepted;
-
-            if (address.AddressFamily == AddressFamily.InterNetworkV6)
+            if (address.AddressFamily != AddressFamily.InterNetwork || address.AddressFamily != AddressFamily.InterNetworkV6)
             {
-                _listenSocket = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
-            }
-            else if(address.AddressFamily == AddressFamily.InterNetwork)
-            {
-                _listenSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                throw new InvalidOperationException("TCP listener currently only support IPv4 and IPv6 sockets.");
             }
             else
             {
-                throw new InvalidOperationException("TCPListener only support IPv4 and IPv6 sockets.");
+                _listenSocket = new Socket(address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+
+                _listenSocket.Bind(address);
+                _listenSocket.Listen((int)ListenBacklog);
+
+                _logger.Debug("Started new TCP listener on {0}", address);
+
+                StartAccepting();
             }
-
-            _listenSocket.Bind(address);
-            _listenSocket.Listen(16);
-
-            StartAccepting(socketEvents);
 
             return;
         }

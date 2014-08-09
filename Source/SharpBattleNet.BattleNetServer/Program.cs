@@ -39,7 +39,7 @@ namespace SharpBattleNet.Servers.BattleNetServer
     using Ninject;
 
     using SharpBattleNet.Framework;
-    using SharpBattleNet.Framework.Extensions;
+    using SharpBattleNet.Framework.Utilities.Extensions;
     using SharpBattleNet.Server.BattleNetServer;
     #endregion
 

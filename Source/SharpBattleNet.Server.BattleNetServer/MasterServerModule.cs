@@ -30,13 +30,13 @@
 //
 #endregion
 
-namespace SharpBattleNet.Server.BattleNetServer
+namespace SharpBattleNet.Server.MasterServer
 {
     #region Usings
     using System;
 
     using Ninject.Modules;
-    using SharpBattleNet.Server.BattleNetServer.Server;
+    using SharpBattleNet.Server.MasterServer.Server;
     #endregion
 
     public sealed class MasterServerModule : NinjectModule

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharpBattleNet.Server.BattleNetServer.Server.Details
+namespace SharpBattleNet.Server.MasterServer.Server.Details
 {
     internal sealed class MasterServer : IMasterServer
     {

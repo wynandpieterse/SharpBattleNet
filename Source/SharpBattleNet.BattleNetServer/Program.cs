@@ -30,7 +30,7 @@
 //
 #endregion
 
-namespace SharpBattleNet.Servers.MasterServer
+namespace SharpBattleNet.MasterServer
 {
     #region Usings
     using System;
@@ -40,7 +40,7 @@ namespace SharpBattleNet.Servers.MasterServer
 
     using SharpBattleNet.Framework;
     using SharpBattleNet.Framework.Utilities.Extensions;
-    using SharpBattleNet.Server.BattleNetServer;
+    using SharpBattleNet.Server.MasterServer;
     #endregion
 
     internal static class Program

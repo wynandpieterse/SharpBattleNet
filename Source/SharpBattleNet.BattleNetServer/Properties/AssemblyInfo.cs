@@ -30,10 +30,13 @@
 //
 #endregion
 
+#region Usings
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+#endregion
 
+#region Assembly Definitions
 [assembly: AssemblyTitle("SharpBattle.net - Master Server")]
 [assembly: AssemblyDescription("This is the main server executable that needs to be run to host most of the services of Battle.net")]
 [assembly: AssemblyConfiguration("")]
@@ -46,4 +49,4 @@ using System.Runtime.InteropServices;
 [assembly: Guid("15cfeb6c-439d-4da4-9abe-f50568be5306")]
 [assembly: AssemblyVersion("0.0.8.0")]
 [assembly: AssemblyFileVersion("0.0.8.0")]
-
+#endregion

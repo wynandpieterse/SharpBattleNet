@@ -30,10 +30,13 @@
 //
 #endregion
 
+#region Usings
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+#endregion
 
+#region Assembly Definitions
 [assembly: AssemblyTitle("SharpBattle.net - Diablo II Realm Server")]
 [assembly: AssemblyDescription("Hosts a realm server for Diablo II on SharpBattle.net")]
 [assembly: AssemblyConfiguration("")]
@@ -46,4 +49,4 @@ using System.Runtime.InteropServices;
 [assembly: Guid("3E1BE83B-484F-44AC-8915-0DB613DCBAB6")]
 [assembly: AssemblyVersion("0.0.8.0")]
 [assembly: AssemblyFileVersion("0.0.8.0")]
-
+#endregion

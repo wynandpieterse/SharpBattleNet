@@ -30,7 +30,7 @@
 //
 #endregion
 
-namespace SharpBattleNet.Server.DiabloIIRealmServer.Server.Details
+namespace SharpBattleNet.Server.DiabloIIRealmServer
 {
     #region Usings
     using System;

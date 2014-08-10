@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FrameworkProgram.cs" />
+    <Compile Include="Server\IServer.cs" />
     <Compile Include="Utilities\Extensions\AssemblyExtensions.cs" />
     <Compile Include="Utilities\Debugging\Guard.cs" />
     <Compile Include="FrameworkModule.cs" />

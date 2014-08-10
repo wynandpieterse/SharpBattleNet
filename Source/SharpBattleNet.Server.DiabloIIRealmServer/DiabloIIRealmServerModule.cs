@@ -36,6 +36,7 @@ namespace SharpBattleNet.Server.DiabloIIRealmServer
     using System;
 
     using Ninject.Modules;
+    using SharpBattleNet.Framework.Server;
     using SharpBattleNet.Server.DiabloIIRealmServer.Server;
     using SharpBattleNet.Server.DiabloIIRealmServer.Server.Details;
     #endregion
@@ -44,7 +45,7 @@ namespace SharpBattleNet.Server.DiabloIIRealmServer
     {
         public override void Load()
         {
-            Bind<IDiabloIIRealmServerProgram>().To<DiabloIIRealmServerProgram>();
+            Bind<IServer>().To<DiabloIIRealmServerProgram>();
 
             return;
         }

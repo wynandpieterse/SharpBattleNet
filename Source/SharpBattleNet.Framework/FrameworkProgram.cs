@@ -39,6 +39,7 @@ namespace SharpBattleNet.Framework
     using Ninject;
 
     using SharpBattleNet.Framework;
+    using SharpBattleNet.Framework.Server;
     using SharpBattleNet.Framework.Utilities.Extensions;
     using SharpBattleNet.Framework.Utilities.Debugging;
     #endregion
@@ -46,6 +47,7 @@ namespace SharpBattleNet.Framework
     public sealed class FrameworkProgram
     {
         private IKernel _injectionKernel = null;
+        private IServer _server = null;
 
         private void PrintHeader(Assembly currentAssembly)
         {
@@ -89,12 +91,23 @@ namespace SharpBattleNet.Framework
                 }
             }
 
+            _server = _injectionKernel.Get<IServer>();
+            _server.Start();
+
             return;
         }
 
         private void Stop()
         {
-            _injectionKernel.Dispose();
+            if (null != _server)
+            {
+                _server.Stop();
+            }
+
+            if (null != _injectionKernel)
+            {
+                _injectionKernel.Dispose();
+            }
 
             return;
         }

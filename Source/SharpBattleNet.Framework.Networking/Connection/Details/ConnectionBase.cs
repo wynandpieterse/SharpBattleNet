@@ -118,6 +118,21 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
 
         private void HandleReceive(SocketAsyncEventArgs socketEvent)
         {
+            if (socketEvent.BytesTransferred == 0)
+            {
+                // Zero means socket is closed
+                if (SocketType.Stream == Socket.SocketType)
+                {
+                    _logger.Info("Connection from {0} closed normally", Socket.RemoteEndPoint);
+                }
+                else if(SocketType.Dgram == Socket.SocketType)
+                {
+                    _logger.Info("Connection from {0} closed normally", socketEvent.RemoteEndPoint);
+                }
+
+                return;
+            }
+
             _logger.Info(Encoding.ASCII.GetString(socketEvent.Buffer, 0, socketEvent.BytesTransferred));
 
             StartRecieving();

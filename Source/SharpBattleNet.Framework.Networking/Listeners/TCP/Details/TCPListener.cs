@@ -189,8 +189,17 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
 
             _listener = new Socket(address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
-            _listener.Bind(address);
-            _listener.Listen(64);
+            try
+            {
+                _listener.Bind(address);
+                _listener.Listen(64);
+            }
+            catch (ObjectDisposedException ex)
+            {
+                _logger.Debug("Listener socket has been closed before even beginning accept operation", ex);
+
+                return;
+            }
 
             StartAccept();
             return;

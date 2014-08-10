@@ -41,6 +41,7 @@ namespace SharpBattleNet.Framework.Networking
     using SharpBattleNet.Framework.Networking.Connection.TCP;
     using SharpBattleNet.Framework.Networking.Connection.TCP.Details;
     using SharpBattleNet.Framework.Networking.Connection.UDP;
+    using SharpBattleNet.Framework.Networking.Connection.UDP.Details;
     using SharpBattleNet.Framework.Networking.Listeners.TCP;
     using SharpBattleNet.Framework.Networking.Listeners.TCP.Details;
     using SharpBattleNet.Framework.Networking.Listeners.UDP;
@@ -66,7 +67,7 @@ namespace SharpBattleNet.Framework.Networking
             Bind<IListenerTCPConnection>().To<ListenerTCPConnection>();
 
             Bind<IBindableUDPConnectionFactory>().ToFactory();
-            //Bind<IBindableUDPConnection>().To<BindableUDPConnection>();
+            Bind<IBindableUDPConnection>().To<BindableUDPConnection>();
 
             return;
         }

@@ -149,11 +149,50 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             socketEvent = RequestSocketEvent();
 
             Socket = new Socket(address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            Socket.Bind(new IPEndPoint(IPAddress.Any, 0));
 
-            if (false == Socket.ConnectAsync(socketEvent))
+            try
             {
-                ProcessConnect(socketEvent);
+                Socket.Bind(new IPEndPoint(IPAddress.Any, 0));
+            }
+            catch (ObjectDisposedException ex)
+            {
+                _logger.DebugException("Socket disposed before any operation was performed on it", ex);
+
+                _connectCallback(false);
+
+                return;
+            }
+            catch (SocketException ex)
+            {
+                _logger.WarnException("Socket failed to bind properly", ex);
+
+                _connectCallback(false);
+
+                return;
+            }
+
+            try
+            {
+                if (false == Socket.ConnectAsync(socketEvent))
+                {
+                    ProcessConnect(socketEvent);
+                }
+            }
+            catch (ObjectDisposedException ex)
+            {
+                _logger.DebugException("Socket disposed before connection could be performed on it", ex);
+
+                _connectCallback(false);
+
+                return;
+            }
+            catch (SocketException ex)
+            {
+                _logger.DebugException("Socket error on connect operation", ex);
+
+                _connectCallback(false);
+
+                return;
             }
 
             return;

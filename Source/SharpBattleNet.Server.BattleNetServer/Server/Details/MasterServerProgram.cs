@@ -34,10 +34,10 @@ namespace SharpBattleNet.Server.MasterServer.Server.Details
 {
     #region Usings
     using System;
-    using SharpBattleNet.Framework.Server;
+    using SharpBattleNet.Framework;
     #endregion
 
-    internal sealed class MasterServerProgram : IServer
+    internal sealed class MasterServerProgram : IProgram
     {
         public void Start()
         {

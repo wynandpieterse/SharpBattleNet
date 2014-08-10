@@ -34,10 +34,10 @@ namespace SharpBattleNet.Server.DiabloIIRealmServer.Server.Details
 {
     #region Usings
     using System;
-    using SharpBattleNet.Framework.Server;
+    using SharpBattleNet.Framework;
     #endregion
 
-    internal sealed class DiabloIIRealmServerProgram : IServer
+    internal sealed class DiabloIIRealmServerProgram : IProgram
     {
         public void Start()
         {

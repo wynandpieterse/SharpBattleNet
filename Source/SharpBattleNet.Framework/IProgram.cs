@@ -30,13 +30,13 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Server
+namespace SharpBattleNet.Framework
 {
     #region Usings
     using System;
     #endregion
 
-    public interface IServer
+    public interface IProgram
     {
         void Start();
         void Stop();

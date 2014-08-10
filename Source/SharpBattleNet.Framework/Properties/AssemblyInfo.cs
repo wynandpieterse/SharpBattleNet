@@ -1,7 +1,10 @@
-﻿using System.Reflection;
+﻿#region Usings
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+#endregion
 
+#region Assembly Definitions
 [assembly: AssemblyTitle("SharpBattle.net Server - Framework")]
 [assembly: AssemblyDescription("Hosts many services and interfaces that are used by most and all Server executables")]
 [assembly: AssemblyConfiguration("")]
@@ -14,4 +17,4 @@ using System.Runtime.InteropServices;
 [assembly: Guid("23DD8BF2-447D-4ED3-AE72-6CE22A38383E")]
 [assembly: AssemblyVersion("0.0.8.0")]
 [assembly: AssemblyFileVersion("0.0.8.0")]
-
+#endregion

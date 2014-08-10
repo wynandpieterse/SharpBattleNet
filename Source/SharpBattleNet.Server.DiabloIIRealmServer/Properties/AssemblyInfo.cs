@@ -1,7 +1,10 @@
-﻿using System.Reflection;
+﻿#region Usings
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+#endregion
 
+#region Assembly Definitions
 [assembly: AssemblyTitle("SharpBattle.net - Master Server Library")]
 [assembly: AssemblyDescription("Contains all the logic for hosting most if not all the services that is part of Battle.net")]
 [assembly: AssemblyConfiguration("")]
@@ -14,4 +17,4 @@ using System.Runtime.InteropServices;
 [assembly: Guid("8f15165b-30fd-4655-a7c0-af08c53c6876")]
 [assembly: AssemblyVersion("0.0.8.0")]
 [assembly: AssemblyFileVersion("0.0.8.0")]
-
+#endregion

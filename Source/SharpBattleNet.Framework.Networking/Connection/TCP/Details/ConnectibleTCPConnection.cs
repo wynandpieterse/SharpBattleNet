@@ -60,7 +60,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             return;
         }
 
-        private void SetupSocketEventForConnect(SocketAsyncEventArgs socketEvent)
+        private void RequestSocketEvent(SocketAsyncEventArgs socketEvent)
         {
             socketEvent.RemoteEndPoint = _connectionEndPoint;
             socketEvent.Completed += HandleConnectEvent;
@@ -68,7 +68,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             return;
         }
 
-        private void ReleaseSocketEvent(SocketAsyncEventArgs socketEvent)
+        private void RecycleSocketEvent(SocketAsyncEventArgs socketEvent)
         {
             socketEvent.RemoteEndPoint = null;
             socketEvent.Completed -= HandleConnectEvent;
@@ -89,7 +89,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
                 StartRecieving();
             }
 
-            ReleaseSocketEvent(socketEvent);
+            RecycleSocketEvent(socketEvent);
             return;
         }
 
@@ -117,7 +117,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
                 socketEvent = new SocketAsyncEventArgs();
             }
 
-            SetupSocketEventForConnect(socketEvent);
+            RequestSocketEvent(socketEvent);
 
             Socket = new Socket(address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             Socket.Bind(new IPEndPoint(IPAddress.Any, 0));

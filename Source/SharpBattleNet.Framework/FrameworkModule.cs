@@ -35,15 +35,12 @@ namespace SharpBattleNet.Framework
     #region Usings
     using System;
     using System.IO;
-
     using Ninject;
     using Ninject.Modules;
     using Nini.Config;
-
     using NLog;
     using NLog.Targets;
     using NLog.Config;
-
     using SharpBattleNet.Framework.Utilities.Debugging;
     #endregion
 
@@ -101,21 +98,21 @@ namespace SharpBattleNet.Framework
                     try
                     {
                         // copy configuration file over
-                        File.Copy(string.Format("../../../Configuration/{0}.ini", _applicationName), configurationFilename);
+                        File.Copy(string.Format("../Configuration/{0}.ini", _applicationName), configurationFilename);
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine("Failed to copy over configuration to the specified application directory. Using default!!!");
                         Console.WriteLine(ex.Message);
 
-                        configurationFilename = string.Format("../../../Configuration/{0}.ini");
+                        configurationFilename = string.Format("../Configuration/{0}.ini");
                     }
                 }
             }
             else
             {
                 // If we failed to create the write directory, use the default configuration.
-                configurationFilename = string.Format("../../../Configuration/{0}.ini", _applicationName);
+                configurationFilename = string.Format("../Configuration/{0}.ini", _applicationName);
             }
 
             Bind<IConfigSource>().ToMethod(context => new IniConfigSource(configurationFilename)).InSingletonScope();
@@ -220,16 +217,9 @@ namespace SharpBattleNet.Framework
 
         public override void Load()
         {
-            try
-            {
-                ConfigureWriteDirectory();
-                ConfigureConfiguration();
-                ConfigureLogging();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Failed to configure framework. Can't continue. See internal exception for more details", ex);
-            }
+            ConfigureWriteDirectory();
+            ConfigureConfiguration();
+            ConfigureLogging();
 
             return;
         }

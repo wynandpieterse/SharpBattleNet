@@ -1,4 +1,4 @@
-#region Header
+﻿#region Header
 //
 //    _  _   ____        _   _   _         _   _      _   
 //  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
@@ -30,30 +30,30 @@
 //
 #endregion
 
-namespace SharpBattleNet.MasterServer
+namespace SharpBattleNet.Server.DiabloIIRealmServer.Server.Details
 {
     #region Usings
     using System;
-    using Ninject;
+    using NLog;
     using SharpBattleNet.Framework;
-    using SharpBattleNet.Server.MasterServer;
     #endregion
 
-    internal static class Program
+    internal sealed class DiabloIIRealmServerProgram : IProgram
     {
-        private static int Main(string[] args)
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+        public void Start()
         {
-            FrameworkProgram program = new FrameworkProgram();
+            _logger.Info("Hello, World");
 
-            program.Configure = kernel =>
-                {
-                    kernel.Load<MasterServerModule>();
+            return;
+        }
 
-                    return "MasterServer";
-                };
+        public void Stop()
+        {
+            _logger.Info("Bye, World");
 
-            return program.Run(args);
+            return;
         }
     }
 }
-

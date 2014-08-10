@@ -30,55 +30,71 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Networking
+namespace SharpBattleNet.Framework.Networking.Connection.Details
 {
     #region Usings
     using System;
-    using Ninject.Modules;
-    using Ninject.Extensions.Factory;
+    using NLog;
+    using System.Net;
+    using System.Net.Sockets;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
-    using SharpBattleNet.Framework.Networking.Utilities.Collections.Details;
-    using SharpBattleNet.Framework.Networking.Connection.TCP;
-    using SharpBattleNet.Framework.Networking.Connection.UDP;
-    using SharpBattleNet.Framework.Networking.Listeners.TCP;
-    using SharpBattleNet.Framework.Networking.Listeners.UDP;
+    using SharpBattleNet.Framework.Utilities.Debugging;
     #endregion
 
-    public sealed class NetworkModule : NinjectModule
+    internal abstract class ConnectionBase : IConnection
     {
-        private void BindUtilities()
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly ISocketEventPool _socketEventBag = null;
+
+        protected Socket Socket { get; set; }
+
+        public ConnectionBase(ISocketEventPool socketEventBag)
         {
-            Bind<ISocketEventPool>().To<SocketEventPool>().InSingletonScope();
+            Guard.AgainstNull(socketEventBag);
+
+            _socketEventBag = socketEventBag;
 
             return;
         }
 
-        private void BindConnectionFactories()
+        public void Send(byte[] buffer, long bufferLenght = 0, EndPoint address = null)
         {
-            Bind<IConnectableTCPConnectionFactory>().ToFactory();
-            Bind<IListenerTCPConnectionFactory>().ToFactory();
+            Guard.AgainstNull(Socket);
+            Guard.AgainstNull(buffer);
 
-            Bind<IBindableUDPConnectionFactory>().ToFactory();
+            if (null != address)
+            {
+                if (0 == bufferLenght)
+                {
+                    Socket.SendTo(buffer, (int)buffer.LongLength, SocketFlags.None, address);
+                }
+                else
+                {
+                    Socket.SendTo(buffer, (int)bufferLenght, SocketFlags.None, address);
+                }
+            }
+            else
+            {
+                if (0 == bufferLenght)
+                {
+                    Socket.Send(buffer, (int)buffer.LongLength, SocketFlags.None);
+                }
+                else
+                {
+                    Socket.Send(buffer, (int)bufferLenght, SocketFlags.None);
+                }
+            }
 
             return;
         }
 
-        private void BindListeners()
+        protected void StartRecieving()
         {
-            Bind<ITCPListenerFactory>().ToFactory();
-            Bind<IUDPListenerFactory>().ToFactory();
+            Guard.AgainstNull(Socket);
 
-            return;
-        }
-
-        public override void Load()
-        {
-            BindUtilities();
-            BindConnectionFactories();
-            BindListeners();
+            _logger.Trace("Start receiving on local endpoint {0}", Socket.LocalEndPoint);
 
             return;
         }
     }
 }
-

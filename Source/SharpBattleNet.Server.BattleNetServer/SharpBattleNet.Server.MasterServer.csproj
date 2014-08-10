@@ -7,8 +7,8 @@
     <ProjectGuid>{51A40588-DE5A-4EC8-8809-5C27C4851E52}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharpBattleNet.Server.BattleNetServer</RootNamespace>
-    <AssemblyName>SharpBattleNet.Server.BattleNetServer</AssemblyName>
+    <RootNamespace>SharpBattleNet.Server.MasterServer</RootNamespace>
+    <AssemblyName>SharpBattleNet.Server.MasterServer</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\BinariesDebug\Libraries\</OutputPath>
+    <OutputPath>..\..\Intermediate\Code\Libraries\SharpBattleNet.Server.MasterServer\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,7 +28,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Binaries\Libraries\</OutputPath>
+    <OutputPath>..\..\Intermediate\Code\Libraries\SharpBattleNet.Server.MasterServer\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -55,8 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BattleNetServerModule.cs" />
+    <Compile Include="MasterServerModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server\Details\MasterServerProgram.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Packages.config" />

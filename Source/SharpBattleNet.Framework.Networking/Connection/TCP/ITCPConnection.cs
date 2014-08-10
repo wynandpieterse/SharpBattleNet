@@ -30,20 +30,14 @@
 //
 #endregion
 
-namespace SharpBattleNet.Server.BattleNetServer
+namespace SharpBattleNet.Framework.Networking.Connection.TCP
 {
     #region Usings
     using System;
-
-    using Ninject.Modules;
     #endregion
 
-    public sealed class BattleNetServerModule : NinjectModule
+    public interface ITCPConnection : IConnection
     {
-        public override void Load()
-        {
-            return;
-        }
+        void Disconnect();
     }
 }
-

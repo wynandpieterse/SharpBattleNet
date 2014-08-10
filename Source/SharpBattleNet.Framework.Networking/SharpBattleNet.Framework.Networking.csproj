@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\BinariesDebug\Libraries\</OutputPath>
+    <OutputPath>..\..\Intermediate\Code\Libraries\SharpBattleNet.Framework.Networking\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,7 +28,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Binaries\Libraries\</OutputPath>
+    <OutputPath>..\..\Intermediate\Code\Libraries\SharpBattleNet.Framework.Networking\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -36,6 +36,9 @@
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.2.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Nini, Version=1.1.0.0, Culture=neutral, PublicKeyToken=691faec150a7fa7b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Trove.Nini.1.1.0.0\lib\net20\Nini.dll</HintPath>
@@ -43,6 +46,9 @@
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Extensions.Factory">
+      <HintPath>..\packages\Ninject.Extensions.Factory.3.2.1.0\lib\net45-full\Ninject.Extensions.Factory.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -57,13 +63,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connection\Details\ConnectionBase.cs" />
+    <Compile Include="Connection\IConnection.cs" />
+    <Compile Include="Connection\TCP\Details\TCPConnectionBase.cs" />
+    <Compile Include="Connection\TCP\Details\ConnectibleTCPConnection.cs" />
+    <Compile Include="Connection\TCP\Details\ListenerTCPConnection.cs" />
+    <Compile Include="Connection\TCP\IConnectableTCPConnection.cs" />
+    <Compile Include="Connection\TCP\IConnectableTCPConnectionFactory.cs" />
+    <Compile Include="Connection\TCP\IListenerTCPConnection.cs" />
+    <Compile Include="Connection\TCP\IListenerTCPConnectionFactory.cs" />
+    <Compile Include="Connection\TCP\ITCPConnection.cs" />
+    <Compile Include="Connection\UDP\IBindableUDPConnection.cs" />
+    <Compile Include="Connection\UDP\IBindableUDPConnectionFactory.cs" />
+    <Compile Include="Connection\UDP\IUDPConnection.cs" />
+    <Compile Include="Listeners\TCP\Details\TCPListener.cs" />
+    <Compile Include="Listeners\TCP\ITCPListener.cs" />
+    <Compile Include="Listeners\TCP\ITCPListenerFactory.cs" />
+    <Compile Include="Listeners\UDP\Details\UDPListener.cs" />
+    <Compile Include="Listeners\UDP\IUDPListener.cs" />
+    <Compile Include="Listeners\UDP\IUDPListenerFactory.cs" />
     <Compile Include="NetworkModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\Collections\Details\SocketEventPool.cs" />
+    <Compile Include="Utilities\Collections\ISocketEventPool.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Connection\UDP\Details\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharpBattleNet.Framework\SharpBattleNet.Framework.csproj">
       <Project>{fdb8d2c5-fd13-40e7-b629-ce71a68bb7b7}</Project>

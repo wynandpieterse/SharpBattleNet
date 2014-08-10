@@ -1,4 +1,4 @@
-#region Header
+﻿#region Header
 //
 //    _  _   ____        _   _   _         _   _      _   
 //  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
@@ -30,30 +30,15 @@
 //
 #endregion
 
-namespace SharpBattleNet.MasterServer
+namespace SharpBattleNet.Framework.Networking.Listeners.UDP.Details
 {
     #region Usings
     using System;
-    using Ninject;
-    using SharpBattleNet.Framework;
-    using SharpBattleNet.Server.MasterServer;
+    using NLog;
     #endregion
 
-    internal static class Program
+    internal sealed class UDPListener : IUDPListener
     {
-        private static int Main(string[] args)
-        {
-            FrameworkProgram program = new FrameworkProgram();
-
-            program.Configure = kernel =>
-                {
-                    kernel.Load<MasterServerModule>();
-
-                    return "MasterServer";
-                };
-
-            return program.Run(args);
-        }
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
     }
 }
-

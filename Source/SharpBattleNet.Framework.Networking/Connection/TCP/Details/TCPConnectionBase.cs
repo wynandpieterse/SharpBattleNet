@@ -1,4 +1,4 @@
-#region Header
+﻿#region Header
 //
 //    _  _   ____        _   _   _         _   _      _   
 //  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
@@ -30,30 +30,42 @@
 //
 #endregion
 
-namespace SharpBattleNet.MasterServer
+namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 {
     #region Usings
     using System;
-    using Ninject;
-    using SharpBattleNet.Framework;
-    using SharpBattleNet.Server.MasterServer;
+    using System.Net.Sockets;
+    using NLog;
+    using SharpBattleNet.Framework.Networking.Utilities.Collections;
+    using SharpBattleNet.Framework.Utilities.Debugging;
+    using SharpBattleNet.Framework.Networking.Connection.Details;
     #endregion
 
-    internal static class Program
+    internal abstract class TCPConnectionBase : ConnectionBase, ITCPConnection
     {
-        private static int Main(string[] args)
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly ISocketEventPool _socketEventBag = null;
+
+        public TCPConnectionBase(ISocketEventPool socketEventBag)
+            : base(socketEventBag)
         {
-            FrameworkProgram program = new FrameworkProgram();
+            Guard.AgainstNull(socketEventBag);
 
-            program.Configure = kernel =>
-                {
-                    kernel.Load<MasterServerModule>();
+            _socketEventBag = socketEventBag;
 
-                    return "MasterServer";
-                };
+            return;
+        }
 
-            return program.Run(args);
+        public void Disconnect()
+        {
+            if(null != Socket)
+            {
+                Socket.Disconnect(true);
+
+                Socket = null;
+            }
+
+            return;
         }
     }
 }
-

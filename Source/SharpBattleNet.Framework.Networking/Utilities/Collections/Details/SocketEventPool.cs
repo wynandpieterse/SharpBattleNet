@@ -1,4 +1,4 @@
-#region Header
+﻿#region Header
 //
 //    _  _   ____        _   _   _         _   _      _   
 //  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
@@ -30,30 +30,15 @@
 //
 #endregion
 
-namespace SharpBattleNet.MasterServer
+namespace SharpBattleNet.Framework.Networking.Utilities.Collections.Details
 {
     #region Usings
     using System;
-    using Ninject;
-    using SharpBattleNet.Framework;
-    using SharpBattleNet.Server.MasterServer;
+    using System.Collections.Concurrent;
+    using System.Net.Sockets;
     #endregion
 
-    internal static class Program
+    internal sealed class SocketEventPool : ConcurrentBag<SocketAsyncEventArgs>, ISocketEventPool
     {
-        private static int Main(string[] args)
-        {
-            FrameworkProgram program = new FrameworkProgram();
-
-            program.Configure = kernel =>
-                {
-                    kernel.Load<MasterServerModule>();
-
-                    return "MasterServer";
-                };
-
-            return program.Run(args);
-        }
     }
 }
-

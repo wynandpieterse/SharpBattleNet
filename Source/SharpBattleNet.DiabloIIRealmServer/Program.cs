@@ -34,116 +34,25 @@ namespace SharpBattleNet.Servers.DiabloIIRealmServer
 {
     #region Usings
     using System;
-    using System.Reflection;
-
     using Ninject;
-
     using SharpBattleNet.Framework;
-    using SharpBattleNet.Framework.Extensions;
     using SharpBattleNet.Server.DiabloIIRealmServer;
     #endregion
 
     internal static class Program
     {
-        private static IKernel _injectionKernel = null;
-
-        private static void PrintHeader(Assembly currentAssembly)
+        private static int Main(string[] args)
         {
-            Console.WriteLine(@"    _  _   ____        _   _   _         _   _      _    ");
-            Console.WriteLine(@"  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_  ");
-            Console.WriteLine(@" |_  .. _ |  _ \ / _` | __| __| |/ _ \  |  \| |/ _ \ __| ");
-            Console.WriteLine(@" |_      _| |_) | (_| | |_| |_| |  __/_ | |\  |  __/ |_  ");
-            Console.WriteLine(@"   |_||_| |____/ \__,_|\__|\__|_|\___(_)_ | \_|\___|\__| ");
+            FrameworkProgram program = new FrameworkProgram();
 
-            Console.WriteLine();
-            Console.WriteLine("{0} - {1}", currentAssembly.GetAssemblyTitle(), currentAssembly.GetAssemblyFileVersion());
-            Console.WriteLine();
-
-            return;
-        }
-
-        private static void Start(string[] commandArguments)
-        {
-            var currentAssembly = Assembly.GetExecutingAssembly();
-
-            Console.Title = String.Format("{0} - {1}", currentAssembly.GetAssemblyTitle(), currentAssembly.GetAssemblyFileVersion());
-            Console.WindowWidth = 120;
-            Console.WindowHeight = 40;
-
-            PrintHeader(currentAssembly);
-
-            _injectionKernel = new StandardKernel(new FrameworkModule("DiabloIIRealmServer"), new DiabloIIRealmServerModule());
-
-            return;
-        }
-
-        private static void Stop()
-        {
-            _injectionKernel.Dispose();
-
-            return;
-        }
-
-        private static void Pause()
-        {
-            bool enterPressed = false;
-            ConsoleKeyInfo lastKey = default(ConsoleKeyInfo);
-
-            Console.WriteLine("Press ENTER to continue...");
-
-            while(false == enterPressed)
-            {
-                if(true == Console.KeyAvailable)
+            program.Configure = kernel =>
                 {
-                    lastKey = Console.ReadKey(true);
-                    if(lastKey.Key == ConsoleKey.Enter)
-                    {
-                        enterPressed = true;
-                    }
-                }
-            }
+                    kernel.Load<DiabloIIRealmServerModule>();
 
-            return;
-        }
+                    return "DiabloIIRealmServer";
+                };
 
-        private static void Run(string[] args)
-        {
-            Start(args);
-            Pause();
-            Stop();
-
-            return;
-        }
-
-        private static void GuardedRun(string[] args)
-        {
-            try
-            {
-                Run(args);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Internal server error:");
-                Console.WriteLine(" - {0}", ex.Message);
-
-                if (null != ex.InnerException)
-                {
-                    Console.WriteLine(" - {0}", ex.InnerException.Message);
-                }
-            }
-
-            return;
-        }
-
-        private static void Main(string[] args)
-        {
-            #if DEBUG == true
-            Run(args);
-            #else
-            GuardedRun(args);
-            #endif
-
-            return;
+            return program.Run(args);
         }
     }
 }

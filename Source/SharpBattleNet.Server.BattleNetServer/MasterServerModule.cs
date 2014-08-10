@@ -1,4 +1,4 @@
-#region Header
+﻿#region Header
 //
 //    _  _   ____        _   _   _         _   _      _   
 //  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
@@ -30,29 +30,22 @@
 //
 #endregion
 
-namespace SharpBattleNet.MasterServer
+namespace SharpBattleNet.Server.MasterServer
 {
     #region Usings
     using System;
-    using Ninject;
+    using Ninject.Modules;
     using SharpBattleNet.Framework;
-    using SharpBattleNet.Server.MasterServer;
+    using SharpBattleNet.Server.MasterServer.Server.Details;
     #endregion
 
-    internal static class Program
+    public sealed class MasterServerModule : NinjectModule
     {
-        private static int Main(string[] args)
+        public override void Load()
         {
-            FrameworkProgram program = new FrameworkProgram();
+            Bind<IProgram>().To<MasterServerProgram>();
 
-            program.Configure = kernel =>
-                {
-                    kernel.Load<MasterServerModule>();
-
-                    return "MasterServer";
-                };
-
-            return program.Run(args);
+            return;
         }
     }
 }

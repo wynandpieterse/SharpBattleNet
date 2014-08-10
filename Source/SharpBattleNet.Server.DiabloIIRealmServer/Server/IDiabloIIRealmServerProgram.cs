@@ -1,4 +1,4 @@
-#region Header
+﻿#region Header
 //
 //    _  _   ____        _   _   _         _   _      _   
 //  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
@@ -30,30 +30,19 @@
 //
 #endregion
 
-namespace SharpBattleNet.MasterServer
+namespace SharpBattleNet.Server.DiabloIIRealmServer.Server
 {
     #region Usings
     using System;
-    using Ninject;
-    using SharpBattleNet.Framework;
-    using SharpBattleNet.Server.MasterServer;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
     #endregion
 
-    internal static class Program
+    public interface IDiabloIIRealmServerProgram
     {
-        private static int Main(string[] args)
-        {
-            FrameworkProgram program = new FrameworkProgram();
-
-            program.Configure = kernel =>
-                {
-                    kernel.Load<MasterServerModule>();
-
-                    return "MasterServer";
-                };
-
-            return program.Run(args);
-        }
+        void Start();
+        void Stop();
     }
 }
-

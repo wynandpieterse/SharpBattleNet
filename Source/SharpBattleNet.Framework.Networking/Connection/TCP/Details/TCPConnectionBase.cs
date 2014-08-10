@@ -60,9 +60,15 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         {
             if(null != Socket)
             {
-                Socket.Disconnect(true);
-
-                Socket = null;
+                try
+                {
+                    Socket.Disconnect(true);
+                }
+                catch (Exception)
+                {
+                    // Don't really care here because system is going to remove all the stuff from itself
+                    // in any case.
+                }
             }
 
             return;

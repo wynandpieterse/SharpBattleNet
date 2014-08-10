@@ -73,6 +73,7 @@
     <Compile Include="Connection\TCP\IListenerTCPConnection.cs" />
     <Compile Include="Connection\TCP\IListenerTCPConnectionFactory.cs" />
     <Compile Include="Connection\TCP\ITCPConnection.cs" />
+    <Compile Include="Connection\UDP\Details\BindableUDPConnection.cs" />
     <Compile Include="Connection\UDP\IBindableUDPConnection.cs" />
     <Compile Include="Connection\UDP\IBindableUDPConnectionFactory.cs" />
     <Compile Include="Connection\UDP\IUDPConnection.cs" />
@@ -91,9 +92,7 @@
   <ItemGroup>
     <None Include="Packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Connection\UDP\Details\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\SharpBattleNet.Framework\SharpBattleNet.Framework.csproj">
       <Project>{fdb8d2c5-fd13-40e7-b629-ce71a68bb7b7}</Project>

@@ -48,7 +48,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         private readonly ISocketEventPool _socketEventBag = null;
 
         private EndPoint _connectionEndPoint = null;
-        private Func<SocketError, bool> _connectCallback = null;
+        private Func<bool, bool> _connectCallback = null;
 
         public ConnectibleTCPConnection(ISocketEventPool socketEventBag)
             : base(socketEventBag)
@@ -60,36 +60,68 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             return;
         }
 
-        private void SetupSocketEventForConnect(SocketAsyncEventArgs socketEvent)
+        private SocketAsyncEventArgs RequestSocketEvent()
         {
+            SocketAsyncEventArgs socketEvent = null;
+
+            if (false == _socketEventBag.TryTake(out socketEvent))
+            {
+                socketEvent = new SocketAsyncEventArgs();
+            }
+
             socketEvent.RemoteEndPoint = _connectionEndPoint;
             socketEvent.Completed += HandleConnectEvent;
 
-            return;
+            return socketEvent;
         }
 
-        private void ReleaseSocketEvent(SocketAsyncEventArgs socketEvent)
+        private void RecycleSocketEvent(SocketAsyncEventArgs socketEvent)
         {
+            Guard.AgainstNull(socketEvent);
+
             socketEvent.RemoteEndPoint = null;
             socketEvent.Completed -= HandleConnectEvent;
 
-            _socketEventBag.TryAdd(socketEvent);
+            if(false == _socketEventBag.TryAdd(socketEvent))
+            {
+                _logger.Trace("Failed to add socket event back to socket event pool");
+            }
 
             return;
         }
 
         private void ProcessConnect(SocketAsyncEventArgs socketEvent)
         {
-            if (false == _connectCallback(socketEvent.SocketError))
+            Guard.AgainstNull(socketEvent);
+            Guard.AgainstNull(_connectCallback);
+            Guard.AgainstNull(Socket);
+
+            if (SocketError.Success != socketEvent.SocketError)
             {
+                _logger.Debug("Failed to connect to {0}", socketEvent.RemoteEndPoint);
+                _logger.Trace("Stated reason for failure to connect is {0}", socketEvent.SocketError);
+
+                _connectCallback(false);
+
                 Socket.Close();
             }
             else
             {
-                StartRecieving();
+                if (false == _connectCallback(true))
+                {
+                    _logger.Trace("User refusing to connect to {0}", socketEvent.RemoteEndPoint);
+
+                    Socket.Close();
+                }
+                else
+                {
+                    _logger.Trace("User accepted connection to {0}", socketEvent.RemoteEndPoint);
+
+                    StartRecieving();
+                }
             }
 
-            ReleaseSocketEvent(socketEvent);
+            RecycleSocketEvent(socketEvent);
             return;
         }
 
@@ -100,7 +132,9 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             return;
         }
 
-        public void Start(EndPoint address, Func<SocketError, bool> connected)
+        #region IConnectableTCPConnection Members
+
+        public void Start(EndPoint address, Func<bool, bool> connected)
         {
             SocketAsyncEventArgs socketEvent = null;
 
@@ -112,22 +146,58 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 
             _logger.Debug("Connecting with TCP socket to {0}", address);
 
-            if (false == _socketEventBag.TryTake(out socketEvent))
-            {
-                socketEvent = new SocketAsyncEventArgs();
-            }
-
-            SetupSocketEventForConnect(socketEvent);
+            socketEvent = RequestSocketEvent();
 
             Socket = new Socket(address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            Socket.Bind(new IPEndPoint(IPAddress.Any, 0));
 
-            if (false == Socket.ConnectAsync(socketEvent))
+            try
             {
-                ProcessConnect(socketEvent);
+                Socket.Bind(new IPEndPoint(IPAddress.Any, 0));
+            }
+            catch (ObjectDisposedException ex)
+            {
+                _logger.DebugException("Socket disposed before any operation was performed on it", ex);
+
+                _connectCallback(false);
+
+                return;
+            }
+            catch (SocketException ex)
+            {
+                _logger.WarnException("Socket failed to bind properly", ex);
+
+                _connectCallback(false);
+
+                return;
+            }
+
+            try
+            {
+                if (false == Socket.ConnectAsync(socketEvent))
+                {
+                    ProcessConnect(socketEvent);
+                }
+            }
+            catch (ObjectDisposedException ex)
+            {
+                _logger.DebugException("Socket disposed before connection could be performed on it", ex);
+
+                _connectCallback(false);
+
+                return;
+            }
+            catch (SocketException ex)
+            {
+                _logger.DebugException("Socket error on connect operation", ex);
+
+                _connectCallback(false);
+
+                return;
             }
 
             return;
         }
+
+        #endregion
     }
 }

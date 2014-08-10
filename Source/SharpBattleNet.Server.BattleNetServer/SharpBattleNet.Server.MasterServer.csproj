@@ -58,7 +58,6 @@
     <Compile Include="MasterServerModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server\Details\MasterServerProgram.cs" />
-    <Compile Include="Server\IMasterServerProgram.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Packages.config" />

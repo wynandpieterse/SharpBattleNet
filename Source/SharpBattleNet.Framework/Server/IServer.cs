@@ -30,17 +30,13 @@
 //
 #endregion
 
-namespace SharpBattleNet.Server.MasterServer.Server
+namespace SharpBattleNet.Framework.Server
 {
     #region Usings
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     #endregion
 
-    public interface IMasterServerProgram
+    public interface IServer
     {
         void Start();
         void Stop();

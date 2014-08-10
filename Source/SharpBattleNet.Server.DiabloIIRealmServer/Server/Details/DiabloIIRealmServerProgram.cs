@@ -40,7 +40,7 @@ namespace SharpBattleNet.Server.DiabloIIRealmServer.Server.Details
     using System.Threading.Tasks;
     #endregion
 
-    internal sealed class DiabloIIRealmServerProgram : IDiabloIIRealmServerProgram
+    internal sealed class DiabloIIRealmServerProgram : IServer
     {
         public void Start()
         {

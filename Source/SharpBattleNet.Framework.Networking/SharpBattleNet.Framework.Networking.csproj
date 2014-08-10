@@ -63,6 +63,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connection\IConnection.cs" />
+    <Compile Include="Connection\TCP\IConnectableTCPConnection.cs" />
+    <Compile Include="Connection\TCP\IConnectableTCPConnectionFactory.cs" />
+    <Compile Include="Connection\TCP\IListenerTCPConnection.cs" />
+    <Compile Include="Connection\TCP\IListenerTCPConnectionFactory.cs" />
+    <Compile Include="Connection\TCP\ITCPConnection.cs" />
+    <Compile Include="Connection\UDP\IBindableUDPConnection.cs" />
+    <Compile Include="Connection\UDP\IBindableUDPConnectionFactory.cs" />
+    <Compile Include="Connection\UDP\IUDPConnection.cs" />
     <Compile Include="NetworkModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Collections\Details\SocketEventBag.cs" />
@@ -73,7 +82,10 @@
   <ItemGroup>
     <None Include="Packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Connection\TCP\Details\" />
+    <Folder Include="Connection\UDP\Details\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharpBattleNet.Framework\SharpBattleNet.Framework.csproj">
       <Project>{fdb8d2c5-fd13-40e7-b629-ce71a68bb7b7}</Project>

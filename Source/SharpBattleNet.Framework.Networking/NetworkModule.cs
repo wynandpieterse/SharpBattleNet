@@ -38,14 +38,34 @@ namespace SharpBattleNet.Framework.Networking
     using Ninject.Extensions.Factory;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Networking.Utilities.Collections.Details;
+    using SharpBattleNet.Framework.Networking.Connection.TCP;
+    using SharpBattleNet.Framework.Networking.Connection.UDP;
     #endregion
 
     public sealed class NetworkModule : NinjectModule
     {
-        public override void Load()
+        private void BindUtilities()
         {
             Bind<ISocketBag>().To<SocketBag>().InSingletonScope();
             Bind<ISocketEventBag>().To<SocketEventBag>().InSingletonScope();
+
+            return;
+        }
+
+        private void BindConnectionFactories()
+        {
+            Bind<IConnectableTCPConnectionFactory>().ToFactory();
+            Bind<IListenerTCPConnectionFactory>().ToFactory();
+
+            Bind<IBindableUDPConnectionFactory>().ToFactory();
+
+            return;
+        }
+
+        public override void Load()
+        {
+            BindUtilities();
+            BindConnectionFactories();
 
             return;
         }

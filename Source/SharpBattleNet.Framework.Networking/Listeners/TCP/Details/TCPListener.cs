@@ -74,7 +74,7 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
 
             socketEvent.Completed += HandleAcceptEvent;
 
-            return null;
+            return socketEvent;
         }
 
         private void RecycleSocketEvent(SocketAsyncEventArgs socketEvent)

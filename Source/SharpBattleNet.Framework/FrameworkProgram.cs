@@ -159,6 +159,10 @@ namespace SharpBattleNet.Framework
                 }
 
                 Console.WriteLine();
+                Console.WriteLine(" - Stack Trace");
+                Console.Write(ex.StackTrace);
+
+                Console.WriteLine();
                 Pause();
             }
 

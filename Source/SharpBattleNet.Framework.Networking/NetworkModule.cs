@@ -41,7 +41,6 @@ namespace SharpBattleNet.Framework.Networking
     using SharpBattleNet.Framework.Networking.Connection.TCP;
     using SharpBattleNet.Framework.Networking.Connection.TCP.Details;
     using SharpBattleNet.Framework.Networking.Connection.UDP;
-    using SharpBattleNet.Framework.Networking.Connection.UDP.Details;
     using SharpBattleNet.Framework.Networking.Listeners.TCP;
     using SharpBattleNet.Framework.Networking.Listeners.TCP.Details;
     using SharpBattleNet.Framework.Networking.Listeners.UDP;

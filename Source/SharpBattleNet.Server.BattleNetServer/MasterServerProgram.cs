@@ -46,6 +46,7 @@ namespace SharpBattleNet.Server.MasterServer
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         private readonly ITCPListenerFactory _listenerFactory = null;
+        private ITCPListener _listener = null;
 
         public MasterServerProgram(ITCPListenerFactory listenerFactory)
         {
@@ -62,9 +63,9 @@ namespace SharpBattleNet.Server.MasterServer
         {
             _logger.Info("Hello, World");
 
-            ITCPListener listener = _listenerFactory.Create();
+            _listener = _listenerFactory.Create();
 
-            listener.Start(new IPEndPoint(IPAddress.Loopback, 6000), Accepted);
+            _listener.Start(new IPEndPoint(IPAddress.Any, 2048), Accepted);
 
             return;
         }

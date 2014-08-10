@@ -64,6 +64,8 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         {
             socketEvent.RemoteEndPoint = _connectionEndPoint;
             socketEvent.Completed += HandleConnectEvent;
+
+            return;
         }
 
         private void ReleaseSocketEvent(SocketAsyncEventArgs socketEvent)

@@ -196,7 +196,13 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
             }
             catch (ObjectDisposedException ex)
             {
-                _logger.Debug("Listener socket has been closed before even beginning accept operation", ex);
+                _logger.DebugException("Listener socket has been closed before even beginning accept operation", ex);
+
+                return;
+            }
+            catch (SocketException ex)
+            {
+                _logger.WarnException("Failed to set an operation on the listener socket", ex);
 
                 return;
             }

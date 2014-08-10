@@ -63,33 +63,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connections\Details\Connection.cs" />
-    <Compile Include="Connections\IConnection.cs" />
-    <Compile Include="Connections\TCP\Details\TCPConnection.cs" />
-    <Compile Include="Connections\TCP\ITCPConnection.cs" />
-    <Compile Include="Connections\TCP\ITCPConnectionFactory.cs" />
-    <Compile Include="Connections\UDP\Details\UDPConnection.cs" />
-    <Compile Include="Connections\UDP\IUDPConnection.cs" />
-    <Compile Include="Connections\UDP\IUDPConnectionFactory.cs" />
+    <Compile Include="Connection\Details\ConnectionBase.cs" />
+    <Compile Include="Connection\IConnection.cs" />
+    <Compile Include="Connection\TCP\Details\TCPConnectionBase.cs" />
+    <Compile Include="Connection\TCP\Details\ConnectibleTCPConnection.cs" />
+    <Compile Include="Connection\TCP\Details\ListenerTCPConnection.cs" />
+    <Compile Include="Connection\TCP\IConnectableTCPConnection.cs" />
+    <Compile Include="Connection\TCP\IConnectableTCPConnectionFactory.cs" />
+    <Compile Include="Connection\TCP\IListenerTCPConnection.cs" />
+    <Compile Include="Connection\TCP\IListenerTCPConnectionFactory.cs" />
+    <Compile Include="Connection\TCP\ITCPConnection.cs" />
+    <Compile Include="Connection\UDP\IBindableUDPConnection.cs" />
+    <Compile Include="Connection\UDP\IBindableUDPConnectionFactory.cs" />
+    <Compile Include="Connection\UDP\IUDPConnection.cs" />
+    <Compile Include="Listeners\TCP\Details\TCPListener.cs" />
+    <Compile Include="Listeners\TCP\ITCPListener.cs" />
+    <Compile Include="Listeners\TCP\ITCPListenerFactory.cs" />
+    <Compile Include="Listeners\UDP\Details\UDPListener.cs" />
+    <Compile Include="Listeners\UDP\IUDPListener.cs" />
+    <Compile Include="Listeners\UDP\IUDPListenerFactory.cs" />
     <Compile Include="NetworkModule.cs" />
-    <Compile Include="Packets\IPacket.cs" />
-    <Compile Include="Packets\IPacketCodec.cs" />
-    <Compile Include="Packets\IPacketDispatcher.cs" />
-    <Compile Include="Packets\IPacketExecutor.cs" />
-    <Compile Include="Packets\IPacketHeaderExecutor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Server\Details\TCPListener.cs" />
-    <Compile Include="Server\ITCPListener.cs" />
-    <Compile Include="Server\ITCPListenerFactory.cs" />
-    <Compile Include="Utilities\SocketBag.cs" />
-    <Compile Include="Utilities\SocketEventBag.cs" />
+    <Compile Include="Utilities\Collections\Details\SocketEventPool.cs" />
+    <Compile Include="Utilities\Collections\ISocketEventPool.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Packets\Attributes\" />
-    <Folder Include="Packets\Details\" />
+    <Folder Include="Connection\UDP\Details\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharpBattleNet.Framework\SharpBattleNet.Framework.csproj">

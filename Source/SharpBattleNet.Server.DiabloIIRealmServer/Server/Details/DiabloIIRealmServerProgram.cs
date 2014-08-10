@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharpBattleNet.Server.MasterServer.Server.Details
+namespace SharpBattleNet.Server.DiabloIIRealmServer.Server.Details
 {
-    internal sealed class MasterServerProgram : IMasterServerProgram
+    internal sealed class DiabloIIRealmServerProgram : IDiabloIIRealmServerProgram
     {
         public void Start()
         {
             Console.WriteLine("Hello, World");
+
             return;
         }
 

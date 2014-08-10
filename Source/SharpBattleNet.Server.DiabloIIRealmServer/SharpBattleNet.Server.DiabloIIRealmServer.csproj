@@ -56,6 +56,8 @@
   <ItemGroup>
     <Compile Include="DiabloIIRealmServerModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server\Details\DiabloIIRealmServerProgram.cs" />
+    <Compile Include="Server\IDiabloIIRealmServerProgram.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Packages.config" />

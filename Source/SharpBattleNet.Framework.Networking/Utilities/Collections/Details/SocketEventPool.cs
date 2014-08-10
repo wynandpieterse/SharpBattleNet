@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
-using SharpBattleNet.Framework.Utilities.Debugging;
 
-namespace SharpBattleNet.Framework.Networking.Utilities
+namespace SharpBattleNet.Framework.Networking.Utilities.Collections.Details
 {
-    public class SocketEventBag : ConcurrentBag<SocketAsyncEventArgs>
+    internal sealed class SocketEventPool : ConcurrentBag<SocketAsyncEventArgs>, ISocketEventPool
     {
     }
 }

@@ -41,11 +41,13 @@ namespace SharpBattleNet.Servers.DiabloIIRealmServer
     using SharpBattleNet.Framework;
     using SharpBattleNet.Framework.Utilities.Extensions;
     using SharpBattleNet.Server.DiabloIIRealmServer;
+    using SharpBattleNet.Server.DiabloIIRealmServer.Server;
     #endregion
 
     internal static class Program
     {
         private static IKernel _injectionKernel = null;
+        private static IDiabloIIRealmServerProgram _server = null;
 
         private static void PrintHeader(Assembly currentAssembly)
         {
@@ -73,12 +75,17 @@ namespace SharpBattleNet.Servers.DiabloIIRealmServer
             PrintHeader(currentAssembly);
 
             _injectionKernel = new StandardKernel(new FrameworkModule("DiabloIIRealmServer"), new DiabloIIRealmServerModule());
+            _server = _injectionKernel.Get<IDiabloIIRealmServerProgram>();
+
+            _server.Start();
 
             return;
         }
 
         private static void Stop()
         {
+            _server.Stop();
+
             _injectionKernel.Dispose();
 
             return;

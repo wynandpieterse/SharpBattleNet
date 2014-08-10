@@ -36,19 +36,46 @@ namespace SharpBattleNet.Framework.Networking
     using System;
     using Ninject.Modules;
     using Ninject.Extensions.Factory;
-    using SharpBattleNet.Framework.Networking.Server;
-    using SharpBattleNet.Framework.Networking.Connections.TCP;
-    using SharpBattleNet.Framework.Networking.Connections.UDP;
+    using SharpBattleNet.Framework.Networking.Utilities.Collections;
+    using SharpBattleNet.Framework.Networking.Utilities.Collections.Details;
+    using SharpBattleNet.Framework.Networking.Connection.TCP;
+    using SharpBattleNet.Framework.Networking.Connection.UDP;
+    using SharpBattleNet.Framework.Networking.Listeners.TCP;
+    using SharpBattleNet.Framework.Networking.Listeners.UDP;
     #endregion
 
     public sealed class NetworkModule : NinjectModule
     {
-        public override void Load()
+        private void BindUtilities()
+        {
+            Bind<ISocketEventPool>().To<SocketEventPool>().InSingletonScope();
+
+            return;
+        }
+
+        private void BindConnectionFactories()
+        {
+            Bind<IConnectableTCPConnectionFactory>().ToFactory();
+            Bind<IListenerTCPConnectionFactory>().ToFactory();
+
+            Bind<IBindableUDPConnectionFactory>().ToFactory();
+
+            return;
+        }
+
+        private void BindListeners()
         {
             Bind<ITCPListenerFactory>().ToFactory();
+            Bind<IUDPListenerFactory>().ToFactory();
 
-            Bind<ITCPConnectionFactory>().ToFactory();
-            Bind<IUDPConnectionFactory>().ToFactory();
+            return;
+        }
+
+        public override void Load()
+        {
+            BindUtilities();
+            BindConnectionFactories();
+            BindListeners();
 
             return;
         }

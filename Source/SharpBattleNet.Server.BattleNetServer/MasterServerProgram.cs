@@ -34,17 +34,38 @@ namespace SharpBattleNet.Server.MasterServer.Server.Details
 {
     #region Usings
     using System;
+    using System.Net;
     using NLog;
     using SharpBattleNet.Framework;
+    using SharpBattleNet.Framework.Networking.Listeners.TCP;
+    using SharpBattleNet.Framework.Networking.Connection;
     #endregion
 
     internal sealed class MasterServerProgram : IProgram
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
+        private readonly ITCPListenerFactory _listenerFactory = null;
+
+        public MasterServerProgram(ITCPListenerFactory listenerFactory)
+        {
+            _listenerFactory = listenerFactory;
+            return;
+        }
+
+        private bool Accepted(IConnection connection)
+        {
+            return true;
+        }
+
         public void Start()
         {
             _logger.Info("Hello, World");
+
+            ITCPListener listener = _listenerFactory.Create();
+
+            listener.Start(new IPEndPoint(IPAddress.Loopback, 6000), Accepted);
+
             return;
         }
 

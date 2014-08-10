@@ -81,6 +81,7 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
         {
             Guard.AgainstNull(socketEvent);
 
+            socketEvent.AcceptSocket = null;
             socketEvent.Completed -= HandleAcceptEvent;
             _socketEvents.TryAdd(socketEvent);
 
@@ -91,11 +92,13 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
         {
             IListenerTCPConnection connection = null;
 
+            _logger.Info("Got new TCP connection from {0}", socketEvent.AcceptSocket.RemoteEndPoint);
+
             StartAccept();
 
             if (socketEvent.SocketError != SocketError.Success)
             {
-                _logger.Warn("Socket connection from {0} failed. Stated reason is : {1}", socketEvent.RemoteEndPoint, socketEvent.SocketError);
+                _logger.Warn("Socket connection from {0} failed. Stated reason is : {1}", socketEvent.AcceptSocket.RemoteEndPoint, socketEvent.SocketError);
             }
             else
             {
@@ -140,6 +143,8 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
             Guard.AgainstNull(accepted);
 
             _accepted = accepted;
+
+            _logger.Info("Started listening for connections on {0}", address);
 
             _listener = new Socket(address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 

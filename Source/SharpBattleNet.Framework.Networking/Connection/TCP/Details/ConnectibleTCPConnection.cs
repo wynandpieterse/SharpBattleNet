@@ -48,7 +48,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         private readonly ISocketEventPool _socketEventBag = null;
 
         private EndPoint _connectionEndPoint = null;
-        private Func<bool, bool> _connectCallback = null;
+        private Func<IConnection, bool, bool> _connectCallback = null;
 
         public ConnectibleTCPConnection(ISocketEventPool socketEventBag)
             : base(socketEventBag)
@@ -101,13 +101,13 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
                 _logger.Debug("Failed to connect to {0}", socketEvent.RemoteEndPoint);
                 _logger.Trace("Stated reason for failure to connect is {0}", socketEvent.SocketError);
 
-                _connectCallback(false);
+                _connectCallback(this, false);
 
                 Socket.Close();
             }
             else
             {
-                if (false == _connectCallback(true))
+                if (false == _connectCallback(this, true))
                 {
                     _logger.Trace("User refusing to connect to {0}", socketEvent.RemoteEndPoint);
 
@@ -134,7 +134,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 
         #region IConnectableTCPConnection Members
 
-        public void Start(EndPoint address, Func<bool, bool> connected)
+        public void Start(EndPoint address, Func<IConnection, bool, bool> connected)
         {
             SocketAsyncEventArgs socketEvent = null;
 
@@ -158,7 +158,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             {
                 _logger.DebugException("Socket disposed before any operation was performed on it", ex);
 
-                _connectCallback(false);
+                _connectCallback(this, false);
 
                 return;
             }
@@ -166,7 +166,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             {
                 _logger.WarnException("Socket failed to bind properly", ex);
 
-                _connectCallback(false);
+                _connectCallback(this, false);
 
                 return;
             }
@@ -182,7 +182,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             {
                 _logger.DebugException("Socket disposed before connection could be performed on it", ex);
 
-                _connectCallback(false);
+                _connectCallback(this, false);
 
                 return;
             }
@@ -190,7 +190,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             {
                 _logger.DebugException("Socket error on connect operation", ex);
 
-                _connectCallback(false);
+                _connectCallback(this, false);
 
                 return;
             }

@@ -40,6 +40,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP
 
     public interface IConnectableTCPConnection : ITCPConnection
     {
-        void Start(EndPoint address, Func<bool, bool> connected);
+        void Start(EndPoint address, Func<IConnection, bool, bool> connected);
     }
 }

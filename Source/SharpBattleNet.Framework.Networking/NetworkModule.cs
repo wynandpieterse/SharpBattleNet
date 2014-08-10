@@ -36,12 +36,17 @@ namespace SharpBattleNet.Framework.Networking
     using System;
     using Ninject.Modules;
     using Ninject.Extensions.Factory;
+    using SharpBattleNet.Framework.Networking.Utilities.Collections;
+    using SharpBattleNet.Framework.Networking.Utilities.Collections.Details;
     #endregion
 
     public sealed class NetworkModule : NinjectModule
     {
         public override void Load()
         {
+            Bind<ISocketBag>().To<SocketBag>().InSingletonScope();
+            Bind<ISocketEventBag>().To<SocketEventBag>().InSingletonScope();
+
             return;
         }
     }

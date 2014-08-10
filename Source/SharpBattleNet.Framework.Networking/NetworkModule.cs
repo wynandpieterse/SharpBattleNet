@@ -40,6 +40,8 @@ namespace SharpBattleNet.Framework.Networking
     using SharpBattleNet.Framework.Networking.Utilities.Collections.Details;
     using SharpBattleNet.Framework.Networking.Connection.TCP;
     using SharpBattleNet.Framework.Networking.Connection.UDP;
+    using SharpBattleNet.Framework.Networking.Listeners.TCP;
+    using SharpBattleNet.Framework.Networking.Listeners.UDP;
     #endregion
 
     public sealed class NetworkModule : NinjectModule
@@ -62,10 +64,19 @@ namespace SharpBattleNet.Framework.Networking
             return;
         }
 
+        private void BindListeners()
+        {
+            Bind<ITCPListenerFactory>().ToFactory();
+            Bind<IUDPListenerFactory>().ToFactory();
+
+            return;
+        }
+
         public override void Load()
         {
             BindUtilities();
             BindConnectionFactories();
+            BindListeners();
 
             return;
         }

@@ -72,6 +72,12 @@
     <Compile Include="Connection\UDP\IBindableUDPConnection.cs" />
     <Compile Include="Connection\UDP\IBindableUDPConnectionFactory.cs" />
     <Compile Include="Connection\UDP\IUDPConnection.cs" />
+    <Compile Include="Listeners\TCP\Details\TCPListener.cs" />
+    <Compile Include="Listeners\TCP\ITCPListener.cs" />
+    <Compile Include="Listeners\TCP\ITCPListenerFactory.cs" />
+    <Compile Include="Listeners\UDP\Details\UDPListener.cs" />
+    <Compile Include="Listeners\UDP\IUDPListener.cs" />
+    <Compile Include="Listeners\UDP\IUDPListenerFactory.cs" />
     <Compile Include="NetworkModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Collections\Details\SocketEventBag.cs" />

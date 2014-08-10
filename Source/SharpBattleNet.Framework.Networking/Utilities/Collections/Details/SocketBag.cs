@@ -8,7 +8,7 @@ using System.Net.Sockets;
 
 namespace SharpBattleNet.Framework.Networking.Utilities.Collections.Details
 {
-    internal sealed class SocketBag : ConcurrentBag<SocketAsyncEventArgs>, ISocketBag
+    internal sealed class SocketBag : ConcurrentBag<Socket>, ISocketBag
     {
     }
 }

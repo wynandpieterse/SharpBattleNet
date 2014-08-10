@@ -5,7 +5,7 @@ using System.Net.Sockets;
 
 namespace SharpBattleNet.Framework.Networking.Utilities.Collections
 {
-    public interface ISocketBag : IProducerConsumerCollection<SocketAsyncEventArgs>
+    public interface ISocketBag : IProducerConsumerCollection<Socket>
     {
     }
 }

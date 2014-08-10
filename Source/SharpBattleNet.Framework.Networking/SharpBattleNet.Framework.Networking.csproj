@@ -64,6 +64,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connection\IConnection.cs" />
+    <Compile Include="Connection\TCP\Details\BaseTCPConnection.cs" />
+    <Compile Include="Connection\TCP\Details\ConnectibleTCPConnection.cs" />
+    <Compile Include="Connection\TCP\Details\ListenerTCPConnection.cs" />
     <Compile Include="Connection\TCP\IConnectableTCPConnection.cs" />
     <Compile Include="Connection\TCP\IConnectableTCPConnectionFactory.cs" />
     <Compile Include="Connection\TCP\IListenerTCPConnection.cs" />
@@ -89,7 +92,6 @@
     <None Include="Packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Connection\TCP\Details\" />
     <Folder Include="Connection\UDP\Details\" />
   </ItemGroup>
   <ItemGroup>

@@ -8,16 +8,16 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
+namespace SharpBattleNet.Framework.Networking.Connection.Details
 {
-    internal abstract class BaseTCPConnection : ITCPConnection
+    internal abstract class ConnectionBase : IConnection
     {
         private readonly ISocketBag _socketBag = null;
         private readonly ISocketEventBag _socketEventBag = null;
 
-        private Socket Socket { get; set; }
+        protected Socket Socket { get; set; }
 
-        public BaseTCPConnection(ISocketBag socketBag, ISocketEventBag socketEventBag)
+        public ConnectionBase(ISocketBag socketBag, ISocketEventBag socketEventBag)
         {
             Guard.AgainstNull(socketBag);
             Guard.AgainstNull(socketEventBag);
@@ -28,26 +28,12 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             return;
         }
 
-        public void Disconnect()
-        {
-            if(null != Socket)
-            {
-                Socket.Disconnect(true);
-
-                while (false == _socketBag.TryAdd(Socket)) ;
-
-                Socket = null;
-            }
-
-            return;
-        }
-
         public void Send(byte[] buffer, long bufferLenght = 0, EndPoint address = null)
         {
             Guard.AgainstNull(Socket);
             Guard.AgainstNull(buffer);
-            
-            if(null != address)
+
+            if (null != address)
             {
                 if (0 == bufferLenght)
                 {
@@ -71,6 +57,11 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             }
 
             return;
+        }
+
+        protected void StartRecieving()
+        {
+
         }
     }
 }

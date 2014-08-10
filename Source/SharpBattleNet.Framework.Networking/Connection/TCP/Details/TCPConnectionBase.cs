@@ -11,12 +11,12 @@ using SharpBattleNet.Framework.Networking.Connection.Details;
 
 namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 {
-    internal sealed class ConnectibleTCPConnection : TCPConnectionBase, IConnectableTCPConnection
+    internal abstract class TCPConnectionBase : ConnectionBase, ITCPConnection
     {
         private readonly ISocketBag _socketBag = null;
         private readonly ISocketEventBag _socketEventBag = null;
 
-        public ConnectibleTCPConnection(ISocketBag socketBag, ISocketEventBag socketEventBag)
+        public TCPConnectionBase(ISocketBag socketBag, ISocketEventBag socketEventBag)
             : base(socketBag, socketEventBag)
         {
             Guard.AgainstNull(socketBag);
@@ -28,8 +28,17 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             return;
         }
 
-        public void Start(EndPoint address, Func<bool, SocketError> connected)
+        public void Disconnect()
         {
+            if(null != Socket)
+            {
+                Socket.Disconnect(true);
+
+                while (false == _socketBag.TryAdd(Socket)) ;
+
+                Socket = null;
+            }
+
             return;
         }
     }

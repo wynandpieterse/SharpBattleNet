@@ -63,8 +63,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connection\Details\ConnectionBase.cs" />
     <Compile Include="Connection\IConnection.cs" />
-    <Compile Include="Connection\TCP\Details\BaseTCPConnection.cs" />
+    <Compile Include="Connection\TCP\Details\TCPConnectionBase.cs" />
     <Compile Include="Connection\TCP\Details\ConnectibleTCPConnection.cs" />
     <Compile Include="Connection\TCP\Details\ListenerTCPConnection.cs" />
     <Compile Include="Connection\TCP\IConnectableTCPConnection.cs" />

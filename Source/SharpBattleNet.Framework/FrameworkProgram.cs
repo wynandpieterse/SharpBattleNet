@@ -43,7 +43,7 @@ namespace SharpBattleNet.Framework
     using SharpBattleNet.Framework.Utilities.Debugging;
     #endregion
 
-    public sealed class Program
+    public sealed class FrameworkProgram
     {
         private string _programName = "";
         private IKernel _injectionKernel = null;
@@ -144,7 +144,7 @@ namespace SharpBattleNet.Framework
             return;
         }
 
-        public void Run(string programName, string[] args)
+        public int Run(string programName, string[] args)
         {
             Guard.AgainstNull(programName);
 
@@ -156,7 +156,7 @@ namespace SharpBattleNet.Framework
             GuardedRun(args);
             #endif
 
-            return;
+            return 0;
         }
     }
 }

@@ -46,9 +46,11 @@ namespace SharpBattleNet.MasterServer
 
     internal static class Program
     {
-        private static void Main(string[] args)
+        private static int Main(string[] args)
         {
-            return;
+            FrameworkProgram program = new FrameworkProgram();
+
+            return program.Run("MasterServer", args);
         }
     }
 }

@@ -43,10 +43,12 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
     using System.Text;
     using System.Threading.Tasks;
     using SharpBattleNet.Framework.Networking.Connection.Details;
+    using NLog;
     #endregion
 
     internal sealed class ConnectibleTCPConnection : TCPConnectionBase, IConnectableTCPConnection
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly ISocketEventPool _socketEventBag = null;
 
         private EndPoint _connectionEndPoint = null;
@@ -109,6 +111,8 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 
             _connectCallback = connected;
             _connectionEndPoint = address;
+
+            _logger.Debug("Connecting with TCP socket to {0}", address);
 
             if (false == _socketEventBag.TryTake(out socketEvent))
             {

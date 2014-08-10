@@ -43,10 +43,12 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
     using System.Text;
     using System.Threading.Tasks;
     using SharpBattleNet.Framework.Networking.Connection.Details;
+    using NLog;
     #endregion
 
     internal abstract class TCPConnectionBase : ConnectionBase, ITCPConnection
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly ISocketEventPool _socketEventBag = null;
 
         public TCPConnectionBase(ISocketEventPool socketEventBag)

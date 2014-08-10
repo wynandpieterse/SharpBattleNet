@@ -35,18 +35,22 @@ namespace SharpBattleNet.Server.MasterServer.Server.Details
     #region Usings
     using System;
     using SharpBattleNet.Framework;
+    using NLog;
     #endregion
 
     internal sealed class MasterServerProgram : IProgram
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         public void Start()
         {
-            Console.WriteLine("Hello, World");
+            _logger.Info("Hello, World");
             return;
         }
 
         public void Stop()
         {
+            _logger.Info("Bye, World");
             return;
         }
     }

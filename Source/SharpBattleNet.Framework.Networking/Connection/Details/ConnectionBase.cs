@@ -32,6 +32,7 @@
 
 namespace SharpBattleNet.Framework.Networking.Connection.Details
 {
+    using NLog;
     #region Usings
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
@@ -46,6 +47,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
 
     internal abstract class ConnectionBase : IConnection
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly ISocketEventPool _socketEventBag = null;
 
         protected Socket Socket { get; set; }
@@ -92,7 +94,11 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
 
         protected void StartRecieving()
         {
+            Guard.AgainstNull(Socket);
 
+            _logger.Trace("Start receiving on local endpoint {0}", Socket.LocalEndPoint);
+
+            return;
         }
     }
 }

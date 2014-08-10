@@ -32,6 +32,7 @@
 
 namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
 {
+    using NLog;
     #region Usings
     using System;
     using System.Collections.Generic;
@@ -42,5 +43,6 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
 
     internal sealed class TCPListener : ITCPListener
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
     }
 }

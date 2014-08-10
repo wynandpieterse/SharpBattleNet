@@ -32,6 +32,7 @@
 
 namespace SharpBattleNet.Framework.Networking.Listeners.UDP.Details
 {
+    using NLog;
     #region Usings
     using System;
     using System.Collections.Generic;
@@ -42,5 +43,6 @@ namespace SharpBattleNet.Framework.Networking.Listeners.UDP.Details
 
     internal sealed class UDPListener : IUDPListener
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
     }
 }

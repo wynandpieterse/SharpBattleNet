@@ -169,11 +169,11 @@ namespace SharpBattleNet.Framework
 
         public int Run(string[] args)
         {
-            #if DEBUG
-            UnguardedRun(args);
-            #else
+            //#if DEBUG
+            //UnguardedRun(args);
+            //#else
             GuardedRun(args);
-            #endif
+            //#endif
 
             return 0;
         }

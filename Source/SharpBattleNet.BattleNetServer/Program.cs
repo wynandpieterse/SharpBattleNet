@@ -37,6 +37,7 @@ namespace SharpBattleNet.MasterServer
     using Ninject;
     using SharpBattleNet.Framework;
     using SharpBattleNet.Server.MasterServer;
+    using SharpBattleNet.Framework.Networking;
     #endregion
 
     internal static class Program
@@ -48,6 +49,7 @@ namespace SharpBattleNet.MasterServer
             program.Configure = kernel =>
                 {
                     kernel.Load<MasterServerModule>();
+                    kernel.Load<NetworkModule>();
 
                     return "MasterServer";
                 };

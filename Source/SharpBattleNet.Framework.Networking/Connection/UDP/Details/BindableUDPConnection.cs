@@ -35,16 +35,32 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
     #region Usings
     using System;
     using System.Net;
+    using NLog;
     using SharpBattleNet.Framework.Networking.Connection.Details;
+    using SharpBattleNet.Framework.Networking.Utilities.Collections;
+    using SharpBattleNet.Framework.Utilities.Debugging;
     #endregion
 
     internal sealed class BindableUDPConnection : ConnectionBase, IBindableUDPConnection
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly ISocketEventPool _socketEventBag = null;
+
+        public BindableUDPConnection(ISocketEventPool socketEventBag)
+            : base(socketEventBag)
+        {
+            Guard.AgainstNull(socketEventBag);
+
+            _socketEventBag = socketEventBag;
+
+            return;
+        }
+
         #region IBindableUDPConnection Members
 
         public void Bind(EndPoint address)
         {
-            throw new NotImplementedException();
+            return;
         }
 
         #endregion

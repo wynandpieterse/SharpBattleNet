@@ -60,12 +60,19 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             return;
         }
 
-        private void RequestSocketEvent(SocketAsyncEventArgs socketEvent)
+        private SocketAsyncEventArgs RequestSocketEvent()
         {
+            SocketAsyncEventArgs socketEvent = null;
+
+            if (false == _socketEventBag.TryTake(out socketEvent))
+            {
+                socketEvent = new SocketAsyncEventArgs();
+            }
+
             socketEvent.RemoteEndPoint = _connectionEndPoint;
             socketEvent.Completed += HandleConnectEvent;
 
-            return;
+            return socketEvent;
         }
 
         private void RecycleSocketEvent(SocketAsyncEventArgs socketEvent)
@@ -73,7 +80,10 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             socketEvent.RemoteEndPoint = null;
             socketEvent.Completed -= HandleConnectEvent;
 
-            _socketEventBag.TryAdd(socketEvent);
+            if(false == _socketEventBag.TryAdd(socketEvent))
+            {
+                _logger.Trace("Failed to add socket event back to socket event pool");
+            }
 
             return;
         }
@@ -112,12 +122,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 
             _logger.Debug("Connecting with TCP socket to {0}", address);
 
-            if (false == _socketEventBag.TryTake(out socketEvent))
-            {
-                socketEvent = new SocketAsyncEventArgs();
-            }
-
-            RequestSocketEvent(socketEvent);
+            socketEvent = RequestSocketEvent();
 
             Socket = new Socket(address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             Socket.Bind(new IPEndPoint(IPAddress.Any, 0));

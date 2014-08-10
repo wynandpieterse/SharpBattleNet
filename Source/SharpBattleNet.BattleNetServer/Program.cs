@@ -46,16 +46,8 @@ namespace SharpBattleNet.MasterServer
 
     internal static class Program
     {
-
-
         private static void Main(string[] args)
         {
-            #if DEBUG == true
-            Run(args);
-            #else
-            GuardedRun(args);
-            #endif
-
             return;
         }
     }

@@ -88,11 +88,75 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
             return;
         }
 
+        private SocketAsyncEventArgs RequestReceiveEvent()
+        {
+            SocketAsyncEventArgs socketEvent = null;
+
+            if (false == _socketEventBag.TryTake(out socketEvent))
+            {
+                socketEvent = new SocketAsyncEventArgs();
+            }
+
+            // Fix this with proper buffer handeling
+            byte[] buffer = new byte[1024];
+            socketEvent.SetBuffer(buffer, 0, buffer.Length);
+            socketEvent.Completed += HandleReceiveEvent;
+
+            return null;
+        }
+
+        private void RecycleReceiveEvent(SocketAsyncEventArgs socketEvent)
+        {
+            Guard.AgainstNull(socketEvent);
+
+            socketEvent.SetBuffer(null, 0, 0);
+            socketEvent.Completed -= HandleReceiveEvent;
+
+            return;
+        }
+
+        private void HandleReceive(SocketAsyncEventArgs socketEvent)
+        {
+            StartRecieving();
+
+
+
+            return;
+        }
+
+        private void HandleReceiveEvent(object sender, SocketAsyncEventArgs socketEvent)
+        {
+            HandleReceive(socketEvent);
+
+            return;
+        }
+
         protected void StartRecieving()
         {
+            SocketAsyncEventArgs socketEvent = null;
+
             Guard.AgainstNull(Socket);
 
-            _logger.Trace("Start receiving on local endpoint {0}", Socket.LocalEndPoint);
+            socketEvent = RequestReceiveEvent();
+
+            if (SocketType.Stream == Socket.SocketType)
+            {
+                if (false == Socket.ReceiveAsync(socketEvent))
+                {
+                    HandleReceive(socketEvent);
+                }
+            }
+            else if(SocketType.Dgram == Socket.SocketType)
+            {
+                if (false == Socket.ReceiveFromAsync(socketEvent))
+                {
+                    HandleReceive(socketEvent);
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("The network library currently does not handle sockets other that stream and datagram");
+            }
 
             return;
         }

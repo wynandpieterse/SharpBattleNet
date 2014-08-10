@@ -35,15 +35,12 @@ namespace SharpBattleNet.Framework
     #region Usings
     using System;
     using System.IO;
-
     using Ninject;
     using Ninject.Modules;
     using Nini.Config;
-
     using NLog;
     using NLog.Targets;
     using NLog.Config;
-
     using SharpBattleNet.Framework.Utilities.Debugging;
     #endregion
 

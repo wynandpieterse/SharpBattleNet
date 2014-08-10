@@ -32,17 +32,13 @@
 
 namespace SharpBattleNet.Framework.Networking.Connection.Details
 {
-    using NLog;
     #region Usings
-    using SharpBattleNet.Framework.Networking.Utilities.Collections;
-    using SharpBattleNet.Framework.Utilities.Debugging;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using NLog;
     using System.Net;
     using System.Net.Sockets;
-    using System.Text;
-    using System.Threading.Tasks;
+    using SharpBattleNet.Framework.Networking.Utilities.Collections;
+    using SharpBattleNet.Framework.Utilities.Debugging;
     #endregion
 
     internal abstract class ConnectionBase : IConnection

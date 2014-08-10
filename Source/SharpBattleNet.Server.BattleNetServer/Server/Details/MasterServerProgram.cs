@@ -34,8 +34,8 @@ namespace SharpBattleNet.Server.MasterServer.Server.Details
 {
     #region Usings
     using System;
-    using SharpBattleNet.Framework;
     using NLog;
+    using SharpBattleNet.Framework;
     #endregion
 
     internal sealed class MasterServerProgram : IProgram

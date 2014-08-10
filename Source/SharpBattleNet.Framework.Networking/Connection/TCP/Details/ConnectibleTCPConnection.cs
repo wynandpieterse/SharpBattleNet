@@ -33,17 +33,13 @@
 namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 {
     #region Usings
-    using SharpBattleNet.Framework.Networking.Utilities.Collections;
-    using SharpBattleNet.Framework.Utilities.Debugging;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Net;
     using System.Net.Sockets;
-    using System.Text;
-    using System.Threading.Tasks;
-    using SharpBattleNet.Framework.Networking.Connection.Details;
     using NLog;
+    using SharpBattleNet.Framework.Networking.Connection.Details;
+    using SharpBattleNet.Framework.Networking.Utilities.Collections;
+    using SharpBattleNet.Framework.Utilities.Debugging;
     #endregion
 
     internal sealed class ConnectibleTCPConnection : TCPConnectionBase, IConnectableTCPConnection

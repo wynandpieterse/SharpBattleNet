@@ -34,14 +34,9 @@ namespace SharpBattleNet.MasterServer
 {
     #region Usings
     using System;
-    using System.Reflection;
-
     using Ninject;
-
     using SharpBattleNet.Framework;
-    using SharpBattleNet.Framework.Utilities.Extensions;
     using SharpBattleNet.Server.MasterServer;
-    using SharpBattleNet.Server.MasterServer.Server;
     #endregion
 
     internal static class Program

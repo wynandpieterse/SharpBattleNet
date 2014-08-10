@@ -50,7 +50,14 @@ namespace SharpBattleNet.Servers.DiabloIIRealmServer
         {
             FrameworkProgram program = new FrameworkProgram();
 
-            return program.Run("DiabloIIRealmServer", args);
+            program.Configure = kernel =>
+                {
+                    kernel.Load<DiabloIIRealmServerModule>();
+
+                    return "DiabloIIRealmServer";
+                };
+
+            return program.Run(args);
         }
     }
 }

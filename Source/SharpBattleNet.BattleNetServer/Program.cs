@@ -50,7 +50,14 @@ namespace SharpBattleNet.MasterServer
         {
             FrameworkProgram program = new FrameworkProgram();
 
-            return program.Run("MasterServer", args);
+            program.Configure = kernel =>
+                {
+                    kernel.Load<MasterServerModule>();
+
+                    return "MasterServer";
+                };
+
+            return program.Run(args);
         }
     }
 }

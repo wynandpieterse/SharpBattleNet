@@ -45,7 +45,6 @@ namespace SharpBattleNet.Framework
 
     public sealed class FrameworkProgram
     {
-        private string _programName = "";
         private IKernel _injectionKernel = null;
 
         private void PrintHeader(Assembly currentAssembly)
@@ -75,7 +74,20 @@ namespace SharpBattleNet.Framework
 
             PrintHeader(currentAssembly);
 
-            _injectionKernel = new StandardKernel(new FrameworkModule(_programName));
+            _injectionKernel = new StandardKernel();
+
+            if(null != Configure)
+            {
+                string programName = Configure(_injectionKernel);
+                if (null == programName)
+                {
+                    Guard.AgainstNull(programName);
+                }
+                else
+                {
+                    _injectionKernel.Load(new FrameworkModule(programName));
+                }
+            }
 
             return;
         }
@@ -144,12 +156,10 @@ namespace SharpBattleNet.Framework
             return;
         }
 
-        public int Run(string programName, string[] args)
+        public Func<IKernel, string> Configure { get; set; }
+
+        public int Run(string[] args)
         {
-            Guard.AgainstNull(programName);
-
-            _programName = programName;
-
             #if DEBUG
             UnguardedRun(args);
             #else

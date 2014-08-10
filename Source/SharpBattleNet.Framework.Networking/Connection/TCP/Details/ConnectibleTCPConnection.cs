@@ -119,6 +119,9 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 
             SetupSocketEventForConnect(socketEvent);
 
+            Socket = new Socket(address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            Socket.Bind(new IPEndPoint(IPAddress.Any, 0));
+
             if (false == Socket.ConnectAsync(socketEvent))
             {
                 ProcessConnect(socketEvent);

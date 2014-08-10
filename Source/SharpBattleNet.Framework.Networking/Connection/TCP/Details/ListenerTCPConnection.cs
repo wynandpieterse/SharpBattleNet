@@ -36,7 +36,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
     using System;
     using System.Net.Sockets;
     using NLog;
-    using SharpBattleNet.Framework.Networking.Connection.Details;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
     #endregion

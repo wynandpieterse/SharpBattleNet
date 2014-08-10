@@ -36,20 +36,12 @@ namespace SharpBattleNet.Framework.Networking
     using System;
     using Ninject.Modules;
     using Ninject.Extensions.Factory;
-    using SharpBattleNet.Framework.Networking.Server;
-    using SharpBattleNet.Framework.Networking.Connections.TCP;
-    using SharpBattleNet.Framework.Networking.Connections.UDP;
     #endregion
 
     public sealed class NetworkModule : NinjectModule
     {
         public override void Load()
         {
-            Bind<ITCPListenerFactory>().ToFactory();
-
-            Bind<ITCPConnectionFactory>().ToFactory();
-            Bind<IUDPConnectionFactory>().ToFactory();
-
             return;
         }
     }

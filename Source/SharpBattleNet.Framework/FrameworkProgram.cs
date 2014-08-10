@@ -51,7 +51,7 @@ namespace SharpBattleNet.Framework
 
             Console.WriteLine(@"    _  _   ____        _   _   _         _   _      _    ");
             Console.WriteLine(@"  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_  ");
-            Console.WriteLine(@" |_  .. _ |  _ \ / _` | __| __| |/ _ \  |  \| |/ _ \ __| ");
+            Console.WriteLine(@" |_  ..  _|  _ \ / _` | __| __| |/ _ \  |  \| |/ _ \ __| ");
             Console.WriteLine(@" |_      _| |_) | (_| | |_| |_| |  __/_ | |\  |  __/ |_  ");
             Console.WriteLine(@"   |_||_| |____/ \__,_|\__|\__|_|\___(_)_ | \_|\___|\__| ");
 
@@ -74,8 +74,12 @@ namespace SharpBattleNet.Framework
 
             _injectionKernel = new StandardKernel();
 
-            if(null != Configure)
+            if (null == Configure)
             {
+                throw new InvalidProgramException("The configuration property of the program must be set to a valid callback function");
+            }
+            else
+            { 
                 string programName = Configure(_injectionKernel);
                 if (null == programName)
                 {

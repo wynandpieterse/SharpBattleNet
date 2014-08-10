@@ -48,7 +48,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         private readonly ISocketEventPool _socketEventBag = null;
 
         private EndPoint _connectionEndPoint = null;
-        private Func<SocketError, bool> _connectCallback = null;
+        private Func<bool, bool> _connectCallback = null;
 
         public ConnectibleTCPConnection(ISocketEventPool socketEventBag)
             : base(socketEventBag)
@@ -77,6 +77,8 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 
         private void RecycleSocketEvent(SocketAsyncEventArgs socketEvent)
         {
+            Guard.AgainstNull(socketEvent);
+
             socketEvent.RemoteEndPoint = null;
             socketEvent.Completed -= HandleConnectEvent;
 
@@ -90,13 +92,33 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 
         private void ProcessConnect(SocketAsyncEventArgs socketEvent)
         {
-            if (false == _connectCallback(socketEvent.SocketError))
+            Guard.AgainstNull(socketEvent);
+            Guard.AgainstNull(_connectCallback);
+            Guard.AgainstNull(Socket);
+
+            if (SocketError.Success != socketEvent.SocketError)
             {
+                _logger.Debug("Failed to connect to {0}", socketEvent.RemoteEndPoint);
+                _logger.Trace("Stated reason for failure to connect is {0}", socketEvent.SocketError);
+
+                _connectCallback(false);
+
                 Socket.Close();
             }
             else
             {
-                StartRecieving();
+                if (false == _connectCallback(true))
+                {
+                    _logger.Trace("User refusing to connect to {0}", socketEvent.RemoteEndPoint);
+
+                    Socket.Close();
+                }
+                else
+                {
+                    _logger.Trace("User accepted connection to {0}", socketEvent.RemoteEndPoint);
+
+                    StartRecieving();
+                }
             }
 
             RecycleSocketEvent(socketEvent);
@@ -110,7 +132,9 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             return;
         }
 
-        public void Start(EndPoint address, Func<SocketError, bool> connected)
+        #region IConnectableTCPConnection Members
+
+        public void Start(EndPoint address, Func<bool, bool> connected)
         {
             SocketAsyncEventArgs socketEvent = null;
 
@@ -134,5 +158,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 
             return;
         }
+
+        #endregion
     }
 }

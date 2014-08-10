@@ -74,8 +74,12 @@ namespace SharpBattleNet.Framework
 
             _injectionKernel = new StandardKernel();
 
-            if(null != Configure)
+            if (null == Configure)
             {
+                throw new InvalidProgramException("The configuration property of the program must be set to a valid callback function");
+            }
+            else
+            { 
                 string programName = Configure(_injectionKernel);
                 if (null == programName)
                 {

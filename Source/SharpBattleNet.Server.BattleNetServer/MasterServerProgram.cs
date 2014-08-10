@@ -64,7 +64,7 @@ namespace SharpBattleNet.Server.MasterServer
             return true;
         }
 
-        private bool OnConnected(bool error)
+        private bool OnConnected(IConnection connection, bool error)
         {
             _logger.Info("Successfull connection");
             return true;

@@ -39,9 +39,13 @@ namespace SharpBattleNet.Framework.Networking
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Networking.Utilities.Collections.Details;
     using SharpBattleNet.Framework.Networking.Connection.TCP;
+    using SharpBattleNet.Framework.Networking.Connection.TCP.Details;
     using SharpBattleNet.Framework.Networking.Connection.UDP;
     using SharpBattleNet.Framework.Networking.Listeners.TCP;
+    using SharpBattleNet.Framework.Networking.Listeners.TCP.Details;
     using SharpBattleNet.Framework.Networking.Listeners.UDP;
+    using SharpBattleNet.Framework.Networking.Listeners.UDP.Details;
+    
     #endregion
 
     public sealed class NetworkModule : NinjectModule
@@ -56,9 +60,13 @@ namespace SharpBattleNet.Framework.Networking
         private void BindConnectionFactories()
         {
             Bind<IConnectableTCPConnectionFactory>().ToFactory();
+            Bind<IConnectableTCPConnection>().To<ConnectibleTCPConnection>();
+
             Bind<IListenerTCPConnectionFactory>().ToFactory();
+            Bind<IListenerTCPConnection>().To<ListenerTCPConnection>();
 
             Bind<IBindableUDPConnectionFactory>().ToFactory();
+            //Bind<IBindableUDPConnection>().To<BindableUDPConnection>();
 
             return;
         }
@@ -66,7 +74,10 @@ namespace SharpBattleNet.Framework.Networking
         private void BindListeners()
         {
             Bind<ITCPListenerFactory>().ToFactory();
+            Bind<ITCPListener>().To<TCPListener>();
+
             Bind<IUDPListenerFactory>().ToFactory();
+            Bind<IUDPListener>().To<UDPListener>();
 
             return;
         }

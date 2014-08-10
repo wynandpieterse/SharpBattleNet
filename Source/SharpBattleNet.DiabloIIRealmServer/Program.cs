@@ -37,6 +37,7 @@ namespace SharpBattleNet.Servers.DiabloIIRealmServer
     using Ninject;
     using SharpBattleNet.Framework;
     using SharpBattleNet.Server.DiabloIIRealmServer;
+    using SharpBattleNet.Framework.Networking;
     #endregion
 
     internal static class Program
@@ -48,6 +49,7 @@ namespace SharpBattleNet.Servers.DiabloIIRealmServer
             program.Configure = kernel =>
                 {
                     kernel.Load<DiabloIIRealmServerModule>();
+                    kernel.Load<NetworkModule>();
 
                     return "DiabloIIRealmServer";
                 };

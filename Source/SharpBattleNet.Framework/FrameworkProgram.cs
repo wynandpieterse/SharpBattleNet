@@ -159,6 +159,10 @@ namespace SharpBattleNet.Framework
                 }
 
                 Console.WriteLine();
+                Console.WriteLine(" - Stack Trace");
+                Console.Write(ex.StackTrace);
+
+                Console.WriteLine();
                 Pause();
             }
 
@@ -169,11 +173,11 @@ namespace SharpBattleNet.Framework
 
         public int Run(string[] args)
         {
-            #if DEBUG
-            UnguardedRun(args);
-            #else
+            //#if DEBUG
+            //UnguardedRun(args);
+            //#else
             GuardedRun(args);
-            #endif
+            //#endif
 
             return 0;
         }

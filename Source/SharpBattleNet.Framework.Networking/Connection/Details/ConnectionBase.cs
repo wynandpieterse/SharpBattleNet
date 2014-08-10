@@ -45,6 +45,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
     internal abstract class ConnectionBase : IConnection
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         private readonly ISocketEventPool _socketEventBag = null;
 
         protected Socket Socket { get; set; }
@@ -57,6 +58,8 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
 
             return;
         }
+
+    #region IConnection Methods
 
         public void Send(byte[] buffer, long bufferLenght = 0, EndPoint address = null)
         {
@@ -88,6 +91,8 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
 
             return;
         }
+
+        #endregion
 
         private SocketAsyncEventArgs RequestReceiveEvent()
         {

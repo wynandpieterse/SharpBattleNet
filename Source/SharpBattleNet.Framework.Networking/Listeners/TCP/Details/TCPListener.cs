@@ -46,6 +46,7 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
     internal sealed class TCPListener : ITCPListener
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         private readonly ISocketEventPool _socketEvents = null;
         private readonly IListenerTCPConnectionFactory _listenerFactory = null;
 
@@ -72,6 +73,7 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
                 socketEvent = new SocketAsyncEventArgs();
             }
 
+            socketEvent.AcceptSocket = null;
             socketEvent.Completed += HandleAcceptEvent;
 
             return socketEvent;
@@ -83,7 +85,11 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
 
             socketEvent.AcceptSocket = null;
             socketEvent.Completed -= HandleAcceptEvent;
-            _socketEvents.TryAdd(socketEvent);
+
+            if(false == _socketEvents.TryAdd(socketEvent))
+            {
+                _logger.Trace("Failed to add an instance of a socket event back to the socket event pool");
+            }
 
             return;
         }
@@ -92,21 +98,44 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
         {
             IListenerTCPConnection connection = null;
 
-            _logger.Info("Got new TCP connection from {0}", socketEvent.AcceptSocket.RemoteEndPoint);
+            Guard.AgainstNull(socketEvent);
+
+            _logger.Debug("Got new TCP connection from {0}", socketEvent.AcceptSocket.RemoteEndPoint);
 
             StartAccept();
 
-            if (socketEvent.SocketError != SocketError.Success)
+            if (SocketError.Success != socketEvent.SocketError)
             {
-                _logger.Warn("Socket connection from {0} failed. Stated reason is : {1}", socketEvent.AcceptSocket.RemoteEndPoint, socketEvent.SocketError);
+                if (SocketError.ConnectionReset == socketEvent.SocketError)
+                {
+                    _logger.Trace("Connection reset from {0}. Possible DOS attack", socketEvent.AcceptSocket.RemoteEndPoint);
+                }
+                else
+                {
+                    if (null != socketEvent.AcceptSocket)
+                    {
+                        _logger.Warn("Socket connection from {0} failed.", socketEvent.AcceptSocket.RemoteEndPoint);
+                    }
+
+                    _logger.Trace("Socket accept fail reason : {0}", socketEvent.SocketError);
+                }
             }
             else
             {
-                connection = _listenerFactory.Create();
-                connection.Start(socketEvent.AcceptSocket);
-                if (false == _accepted(connection))
+                try
                 {
-                    connection.Disconnect();
+                    connection = _listenerFactory.Create();
+                    connection.Start(socketEvent.AcceptSocket);
+                    if (false == _accepted(connection))
+                    {
+                        connection.Disconnect();
+                    }
+                }
+                catch(Exception ex)
+                {
+                    _logger.DebugException("Failed to create socket connection", ex);
+
+                    socketEvent.AcceptSocket.Close();
                 }
             }
 
@@ -125,11 +154,23 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
         {
             SocketAsyncEventArgs socketEvent = null;
 
-            socketEvent = RequestSocketEvent();
-
-            if (false == _listener.AcceptAsync(socketEvent))
+            try
             {
-                HandleAccept(socketEvent);
+                socketEvent = RequestSocketEvent();
+
+                if (false == _listener.AcceptAsync(socketEvent))
+                {
+                    HandleAccept(socketEvent);
+                }
+            }
+            catch (ObjectDisposedException ex)
+            {
+                _logger.TraceException("Socket disposed. Normal exception that happens at exit", ex);
+
+                if (null != socketEvent)
+                {
+                    RecycleSocketEvent(socketEvent);
+                }
             }
 
             return;

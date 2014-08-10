@@ -36,7 +36,6 @@ namespace SharpBattleNet.Server.DiabloIIRealmServer
     using System;
     using Ninject.Modules;
     using SharpBattleNet.Framework;
-    using SharpBattleNet.Server.DiabloIIRealmServer.Server.Details;
     #endregion
 
     public sealed class DiabloIIRealmServerModule : NinjectModule

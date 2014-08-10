@@ -36,7 +36,6 @@ namespace SharpBattleNet.Server.MasterServer
     using System;
     using Ninject.Modules;
     using SharpBattleNet.Framework;
-    using SharpBattleNet.Server.MasterServer.Server.Details;
     #endregion
 
     public sealed class MasterServerModule : NinjectModule

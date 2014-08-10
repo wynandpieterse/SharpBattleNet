@@ -30,21 +30,57 @@
 //
 #endregion
 
-namespace SharpBattleNet.Server.DiabloIIRealmServer.Server.Details
+namespace SharpBattleNet.Server.MasterServer
 {
     #region Usings
     using System;
+    using System.Net;
+    using System.Net.Sockets;
     using NLog;
     using SharpBattleNet.Framework;
+    using SharpBattleNet.Framework.Networking.Listeners.TCP;
+    using SharpBattleNet.Framework.Networking.Connection;
+    using SharpBattleNet.Framework.Networking.Connection.TCP;
     #endregion
 
-    internal sealed class DiabloIIRealmServerProgram : IProgram
+    internal sealed class MasterServerProgram : IProgram
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+        private readonly ITCPListenerFactory _listenerFactory = null;
+        private ITCPListener _listener = null;
+        private readonly IConnectableTCPConnectionFactory _connectionFactory = null;
+        private IConnectableTCPConnection _connect = null;
+
+        public MasterServerProgram(ITCPListenerFactory listenerFactory, IConnectableTCPConnectionFactory connectionFactory)
+        {
+            _listenerFactory = listenerFactory;
+            _connectionFactory = connectionFactory;
+            return;
+        }
+
+        private bool Accepted(IConnection connection)
+        {
+            return true;
+        }
+
+        private bool OnConnected(SocketError error)
+        {
+            _logger.Info("Successfull connection");
+            return true;
+        }
 
         public void Start()
         {
             _logger.Info("Hello, World");
+
+            _listener = _listenerFactory.Create();
+
+            _listener.Start(new IPEndPoint(IPAddress.Any, 2048), Accepted);
+
+            _connect = _connectionFactory.Create();
+
+            _connect.Start(new IPEndPoint(IPAddress.Loopback, 2048), OnConnected);
 
             return;
         }
@@ -52,7 +88,6 @@ namespace SharpBattleNet.Server.DiabloIIRealmServer.Server.Details
         public void Stop()
         {
             _logger.Info("Bye, World");
-
             return;
         }
     }

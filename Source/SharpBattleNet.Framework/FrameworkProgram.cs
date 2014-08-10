@@ -51,7 +51,7 @@ namespace SharpBattleNet.Framework
 
             Console.WriteLine(@"    _  _   ____        _   _   _         _   _      _    ");
             Console.WriteLine(@"  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_  ");
-            Console.WriteLine(@" |_  .. _ |  _ \ / _` | __| __| |/ _ \  |  \| |/ _ \ __| ");
+            Console.WriteLine(@" |_  ..  _|  _ \ / _` | __| __| |/ _ \  |  \| |/ _ \ __| ");
             Console.WriteLine(@" |_      _| |_) | (_| | |_| |_| |  __/_ | |\  |  __/ |_  ");
             Console.WriteLine(@"   |_||_| |____/ \__,_|\__|\__|_|\___(_)_ | \_|\___|\__| ");
 
@@ -74,8 +74,12 @@ namespace SharpBattleNet.Framework
 
             _injectionKernel = new StandardKernel();
 
-            if(null != Configure)
+            if (null == Configure)
             {
+                throw new InvalidProgramException("The configuration property of the program must be set to a valid callback function");
+            }
+            else
+            { 
                 string programName = Configure(_injectionKernel);
                 if (null == programName)
                 {
@@ -139,27 +143,47 @@ namespace SharpBattleNet.Framework
             return;
         }
 
+        private void UnhandledException(Exception ex)
+        {
+            // Can't really use NLogger here because I dont know if it was configured correctly
+            // by this time
+            Console.WriteLine();
+            Console.WriteLine("INTERNAL SERVER ERROR:");
+            Console.WriteLine(" - {0}", ex.Message);
+
+            if (null != ex.InnerException)
+            {
+                Console.WriteLine(" - {0}", ex.InnerException.Message);
+            }
+
+            Console.WriteLine();
+            Console.WriteLine(" - Stack Trace");
+            Console.Write(ex.StackTrace);
+
+            Console.WriteLine();
+            Pause();
+
+            return;
+        }
+
+        private void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
+        {
+            UnhandledException((Exception)e.ExceptionObject);
+
+            return;
+        }
+
         private void GuardedRun(string[] args)
         {
             try
             {
+                AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
+
                 UnguardedRun(args);
             }
             catch (Exception ex)
             {
-                // Can't really use NLogger here because I dont know if it was configured correctly
-                // by this time
-                Console.WriteLine();
-                Console.WriteLine("INTERNAL SERVER ERROR:");
-                Console.WriteLine(" - {0}", ex.Message);
-
-                if (null != ex.InnerException)
-                {
-                    Console.WriteLine(" - {0}", ex.InnerException.Message);
-                }
-
-                Console.WriteLine();
-                Pause();
+                UnhandledException(ex);
             }
 
             return;
@@ -169,11 +193,11 @@ namespace SharpBattleNet.Framework
 
         public int Run(string[] args)
         {
-            #if DEBUG
-            UnguardedRun(args);
-            #else
+            //#if DEBUG
+            //UnguardedRun(args);
+            //#else
             GuardedRun(args);
-            #endif
+            //#endif
 
             return 0;
         }

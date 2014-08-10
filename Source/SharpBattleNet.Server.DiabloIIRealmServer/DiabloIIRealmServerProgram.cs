@@ -30,7 +30,7 @@
 //
 #endregion
 
-namespace SharpBattleNet.Server.MasterServer.Server.Details
+namespace SharpBattleNet.Server.DiabloIIRealmServer
 {
     #region Usings
     using System;
@@ -38,19 +38,21 @@ namespace SharpBattleNet.Server.MasterServer.Server.Details
     using SharpBattleNet.Framework;
     #endregion
 
-    internal sealed class MasterServerProgram : IProgram
+    internal sealed class DiabloIIRealmServerProgram : IProgram
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public void Start()
         {
             _logger.Info("Hello, World");
+
             return;
         }
 
         public void Stop()
         {
             _logger.Info("Bye, World");
+
             return;
         }
     }

@@ -34,11 +34,183 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
 {
     #region Usings
     using System;
+    using System.Net;
+    using System.Net.Sockets;
     using NLog;
+    using SharpBattleNet.Framework.Networking.Utilities.Collections;
+    using SharpBattleNet.Framework.Utilities.Debugging;
+    using SharpBattleNet.Framework.Networking.Connection;
+    using SharpBattleNet.Framework.Networking.Connection.TCP;
     #endregion
 
     internal sealed class TCPListener : ITCPListener
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+        private readonly ISocketEventPool _socketEvents = null;
+        private readonly IListenerTCPConnectionFactory _listenerFactory = null;
+
+        private Socket _listener = null;
+        private Func<IConnection, bool> _accepted = null;
+
+        public TCPListener(ISocketEventPool socketEvents, IListenerTCPConnectionFactory listenerFactory)
+        {
+            Guard.AgainstNull(socketEvents);
+            Guard.AgainstNull(listenerFactory);
+
+            _socketEvents = socketEvents;
+            _listenerFactory = listenerFactory;
+
+            return;
+        }
+
+        private SocketAsyncEventArgs RequestSocketEvent()
+        {
+            SocketAsyncEventArgs socketEvent = null;
+
+            if (false == _socketEvents.TryTake(out socketEvent))
+            {
+                socketEvent = new SocketAsyncEventArgs();
+            }
+
+            socketEvent.AcceptSocket = null;
+            socketEvent.Completed += HandleAcceptEvent;
+
+            return socketEvent;
+        }
+
+        private void RecycleSocketEvent(SocketAsyncEventArgs socketEvent)
+        {
+            Guard.AgainstNull(socketEvent);
+
+            socketEvent.AcceptSocket = null;
+            socketEvent.Completed -= HandleAcceptEvent;
+
+            if(false == _socketEvents.TryAdd(socketEvent))
+            {
+                _logger.Trace("Failed to add an instance of a socket event back to the socket event pool");
+            }
+
+            return;
+        }
+
+        private void HandleAccept(SocketAsyncEventArgs socketEvent)
+        {
+            IListenerTCPConnection connection = null;
+
+            Guard.AgainstNull(socketEvent);
+
+            _logger.Debug("Got new TCP connection from {0}", socketEvent.AcceptSocket.RemoteEndPoint);
+
+            StartAccept();
+
+            if (SocketError.Success != socketEvent.SocketError)
+            {
+                if (SocketError.ConnectionReset == socketEvent.SocketError)
+                {
+                    _logger.Trace("Connection reset from {0}. Possible DOS attack", socketEvent.AcceptSocket.RemoteEndPoint);
+                }
+                else
+                {
+                    if (null != socketEvent.AcceptSocket)
+                    {
+                        _logger.Warn("Socket connection from {0} failed.", socketEvent.AcceptSocket.RemoteEndPoint);
+                    }
+
+                    _logger.Trace("Socket accept fail reason : {0}", socketEvent.SocketError);
+                }
+            }
+            else
+            {
+                try
+                {
+                    connection = _listenerFactory.Create();
+                    connection.Start(socketEvent.AcceptSocket);
+                    if (false == _accepted(connection))
+                    {
+                        connection.Disconnect();
+                    }
+                }
+                catch(Exception ex)
+                {
+                    _logger.DebugException("Failed to create socket connection", ex);
+
+                    socketEvent.AcceptSocket.Close();
+                }
+            }
+
+            RecycleSocketEvent(socketEvent);
+            return;
+        }
+
+        private void HandleAcceptEvent(object sender, SocketAsyncEventArgs socketEvent)
+        {
+            HandleAccept(socketEvent);
+
+            return;
+        }
+
+        private void StartAccept()
+        {
+            SocketAsyncEventArgs socketEvent = null;
+
+            try
+            {
+                socketEvent = RequestSocketEvent();
+
+                if (false == _listener.AcceptAsync(socketEvent))
+                {
+                    HandleAccept(socketEvent);
+                }
+            }
+            catch (ObjectDisposedException ex)
+            {
+                _logger.TraceException("Socket disposed. Normal exception that happens at exit", ex);
+
+                if (null != socketEvent)
+                {
+                    RecycleSocketEvent(socketEvent);
+                }
+            }
+
+            return;
+        }
+
+        #region ITCPListener Members
+
+        public void Start(EndPoint address, Func<IConnection, bool> accepted)
+        {
+            Guard.AgainstNull(address);
+            Guard.AgainstNull(accepted);
+
+            _accepted = accepted;
+
+            _logger.Info("Started listening for connections on {0}", address);
+
+            _listener = new Socket(address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+
+            try
+            {
+                _listener.Bind(address);
+                _listener.Listen(64);
+            }
+            catch (ObjectDisposedException ex)
+            {
+                _logger.DebugException("Listener socket has been closed before even beginning accept operation", ex);
+
+                return;
+            }
+            catch (SocketException ex)
+            {
+                _logger.WarnException("Failed to set an operation on the listener socket", ex);
+
+                return;
+            }
+
+            StartAccept();
+            return;
+        }
+
+        #endregion
     }
 }

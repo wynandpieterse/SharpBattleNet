@@ -45,6 +45,7 @@
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <BaseIntermediateOutputPath>../../Intermediate/Code/Binaries/SharpBattleNet.BattleNetServer/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>

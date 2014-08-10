@@ -30,14 +30,16 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Networking.Listeners.TCP
+namespace SharpBattleNet.Framework.Networking.Listeners
 {
     #region Usings
     using System;
+    using System.Net;
+    using SharpBattleNet.Framework.Networking.Connection;
     #endregion
 
-    public interface ITCPListener : IListener
+    public interface IListener
     {
-
+        void Start(EndPoint address, Func<IConnection, bool> accepted);
     }
 }

@@ -30,19 +30,39 @@
 //
 #endregion
 
-namespace SharpBattleNet.Server.DiabloIIRealmServer.Server
+namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
 {
     #region Usings
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using System.Net;
+    using NLog;
+    using SharpBattleNet.Framework.Networking.Connection.Details;
+    using SharpBattleNet.Framework.Networking.Utilities.Collections;
+    using SharpBattleNet.Framework.Utilities.Debugging;
     #endregion
 
-    public interface IDiabloIIRealmServerProgram
+    internal sealed class BindableUDPConnection : ConnectionBase, IBindableUDPConnection
     {
-        void Start();
-        void Stop();
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly ISocketEventPool _socketEventBag = null;
+
+        public BindableUDPConnection(ISocketEventPool socketEventBag)
+            : base(socketEventBag)
+        {
+            Guard.AgainstNull(socketEventBag);
+
+            _socketEventBag = socketEventBag;
+
+            return;
+        }
+
+        #region IBindableUDPConnection Members
+
+        public void Bind(EndPoint address)
+        {
+            return;
+        }
+
+        #endregion
     }
 }

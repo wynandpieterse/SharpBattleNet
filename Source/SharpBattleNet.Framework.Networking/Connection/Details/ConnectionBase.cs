@@ -118,21 +118,28 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
             socketEvent.SetBuffer(null, 0, 0);
             socketEvent.Completed -= HandleReceiveEvent;
 
+            if (false == _socketEventBag.TryAdd(socketEvent))
+            {
+                _logger.Trace("Failed to insert receive socket event back into event pool");
+            }
+
             return;
         }
 
         private void HandleReceive(SocketAsyncEventArgs socketEvent)
         {
+            Guard.AgainstNull(socketEvent);
+
             if (socketEvent.BytesTransferred == 0)
             {
                 // Zero means socket is closed
                 if (SocketType.Stream == Socket.SocketType)
                 {
-                    _logger.Info("Connection from {0} closed normally", Socket.RemoteEndPoint);
+                    _logger.Debug("Connection from {0} closed normally", Socket.RemoteEndPoint);
                 }
                 else if(SocketType.Dgram == Socket.SocketType)
                 {
-                    _logger.Info("Connection from {0} closed normally", socketEvent.RemoteEndPoint);
+                    _logger.Debug("Connection from {0} closed normally", socketEvent.RemoteEndPoint);
                 }
 
                 return;
@@ -141,6 +148,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
             _logger.Info(Encoding.ASCII.GetString(socketEvent.Buffer, 0, socketEvent.BytesTransferred));
 
             StartRecieving();
+
             RecycleReceiveEvent(socketEvent);
 
             return;
@@ -161,23 +169,44 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
 
             socketEvent = RequestReceiveEvent();
 
-            if (SocketType.Stream == Socket.SocketType)
+            try
             {
-                if (false == Socket.ReceiveAsync(socketEvent))
+                if (SocketType.Stream == Socket.SocketType)
                 {
-                    HandleReceive(socketEvent);
+                    if (false == Socket.ReceiveAsync(socketEvent))
+                    {
+                        HandleReceive(socketEvent);
+                    }
+                }
+                else if (SocketType.Dgram == Socket.SocketType)
+                {
+                    if (false == Socket.ReceiveFromAsync(socketEvent))
+                    {
+                        HandleReceive(socketEvent);
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException("The network library currently does not handle sockets other that stream and datagram");
                 }
             }
-            else if(SocketType.Dgram == Socket.SocketType)
+            catch (ObjectDisposedException ex)
             {
-                if (false == Socket.ReceiveFromAsync(socketEvent))
+                _logger.TraceException("Socket object disposed. Returning from receive loop", ex);
+
+                if (null != socketEvent)
                 {
-                    HandleReceive(socketEvent);
+                    RecycleReceiveEvent(socketEvent);
                 }
             }
-            else
+            catch (SocketException ex)
             {
-                throw new InvalidOperationException("The network library currently does not handle sockets other that stream and datagram");
+                _logger.DebugException("Socket exception", ex);
+
+                if (null != socketEvent)
+                {
+                    RecycleReceiveEvent(socketEvent);
+                }
             }
 
             return;

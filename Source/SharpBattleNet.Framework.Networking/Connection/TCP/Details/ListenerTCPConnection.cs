@@ -43,6 +43,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
     internal sealed class ListenerTCPConnection : TCPConnectionBase, IListenerTCPConnection
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         private readonly ISocketEventPool _socketEventBag = null;
 
         public ListenerTCPConnection(ISocketEventPool socketEventBag)

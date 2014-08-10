@@ -13,16 +13,13 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 {
     internal sealed class ListenerTCPConnection : TCPConnectionBase, IListenerTCPConnection
     {
-        private readonly ISocketBag _socketBag = null;
-        private readonly ISocketEventBag _socketEventBag = null;
+        private readonly ISocketEventPool _socketEventBag = null;
 
-        public ListenerTCPConnection(ISocketBag socketBag, ISocketEventBag socketEventBag)
-            : base(socketBag, socketEventBag)
+        public ListenerTCPConnection(ISocketEventPool socketEventBag)
+            : base(socketEventBag)
         {
-            Guard.AgainstNull(socketBag);
             Guard.AgainstNull(socketEventBag);
 
-            _socketBag = socketBag;
             _socketEventBag = socketEventBag;
 
             return;
@@ -30,6 +27,8 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 
         public void Start(Socket acceptedSocket)
         {
+            Guard.AgainstNull(acceptedSocket);
+
             Socket = acceptedSocket;
 
             StartRecieving();

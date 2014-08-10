@@ -13,16 +13,13 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 {
     internal abstract class TCPConnectionBase : ConnectionBase, ITCPConnection
     {
-        private readonly ISocketBag _socketBag = null;
-        private readonly ISocketEventBag _socketEventBag = null;
+        private readonly ISocketEventPool _socketEventBag = null;
 
-        public TCPConnectionBase(ISocketBag socketBag, ISocketEventBag socketEventBag)
-            : base(socketBag, socketEventBag)
+        public TCPConnectionBase(ISocketEventPool socketEventBag)
+            : base(socketEventBag)
         {
-            Guard.AgainstNull(socketBag);
             Guard.AgainstNull(socketEventBag);
 
-            _socketBag = socketBag;
             _socketEventBag = socketEventBag;
 
             return;
@@ -33,8 +30,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             if(null != Socket)
             {
                 Socket.Disconnect(true);
-
-                while (false == _socketBag.TryAdd(Socket)) ;
 
                 Socket = null;
             }

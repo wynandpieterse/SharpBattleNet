@@ -13,23 +13,81 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 {
     internal sealed class ConnectibleTCPConnection : TCPConnectionBase, IConnectableTCPConnection
     {
-        private readonly ISocketBag _socketBag = null;
-        private readonly ISocketEventBag _socketEventBag = null;
+        private readonly ISocketEventPool _socketEventBag = null;
 
-        public ConnectibleTCPConnection(ISocketBag socketBag, ISocketEventBag socketEventBag)
-            : base(socketBag, socketEventBag)
+        private EndPoint _connectionEndPoint = null;
+        private Func<SocketError, bool> _connectCallback = null;
+
+        public ConnectibleTCPConnection(ISocketEventPool socketEventBag)
+            : base(socketEventBag)
         {
-            Guard.AgainstNull(socketBag);
             Guard.AgainstNull(socketEventBag);
 
-            _socketBag = socketBag;
             _socketEventBag = socketEventBag;
 
             return;
         }
 
-        public void Start(EndPoint address, Func<bool, SocketError> connected)
+        private void SetupSocketEventForConnect(SocketAsyncEventArgs socketEvent)
         {
+            socketEvent.RemoteEndPoint = _connectionEndPoint;
+            socketEvent.Completed += HandleConnectEvent;
+        }
+
+        private void ReleaseSocketEvent(SocketAsyncEventArgs socketEvent)
+        {
+            socketEvent.RemoteEndPoint = null;
+            socketEvent.Completed -= HandleConnectEvent;
+
+            _socketEventBag.TryAdd(socketEvent);
+
+            return;
+        }
+
+        private void ProcessConnect(SocketAsyncEventArgs socketEvent)
+        {
+            if (false == _connectCallback(socketEvent.SocketError))
+            {
+                Socket.Close();
+            }
+            else
+            {
+                StartRecieving();
+            }
+
+            ReleaseSocketEvent(socketEvent);
+            return;
+        }
+
+        private void HandleConnectEvent(object sender, SocketAsyncEventArgs socketEvent)
+        {
+            ProcessConnect(socketEvent);
+
+            return;
+        }
+
+        public void Start(EndPoint address, Func<SocketError, bool> connected)
+        {
+            SocketAsyncEventArgs socketEvent = null;
+
+            Guard.AgainstNull(address);
+            Guard.AgainstNull(connected);
+
+            _connectCallback = connected;
+            _connectionEndPoint = address;
+
+            if (false == _socketEventBag.TryTake(out socketEvent))
+            {
+                socketEvent = new SocketAsyncEventArgs();
+            }
+
+            SetupSocketEventForConnect(socketEvent);
+
+            if (false == Socket.ConnectAsync(socketEvent))
+            {
+                ProcessConnect(socketEvent);
+            }
+
             return;
         }
     }

@@ -48,8 +48,7 @@ namespace SharpBattleNet.Framework.Networking
     {
         private void BindUtilities()
         {
-            Bind<ISocketBag>().To<SocketBag>().InSingletonScope();
-            Bind<ISocketEventBag>().To<SocketEventBag>().InSingletonScope();
+            Bind<ISocketEventPool>().To<SocketEventPool>().InSingletonScope();
 
             return;
         }

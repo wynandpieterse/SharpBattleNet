@@ -12,17 +12,14 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
 {
     internal abstract class ConnectionBase : IConnection
     {
-        private readonly ISocketBag _socketBag = null;
-        private readonly ISocketEventBag _socketEventBag = null;
+        private readonly ISocketEventPool _socketEventBag = null;
 
         protected Socket Socket { get; set; }
 
-        public ConnectionBase(ISocketBag socketBag, ISocketEventBag socketEventBag)
+        public ConnectionBase(ISocketEventPool socketEventBag)
         {
-            Guard.AgainstNull(socketBag);
             Guard.AgainstNull(socketEventBag);
 
-            _socketBag = socketBag;
             _socketEventBag = socketEventBag;
 
             return;

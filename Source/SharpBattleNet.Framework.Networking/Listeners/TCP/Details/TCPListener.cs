@@ -34,11 +34,35 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
 {
     #region Usings
     using System;
+    using System.Net;
     using NLog;
+    using SharpBattleNet.Framework.Networking.Utilities.Collections;
+    using SharpBattleNet.Framework.Utilities.Debugging;
     #endregion
 
     internal sealed class TCPListener : ITCPListener
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly ISocketEventPool _socketEvents = null;
+
+        public TCPListener(ISocketEventPool socketEvents)
+        {
+            Guard.AgainstNull(socketEvents);
+
+            _socketEvents = socketEvents;
+
+            return;
+        }
+
+        #region ITCPListener Members
+
+        public void Start(EndPoint address)
+        {
+            Guard.AgainstNull(address);
+
+            return;
+        }
+
+        #endregion
     }
 }

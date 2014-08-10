@@ -66,7 +66,8 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
                 }
                 catch (Exception)
                 {
-
+                    // Don't really care here because system is going to remove all the stuff from itself
+                    // in any case.
                 }
             }
 

@@ -139,31 +139,47 @@ namespace SharpBattleNet.Framework
             return;
         }
 
+        private void UnhandledException(Exception ex)
+        {
+            // Can't really use NLogger here because I dont know if it was configured correctly
+            // by this time
+            Console.WriteLine();
+            Console.WriteLine("INTERNAL SERVER ERROR:");
+            Console.WriteLine(" - {0}", ex.Message);
+
+            if (null != ex.InnerException)
+            {
+                Console.WriteLine(" - {0}", ex.InnerException.Message);
+            }
+
+            Console.WriteLine();
+            Console.WriteLine(" - Stack Trace");
+            Console.Write(ex.StackTrace);
+
+            Console.WriteLine();
+            Pause();
+
+            return;
+        }
+
+        private void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
+        {
+            UnhandledException((Exception)e.ExceptionObject);
+
+            return;
+        }
+
         private void GuardedRun(string[] args)
         {
             try
             {
+                AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
+
                 UnguardedRun(args);
             }
             catch (Exception ex)
             {
-                // Can't really use NLogger here because I dont know if it was configured correctly
-                // by this time
-                Console.WriteLine();
-                Console.WriteLine("INTERNAL SERVER ERROR:");
-                Console.WriteLine(" - {0}", ex.Message);
-
-                if (null != ex.InnerException)
-                {
-                    Console.WriteLine(" - {0}", ex.InnerException.Message);
-                }
-
-                Console.WriteLine();
-                Console.WriteLine(" - Stack Trace");
-                Console.Write(ex.StackTrace);
-
-                Console.WriteLine();
-                Pause();
+                UnhandledException(ex);
             }
 
             return;

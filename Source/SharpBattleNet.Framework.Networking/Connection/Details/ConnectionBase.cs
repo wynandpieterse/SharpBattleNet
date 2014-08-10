@@ -34,9 +34,10 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
 {
     #region Usings
     using System;
-    using NLog;
     using System.Net;
     using System.Net.Sockets;
+    using System.Text;
+    using NLog;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
     #endregion
@@ -102,7 +103,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
             socketEvent.SetBuffer(buffer, 0, buffer.Length);
             socketEvent.Completed += HandleReceiveEvent;
 
-            return null;
+            return socketEvent;
         }
 
         private void RecycleReceiveEvent(SocketAsyncEventArgs socketEvent)
@@ -117,9 +118,10 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
 
         private void HandleReceive(SocketAsyncEventArgs socketEvent)
         {
+            _logger.Info(Encoding.ASCII.GetString(socketEvent.Buffer, 0, socketEvent.BytesTransferred));
+
             StartRecieving();
-
-
+            RecycleReceiveEvent(socketEvent);
 
             return;
         }

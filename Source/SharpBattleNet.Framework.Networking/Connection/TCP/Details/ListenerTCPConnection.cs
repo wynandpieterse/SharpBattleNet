@@ -43,6 +43,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
     internal sealed class ListenerTCPConnection : TCPConnectionBase, IListenerTCPConnection
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         private readonly ISocketEventPool _socketEventBag = null;
 
         public ListenerTCPConnection(ISocketEventPool socketEventBag)
@@ -55,6 +56,8 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             return;
         }
 
+        #region IListenerTCPConnection Members
+
         public void Start(Socket acceptedSocket)
         {
             Guard.AgainstNull(acceptedSocket);
@@ -65,5 +68,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 
             return;
         }
+
+        #endregion
     }
 }

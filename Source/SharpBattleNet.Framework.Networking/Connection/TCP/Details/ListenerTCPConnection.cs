@@ -56,6 +56,8 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             return;
         }
 
+        #region IListenerTCPConnection Members
+
         public void Start(Socket acceptedSocket)
         {
             Guard.AgainstNull(acceptedSocket);
@@ -66,5 +68,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 
             return;
         }
+
+        #endregion
     }
 }

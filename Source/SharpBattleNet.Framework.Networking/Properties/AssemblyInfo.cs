@@ -1,4 +1,4 @@
-﻿#region Header
+#region Header
 //
 //    _  _   ____        _   _   _         _   _      _   
 //  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
@@ -37,12 +37,12 @@ using System.Runtime.InteropServices;
 
 #region Assembly Definitions
 [assembly: AssemblyTitle("SharpBattle.net Server - Network Framework")]
-[assembly: AssemblyDescription("Allows programs to host networking servers")]
+[assembly: AssemblyDescription("Contains classes that makes it easier to work with sockets, connections and packet handeling.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Reaper Interactive")]
+[assembly: AssemblyCompany("Wynand Pieterse")]
 [assembly: AssemblyProduct("SharpBattle.net")]
-[assembly: AssemblyCopyright("")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCopyright("2014 - Wynand Pieterse")]
+[assembly: AssemblyTrademark("Battle.net, Diablo, StarCraft and WarCraft are trademarks of Blizzard Games.")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: Guid("dafa7b7d-c510-4d5b-bf2b-ee7b9e0358a5")]

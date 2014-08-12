@@ -40,7 +40,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <BaseIntermediateOutputPath>../../Intermediate/Code/Binaries/SharpBattleNet.WarCraftIIIRouterServer/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/Code/SharpBattleNet.Program.WarCraftIIIRouterServer/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -52,7 +52,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <BaseIntermediateOutputPath>../../Intermediate/Code/Binaries/SharpBattleNet.WarCraftIIIRouterServer/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/Code/SharpBattleNet.Program.WarCraftIIIRouterServer/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup>

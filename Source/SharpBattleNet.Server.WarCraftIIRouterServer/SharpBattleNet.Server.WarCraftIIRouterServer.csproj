@@ -20,6 +20,8 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\Intermediate\Code\Libraries\SharpBattleNet.Server.WarCraftIIIRouterServer\Debug\</OutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/Code/Libraries/SharpBattleNet.Server.WarCraftIIIRouterServer/</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,6 +30,8 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\Intermediate\Code\Libraries\SharpBattleNet.Server.WarCraftIIIRouterServer\Debug\</OutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/Code/Libraries/SharpBattleNet.Server.WarCraftIIIRouterServer/</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>

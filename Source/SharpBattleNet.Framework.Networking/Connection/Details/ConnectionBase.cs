@@ -192,7 +192,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
             }
             catch (ObjectDisposedException ex)
             {
-                _logger.TraceException("Socket object disposed. Returning from receive loop", ex);
+                _logger.Trace("Socket object disposed. Returning from receive loop", ex);
 
                 if (null != socketEvent)
                 {
@@ -201,7 +201,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
             }
             catch (SocketException ex)
             {
-                _logger.DebugException("Socket exception", ex);
+                _logger.Debug("Socket exception", ex);
 
                 if (null != socketEvent)
                 {

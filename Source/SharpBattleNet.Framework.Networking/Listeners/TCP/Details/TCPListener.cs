@@ -133,7 +133,7 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
                 }
                 catch(Exception ex)
                 {
-                    _logger.DebugException("Failed to create socket connection", ex);
+                    _logger.Debug("Failed to create socket connection", ex);
 
                     socketEvent.AcceptSocket.Close();
                 }
@@ -165,7 +165,7 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
             }
             catch (ObjectDisposedException ex)
             {
-                _logger.TraceException("Socket disposed. Normal exception that happens at exit", ex);
+                _logger.Trace("Socket disposed. Normal exception that happens at exit", ex);
 
                 if (null != socketEvent)
                 {
@@ -196,13 +196,13 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
             }
             catch (ObjectDisposedException ex)
             {
-                _logger.DebugException("Listener socket has been closed before even beginning accept operation", ex);
+                _logger.Debug("Listener socket has been closed before even beginning accept operation", ex);
 
                 return;
             }
             catch (SocketException ex)
             {
-                _logger.WarnException("Failed to set an operation on the listener socket", ex);
+                _logger.Warn("Failed to set an operation on the listener socket", ex);
 
                 return;
             }

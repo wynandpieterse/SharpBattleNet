@@ -156,7 +156,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             }
             catch (ObjectDisposedException ex)
             {
-                _logger.DebugException("Socket disposed before any operation was performed on it", ex);
+                _logger.Debug("Socket disposed before any operation was performed on it", ex);
 
                 _connectCallback(this, false);
 
@@ -164,7 +164,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             }
             catch (SocketException ex)
             {
-                _logger.WarnException("Socket failed to bind properly", ex);
+                _logger.Warn("Socket failed to bind properly", ex);
 
                 _connectCallback(this, false);
 
@@ -180,7 +180,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             }
             catch (ObjectDisposedException ex)
             {
-                _logger.DebugException("Socket disposed before connection could be performed on it", ex);
+                _logger.Debug("Socket disposed before connection could be performed on it", ex);
 
                 _connectCallback(this, false);
 
@@ -188,7 +188,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             }
             catch (SocketException ex)
             {
-                _logger.DebugException("Socket error on connect operation", ex);
+                _logger.Debug("Socket error on connect operation", ex);
 
                 _connectCallback(this, false);
 

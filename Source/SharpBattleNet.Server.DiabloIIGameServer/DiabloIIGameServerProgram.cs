@@ -1,4 +1,4 @@
-#region Header
+﻿#region Header
 //
 //    _  _   ____        _   _   _         _   _      _   
 //  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
@@ -30,22 +30,30 @@
 //
 #endregion
 
-#region Usings
-using System.Reflection;
-using System.Runtime.InteropServices;
-#endregion
+namespace SharpBattleNet.Server.DiabloIIGameServer
+{
+    #region Usings
+    using System;
+    using NLog;
+    using SharpBattleNet.Framework;
+    #endregion
 
-#region Assembly Definitions
-[assembly: AssemblyTitle("SharpBattle.net Server - Framework")]
-[assembly: AssemblyDescription("Contains various utilities and framework classes that help with the creation of programs.")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Wynand Pieterse")]
-[assembly: AssemblyProduct("SharpBattle.net")]
-[assembly: AssemblyCopyright("2014 - Wynand Pieterse")]
-[assembly: AssemblyTrademark("Battle.net, Diablo, StarCraft and WarCraft are trademarks of Blizzard Games.")]
-[assembly: AssemblyCulture("")]
-[assembly: ComVisible(false)]
-[assembly: Guid("23DD8BF2-447D-4ED3-AE72-6CE22A38383E")]
-[assembly: AssemblyVersion("0.0.13.0")]
-[assembly: AssemblyFileVersion("0.0.13.0")]
-#endregion
+    internal sealed class DiabloIIGameServerProgram : IProgram
+    {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+        public void Start()
+        {
+            _logger.Info("Hello, World");
+
+            return;
+        }
+
+        public void Stop()
+        {
+            _logger.Info("Bye, World");
+
+            return;
+        }
+    }
+}

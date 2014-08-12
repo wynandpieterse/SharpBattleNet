@@ -1,4 +1,4 @@
-#region Header
+﻿#region Header
 //
 //    _  _   ____        _   _   _         _   _      _   
 //  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
@@ -32,12 +32,13 @@
 
 #region Usings
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 #endregion
 
 #region Assembly Definitions
-[assembly: AssemblyTitle("SharpBattle.net - Master Server")]
-[assembly: AssemblyDescription("Hosts the main Battle.net services such as chat, game finding, friends and much more.")]
+[assembly: AssemblyTitle("SharpBattle.net - WarCraft III UDP Router Server")]
+[assembly: AssemblyDescription("Contains the logic that is used by the WarCraft III Router Server executable. Used by Battle.net to route WarCraft III game commands.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Wynand Pieterse")]
 [assembly: AssemblyProduct("SharpBattle.net")]
@@ -45,7 +46,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("Battle.net, Diablo, StarCraft and WarCraft are trademarks of Blizzard Games.")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
-[assembly: Guid("15cfeb6c-439d-4da4-9abe-f50568be5306")]
-[assembly: AssemblyVersion("0.0.12.0")]
-[assembly: AssemblyFileVersion("0.0.12.0")]
+[assembly: Guid("905246b6-79c5-4031-9eac-519133ad0e12")]
+[assembly: AssemblyVersion("0.0.13.0")]
+[assembly: AssemblyFileVersion("0.0.13.0")]
 #endregion

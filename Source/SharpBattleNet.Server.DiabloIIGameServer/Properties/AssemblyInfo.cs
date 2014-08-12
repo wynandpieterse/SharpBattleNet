@@ -1,4 +1,4 @@
-#region Header
+﻿#region Header
 //
 //    _  _   ____        _   _   _         _   _      _   
 //  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
@@ -32,12 +32,13 @@
 
 #region Usings
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 #endregion
 
 #region Assembly Definitions
-[assembly: AssemblyTitle("SharpBattle.net Server - Framework")]
-[assembly: AssemblyDescription("Contains various utilities and framework classes that help with the creation of programs.")]
+[assembly: AssemblyTitle("SharpBattle.net - Diablo II Game Server")]
+[assembly: AssemblyDescription("Contains the logic that is used by the Diablo II Server executable. Hosts a single game that players can connect to. This is the server part of a closed Diablo II game.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Wynand Pieterse")]
 [assembly: AssemblyProduct("SharpBattle.net")]
@@ -45,7 +46,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("Battle.net, Diablo, StarCraft and WarCraft are trademarks of Blizzard Games.")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
-[assembly: Guid("23DD8BF2-447D-4ED3-AE72-6CE22A38383E")]
+[assembly: Guid("81393681-72a5-45aa-9eca-8eae2edb7598")]
 [assembly: AssemblyVersion("0.0.13.0")]
 [assembly: AssemblyFileVersion("0.0.13.0")]
 #endregion

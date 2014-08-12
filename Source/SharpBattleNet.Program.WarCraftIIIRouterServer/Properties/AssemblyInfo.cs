@@ -1,4 +1,4 @@
-#region Header
+﻿#region Header
 //
 //    _  _   ____        _   _   _         _   _      _   
 //  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
@@ -36,8 +36,8 @@ using System.Runtime.InteropServices;
 #endregion
 
 #region Assembly Definitions
-[assembly: AssemblyTitle("SharpBattle.net Server - Framework")]
-[assembly: AssemblyDescription("Contains various utilities and framework classes that help with the creation of programs.")]
+[assembly: AssemblyTitle("SharpBattle.net - WarCraft III UDP Router Server")]
+[assembly: AssemblyDescription("Hosts the UDP router server that WarCraft III connects to to send user commands.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Wynand Pieterse")]
 [assembly: AssemblyProduct("SharpBattle.net")]
@@ -45,7 +45,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("Battle.net, Diablo, StarCraft and WarCraft are trademarks of Blizzard Games.")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
-[assembly: Guid("23DD8BF2-447D-4ED3-AE72-6CE22A38383E")]
+[assembly: Guid("5e559f89-b98a-4a46-adcc-cdeec5406563")]
 [assembly: AssemblyVersion("0.0.13.0")]
 [assembly: AssemblyFileVersion("0.0.13.0")]
 #endregion

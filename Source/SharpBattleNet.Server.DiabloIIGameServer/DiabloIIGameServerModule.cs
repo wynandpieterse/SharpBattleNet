@@ -1,4 +1,4 @@
-#region Header
+﻿#region Header
 //
 //    _  _   ____        _   _   _         _   _      _   
 //  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
@@ -30,22 +30,22 @@
 //
 #endregion
 
-#region Usings
-using System.Reflection;
-using System.Runtime.InteropServices;
-#endregion
+namespace SharpBattleNet.Server.DiabloIIGameServer
+{
+    #region Usings
+    using System;
+    using Ninject.Modules;
+    using SharpBattleNet.Framework;
+    #endregion
 
-#region Assembly Definitions
-[assembly: AssemblyTitle("SharpBattle.net - Diablo II Realm Server")]
-[assembly: AssemblyDescription("Hosts the realm servers that Diablo II uses to connect to online private games.")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Wynand Pieterse")]
-[assembly: AssemblyProduct("SharpBattle.net")]
-[assembly: AssemblyCopyright("2014 - Wynand Pieterse")]
-[assembly: AssemblyTrademark("Battle.net, Diablo, StarCraft and WarCraft are trademarks of Blizzard Games.")]
-[assembly: AssemblyCulture("")]
-[assembly: ComVisible(false)]
-[assembly: Guid("3E1BE83B-484F-44AC-8915-0DB613DCBAB6")]
-[assembly: AssemblyVersion("0.0.12.0")]
-[assembly: AssemblyFileVersion("0.0.12.0")]
-#endregion
+    public sealed class DiabloIIGameServerModule : NinjectModule
+    {
+        public override void Load()
+        {
+            Bind<IProgram>().To<DiabloIIGameServerProgram>();
+
+            return;
+        }
+    }
+}
+

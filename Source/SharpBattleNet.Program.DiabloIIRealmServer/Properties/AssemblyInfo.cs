@@ -36,8 +36,8 @@ using System.Runtime.InteropServices;
 #endregion
 
 #region Assembly Definitions
-[assembly: AssemblyTitle("SharpBattle.net Server - Framework")]
-[assembly: AssemblyDescription("Contains various utilities and framework classes that help with the creation of programs.")]
+[assembly: AssemblyTitle("SharpBattle.net - Diablo II Realm Server")]
+[assembly: AssemblyDescription("Hosts the realm servers that Diablo II uses to connect to online private games.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Wynand Pieterse")]
 [assembly: AssemblyProduct("SharpBattle.net")]
@@ -45,7 +45,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("Battle.net, Diablo, StarCraft and WarCraft are trademarks of Blizzard Games.")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
-[assembly: Guid("23DD8BF2-447D-4ED3-AE72-6CE22A38383E")]
+[assembly: Guid("3E1BE83B-484F-44AC-8915-0DB613DCBAB6")]
 [assembly: AssemblyVersion("0.0.13.0")]
 [assembly: AssemblyFileVersion("0.0.13.0")]
 #endregion

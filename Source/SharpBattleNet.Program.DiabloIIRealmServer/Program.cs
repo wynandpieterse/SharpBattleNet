@@ -30,22 +30,32 @@
 //
 #endregion
 
-#region Usings
-using System.Reflection;
-using System.Runtime.InteropServices;
-#endregion
+namespace SharpBattleNet.Program.DiabloIIRealmServer
+{
+    #region Usings
+    using System;
+    using Ninject;
+    using SharpBattleNet.Framework;
+    using SharpBattleNet.Server.DiabloIIRealmServer;
+    using SharpBattleNet.Framework.Networking;
+    #endregion
 
-#region Assembly Definitions
-[assembly: AssemblyTitle("SharpBattle.net Server - Framework")]
-[assembly: AssemblyDescription("Contains various utilities and framework classes that help with the creation of programs.")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Wynand Pieterse")]
-[assembly: AssemblyProduct("SharpBattle.net")]
-[assembly: AssemblyCopyright("2014 - Wynand Pieterse")]
-[assembly: AssemblyTrademark("Battle.net, Diablo, StarCraft and WarCraft are trademarks of Blizzard Games.")]
-[assembly: AssemblyCulture("")]
-[assembly: ComVisible(false)]
-[assembly: Guid("23DD8BF2-447D-4ED3-AE72-6CE22A38383E")]
-[assembly: AssemblyVersion("0.0.13.0")]
-[assembly: AssemblyFileVersion("0.0.13.0")]
-#endregion
+    internal static class Program
+    {
+        private static int Main(string[] args)
+        {
+            FrameworkProgram program = new FrameworkProgram();
+
+            program.Configure = kernel =>
+                {
+                    kernel.Load<DiabloIIRealmServerModule>();
+                    kernel.Load<NetworkModule>();
+
+                    return "DiabloIIRealmServer";
+                };
+
+            return program.Run(args);
+        }
+    }
+}
+

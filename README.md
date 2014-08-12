@@ -25,4 +25,4 @@ This project is completely open source, and community involvement is highly enco
 
 If you wish to contribute ideas or code, please fork this repository and make a pull request.
 
-Version 0.0.11
+Version 0.0.12

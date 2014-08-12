@@ -1,4 +1,4 @@
-﻿#region Header
+#region Header
 //
 //    _  _   ____        _   _   _         _   _      _   
 //  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
@@ -37,15 +37,15 @@ using System.Runtime.InteropServices;
 
 #region Assembly Definitions
 [assembly: AssemblyTitle("SharpBattle.net - Diablo II Realm Server")]
-[assembly: AssemblyDescription("Hosts a realm server for Diablo II on SharpBattle.net")]
+[assembly: AssemblyDescription("Hosts the realm servers that Diablo II uses to connect to online private games.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Reaper Interactive")]
+[assembly: AssemblyCompany("Wynand Pieterse")]
 [assembly: AssemblyProduct("SharpBattle.net")]
-[assembly: AssemblyCopyright("")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCopyright("2014 - Wynand Pieterse")]
+[assembly: AssemblyTrademark("Battle.net, Diablo, StarCraft and WarCraft are trademarks of Blizzard Games.")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: Guid("3E1BE83B-484F-44AC-8915-0DB613DCBAB6")]
-[assembly: AssemblyVersion("0.0.10.0")]
-[assembly: AssemblyFileVersion("0.0.10.0")]
+[assembly: AssemblyVersion("0.0.11.0")]
+[assembly: AssemblyFileVersion("0.0.11.0")]
 #endregion

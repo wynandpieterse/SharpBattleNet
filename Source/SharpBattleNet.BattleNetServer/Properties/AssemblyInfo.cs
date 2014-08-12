@@ -1,4 +1,4 @@
-﻿#region Header
+#region Header
 //
 //    _  _   ____        _   _   _         _   _      _   
 //  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
@@ -37,15 +37,15 @@ using System.Runtime.InteropServices;
 
 #region Assembly Definitions
 [assembly: AssemblyTitle("SharpBattle.net - Master Server")]
-[assembly: AssemblyDescription("This is the main server executable that needs to be run to host most of the services of Battle.net")]
+[assembly: AssemblyDescription("Hosts the main Battle.net services such as chat, game finding, friends and much more.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Reaper Interactive")]
+[assembly: AssemblyCompany("Wynand Pieterse")]
 [assembly: AssemblyProduct("SharpBattle.net")]
-[assembly: AssemblyCopyright("")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCopyright("2014 - Wynand Pieterse")]
+[assembly: AssemblyTrademark("Battle.net, Diablo, StarCraft and WarCraft are trademarks of Blizzard Games.")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: Guid("15cfeb6c-439d-4da4-9abe-f50568be5306")]
-[assembly: AssemblyVersion("0.0.10.0")]
-[assembly: AssemblyFileVersion("0.0.10.0")]
+[assembly: AssemblyVersion("0.0.11.0")]
+[assembly: AssemblyFileVersion("0.0.11.0")]
 #endregion

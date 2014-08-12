@@ -1,4 +1,4 @@
-﻿#region Header
+#region Header
 //
 //    _  _   ____        _   _   _         _   _      _   
 //  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
@@ -64,7 +64,7 @@ namespace SharpBattleNet.Server.MasterServer
             return true;
         }
 
-        private bool OnConnected(SocketError error)
+        private bool OnConnected(bool error)
         {
             _logger.Info("Successfull connection");
             return true;

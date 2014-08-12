@@ -68,6 +68,7 @@ namespace SharpBattleNet.Server.MasterServer
         {
             if(true == error)
             {
+                _logger.Info("Failed to connect");
             }
             else
             {

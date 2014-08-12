@@ -45,7 +45,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("Battle.net, Diablo, StarCraft and WarCraft are trademarks of Blizzard Games.")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
-[assembly: Guid("3E1BE83B-484F-44AC-8915-0DB613DCBAB6")]
+[assembly: Guid("1ac8beae-00bb-4b05-a0d3-17fe892ad8b0")]
 [assembly: AssemblyVersion("0.0.12.0")]
 [assembly: AssemblyFileVersion("0.0.12.0")]
 #endregion

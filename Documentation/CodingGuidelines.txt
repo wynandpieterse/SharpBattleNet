@@ -1,0 +1,243 @@
+1. Introduction
+-----------------------------------------------------------------------
+First, read the .NET Framework Design Guidelines. 
+Almost all naming conventions, casing rules, etc., are spelled out in this document.
+Unlike the Design Guidelines document, you should treat this document as a set of suggested guidelines.  
+These generally do not effect the customer view so they are not required.
+
+   
+2. Style Guidelines
+-----------------------------------------------------------------------
+
+2.1 Tabs & Indenting
+-----------------------------------------------------------------------
+Tab characters (\0x09) should not be used in code. 
+All indentation should be done with 8 space characters.
+
+2.2 Bracing
+-----------------------------------------------------------------------
+Open braces should always be at the beginning of the line after the statement that begins the block. 
+Contents of the brace should be indented by 4 spaces. For example:
+
+	if (someExpression)
+	{
+	   DoSomething();
+	}
+	else
+	{
+	   DoSomethingElse();
+	}
+
+“case” statements should be indented from the switch statement like this:
+
+	switch (someExpression) 
+	{
+
+	   case 0:
+	      DoSomething();
+	      break;
+
+	   case 1:
+	      DoSomethingElse();
+	      break;
+
+	   case 2: 
+	      {
+	         int n = 1;
+	         DoAnotherThing(n);
+	      }
+	      break;
+	}
+
+Braces should never be considered optional. Even for single statement blocks, you should always use braces. 
+This increases code readability and maintainability.
+
+	for (int i=0; i<100; i++) { DoSomething(i); }
+
+
+2.3 Single line statements
+-----------------------------------------------------------------------
+Single line statements can have braces that begin and end on the same line.
+
+	public class Foo
+	{
+	   int bar;
+
+	   public int Bar
+	   {
+	      get { return bar; }
+	      set { bar = value; }
+	   }
+
+	}
+
+It is suggested that all control structures (if, while, for, etc.) use braces, but it is not required.
+
+
+2.4 Commenting
+-----------------------------------------------------------------------
+Comments should be used to describe intention, algorithmic overview, and/or logical flow. It would be 
+ideal, if from reading the comments alone, someone other than the author could understand a function’s
+intended behavior and general operation. While there are no minimum comment requirements and certainly
+some very small routines need no commenting at all, it is hoped that most routines will have comments
+reflecting the programmer’s intent and approach.
+
+
+2.4.1 Copyright notice
+-----------------------------------------------------------------------
+Each file should start with a copyright notice. To avoid errors in doc comment builds, you don’t want 
+to use triple-slash doc comments, but using XML makes the comments easy to replace in the future. Final
+text will vary by product (you should contact legal for the exact text), but should be similar to:
+
+	//-----------------------------------------------------------------------
+	// <copyright file="ContainerControl.cs" company="Microsoft">
+	//     Copyright (c) Microsoft Corporation.  All rights reserved.
+	// </copyright>
+	//-----------------------------------------------------------------------
+
+
+2.4.2 Documentation Comments
+-----------------------------------------------------------------------
+All methods should use XML doc comments. For internal dev comments, the <devdoc> tag should be used.
+
+	public class Foo 
+	{
+
+	/// <summary>Public stuff about the method</summary>
+	/// <param name=”bar”>What a neat parameter!</param>
+	/// <devdoc>Cool internal stuff!</devdoc>
+	///
+	public void MyMethod(int bar) { … }
+
+	}
+
+However, it is common that you would want to move the XML documentation to an external file – for that,
+use the <include> tag.
+
+	public class Foo 
+	{
+
+	   /// <include file='doc\Foo.uex' path='docs/doc[@for="Foo.MyMethod"]/*' />
+	   ///
+	   public void MyMethod(int bar) { … }
+
+	}
+
+
+2.4.3 Comment Style
+-----------------------------------------------------------------------
+The // (two slashes) style of comment tags should be used in most situations. Where ever possible, place
+comments above the code instead of beside it. Here are some examples:
+
+	// This is required for WebClient to work through the proxy
+	GlobalProxySelection.Select = new WebProxy("http://itgproxy");
+
+
+	// Create object to access Internet resources
+	//
+	WebClient myClient = new WebClient();
+
+Comments can be placed at the end of a line when space allows:
+
+	public class SomethingUseful 
+	{
+	    private int          itemHash;            // instance member
+	    private static bool  hasDoneSomething;    // static member
+	}
+
+
+2.5 Spacing
+-----------------------------------------------------------------------
+Spaces improve readability by decreasing code density. Here are some guidelines for the use of space
+characters within code:
+
+Do use a single space after a comma between function arguments.
+	Right:          Console.In.Read(myChar, 0, 1);
+	Wrong:       	Console.In.Read(myChar,0,1); 
+ 
+Do not use a space after the parenthesis and function arguments
+	Right:          CreateFoo(myChar, 0, 1)
+	Wrong:       	CreateFoo( myChar, 0, 1 ) 
+
+Do not use spaces between a function name and parenthesis.
+	Right:          CreateFoo()
+	Wrong:       	CreateFoo ()
+ 
+Do not use spaces inside brackets.
+	Right:    	x = dataArray[index];
+	Wrong:       	x = dataArray[ index ]; 
+
+Do use a single space before flow control statements
+	Right:          while (x == y)
+	Wrong:       	while(x==y)
+ 
+Do use a single space before and after comparison operators
+	Right:          if (x == y)
+	Wrong:       	if (x==y) 
+
+
+2.6 Naming
+-----------------------------------------------------------------------
+Follow all .NET Framework Design Guidelines for both internal and external members. 
+Highlights of these include:
+
+	Do not use Hungarian notation 
+	Do not use a prefix for member variables (_, m_, s_, etc.). 
+	If you want to distinguish between local and member variables you should use “this.” in C# and “Me.” in VB.NET. 
+	Do use camelCasing for member variables 
+	Do use camelCasing for parameters 
+	Do use camelCasing for local variables 
+	Do use PascalCasing for function, property, event, and class names 
+	Do prefix interfaces names with “I” 
+	Do not prefix enums, classes, or delegates with any letter 
+
+The reasons to extend the public rules (no Hungarian, no prefix for member variables, etc.) 
+is to produce a consistent source code appearance. In addition a goal is to have clean readable source. Code
+legibility should be a primary goal.
+
+2.8 File Organization
+-----------------------------------------------------------------------
+Source files should contain only one public type, although multiple internal classes are allowed. Source files
+should be given the name of the public class in the file. Directory names should follow the namespace for the
+class. 
+
+For example, I would expect to find the public class “System.Windows.Forms.Control” in “System\Windows\Forms\Control.cs”…
+
+Classes member should be alphabetized, and grouped into sections (Fields, Constructors, Properties, Events, 
+Methods, Private interface implementations, Nested types). Using statements should be inside the namespace
+declaration. 
+
+	namespace MyNamespace 
+	{
+
+		using System;
+
+		public class MyClass : IFoo 
+		{
+
+		      // fields
+		      int foo;
+
+		      // constructors
+		      public MyClass() { … }
+	
+		      // properties
+		      public int Foo { get { … } set { … } }
+	
+		      // events
+		      public event EventHandler FooChanged { add { … } remove { … } }
+	
+		      // methods
+		      void DoSomething() { … }
+		      void FindSomethind() { … }
+
+		      //private interface implementations
+		      void IFoo.DoSomething() { DoSomething(); }
+
+		      // nested types
+		      class NestedType { … }
+
+		}
+
+	}
+

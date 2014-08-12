@@ -34,6 +34,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Server.Maste
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Server.DiabloIIRealmServer", "SharpBattleNet.Server.DiabloIIRealmServer\SharpBattleNet.Server.DiabloIIRealmServer.csproj", "{72992102-9792-4899-B500-C0DC47736529}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.WarCraftIIIRouterServer", "SharpBattleNet.WarCraftIIIRouterServer\SharpBattleNet.WarCraftIIIRouterServer.csproj", "{2B30BB09-89A5-40DE-8E17-9135691894B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Server.WarCraftIIRouterServer", "SharpBattleNet.Server.WarCraftIIRouterServer\SharpBattleNet.Server.WarCraftIIRouterServer.csproj", "{A99E4A43-869E-4D11-88E2-9E5A2B481FBA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +68,14 @@ Global
 		{72992102-9792-4899-B500-C0DC47736529}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72992102-9792-4899-B500-C0DC47736529}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72992102-9792-4899-B500-C0DC47736529}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B30BB09-89A5-40DE-8E17-9135691894B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B30BB09-89A5-40DE-8E17-9135691894B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B30BB09-89A5-40DE-8E17-9135691894B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B30BB09-89A5-40DE-8E17-9135691894B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A99E4A43-869E-4D11-88E2-9E5A2B481FBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A99E4A43-869E-4D11-88E2-9E5A2B481FBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A99E4A43-869E-4D11-88E2-9E5A2B481FBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A99E4A43-869E-4D11-88E2-9E5A2B481FBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,5 +88,7 @@ Global
 		{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
 		{51A40588-DE5A-4EC8-8809-5C27C4851E52} = {EA306AEF-D55C-4C28-ABD6-C3F0EF804138}
 		{72992102-9792-4899-B500-C0DC47736529} = {EA306AEF-D55C-4C28-ABD6-C3F0EF804138}
+		{2B30BB09-89A5-40DE-8E17-9135691894B3} = {B8200D93-916B-4CC2-ADE0-6F0B4466386A}
+		{A99E4A43-869E-4D11-88E2-9E5A2B481FBA} = {EA306AEF-D55C-4C28-ABD6-C3F0EF804138}
 	EndGlobalSection
 EndGlobal

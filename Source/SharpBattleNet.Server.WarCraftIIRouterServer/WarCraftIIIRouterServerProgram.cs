@@ -38,12 +38,13 @@ namespace SharpBattleNet.Server.WarCraftIIIRouterServer
     using SharpBattleNet.Framework;
     #endregion
 
-    internal sealed class MasterServerProgram : IProgram
+    internal sealed class WarCraftIIIRouterServerProgram : IProgram
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public void Start()
         {
+            _logger.Info("Hello, World");
             return;
         }
 

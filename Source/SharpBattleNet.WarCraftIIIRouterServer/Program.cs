@@ -36,8 +36,8 @@ namespace SharpBattleNet.WarCraftIIIRouterServer
     using System;
     using Ninject;
     using SharpBattleNet.Framework;
-    using SharpBattleNet.Server.MasterServer;
     using SharpBattleNet.Framework.Networking;
+    using SharpBattleNet.Server.WarCraftIIIRouterServer;
     #endregion
 
     internal static class Program
@@ -48,10 +48,10 @@ namespace SharpBattleNet.WarCraftIIIRouterServer
 
             program.Configure = kernel =>
                 {
-                    kernel.Load<MasterServerModule>();
+                    kernel.Load<WarCraftIIIRouterServerModule>();
                     kernel.Load<NetworkModule>();
 
-                    return "MasterServer";
+                    return "WarCraftIIIRouterServer";
                 };
 
             return program.Run(args);

@@ -38,7 +38,7 @@ namespace SharpBattleNet.Server.WarCraftIIIRouterServer
     using SharpBattleNet.Framework;
     #endregion
 
-    public sealed class MasterServerModule : NinjectModule
+    public sealed class WarCraftIIIRouterServerModule : NinjectModule
     {
         public override void Load()
         {

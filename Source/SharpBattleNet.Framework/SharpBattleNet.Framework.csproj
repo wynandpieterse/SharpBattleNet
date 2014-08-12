@@ -19,22 +19,22 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Intermediate\Code\Libraries\SharpBattleNet.Framework\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <BaseIntermediateOutputPath>../../Intermediate/Code/Libraries/SharpBattleNet.Framework/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/Code/SharpBattleNet.Framework/</BaseIntermediateOutputPath>
+    <OutputPath>$(BaseIntermediateOutputPath)$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Intermediate\Code\Libraries\SharpBattleNet.Framework\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <BaseIntermediateOutputPath>../../Intermediate/Code/Libraries/SharpBattleNet.Framework/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/Code/SharpBattleNet.Framework/</BaseIntermediateOutputPath>
+    <OutputPath>$(BaseIntermediateOutputPath)$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>

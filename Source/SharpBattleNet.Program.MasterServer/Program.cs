@@ -30,13 +30,13 @@
 //
 #endregion
 
-namespace SharpBattleNet.Servers.DiabloIIRealmServer
+namespace SharpBattleNet.Program.MasterServer
 {
     #region Usings
     using System;
     using Ninject;
     using SharpBattleNet.Framework;
-    using SharpBattleNet.Server.DiabloIIRealmServer;
+    using SharpBattleNet.Server.MasterServer;
     using SharpBattleNet.Framework.Networking;
     #endregion
 
@@ -48,10 +48,10 @@ namespace SharpBattleNet.Servers.DiabloIIRealmServer
 
             program.Configure = kernel =>
                 {
-                    kernel.Load<DiabloIIRealmServerModule>();
+                    kernel.Load<MasterServerModule>();
                     kernel.Load<NetworkModule>();
 
-                    return "DiabloIIRealmServer";
+                    return "MasterServer";
                 };
 
             return program.Run(args);

@@ -40,6 +40,9 @@
     <BaseIntermediateOutputPath>../../Intermediate/Code/Binaries/SharpBattleNet.DiabloIIGameServer/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>BattleNet.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Castle.Core">
       <HintPath>..\packages\Castle.Core.3.2.0\lib\net45\Castle.Core.dll</HintPath>
@@ -69,7 +72,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +87,9 @@
       <Project>{8db14ffe-d08d-428b-afbb-52337352fdf5}</Project>
       <Name>SharpBattleNet.Server.DiabloIIGameServer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BattleNet.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

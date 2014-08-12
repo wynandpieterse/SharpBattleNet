@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BE5DBA5D-7B69-46AB-B58C-DEEC2C4922DA}</ProjectGuid>
+    <ProjectGuid>{D40EE1B5-3BB9-4EF6-AFEB-825379914887}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharpBattleNet.DiabloIIRealmServer</RootNamespace>
-    <AssemblyName>SBNDiabloIIRealmServer</AssemblyName>
+    <RootNamespace>SharpBattleNet.Program.MasterServer</RootNamespace>
+    <AssemblyName>SBNMasterServer</AssemblyName>
     <TargetFrameworkVersion>v4.5.3</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -42,8 +42,9 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <BaseIntermediateOutputPath>../../Intermediate/Code/Binaries/SharpBattleNet.DiabloIIRealmServer/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/Code/Binaries/SharpBattleNet.BattleNetServer/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
@@ -55,7 +56,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <BaseIntermediateOutputPath>../../Intermediate/Code/Binaries/SharpBattleNet.DiabloIIRealmServer/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../Intermediate/Code/Binaries/SharpBattleNet.BattleNetServer/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <Prefer32Bit>false</Prefer32Bit>
@@ -113,9 +114,9 @@
       <Project>{fdb8d2c5-fd13-40e7-b629-ce71a68bb7b7}</Project>
       <Name>SharpBattleNet.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SharpBattleNet.Server.DiabloIIRealmServer\SharpBattleNet.Server.DiabloIIRealmServer.csproj">
-      <Project>{72992102-9792-4899-b500-c0dc47736529}</Project>
-      <Name>SharpBattleNet.Server.DiabloIIRealmServer</Name>
+    <ProjectReference Include="..\SharpBattleNet.Server.BattleNetServer\SharpBattleNet.Server.MasterServer.csproj">
+      <Project>{51a40588-de5a-4ec8-8809-5c27c4851e52}</Project>
+      <Name>SharpBattleNet.Server.MasterServer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

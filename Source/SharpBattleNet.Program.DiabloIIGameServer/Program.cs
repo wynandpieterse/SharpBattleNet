@@ -1,4 +1,4 @@
-#region Header
+﻿#region Header
 //
 //    _  _   ____        _   _   _         _   _      _   
 //  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
@@ -30,14 +30,14 @@
 //
 #endregion
 
-namespace SharpBattleNet.MasterServer
+namespace SharpBattleNet.Program.DiabloIIGameServer
 {
     #region Usings
     using System;
     using Ninject;
     using SharpBattleNet.Framework;
-    using SharpBattleNet.Server.MasterServer;
     using SharpBattleNet.Framework.Networking;
+    using SharpBattleNet.Server.DiabloIIGameServer;
     #endregion
 
     internal static class Program
@@ -48,10 +48,10 @@ namespace SharpBattleNet.MasterServer
 
             program.Configure = kernel =>
                 {
-                    kernel.Load<MasterServerModule>();
+                    kernel.Load<DiabloIIGameServerModule>();
                     kernel.Load<NetworkModule>();
 
-                    return "MasterServer";
+                    return "DiabloIIGameServer";
                 };
 
             return program.Run(args);

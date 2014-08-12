@@ -7,7 +7,7 @@
     <ProjectGuid>{2B30BB09-89A5-40DE-8E17-9135691894B3}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharpBattleNet.WarCraftIIIRouterServer</RootNamespace>
+    <RootNamespace>SharpBattleNet.Program.WarCraftIIIRouterServer</RootNamespace>
     <AssemblyName>SBNWarCraftIIIRouterServer</AssemblyName>
     <TargetFrameworkVersion>v4.5.3</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

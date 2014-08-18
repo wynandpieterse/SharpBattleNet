@@ -40,12 +40,24 @@ namespace SharpBattleNet.Program.DiabloIIRealmServer
     using SharpBattleNet.Framework.Networking;
     #endregion
 
+    /// <summary>
+    /// Contains the initialization logic for D2RS.
+    /// </summary>
     internal static class Program
     {
+        /// <summary>
+        /// Called by Windows when the program is started.
+        /// </summary>
+        /// <param name="args">Parameters passed on the command line.</param>
+        /// <returns>
+        /// Wheter the program exited successfully or failed. A value of 1
+        /// indicates success while a value of 0 indicated failure.
+        /// </returns>
         private static int Main(string[] args)
         {
             FrameworkProgram program = new FrameworkProgram();
 
+            // Configure the framework and start D2RS.
             program.Configure = kernel =>
                 {
                     kernel.Load<DiabloIIRealmServerModule>();

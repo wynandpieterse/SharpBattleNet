@@ -40,12 +40,23 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
     using SharpBattleNet.Framework.Utilities.Debugging;
     #endregion
 
+    /// <summary>
+    /// Implements <see cref="IListenerTCPConnection"/> to provide listeners
+    /// with a way to communicate with the outside world.
+    /// </summary>
     internal sealed class ListenerTCPConnection : TCPConnectionBase, IListenerTCPConnection
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         private readonly ISocketEventPool _socketEventBag = null;
 
+        /// <summary>
+        /// Constructs an empty <see cref="ListenerTCPConnection"/> object.
+        /// </summary>
+        /// <param name="socketEventBag">
+        /// Collection of <see cref="SocketAsyncEventArgs"/> object. Usefull
+        /// for performance reasons.
+        /// </param>
         public ListenerTCPConnection(ISocketEventPool socketEventBag)
             : base(socketEventBag)
         {
@@ -58,6 +69,13 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 
         #region IListenerTCPConnection Members
 
+        /// <summary>
+        /// Called by the listener subsystem to start the client socket
+        /// and begin recieving data.
+        /// </summary>
+        /// <param name="acceptedSocket">
+        /// The operating system socket that was accepted by the listener.
+        /// </param>
         public void Start(Socket acceptedSocket)
         {
             Guard.AgainstNull(acceptedSocket);

@@ -49,8 +49,14 @@ namespace SharpBattleNet.Framework.Networking
     
     #endregion
 
+    /// <summary>
+    /// Ninject module to load all IoC objects for the network framework library.
+    /// </summary>
     public sealed class NetworkModule : NinjectModule
     {
+        /// <summary>
+        /// Binds all utility classes to the container.
+        /// </summary>
         private void BindUtilities()
         {
             Bind<ISocketEventPool>().To<SocketEventPool>().InSingletonScope();
@@ -58,6 +64,9 @@ namespace SharpBattleNet.Framework.Networking
             return;
         }
 
+        /// <summary>
+        /// Binds all connection classes to the container.
+        /// </summary>
         private void BindConnectionFactories()
         {
             Bind<IConnectableTCPConnectionFactory>().ToFactory();
@@ -72,6 +81,9 @@ namespace SharpBattleNet.Framework.Networking
             return;
         }
 
+        /// <summary>
+        /// Binds all the listener classes to the container.
+        /// </summary>
         private void BindListeners()
         {
             Bind<ITCPListenerFactory>().ToFactory();
@@ -83,6 +95,9 @@ namespace SharpBattleNet.Framework.Networking
             return;
         }
 
+        /// <summary>
+        /// Called by Ninject to bind all desired objects.
+        /// </summary>
         public override void Load()
         {
             BindUtilities();

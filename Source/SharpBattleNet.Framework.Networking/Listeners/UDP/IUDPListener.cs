@@ -36,6 +36,10 @@ namespace SharpBattleNet.Framework.Networking.Listeners.UDP
     using System;
     #endregion
 
+    /// <summary>
+    /// Listens for connections on UDP ports. Mainly there for a proprietary
+    /// protocol that is used inside SharpBattle.net
+    /// </summary>
     public interface IUDPListener
     {
     }

@@ -35,9 +35,17 @@ namespace SharpBattleNet.Framework.Networking.Listeners.UDP
     #region Usings
     using System;
     #endregion
-
+    
+    /// <summary>
+    /// Constructs <see cref="IUDPListener"/> objects ready for use.
+    /// </summary>
     public interface IUDPListenerFactory
     {
+        /// <summary>
+        /// Constructs a brand new <see cref="IUDPListener"/> object ready
+        /// for use.
+        /// </summary>
+        /// <returns>A new <see cref="IUDPListener"/> object.</returns>
         IUDPListener Create();
     }
 }

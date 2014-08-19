@@ -140,17 +140,11 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
                 socketEvent = new SocketAsyncEventArgs();
             }
 
-            // TODO : Fix this with proper buffer allocations going through a buffer
-            // pool.
-            /*byte[] buffer = new byte[1024];
-            socketEvent.SetBuffer(buffer, 0, buffer.Length);
-            socketEvent.Completed += HandleReceiveEvent;*/
-
             ArraySegment<byte> buffer = _bufferPool.Request();
-            //socketEvent.SetBuffer(buffer.Array, buffer.Offset, buffer.Count);
+
+            socketEvent.SetBuffer(buffer.Array, buffer.Offset, buffer.Count);
+            socketEvent.UserToken = buffer;
             socketEvent.Completed += HandleReceiveEvent;
-            //socketEvent.UserToken = buffer;
-            socketEvent.BufferList.Add(buffer);
 
             return socketEvent;
         }
@@ -167,11 +161,11 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         {
             Guard.AgainstNull(socketEvent);
 
-            foreach (var bufferSegment in socketEvent.BufferList)
-            {
-                _bufferPool.Recycle(bufferSegment);
-            }
+            ArraySegment<byte> buffer = (ArraySegment<byte>)socketEvent.UserToken;
 
+            _bufferPool.Recycle(buffer);
+
+            socketEvent.SetBuffer(null, 0, 0);
             socketEvent.Completed -= HandleReceiveEvent;
 
             if (false == _socketEventBag.TryAdd(socketEvent))
@@ -215,7 +209,8 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
 
             // TODO : Fix this by buffering the data and handing it of to the packet
             // manager for multiplexing it.
-            _logger.Info(Encoding.ASCII.GetString(socketEvent.Buffer, 0, socketEvent.BytesTransferred));
+            ArraySegment<byte> buffer = (ArraySegment<byte>)socketEvent.UserToken;
+            _logger.Info(Encoding.ASCII.GetString(buffer.Array, buffer.Offset, socketEvent.BytesTransferred));
 
             RecycleReceiveEvent(socketEvent);
 

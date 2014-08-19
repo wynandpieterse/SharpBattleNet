@@ -69,7 +69,7 @@ namespace SharpBattleNet.Server.MasterServer
 
         private bool OnConnected(IConnection connection, bool error)
         {
-            if(true == error)
+            if(false == error)
             {
                 _logger.Info("Failed to connect");
             }

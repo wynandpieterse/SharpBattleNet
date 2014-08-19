@@ -69,7 +69,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
             Guard.AgainstNull(bufferPoolManager);
 
             _socketEventBag = socketEventBag;
-            _bufferPool = bufferPoolManager.Get("NetworkTransmition");
+            _bufferPool = bufferPoolManager.Get("NetworkTransmission");
 
             return;
         }
@@ -142,9 +142,14 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
 
             // TODO : Fix this with proper buffer allocations going through a buffer
             // pool.
-            byte[] buffer = new byte[1024];
+            /*byte[] buffer = new byte[1024];
             socketEvent.SetBuffer(buffer, 0, buffer.Length);
+            socketEvent.Completed += HandleReceiveEvent;*/
+
+            ArraySegment<byte> buffer = _bufferPool.Request();
+            socketEvent.SetBuffer(buffer.Array, buffer.Offset, buffer.Count);
             socketEvent.Completed += HandleReceiveEvent;
+            socketEvent.UserToken = buffer;
 
             return socketEvent;
         }

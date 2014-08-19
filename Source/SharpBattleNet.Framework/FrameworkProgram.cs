@@ -40,15 +40,24 @@ namespace SharpBattleNet.Framework
     using SharpBattleNet.Framework.Utilities.Debugging;
     #endregion
 
+    /// <summary>
+    /// Used by server executables as a common way to enter the system and
+    /// start using it.
+    /// </summary>
     public sealed class FrameworkProgram
     {
         private IKernel _injectionKernel = null;
         private IProgram _server = null;
 
+        /// <summary>
+        /// Prints the #Battle.Net header to the console.
+        /// </summary>
+        /// <param name="currentAssembly">The server executable assembly.</param>
         private void PrintHeader(Assembly currentAssembly)
         {
             Guard.AgainstNull(currentAssembly);
 
+            // TODO : Find a way to handle this nicely inside services/daeomons.
             Console.WriteLine(@"    _  _   ____        _   _   _         _   _      _    ");
             Console.WriteLine(@"  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_  ");
             Console.WriteLine(@" |_  ..  _|  _ \ / _` | __| __| |/ _ \  |  \| |/ _ \ __| ");
@@ -62,6 +71,15 @@ namespace SharpBattleNet.Framework
             return;
         }
 
+        /// <summary>
+        /// Starts the program. This creates the IoC container and initializes
+        /// it with all the user desired modules. Calls the configure callback
+        /// to set up all user required container modules. After this function
+        /// the system is in a useable state.
+        /// </summary>
+        /// <param name="commandArguments">
+        /// Parameters passed on the command line.
+        /// </param>
         private void Start(string[] commandArguments)
         {
             var currentAssembly = Assembly.GetEntryAssembly();
@@ -97,6 +115,9 @@ namespace SharpBattleNet.Framework
             return;
         }
 
+        /// <summary>
+        /// Stops the server completely and disposes of the IoC container.
+        /// </summary>
         private void Stop()
         {
             if (null != _server)
@@ -112,6 +133,9 @@ namespace SharpBattleNet.Framework
             return;
         }
 
+        /// <summary>
+        /// Pauses the command line input, waiting for the user to press Enter.
+        /// </summary>
         private void Pause()
         {
             bool enterPressed = false;
@@ -134,6 +158,13 @@ namespace SharpBattleNet.Framework
             return;
         }
 
+        /// <summary>
+        /// Provides no guards around system calls. Usefull for debug
+        /// builds.
+        /// </summary>
+        /// <param name="args">
+        /// Parameters passed on the command line.
+        /// </param>
         private void UnguardedRun(string[] args)
         {
             Start(args);
@@ -143,8 +174,16 @@ namespace SharpBattleNet.Framework
             return;
         }
 
+        /// <summary>
+        /// Called by the system when an unhandled exception has occured. Prints
+        /// some values to the console to let he user know.
+        /// </summary>
+        /// <param name="ex">The exception that occured.</param>
         private void UnhandledException(Exception ex)
         {
+            // TODO : See if we can maybe integrate with 3rd-party solutions like
+            // rocket.io or like that.
+
             // Can't really use NLogger here because I dont know if it was configured correctly
             // by this time
             Console.WriteLine();
@@ -166,6 +205,11 @@ namespace SharpBattleNet.Framework
             return;
         }
 
+        /// <summary>
+        /// Called by the .NET framework when an unhandled exception has occured.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">Contains details about the unhandled exception.</param>
         private void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
         {
             UnhandledException((Exception)e.ExceptionObject);
@@ -173,6 +217,14 @@ namespace SharpBattleNet.Framework
             return;
         }
 
+        /// <summary>
+        /// Sets up the system to handle exceptions, then calls the rest of the
+        /// initialization pipeline. Usefull in release builds when users dont
+        /// have a debugger attached.
+        /// </summary>
+        /// <param name="args">
+        /// Parameters passed on the command line.
+        /// </param>
         private void GuardedRun(string[] args)
         {
             try
@@ -189,8 +241,23 @@ namespace SharpBattleNet.Framework
             return;
         }
 
+        /// <summary>
+        /// User code should set this before calling Run. Called by the
+        /// startup code to configure the IoC container with user modules.
+        /// </summary>
         public Func<IKernel, string> Configure { get; set; }
 
+        /// <summary>
+        /// Starts the system, initializes all IoC modules and call user code.
+        /// This function only returns after the server module has exited.
+        /// </summary>
+        /// <param name="args">
+        /// Parameters passed on the command line.
+        /// </param>
+        /// <returns>
+        /// A value indicating if we exited successfully. A valu of 1 indicates
+        /// success while a value of 0 indicates failure.
+        /// </returns>
         public int Run(string[] args)
         {
             //#if DEBUG

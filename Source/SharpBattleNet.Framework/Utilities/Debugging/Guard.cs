@@ -35,9 +35,18 @@ namespace SharpBattleNet.Framework.Utilities.Debugging
     #region Usings
     using System;
     #endregion
-
+    
+    /// <summary>
+    /// Usefull methods to test class pre- and post-conditions.
+    /// </summary>
     public static class Guard
     {
+        /// <summary>
+        /// Guards agains a value that is null.
+        /// </summary>
+        /// <param name="valueToTest">
+        /// The value to test.
+        /// </param>
         public static void AgainstNull(object valueToTest)
         {
             if (null == valueToTest)
@@ -48,6 +57,12 @@ namespace SharpBattleNet.Framework.Utilities.Debugging
             return;
         }
 
+        /// <summary>
+        /// Guards agains null, empty and whitespace strings.
+        /// </summary>
+        /// <param name="valueToTest">
+        /// The string to test.
+        /// </param>
         public static void AgainstEmptyString(string valueToTest)
         {
             if (string.IsNullOrEmpty(valueToTest))

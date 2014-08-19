@@ -37,8 +37,26 @@ namespace SharpBattleNet.Framework.Networking.Connection
     using System.Net;
     #endregion
 
+    /// <summary>
+    /// Base connection interface. Contains methods to send data to remote
+    /// systems. Used by the packet handlers to communicate with remote
+    /// systems.
+    /// </summary>
     public interface IConnection
     {
+        /// <summary>
+        /// Sends the specified buffer to the remote address.
+        /// </summary>
+        /// <param name="buffer">The data to send to the remote address.</param>
+        /// <param name="bufferLenght">
+        /// The ammount of data to send from the buffer beginning from index 0.
+        /// If this value is 0, the ammount will be deduced from the buffer
+        /// itself.
+        /// </param>
+        /// <param name="address">
+        /// The remote address to send the buffer to if this is a connectionless
+        /// protocol.
+        /// </param>
         void Send(byte[] buffer, long bufferLenght = 0, EndPoint address = null);
     }
 }

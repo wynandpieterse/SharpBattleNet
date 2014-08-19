@@ -41,11 +41,21 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
     using SharpBattleNet.Framework.Utilities.Debugging;
     #endregion
 
+    /// <summary>
+    /// Implements the <see cref="IBindableUDPConnection"/> class.
+    /// </summary>
     internal sealed class BindableUDPConnection : ConnectionBase, IBindableUDPConnection
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly ISocketEventPool _socketEventBag = null;
 
+        /// <summary>
+        /// Constructs an empty <see cref="BindableUDPConnection"/>.
+        /// </summary>
+        /// <param name="socketEventBag">
+        /// Pool of <see cref="SocketAsyncEventArgs"/> object. Usefull
+        /// for performance reasons.
+        /// </param>
         public BindableUDPConnection(ISocketEventPool socketEventBag)
             : base(socketEventBag)
         {
@@ -58,6 +68,11 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
 
         #region IBindableUDPConnection Members
 
+        /// <summary>
+        /// Binds this UDP socket to the specified endpoint. After this
+        /// the socket is place in a recieve state.
+        /// </summary>
+        /// <param name="address"></param>
         public void Bind(EndPoint address)
         {
             return;

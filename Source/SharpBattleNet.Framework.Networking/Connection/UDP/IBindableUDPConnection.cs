@@ -37,8 +37,18 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP
     using System.Net;
     #endregion
 
+    /// <summary>
+    /// Provides a UDP network socket that can be used to bind to a specific
+    /// address.
+    /// </summary>
     public interface IBindableUDPConnection : IUDPConnection
     {
+        /// <summary>
+        /// Binds this UDP connection to the specified endpoint.
+        /// </summary>
+        /// <param name="address">
+        /// The endpoint to bind to.
+        /// </param>
         void Bind(EndPoint address);
     }
 }

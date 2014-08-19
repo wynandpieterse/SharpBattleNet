@@ -38,6 +38,13 @@ namespace SharpBattleNet.Framework.Networking.Utilities.Collections
     using System.Net.Sockets;
     #endregion
 
+    /// <summary>
+    /// Specializes the <see cref="IProducerConsumerCollection{T}"/> interface
+    /// to handle <see cref="SocketAsyncEventArgs"/>. Because recieves and
+    /// sends plus connections can happen a lot of times in a network system,
+    /// this pool of <see cref="SocketAsyncEventArgs"/> objects can save a lot
+    /// of presure on the garbage collector.
+    /// </summary>
     public interface ISocketEventPool : IProducerConsumerCollection<SocketAsyncEventArgs>
     {
     }

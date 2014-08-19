@@ -36,9 +36,22 @@ namespace SharpBattleNet.Framework
     using System;
     #endregion
 
+    /// <summary>
+    /// Used by the framework to call server framework assemblies. Provides
+    /// a way for the server assembly to initialize and stop itself.
+    /// </summary>
     public interface IProgram
     {
+        /// <summary>
+        /// The framework calls this to let the server assembly initialize
+        /// itself to the required state.
+        /// </summary>
         void Start();
+
+        /// <summary>
+        /// The framework calls this to let the server assembly shutdown
+        /// all its required subsystems.
+        /// </summary>
         void Stop();
     }
 }

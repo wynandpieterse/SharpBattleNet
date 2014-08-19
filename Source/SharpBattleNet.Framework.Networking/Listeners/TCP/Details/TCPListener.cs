@@ -43,6 +43,9 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
     using SharpBattleNet.Framework.Networking.Connection.TCP;
     #endregion
 
+    /// <summary>
+    /// Implements <see cref="ITCPListener"/>.
+    /// </summary>
     internal sealed class TCPListener : ITCPListener
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
@@ -53,6 +56,17 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
         private Socket _listener = null;
         private Func<IConnection, bool> _accepted = null;
 
+        /// <summary>
+        /// Constructs an empty <see cref="TCPListener"/>.
+        /// </summary>
+        /// <param name="socketEvents">
+        /// Pool of <see cref="SocketAsyncEventArgs"/> objects. Mainly for
+        /// performance reasons.
+        /// </param>
+        /// <param name="listenerFactory">
+        /// Factory that is used to create new TCP listener connections when
+        /// a client is accepted.
+        /// </param>
         public TCPListener(ISocketEventPool socketEvents, IListenerTCPConnectionFactory listenerFactory)
         {
             Guard.AgainstNull(socketEvents);
@@ -64,6 +78,15 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
             return;
         }
 
+        /// <summary>
+        /// Creates an empty <see cref="SocketAsyncEventArgs"/> that is used
+        /// to accept new clients. Sets the accept callback and accept socket
+        /// properties to required states.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="SocketAsyncEventArgs"/> that can be used to accept
+        /// new clients on a TCP listener.
+        /// </returns>
         private SocketAsyncEventArgs RequestSocketEvent()
         {
             SocketAsyncEventArgs socketEvent = null;
@@ -79,6 +102,13 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
             return socketEvent;
         }
 
+        /// <summary>
+        /// Recycles a <see cref="SocketAsyncEventArgs"/> back into the
+        /// pool.
+        /// </summary>
+        /// <param name="socketEvent">
+        /// The <see cref="SocketAsyncEventArgs"/> object to recycle.
+        /// </param>
         private void RecycleSocketEvent(SocketAsyncEventArgs socketEvent)
         {
             Guard.AgainstNull(socketEvent);
@@ -94,6 +124,16 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
             return;
         }
 
+        /// <summary>
+        /// Handles an accept event from the operating system network subsystem.
+        /// Calls the passed callback function to make sure the server wishes to
+        /// accept the new client. A return value of true from the callback states
+        /// that the client should be accepted while a value of false closes the
+        /// connection.
+        /// </summary>
+        /// <param name="socketEvent">
+        /// Contains information from the operating system about accept operation.
+        /// </param>
         private void HandleAccept(SocketAsyncEventArgs socketEvent)
         {
             IListenerTCPConnection connection = null;
@@ -143,6 +183,14 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
             return;
         }
 
+        /// <summary>
+        /// Handles an asynchronous accept operation.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="socketEvent">
+        /// Contains operating system network system information about the accept
+        /// event.
+        /// </param>
         private void HandleAcceptEvent(object sender, SocketAsyncEventArgs socketEvent)
         {
             HandleAccept(socketEvent);
@@ -150,6 +198,10 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
             return;
         }
 
+        /// <summary>
+        /// Starts accepting clients on this listener. Will asynchronously call
+        /// the provided callback when new clients are connecting.
+        /// </summary>
         private void StartAccept()
         {
             SocketAsyncEventArgs socketEvent = null;
@@ -178,6 +230,19 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
 
         #region ITCPListener Members
 
+        /// <summary>
+        /// Starts listening for TCP connection on the desired endpoint and let
+        /// the calling code know through the callback when a new client has
+        /// connected.
+        /// </summary>
+        /// <param name="address">
+        /// The local endpoint to listen for new TCP connections.
+        /// </param>
+        /// <param name="accepted">
+        /// Called by the accept logic when a new client has connection. Should
+        /// return true if the client should be accepted or false if the client
+        /// should be disconnected.
+        /// </param>
         public void Start(EndPoint address, Func<IConnection, bool> accepted)
         {
             Guard.AgainstNull(address);

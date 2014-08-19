@@ -42,6 +42,8 @@ namespace SharpBattleNet.Framework
     using NLog.Targets;
     using NLog.Config;
     using SharpBattleNet.Framework.Utilities.Debugging;
+    using SharpBattleNet.Framework.Utilities.Collections;
+    using SharpBattleNet.Framework.Utilities.Collections.Details;
     #endregion
 
     /// <summary>
@@ -67,6 +69,16 @@ namespace SharpBattleNet.Framework
             Guard.AgainstEmptyString(applicationName);
 
             _applicationName = applicationName;
+
+            return;
+        }
+
+        /// <summary>
+        /// Configures utility interfaces with IoC
+        /// </summary>
+        private void ConfigureUtilities()
+        {
+            Bind<IBufferPoolManager>().To<BufferPoolManager>();
 
             return;
         }
@@ -259,6 +271,7 @@ namespace SharpBattleNet.Framework
         /// </summary>
         public override void Load()
         {
+            ConfigureUtilities();
             ConfigureWriteDirectory();
             ConfigureConfiguration();
             ConfigureLogging();

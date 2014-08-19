@@ -147,9 +147,10 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
             socketEvent.Completed += HandleReceiveEvent;*/
 
             ArraySegment<byte> buffer = _bufferPool.Request();
-            socketEvent.SetBuffer(buffer.Array, buffer.Offset, buffer.Count);
+            //socketEvent.SetBuffer(buffer.Array, buffer.Offset, buffer.Count);
             socketEvent.Completed += HandleReceiveEvent;
-            socketEvent.UserToken = buffer;
+            //socketEvent.UserToken = buffer;
+            socketEvent.BufferList.Add(buffer);
 
             return socketEvent;
         }
@@ -166,7 +167,11 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         {
             Guard.AgainstNull(socketEvent);
 
-            socketEvent.SetBuffer(null, 0, 0);
+            foreach (var bufferSegment in socketEvent.BufferList)
+            {
+                _bufferPool.Recycle(bufferSegment);
+            }
+
             socketEvent.Completed -= HandleReceiveEvent;
 
             if (false == _socketEventBag.TryAdd(socketEvent))

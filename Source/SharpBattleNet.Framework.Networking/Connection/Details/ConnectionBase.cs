@@ -40,6 +40,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
     using NLog;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
+    using SharpBattleNet.Framework.Utilities.Collections;
     #endregion
 
     /// <summary>
@@ -51,6 +52,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         private readonly ISocketEventPool _socketEventBag = null;
+        private readonly IBufferPool _bufferPool = null;
 
         protected Socket Socket { get; set; }
 
@@ -61,11 +63,13 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         /// Reference to a pool of <see cref="SocketAsyncEventArgs"/>. Mainly
         /// used for performance benefits.
         /// </param>
-        public ConnectionBase(ISocketEventPool socketEventBag)
+        public ConnectionBase(ISocketEventPool socketEventBag, IBufferPoolManager bufferPoolManager)
         {
             Guard.AgainstNull(socketEventBag);
+            Guard.AgainstNull(bufferPoolManager);
 
             _socketEventBag = socketEventBag;
+            _bufferPool = bufferPoolManager.Get("NetworkTransmission");
 
             return;
         }
@@ -121,10 +125,10 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         /// <summary>
         /// Creates an empty <see cref="SocketAsyncEventArgs"/> that can
         /// be used to receive data. Sets the event callback and requests
-        /// a buffer from the buffer pool to recieve the data in.
+        /// a buffer from the buffer pool to receive the data in.
         /// </summary>
         /// <returns>
-        /// A <see cref="SocketAsyncEventArgs"/> that can be used for recieve
+        /// A <see cref="SocketAsyncEventArgs"/> that can be used for receive
         /// operations.
         /// </returns>
         private SocketAsyncEventArgs RequestReceiveEvent()
@@ -136,10 +140,10 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
                 socketEvent = new SocketAsyncEventArgs();
             }
 
-            // TODO : Fix this with proper buffer allocations going through a buffer
-            // pool.
-            byte[] buffer = new byte[1024];
-            socketEvent.SetBuffer(buffer, 0, buffer.Length);
+            ArraySegment<byte> buffer = _bufferPool.Request();
+
+            socketEvent.SetBuffer(buffer.Array, buffer.Offset, buffer.Count);
+            socketEvent.UserToken = buffer;
             socketEvent.Completed += HandleReceiveEvent;
 
             return socketEvent;
@@ -157,6 +161,10 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         {
             Guard.AgainstNull(socketEvent);
 
+            ArraySegment<byte> buffer = (ArraySegment<byte>)socketEvent.UserToken;
+
+            _bufferPool.Recycle(buffer);
+
             socketEvent.SetBuffer(null, 0, 0);
             socketEvent.Completed -= HandleReceiveEvent;
 
@@ -169,19 +177,19 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         }
 
         /// <summary>
-        /// Handles a recieve operation from the network subsystem. Retrieves
+        /// Handles a receive operation from the network subsystem. Retrieves
         /// the data recieved and buffers them, then passes the data buffer on
         /// to the packet handler to do its magic.
         /// </summary>
         /// <param name="socketEvent">
-        /// Contains operating system specific information about the recieve
+        /// Contains operating system specific information about the receive
         /// event.
         /// </param>
         private void HandleReceive(SocketAsyncEventArgs socketEvent)
         {
             Guard.AgainstNull(socketEvent);
 
-            // A recieve of 0 usually means that the stream was closed.
+            // A receive of 0 usually means that the stream was closed.
             if (socketEvent.BytesTransferred == 0)
             {
                 if (SocketType.Stream == Socket.SocketType)
@@ -196,12 +204,13 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
                 return;
             }
 
-            // Start recieving immediatly again.
-            StartRecieving();
+            // Start receiving immediatly again.
+            StartReceiving();
 
             // TODO : Fix this by buffering the data and handing it of to the packet
             // manager for multiplexing it.
-            _logger.Info(Encoding.ASCII.GetString(socketEvent.Buffer, 0, socketEvent.BytesTransferred));
+            ArraySegment<byte> buffer = (ArraySegment<byte>)socketEvent.UserToken;
+            _logger.Info(Encoding.ASCII.GetString(buffer.Array, buffer.Offset, socketEvent.BytesTransferred));
 
             RecycleReceiveEvent(socketEvent);
 
@@ -209,10 +218,10 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         }
 
         /// <summary>
-        /// Handles an asynchronous network recieve event.
+        /// Handles an asynchronous network receive event.
         /// </summary>
         /// <param name="sender">The originator of the event.</param>
-        /// <param name="socketEvent">Contains details about the recieve event.</param>
+        /// <param name="socketEvent">Contains details about the receive event.</param>
         private void HandleReceiveEvent(object sender, SocketAsyncEventArgs socketEvent)
         {
             HandleReceive(socketEvent);
@@ -221,10 +230,10 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         }
 
         /// <summary>
-        /// Starts asynchronously recieving data on the socket. This should be
+        /// Starts asynchronously receiving data on the socket. This should be
         /// called after the socket is bound and connected.
         /// </summary>
-        protected void StartRecieving()
+        protected void StartReceiving()
         {
             SocketAsyncEventArgs socketEvent = null;
 

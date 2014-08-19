@@ -39,6 +39,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
     using SharpBattleNet.Framework.Networking.Connection.Details;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
+    using SharpBattleNet.Framework.Utilities.Collections;
     #endregion
 
     /// <summary>
@@ -56,10 +57,11 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
         /// Pool of <see cref="SocketAsyncEventArgs"/> object. Usefull
         /// for performance reasons.
         /// </param>
-        public BindableUDPConnection(ISocketEventPool socketEventBag)
-            : base(socketEventBag)
+        public BindableUDPConnection(ISocketEventPool socketEventBag, IBufferPoolManager bufferPoolManager)
+            : base(socketEventBag, bufferPoolManager)
         {
             Guard.AgainstNull(socketEventBag);
+            Guard.AgainstNull(bufferPoolManager);
 
             _socketEventBag = socketEventBag;
 
@@ -70,7 +72,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
 
         /// <summary>
         /// Binds this UDP socket to the specified endpoint. After this
-        /// the socket is place in a recieve state.
+        /// the socket is place in a receive state.
         /// </summary>
         /// <param name="address"></param>
         public void Bind(EndPoint address)

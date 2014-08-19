@@ -102,7 +102,7 @@ namespace SharpBattleNet.Framework.Utilities.Collections.Details
             // TODO : Make a pool that can grow and shrink as needed, then this
             // can be done away with, and we have a more scalable solution. This
             // implementation can currently handle only a 1024 allocations from
-            // it. So if more clients, eg. connects to the server, the recieve
+            // it. So if more clients, eg. connects to the server, the receive
             // pool will be exhausted very quickly.
             _buffer = new byte[pageSize * 1024];
 

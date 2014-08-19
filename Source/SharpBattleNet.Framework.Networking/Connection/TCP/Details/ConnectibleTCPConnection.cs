@@ -40,6 +40,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
     using SharpBattleNet.Framework.Networking.Connection.Details;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
+    using SharpBattleNet.Framework.Utilities.Collections;
     #endregion
 
     /// <summary>
@@ -59,10 +60,11 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         /// <param name="socketEventBag">
         /// Pool of <see cref="SocketAsyncEventArgs"/> for performance reasons.
         /// </param>
-        public ConnectibleTCPConnection(ISocketEventPool socketEventBag)
-            : base(socketEventBag)
+        public ConnectibleTCPConnection(ISocketEventPool socketEventBag, IBufferPoolManager bufferPoolManager)
+            : base(socketEventBag, bufferPoolManager)
         {
             Guard.AgainstNull(socketEventBag);
+            Guard.AgainstNull(bufferPoolManager);
 
             _socketEventBag = socketEventBag;
 
@@ -120,7 +122,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         /// Handles the connection event to the remote endpoint. If a connection
         /// is successfull, calls the callback supplied by the user. If the user 
         /// returns true from the callback, the connection is placed in the 
-        /// recieving state. The user can return false from the callback, and the
+        /// receiving state. The user can return false from the callback, and the
         /// connection attempt will be aborted.
         /// </summary>
         /// <param name="socketEvent">
@@ -154,7 +156,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
                 {
                     _logger.Trace("User accepted connection to {0}", socketEvent.RemoteEndPoint);
 
-                    StartRecieving();
+                    StartReceiving();
                 }
             }
 

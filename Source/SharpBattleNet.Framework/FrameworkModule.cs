@@ -81,6 +81,7 @@ namespace SharpBattleNet.Framework
         {
             Bind<IBufferPoolFactory>().ToFactory();
             Bind<IBufferPoolManager>().To<BufferPoolManager>().InSingletonScope();
+            Bind<IBufferPool>().To<BufferPool>();
 
             return;
         }

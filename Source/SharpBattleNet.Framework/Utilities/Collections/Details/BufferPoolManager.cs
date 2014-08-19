@@ -34,25 +34,107 @@ namespace SharpBattleNet.Framework.Utilities.Collections.Details
 {
     #region Usings
     using System;
+    using System.Collections.Concurrent;
+    using NLog;
+    using SharpBattleNet.Framework.Utilities.Debugging;
     #endregion
 
+    /// <summary>
+    /// Implements the interface of <see cref="IBufferPoolManager"/>.
+    /// </summary>
     internal class BufferPoolManager : IBufferPoolManager
     {
-        public BufferPoolManager()
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+        private readonly ConcurrentDictionary<string, IBufferPool> _pools = null;
+        private readonly IBufferPoolFactory _bufferFactory = null;
+
+        /// <summary>
+        /// Constructs an empty <see cref="BufferPoolManager"/>.
+        /// </summary>
+        /// <param name="bufferFactory">
+        /// A factory interface that can create <see cref="IBufferPool"/> objects.
+        /// </param>
+        public BufferPoolManager(IBufferPoolFactory bufferFactory)
         {
+            Guard.AgainstNull(bufferFactory);
+
+            _pools = new ConcurrentDictionary<string, IBufferPool>();
+            _bufferFactory = bufferFactory;
+
             return;
         }
 
         #region IBufferPoolManager Members
 
+        /// <summary>
+        /// Creates a new buffer pool with the specified name and the allocation
+        /// size of each page.
+        /// </summary>
+        /// <param name="name">The name of the buffer pool.</param>
+        /// <param name="pageSize">
+        /// The page size for each allocation from the buffer pool.
+        /// </param>
+        /// <returns>A reference to the buffer pool that was created.</returns>
         public IBufferPool Create(string name, int pageSize)
         {
-            throw new NotImplementedException();
+            IBufferPool poolToCreate = null;
+
+            Guard.AgainstEmptyString(name);
+
+            if (0 == pageSize)
+            {
+                throw new ArgumentException("Page size cannot be zero", "pageSize");
+            }
+
+            if((8 * 1024) < pageSize)
+            {
+                throw new ArgumentException("Page size cannot be more than 8KB in size", "pageSize");
+            }
+
+            if (true == _pools.ContainsKey(name))
+            {
+                throw new InvalidOperationException(string.Format("The buffer pool dictionary already contains a buffer pool with the name {0}", name));
+            }
+
+            poolToCreate = _bufferFactory.Create();
+
+            poolToCreate.Initialize(name, pageSize);
+
+            if (false == _pools.TryAdd(name, poolToCreate))
+            {
+                throw new InvalidProgramException(string.Format("Failed to add the buffer pool \'{0}\' to the pool dictionary", name));
+            }
+            else
+            {
+                _logger.Trace("Successfully created buffer pool : {0}", name);
+            }
+
+            return null;
         }
 
+        /// <summary>
+        /// Retrieves a previously created buffer pool. Will fail if the buffer
+        /// pool does not exist.
+        /// </summary>
+        /// <param name="name">
+        /// The name of the <see cref="IBufferPool"/> to get.
+        /// </param>
+        /// <returns>
+        /// A reference to the requested <see cref="IBufferPool"/>.
+        /// </returns>
         public IBufferPool Get(string name)
         {
-            throw new NotImplementedException();
+            IBufferPool pool = null;
+
+            Guard.AgainstEmptyString(name);
+
+            if (false == _pools.TryGetValue(name, out pool))
+            {
+                throw new InvalidOperationException(string.Format("The pool {0} does not exist in the buffer pool manager", name));
+            }
+
+            return pool;
         }
 
         #endregion

@@ -44,6 +44,20 @@ namespace SharpBattleNet.Framework.Utilities.Collections
     public interface IBufferPool
     {
         /// <summary>
+        /// Gets the name of this buffer pool.
+        /// </summary>
+        string Name { get; }
+
+        /// <summary>
+        /// Initializes this buffer pool up to the point of using it.
+        /// </summary>
+        /// <param name="name">The name of this buffer pool.</param>
+        /// <param name="pageSize">
+        /// The page size for each allocation from this buffer pool.
+        /// </param>
+        void Initialize(string name, int pageSize);
+
+        /// <summary>
         /// Requests a new page from the buffer pool that can be used.
         /// </summary>
         /// <returns>

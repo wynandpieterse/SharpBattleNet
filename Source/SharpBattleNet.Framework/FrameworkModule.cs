@@ -44,6 +44,7 @@ namespace SharpBattleNet.Framework
     using SharpBattleNet.Framework.Utilities.Debugging;
     using SharpBattleNet.Framework.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Collections.Details;
+    using Ninject.Extensions.Factory;
     #endregion
 
     /// <summary>
@@ -78,6 +79,7 @@ namespace SharpBattleNet.Framework
         /// </summary>
         private void ConfigureUtilities()
         {
+            Bind<IBufferPoolFactory>().ToFactory();
             Bind<IBufferPoolManager>().To<BufferPoolManager>().InSingletonScope();
 
             return;

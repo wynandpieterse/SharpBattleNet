@@ -70,6 +70,7 @@
     <Compile Include="Utilities\Collections\Details\BufferPool.cs" />
     <Compile Include="Utilities\Collections\Details\BufferPoolManager.cs" />
     <Compile Include="Utilities\Collections\IBufferPool.cs" />
+    <Compile Include="Utilities\Collections\IBufferPoolFactory.cs" />
     <Compile Include="Utilities\Collections\IBufferPoolManager.cs" />
     <Compile Include="Utilities\Extensions\AssemblyExtensions.cs" />
     <Compile Include="Utilities\Debugging\Guard.cs" />

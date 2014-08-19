@@ -30,41 +30,21 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Utilities.Collections.Details
+namespace SharpBattleNet.Framework.Utilities.Collections
 {
     #region Usings
     using System;
     #endregion
 
     /// <summary>
-    /// Implements the interface of <see cref="IBufferPool"/>.
+    /// Factory to create <see cref="IBufferPool"/> instances.
     /// </summary>
-    internal class BufferPool : IBufferPool
+    public interface IBufferPoolFactory
     {
-        public BufferPool()
-        {
-            return;
-        }
-
-        #region IBufferPool Members
-
-        public string Name { get; private set; }
-
-        public void Initialize(string name, int pageSize)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Recycle(ArraySegment<byte> buffer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ArraySegment<byte> Request()
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
+        /// <summary>
+        /// Creates a <see cref="IBufferPool"/> instance.
+        /// </summary>
+        /// <returns>A new <see cref="IBufferPool"/>.</returns>
+        IBufferPool Create();
     }
 }

@@ -40,8 +40,12 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
     using SharpBattleNet.Framework.Networking.Connection.Details;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
+    using SharpBattleNet.Framework.Utilities.Collections;
     #endregion
 
+    /// <summary>
+    /// Concrete implementation of <see cref="IConnectableTCPConnection"/>.
+    /// </summary>
     internal sealed class ConnectibleTCPConnection : TCPConnectionBase, IConnectableTCPConnection
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
@@ -50,16 +54,32 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         private EndPoint _connectionEndPoint = null;
         private Func<IConnection, bool, bool> _connectCallback = null;
 
-        public ConnectibleTCPConnection(ISocketEventPool socketEventBag)
-            : base(socketEventBag)
+        /// <summary>
+        /// Constructs an empty <see cref="ConnectibleTCPConnection"/>.
+        /// </summary>
+        /// <param name="socketEventBag">
+        /// Pool of <see cref="SocketAsyncEventArgs"/> for performance reasons.
+        /// </param>
+        public ConnectibleTCPConnection(ISocketEventPool socketEventBag, IBufferPoolManager bufferPoolManager)
+            : base(socketEventBag, bufferPoolManager)
         {
             Guard.AgainstNull(socketEventBag);
+            Guard.AgainstNull(bufferPoolManager);
 
             _socketEventBag = socketEventBag;
 
             return;
         }
 
+        /// <summary>
+        /// Requests an empty <see cref="SocketAsyncEventArgs"/> for connection
+        /// purposes. Clears the <see cref="SocketAsyncEventArgs"/> and set 
+        /// the callback and remote endpoint properties.
+        /// </summary>
+        /// <returns>
+        /// An empty <see cref="SocketAsyncEventArgs"/> that is ready to be used
+        /// to connect to a remote endpoint asynchronously.
+        /// </returns>
         private SocketAsyncEventArgs RequestSocketEvent()
         {
             SocketAsyncEventArgs socketEvent = null;
@@ -75,6 +95,14 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             return socketEvent;
         }
 
+        /// <summary>
+        /// Recycles a <see cref="SocketAsyncEventArgs"/> back into the pool
+        /// for later use. Clears the callback and remote endpoint reference.
+        /// </summary>
+        /// <param name="socketEvent">
+        /// The <see cref="SocketAsyncEventArgs"/> that should be returned
+        /// to the pool.
+        /// </param>
         private void RecycleSocketEvent(SocketAsyncEventArgs socketEvent)
         {
             Guard.AgainstNull(socketEvent);
@@ -90,6 +118,17 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             return;
         }
 
+        /// <summary>
+        /// Handles the connection event to the remote endpoint. If a connection
+        /// is successfull, calls the callback supplied by the user. If the user 
+        /// returns true from the callback, the connection is placed in the 
+        /// receiving state. The user can return false from the callback, and the
+        /// connection attempt will be aborted.
+        /// </summary>
+        /// <param name="socketEvent">
+        /// The <see cref="SocketAsyncEventArgs"/> that contains details about
+        /// the connection event from the operating system.
+        /// </param>
         private void ProcessConnect(SocketAsyncEventArgs socketEvent)
         {
             Guard.AgainstNull(socketEvent);
@@ -117,7 +156,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
                 {
                     _logger.Trace("User accepted connection to {0}", socketEvent.RemoteEndPoint);
 
-                    StartRecieving();
+                    StartReceiving();
                 }
             }
 
@@ -125,8 +164,15 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             return;
         }
 
+        /// <summary>
+        /// Event that is fired by the operating system network stack when the
+        /// connection was handled asynchronously.
+        /// </summary>
+        /// <param name="sender">The sender of the socket event.</param>
+        /// <param name="socketEvent">Contains information about the connect event.</param>
         private void HandleConnectEvent(object sender, SocketAsyncEventArgs socketEvent)
         {
+            // Just pass through to the handler function
             ProcessConnect(socketEvent);
 
             return;
@@ -134,6 +180,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 
         #region IConnectableTCPConnection Members
 
+        /// <inheritdoc/>
         public void Start(EndPoint address, Func<IConnection, bool, bool> connected)
         {
             SocketAsyncEventArgs socketEvent = null;

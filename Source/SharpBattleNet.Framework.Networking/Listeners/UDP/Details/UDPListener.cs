@@ -37,6 +37,9 @@ namespace SharpBattleNet.Framework.Networking.Listeners.UDP.Details
     using NLog;
     #endregion
 
+    /// <summary>
+    /// Concretely implements <see cref="IUDPListener"/>.
+    /// </summary>
     internal sealed class UDPListener : IUDPListener
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();

@@ -30,44 +30,21 @@
 //
 #endregion
 
-namespace SharpBattleNet.Program.DiabloIIGameServer
+namespace SharpBattleNet.Framework.Utilities.Collections
 {
     #region Usings
     using System;
-    using Ninject;
-    using SharpBattleNet.Framework;
-    using SharpBattleNet.Framework.Networking;
-    using SharpBattleNet.Server.DiabloIIGameServer;
     #endregion
 
     /// <summary>
-    /// Called by Windows. Contains main program logic.
+    /// Factory to create <see cref="IBufferPool"/> instances.
     /// </summary>
-    internal static class Program
+    public interface IBufferPoolFactory
     {
         /// <summary>
-        /// Called by Windows when the program is started.
+        /// Creates a <see cref="IBufferPool"/> instance.
         /// </summary>
-        /// <param name="args">Parameters passed on the command line</param>
-        /// <returns>
-        /// Wheter the program exited successfully or failed. A value of 1
-        /// indicate success while a value of 0 indicates failure
-        /// </returns>
-        private static int Main(string[] args)
-        {
-            FrameworkProgram program = new FrameworkProgram();
-
-            // Configure the framework and launches a D2 game server
-            program.Configure = kernel =>
-                {
-                    kernel.Load<DiabloIIGameServerModule>();
-                    kernel.Load<NetworkModule>();
-
-                    return "DiabloIIGameServer";
-                };
-
-            return program.Run(args);
-        }
+        /// <returns>A new <see cref="IBufferPool"/>.</returns>
+        IBufferPool Create();
     }
 }
-

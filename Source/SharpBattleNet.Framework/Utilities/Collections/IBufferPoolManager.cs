@@ -30,44 +30,39 @@
 //
 #endregion
 
-namespace SharpBattleNet.Program.DiabloIIGameServer
+namespace SharpBattleNet.Framework.Utilities.Collections
 {
     #region Usings
     using System;
-    using Ninject;
-    using SharpBattleNet.Framework;
-    using SharpBattleNet.Framework.Networking;
-    using SharpBattleNet.Server.DiabloIIGameServer;
     #endregion
 
     /// <summary>
-    /// Called by Windows. Contains main program logic.
+    /// Manages buffer pools. Request a buffer pool, then use the methods inside
+    /// <see cref="IBufferPool"/> to manage the buffers inside it.
     /// </summary>
-    internal static class Program
+    public interface IBufferPoolManager
     {
         /// <summary>
-        /// Called by Windows when the program is started.
+        /// Creates a brand new buffer pool with allocations handeling from the
+        /// page size.
         /// </summary>
-        /// <param name="args">Parameters passed on the command line</param>
+        /// <param name="name">The globally unique buffer pool name.</param>
+        /// <param name="pageSize">
+        /// The size of each allocation from the pool.
+        /// </param>
         /// <returns>
-        /// Wheter the program exited successfully or failed. A value of 1
-        /// indicate success while a value of 0 indicates failure
+        /// A refernce to the <see cref="IBufferPool"/> that was created.
         /// </returns>
-        private static int Main(string[] args)
-        {
-            FrameworkProgram program = new FrameworkProgram();
+        IBufferPool Create(string name, int pageSize);
 
-            // Configure the framework and launches a D2 game server
-            program.Configure = kernel =>
-                {
-                    kernel.Load<DiabloIIGameServerModule>();
-                    kernel.Load<NetworkModule>();
-
-                    return "DiabloIIGameServer";
-                };
-
-            return program.Run(args);
-        }
+        /// <summary>
+        /// Requests a previously created buffer pool. Will fail if the pool does
+        /// not exist.
+        /// </summary>
+        /// <param name="name">The name of the pool to acquire.</param>
+        /// <returns>
+        /// A reference to the <see cref="IBufferPool"/> with the passed in name.
+        /// </returns>
+        IBufferPool Get(string name);
     }
 }
-

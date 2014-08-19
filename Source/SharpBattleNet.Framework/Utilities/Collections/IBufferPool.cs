@@ -30,44 +30,49 @@
 //
 #endregion
 
-namespace SharpBattleNet.Program.DiabloIIGameServer
+namespace SharpBattleNet.Framework.Utilities.Collections
 {
     #region Usings
     using System;
-    using Ninject;
-    using SharpBattleNet.Framework;
-    using SharpBattleNet.Framework.Networking;
-    using SharpBattleNet.Server.DiabloIIGameServer;
     #endregion
 
     /// <summary>
-    /// Called by Windows. Contains main program logic.
+    /// Manages a pool of byte buffer objects. Can acquire new buffer objects
+    /// that can help speed up socket and file operations without putting too
+    /// much presure on the garbage collector
     /// </summary>
-    internal static class Program
+    public interface IBufferPool
     {
         /// <summary>
-        /// Called by Windows when the program is started.
+        /// Gets the name of this buffer pool.
         /// </summary>
-        /// <param name="args">Parameters passed on the command line</param>
+        string Name { get; }
+
+        /// <summary>
+        /// Initializes this buffer pool up to the point of using it.
+        /// </summary>
+        /// <param name="name">The name of this buffer pool.</param>
+        /// <param name="pageSize">
+        /// The page size for each allocation from this buffer pool.
+        /// </param>
+        void Initialize(string name, int pageSize);
+
+        /// <summary>
+        /// Requests a new page from the buffer pool that can be used.
+        /// </summary>
         /// <returns>
-        /// Wheter the program exited successfully or failed. A value of 1
-        /// indicate success while a value of 0 indicates failure
+        /// An array segment that contains the byte buffer to be used an the
+        /// offset into it.
         /// </returns>
-        private static int Main(string[] args)
-        {
-            FrameworkProgram program = new FrameworkProgram();
+        ArraySegment<byte> Request();
 
-            // Configure the framework and launches a D2 game server
-            program.Configure = kernel =>
-                {
-                    kernel.Load<DiabloIIGameServerModule>();
-                    kernel.Load<NetworkModule>();
-
-                    return "DiabloIIGameServer";
-                };
-
-            return program.Run(args);
-        }
+        /// <summary>
+        /// Recycles a previously used buffer back into the pool for later
+        /// use.
+        /// </summary>
+        /// <param name="buffer">
+        /// The array segment to recycle back into the system.
+        /// </param>
+        void Recycle(ArraySegment<byte> buffer);
     }
 }
-

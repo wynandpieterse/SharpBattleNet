@@ -42,8 +42,15 @@ namespace SharpBattleNet.Framework
     using NLog.Targets;
     using NLog.Config;
     using SharpBattleNet.Framework.Utilities.Debugging;
+    using SharpBattleNet.Framework.Utilities.Collections;
+    using SharpBattleNet.Framework.Utilities.Collections.Details;
+    using Ninject.Extensions.Factory;
     #endregion
 
+    /// <summary>
+    /// Provides common IoC modules that is used by most of the system. Provides
+    /// configuration and logging modules built into one.
+    /// </summary>
     public sealed class FrameworkModule : NinjectModule
     {
         private readonly string _applicationName = "";
@@ -51,6 +58,12 @@ namespace SharpBattleNet.Framework
         private string _writeDirectory = "";
         private bool _writeDirectorySuccessfull = false;
 
+        /// <summary>
+        /// Constructs an empty <see cref="FrameworkModule"/>.
+        /// </summary>
+        /// <param name="applicationName">
+        /// The application name that is calling us.
+        /// </param>
         public FrameworkModule(string applicationName)
         {
             Guard.AgainstNull(applicationName);
@@ -61,6 +74,21 @@ namespace SharpBattleNet.Framework
             return;
         }
 
+        /// <summary>
+        /// Configures utility interfaces with IoC
+        /// </summary>
+        private void ConfigureUtilities()
+        {
+            Bind<IBufferPoolFactory>().ToFactory();
+            Bind<IBufferPoolManager>().To<BufferPoolManager>().InSingletonScope();
+            Bind<IBufferPool>().To<BufferPool>();
+
+            return;
+        }
+
+        /// <summary>
+        /// Creates the application write directory if it does not exists.
+        /// </summary>
         private void ConfigureWriteDirectory()
         {
             try
@@ -83,6 +111,10 @@ namespace SharpBattleNet.Framework
             return;
         }
 
+        /// <summary>
+        /// Configures the configuration subsystem that can be used by modules
+        /// to make themself configurable to the open world.
+        /// </summary>
         private void ConfigureConfiguration()
         {
             string configurationDirectory = Path.Combine(_writeDirectory, "Configuration");
@@ -120,6 +152,16 @@ namespace SharpBattleNet.Framework
             return;
         }
 
+        /// <summary>
+        /// Returns a NLog log level depending on the passed in string.
+        /// </summary>
+        /// <param name="level">
+        /// The string to parse for log levels.
+        /// </param>
+        /// <returns>
+        /// An <see cref="LogLevel"/> enumartion converted from the level
+        /// argument.
+        /// </returns>
         private LogLevel GetLogLevel(string level)
         {
             Guard.AgainstNull(level);
@@ -144,6 +186,10 @@ namespace SharpBattleNet.Framework
             return LogLevel.Off;
         }
 
+        /// <summary>
+        /// Configure NLog to output to the console.
+        /// </summary>
+        /// <param name="config">The NLog configuration object to configure.</param>
         private void ConfigureConsoleLogging(LoggingConfiguration config)
         {
             Guard.AgainstNull(config);
@@ -167,6 +213,11 @@ namespace SharpBattleNet.Framework
             return;
         }
 
+        /// <summary>
+        /// Configures the NLog subsystem to log to a file inside the write
+        /// directory.
+        /// </summary>
+        /// <param name="config">The NLog configuration object to configure.</param>
         private void ConfigureFileLogging(LoggingConfiguration config)
         {
             Guard.AgainstNull(config);
@@ -203,6 +254,9 @@ namespace SharpBattleNet.Framework
             return;
         }
 
+        /// <summary>
+        /// Configures NLog.
+        /// </summary>
         private void ConfigureLogging()
         {
             var config = new LoggingConfiguration();
@@ -215,8 +269,12 @@ namespace SharpBattleNet.Framework
             return;
         }
 
+        /// <summary>
+        /// Called by Ninject to configure this module.
+        /// </summary>
         public override void Load()
         {
+            ConfigureUtilities();
             ConfigureWriteDirectory();
             ConfigureConfiguration();
             ConfigureLogging();

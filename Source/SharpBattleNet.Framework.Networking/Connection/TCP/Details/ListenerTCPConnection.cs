@@ -38,18 +38,31 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
     using NLog;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
+    using SharpBattleNet.Framework.Utilities.Collections;
     #endregion
 
+    /// <summary>
+    /// Implements <see cref="IListenerTCPConnection"/> to provide listeners
+    /// with a way to communicate with the outside world.
+    /// </summary>
     internal sealed class ListenerTCPConnection : TCPConnectionBase, IListenerTCPConnection
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         private readonly ISocketEventPool _socketEventBag = null;
 
-        public ListenerTCPConnection(ISocketEventPool socketEventBag)
-            : base(socketEventBag)
+        /// <summary>
+        /// Constructs an empty <see cref="ListenerTCPConnection"/> object.
+        /// </summary>
+        /// <param name="socketEventBag">
+        /// Collection of <see cref="SocketAsyncEventArgs"/> object. Usefull
+        /// for performance reasons.
+        /// </param>
+        public ListenerTCPConnection(ISocketEventPool socketEventBag, IBufferPoolManager bufferPoolManager)
+            : base(socketEventBag, bufferPoolManager)
         {
             Guard.AgainstNull(socketEventBag);
+            Guard.AgainstNull(bufferPoolManager);
 
             _socketEventBag = socketEventBag;
 
@@ -58,13 +71,20 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 
         #region IListenerTCPConnection Members
 
+        /// <summary>
+        /// Called by the listener subsystem to start the client socket
+        /// and begin receiving data.
+        /// </summary>
+        /// <param name="acceptedSocket">
+        /// The operating system socket that was accepted by the listener.
+        /// </param>
         public void Start(Socket acceptedSocket)
         {
             Guard.AgainstNull(acceptedSocket);
 
             Socket = acceptedSocket;
 
-            StartRecieving();
+            StartReceiving();
 
             return;
         }

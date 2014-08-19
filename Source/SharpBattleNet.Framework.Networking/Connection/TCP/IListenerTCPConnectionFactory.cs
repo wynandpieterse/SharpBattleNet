@@ -36,8 +36,18 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP
     using System;
     #endregion
 
+    /// <summary>
+    /// Contains functionality to construct <see cref="IListenerTCPConnection"/>
+    /// </summary>
     public interface IListenerTCPConnectionFactory
     {
+        /// <summary>
+        /// Creates a brand new Listener TCP connection. Used by the TCP listener
+        /// subsystem to accept new clients
+        /// </summary>
+        /// <returns>
+        /// A listener socket that can be used to receive client commands
+        /// </returns>
         IListenerTCPConnection Create();
     }
 }

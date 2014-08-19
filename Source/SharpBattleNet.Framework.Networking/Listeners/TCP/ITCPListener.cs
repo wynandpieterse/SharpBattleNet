@@ -36,6 +36,11 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP
     using System;
     #endregion
 
+    /// <summary>
+    /// Listens for TCP connections and accepts them, then hand of the connection
+    /// to the server program for inspecting and gives it a chance to cancel
+    /// the accepted socket.
+    /// </summary>
     public interface ITCPListener : IListener
     {
 

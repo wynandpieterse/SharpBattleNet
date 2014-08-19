@@ -36,7 +36,29 @@ namespace SharpBattleNet.Framework.Utilities.Collections
     using System;
     #endregion
 
+    /// <summary>
+    /// Manages a pool of byte buffer objects. Can acquire new buffer objects
+    /// that can help speed up socket and file operations without putting too
+    /// much presure on the garbage collector
+    /// </summary>
     public interface IBufferPool
     {
+        /// <summary>
+        /// Requests a new page from the buffer pool that can be used.
+        /// </summary>
+        /// <returns>
+        /// An array segment that contains the byte buffer to be used an the
+        /// offset into it.
+        /// </returns>
+        ArraySegment<byte> Request();
+
+        /// <summary>
+        /// Recycles a previously used buffer back into the pool for later
+        /// use.
+        /// </summary>
+        /// <param name="buffer">
+        /// The array segment to recycle back into the system.
+        /// </param>
+        void Recycle(ArraySegment<byte> buffer);
     }
 }

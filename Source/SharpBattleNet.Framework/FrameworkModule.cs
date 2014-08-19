@@ -78,7 +78,7 @@ namespace SharpBattleNet.Framework
         /// </summary>
         private void ConfigureUtilities()
         {
-            Bind<IBufferPoolManager>().To<BufferPoolManager>();
+            Bind<IBufferPoolManager>().To<BufferPoolManager>().InSingletonScope();
 
             return;
         }

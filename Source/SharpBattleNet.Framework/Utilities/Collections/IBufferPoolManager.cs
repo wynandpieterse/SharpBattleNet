@@ -36,7 +36,33 @@ namespace SharpBattleNet.Framework.Utilities.Collections
     using System;
     #endregion
 
+    /// <summary>
+    /// Manages buffer pools. Request a buffer pool, then use the methods inside
+    /// <see cref="IBufferPool"/> to manage the buffers inside it.
+    /// </summary>
     public interface IBufferPoolManager
     {
+        /// <summary>
+        /// Creates a brand new buffer pool with allocations handeling from the
+        /// page size.
+        /// </summary>
+        /// <param name="name">The globally unique buffer pool name.</param>
+        /// <param name="pageSize">
+        /// The size of each allocation from the pool.
+        /// </param>
+        /// <returns>
+        /// A refernce to the <see cref="IBufferPool"/> that was created.
+        /// </returns>
+        IBufferPool Create(string name, int pageSize);
+
+        /// <summary>
+        /// Requests a previously created buffer pool. Will fail if the pool does
+        /// not exist.
+        /// </summary>
+        /// <param name="name">The name of the pool to acquire.</param>
+        /// <returns>
+        /// A reference to the <see cref="IBufferPool"/> with the passed in name.
+        /// </returns>
+        IBufferPool Get(string name);
     }
 }

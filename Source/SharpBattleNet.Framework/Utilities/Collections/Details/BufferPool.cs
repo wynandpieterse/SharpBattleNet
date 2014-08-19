@@ -38,5 +38,23 @@ namespace SharpBattleNet.Framework.Utilities.Collections.Details
 
     internal class BufferPool : IBufferPool
     {
+        public BufferPool()
+        {
+            return;
+        }
+
+        #region IBufferPool Members
+
+        public void Recycle(ArraySegment<byte> buffer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ArraySegment<byte> Request()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

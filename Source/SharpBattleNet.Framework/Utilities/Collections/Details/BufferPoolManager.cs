@@ -38,5 +38,23 @@ namespace SharpBattleNet.Framework.Utilities.Collections.Details
 
     internal class BufferPoolManager : IBufferPoolManager
     {
+        public BufferPoolManager()
+        {
+            return;
+        }
+
+        #region IBufferPoolManager Members
+
+        public IBufferPool Create(string name, int pageSize)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBufferPool Get(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

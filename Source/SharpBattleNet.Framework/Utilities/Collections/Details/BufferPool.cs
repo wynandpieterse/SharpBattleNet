@@ -34,6 +34,9 @@ namespace SharpBattleNet.Framework.Utilities.Collections.Details
 {
     #region Usings
     using System;
+    using NLog;
+    using SharpBattleNet.Framework.Utilities.Debugging;
+    using System.Collections.Concurrent;
     #endregion
 
     /// <summary>
@@ -41,28 +44,118 @@ namespace SharpBattleNet.Framework.Utilities.Collections.Details
     /// </summary>
     internal class BufferPool : IBufferPool
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+        private string _name = "";
+        private int _pageSize = 0;
+        private byte[] _buffer = null;
+        private ConcurrentStack<int> _freeIndices = null;
+
+        /// <summary>
+        /// Creates an empty <see cref="BufferPool"/> object.
+        /// </summary>
         public BufferPool()
         {
+            _freeIndices = new ConcurrentStack<int>();
+
             return;
         }
 
         #region IBufferPool Members
 
-        public string Name { get; private set; }
+        /// <summary>
+        /// Request the name of this buffer pool.
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+        }
 
+        /// <summary>
+        /// Initializes the buffer pool with the desired name and requested
+        /// page allocation size.
+        /// </summary>
+        /// <param name="name">The name of this pool.</param>
+        /// <param name="pageSize">
+        /// The size of each allocation from this buffer pool.
+        /// </param>
         public void Initialize(string name, int pageSize)
         {
-            throw new NotImplementedException();
+            Guard.AgainstEmptyString(name);
+
+            if (0 == pageSize)
+            {
+                throw new ArgumentException("Page size cannot be zero", "pageSize");
+            }
+
+            if ((8 * 1024) < pageSize)
+            {
+                throw new ArgumentException("Page size cannot be more than 8KB in size", "pageSize");
+            }
+
+            _name = name;
+            _pageSize = pageSize;
+
+            // TODO : Make a pool that can grow and shrink as needed, then this
+            // can be done away with, and we have a more scalable solution. This
+            // implementation can currently handle only a 1024 allocations from
+            // it. So if more clients, eg. connects to the server, the recieve
+            // pool will be exhausted very quickly.
+            _buffer = new byte[pageSize * 1024];
+
+            for (int index = 0; index < 1024; index++)
+            {
+                _freeIndices.Push(index);
+            }
+
+            return;
         }
 
+        /// <summary>
+        /// Recycles a previous allocated buffer back into this buffer pool
+        /// for later use.
+        /// </summary>
+        /// <param name="buffer">
+        /// The buffer to recycle back into this pool.
+        /// </param>
         public void Recycle(ArraySegment<byte> buffer)
         {
-            throw new NotImplementedException();
+            int index = 0;
+
+            if (null == buffer.Array)
+            {
+                throw new InvalidOperationException("The passed in buffer array cannot be null");
+            }
+
+            if (_buffer != buffer.Array)
+            {
+                throw new InvalidOperationException("The passed in buffer did not originate from this pool");
+            }
+
+            index = buffer.Offset / 1024;
+            _freeIndices.Push(index);
+
+            return;
         }
 
+        /// <summary>
+        /// Request a new buffer from this pool that is exactly page size big.
+        /// </summary>
+        /// <returns>The requested buffer, ready to be used.</returns>
         public ArraySegment<byte> Request()
         {
-            throw new NotImplementedException();
+            int index = 0;
+
+            if (false == _freeIndices.TryPop(out index))
+            {
+                throw new InvalidOperationException("The buffer pool has exhausted its resources");
+            }
+
+            Array.Clear(_buffer, index * 1024, _pageSize);
+            return new ArraySegment<byte>(_buffer, index * 1024, _pageSize);
         }
 
         #endregion

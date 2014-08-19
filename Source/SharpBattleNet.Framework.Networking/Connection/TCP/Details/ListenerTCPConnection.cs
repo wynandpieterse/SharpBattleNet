@@ -38,6 +38,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
     using NLog;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
+    using SharpBattleNet.Framework.Utilities.Collections;
     #endregion
 
     /// <summary>
@@ -57,10 +58,11 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         /// Collection of <see cref="SocketAsyncEventArgs"/> object. Usefull
         /// for performance reasons.
         /// </param>
-        public ListenerTCPConnection(ISocketEventPool socketEventBag)
-            : base(socketEventBag)
+        public ListenerTCPConnection(ISocketEventPool socketEventBag, IBufferPoolManager bufferPoolManager)
+            : base(socketEventBag, bufferPoolManager)
         {
             Guard.AgainstNull(socketEventBag);
+            Guard.AgainstNull(bufferPoolManager);
 
             _socketEventBag = socketEventBag;
 

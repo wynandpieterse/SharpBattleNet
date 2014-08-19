@@ -40,6 +40,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
     using NLog;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
+    using SharpBattleNet.Framework.Utilities.Collections;
     #endregion
 
     /// <summary>
@@ -51,6 +52,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         private readonly ISocketEventPool _socketEventBag = null;
+        private readonly IBufferPool _bufferPool = null;
 
         protected Socket Socket { get; set; }
 
@@ -61,11 +63,13 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         /// Reference to a pool of <see cref="SocketAsyncEventArgs"/>. Mainly
         /// used for performance benefits.
         /// </param>
-        public ConnectionBase(ISocketEventPool socketEventBag)
+        public ConnectionBase(ISocketEventPool socketEventBag, IBufferPoolManager bufferPoolManager)
         {
             Guard.AgainstNull(socketEventBag);
+            Guard.AgainstNull(bufferPoolManager);
 
             _socketEventBag = socketEventBag;
+            _bufferPool = bufferPoolManager.Get("NetworkTransmition");
 
             return;
         }

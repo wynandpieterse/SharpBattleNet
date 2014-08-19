@@ -73,7 +73,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 
         /// <summary>
         /// Called by the listener subsystem to start the client socket
-        /// and begin recieving data.
+        /// and begin receiving data.
         /// </summary>
         /// <param name="acceptedSocket">
         /// The operating system socket that was accepted by the listener.
@@ -84,7 +84,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 
             Socket = acceptedSocket;
 
-            StartRecieving();
+            StartReceiving();
 
             return;
         }

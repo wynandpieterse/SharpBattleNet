@@ -39,7 +39,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP
 
     /// <summary>
     /// Created by the TCP listener subsystem. These connections are used from
-    /// there on to handle recieves from clients. After the listener accepts
+    /// there on to handle receives from clients. After the listener accepts
     /// the connection and the server agrees, the listener starts receiving.
     /// 
     /// This is used from the server side of the system.
@@ -47,7 +47,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP
     public interface IListenerTCPConnection : ITCPConnection
     {
         /// <summary>
-        /// Starts the listener TCP connection and recieves any data that is
+        /// Starts the listener TCP connection and receives any data that is
         /// sent to it.
         /// </summary>
         /// <param name="acceptedSocket">

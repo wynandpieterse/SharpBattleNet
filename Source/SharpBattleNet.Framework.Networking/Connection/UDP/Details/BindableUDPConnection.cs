@@ -72,7 +72,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
 
         /// <summary>
         /// Binds this UDP socket to the specified endpoint. After this
-        /// the socket is place in a recieve state.
+        /// the socket is place in a receive state.
         /// </summary>
         /// <param name="address"></param>
         public void Bind(EndPoint address)

@@ -46,7 +46,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP
         /// subsystem to accept new clients
         /// </summary>
         /// <returns>
-        /// A listener socket that can be used to recieve client commands
+        /// A listener socket that can be used to receive client commands
         /// </returns>
         IListenerTCPConnection Create();
     }

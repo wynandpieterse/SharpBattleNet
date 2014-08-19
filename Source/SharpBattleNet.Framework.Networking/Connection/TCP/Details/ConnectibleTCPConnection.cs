@@ -122,7 +122,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         /// Handles the connection event to the remote endpoint. If a connection
         /// is successfull, calls the callback supplied by the user. If the user 
         /// returns true from the callback, the connection is placed in the 
-        /// recieving state. The user can return false from the callback, and the
+        /// receiving state. The user can return false from the callback, and the
         /// connection attempt will be aborted.
         /// </summary>
         /// <param name="socketEvent">
@@ -156,7 +156,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
                 {
                     _logger.Trace("User accepted connection to {0}", socketEvent.RemoteEndPoint);
 
-                    StartRecieving();
+                    StartReceiving();
                 }
             }
 

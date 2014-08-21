@@ -9,6 +9,17 @@ using SharpBattleNet.Framework.Networking.PacketHandeling.Utilities;
 
 namespace SharpBattleNet.Server.MasterServer
 {
+    public sealed class HeaderExecutor : IPacketHeaderExecutor
+    {
+        public bool Handle(ArraySegment<byte> dataBuffer, out uint id, out uint lenght)
+        {
+            id = 0;
+            lenght = 0;
+
+            return false;
+        }
+    }
+
     [Packet]
     public sealed class TestPacket : IPacket
     {

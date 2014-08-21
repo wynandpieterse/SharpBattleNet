@@ -86,8 +86,10 @@
     <Compile Include="Listeners\UDP\IUDPListener.cs" />
     <Compile Include="Listeners\UDP\IUDPListenerFactory.cs" />
     <Compile Include="NetworkModule.cs" />
+    <Compile Include="PacketHandeling\Details\PacketDispatcher.cs" />
     <Compile Include="PacketHandeling\IPacket.cs" />
     <Compile Include="PacketHandeling\IPacketDispatcher.cs" />
+    <Compile Include="PacketHandeling\IPacketDispatcherFactory.cs" />
     <Compile Include="PacketHandeling\IPacketExecutor.cs" />
     <Compile Include="PacketHandeling\IPacketHeaderExecutor.cs" />
     <Compile Include="PacketHandeling\IPacketIn.cs" />
@@ -104,9 +106,7 @@
   <ItemGroup>
     <None Include="Packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="PacketHandeling\Details\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\SharpBattleNet.Framework\SharpBattleNet.Framework.csproj">
       <Project>{fdb8d2c5-fd13-40e7-b629-ce71a68bb7b7}</Project>

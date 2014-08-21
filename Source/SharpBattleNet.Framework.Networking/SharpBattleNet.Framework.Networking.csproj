@@ -87,6 +87,7 @@
     <Compile Include="Listeners\UDP\IUDPListenerFactory.cs" />
     <Compile Include="NetworkModule.cs" />
     <Compile Include="PacketHandeling\Details\PacketDispatcher.cs" />
+    <Compile Include="PacketHandeling\Details\PacketDispatcherState.cs" />
     <Compile Include="PacketHandeling\IPacket.cs" />
     <Compile Include="PacketHandeling\IPacketDispatcher.cs" />
     <Compile Include="PacketHandeling\IPacketDispatcherFactory.cs" />

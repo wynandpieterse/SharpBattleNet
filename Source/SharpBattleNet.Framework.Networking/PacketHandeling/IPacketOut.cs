@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharpBattleNet.Framework.Networking.PacketHandeling
 {
-    public interface IPacketContainer
+    public interface IPacketOut
     {
     }
 }

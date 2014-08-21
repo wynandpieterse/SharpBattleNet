@@ -8,5 +8,7 @@ namespace SharpBattleNet.Framework.Networking.PacketHandeling
 {
     public interface IPacketSerializer
     {
+        void Serialize(IPacketOut packet, ArraySegment<byte> buffer);
+        void Deserialize(ArraySegment<byte> buffer, IPacketIn packet);
     }
 }

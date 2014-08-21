@@ -87,13 +87,16 @@
     <Compile Include="Listeners\UDP\IUDPListenerFactory.cs" />
     <Compile Include="NetworkModule.cs" />
     <Compile Include="PacketHandeling\IPacket.cs" />
-    <Compile Include="PacketHandeling\IPacketContainer.cs" />
     <Compile Include="PacketHandeling\IPacketDispatcher.cs" />
     <Compile Include="PacketHandeling\IPacketExecutor.cs" />
     <Compile Include="PacketHandeling\IPacketHeaderExecutor.cs" />
+    <Compile Include="PacketHandeling\IPacketIn.cs" />
+    <Compile Include="PacketHandeling\IPacketOut.cs" />
     <Compile Include="PacketHandeling\IPacketSerializer.cs" />
     <Compile Include="PacketHandeling\PacketAttribute.cs" />
     <Compile Include="PacketHandeling\PacketDetails.cs" />
+    <Compile Include="PacketHandeling\Utilities\PacketExecutorHelper.cs" />
+    <Compile Include="PacketHandeling\Utilities\PacketSerializerHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Collections\Details\SocketEventPool.cs" />
     <Compile Include="Utilities\Collections\ISocketEventPool.cs" />

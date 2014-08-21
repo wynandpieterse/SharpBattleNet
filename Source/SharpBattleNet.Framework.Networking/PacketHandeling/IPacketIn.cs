@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharpBattleNet.Framework.Networking.PacketHandeling
 {
-    public interface IPacketHeaderExecutor
+    public interface IPacketIn
     {
-        bool Handle(ArraySegment<byte> dataBuffer, out uint id, out uint lenght);
     }
 }

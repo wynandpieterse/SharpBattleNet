@@ -4,20 +4,43 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SharpBattleNet.Framework.Networking.Connection;
+using SharpBattleNet.Framework.Networking.PacketHandeling.Utilities;
 
 namespace SharpBattleNet.Server.MasterServer
 {
     [Packet]
     public sealed class TestPacket : IPacket
     {
-        internal class Serializer : IPacketSerializer
+        internal class In : IPacketIn
         {
 
         }
 
-        internal class Executor : IPacketExecutor
+        internal class Out : IPacketOut
         {
 
+        }
+
+        internal class Serializer : PacketSerializerHelper<In, Out>
+        {
+            protected override void Deserialize(ArraySegment<byte> buffer, In packet)
+            {
+                return;
+            }
+
+            protected override void Serialize(Out packet, ArraySegment<byte> buffer)
+            {
+                return;
+            }
+        }
+
+        internal class Executor : PacketExecutorHelper<In>
+        {
+            protected override void Handle(In packet, IConnection remote)
+            {
+                return;
+            }
         }
 
         public PacketDetails Details

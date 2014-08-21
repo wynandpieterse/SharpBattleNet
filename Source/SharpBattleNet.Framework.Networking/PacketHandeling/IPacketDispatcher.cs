@@ -8,5 +8,6 @@ namespace SharpBattleNet.Framework.Networking.PacketHandeling
 {
     public interface IPacketDispatcher
     {
+        void Process(ArraySegment<byte> buffer);
     }
 }

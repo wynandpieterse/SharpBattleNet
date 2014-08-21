@@ -86,6 +86,14 @@
     <Compile Include="Listeners\UDP\IUDPListener.cs" />
     <Compile Include="Listeners\UDP\IUDPListenerFactory.cs" />
     <Compile Include="NetworkModule.cs" />
+    <Compile Include="PacketHandeling\IPacket.cs" />
+    <Compile Include="PacketHandeling\IPacketContainer.cs" />
+    <Compile Include="PacketHandeling\IPacketDispatcher.cs" />
+    <Compile Include="PacketHandeling\IPacketExecutor.cs" />
+    <Compile Include="PacketHandeling\IPacketHeaderExecutor.cs" />
+    <Compile Include="PacketHandeling\IPacketSerializer.cs" />
+    <Compile Include="PacketHandeling\PacketAttribute.cs" />
+    <Compile Include="PacketHandeling\PacketDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Collections\Details\SocketEventPool.cs" />
     <Compile Include="Utilities\Collections\ISocketEventPool.cs" />
@@ -93,7 +101,9 @@
   <ItemGroup>
     <None Include="Packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="PacketHandeling\Details\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharpBattleNet.Framework\SharpBattleNet.Framework.csproj">
       <Project>{fdb8d2c5-fd13-40e7-b629-ce71a68bb7b7}</Project>

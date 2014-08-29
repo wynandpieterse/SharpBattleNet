@@ -16,7 +16,7 @@
 */
 #endregion
 
-namespace ServerToolkit.BufferManagement
+namespace SharpBattleNet.Framework.External.BufferPool
 {
     using System;
     using System.Collections.Generic;

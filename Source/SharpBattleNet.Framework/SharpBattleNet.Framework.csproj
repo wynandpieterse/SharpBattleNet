@@ -71,6 +71,7 @@
     <Compile Include="Utilities\Debugging\Guard.cs" />
     <Compile Include="FrameworkModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\Extensions\EnumerableExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Packages.config" />

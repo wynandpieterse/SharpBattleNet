@@ -204,6 +204,11 @@ namespace SharpBattleNet.Framework.Utilities.Extensions
 
             return "";
         }
+
+        public static void ProcessTypesAsync(Action<Type> executor)
+        {
+            return;
+        }
     }
 }
 

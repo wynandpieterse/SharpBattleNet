@@ -1,4 +1,4 @@
-﻿#region Header
+#region Header
 //
 //    _  _   ____        _   _   _         _   _      _   
 //  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
@@ -47,6 +47,8 @@ namespace SharpBattleNet.Framework.Networking
     using SharpBattleNet.Framework.Networking.Listeners.TCP.Details;
     using SharpBattleNet.Framework.Networking.Listeners.UDP;
     using SharpBattleNet.Framework.Networking.Listeners.UDP.Details;
+    using SharpBattleNet.Framework.Networking.PacketHandeling;
+    using SharpBattleNet.Framework.Networking.PacketHandeling.Details;
     #endregion
 
     /// <summary>
@@ -110,6 +112,17 @@ namespace SharpBattleNet.Framework.Networking
         }
 
         /// <summary>
+        /// Binds all the details that handle packet dispatching.
+        /// </summary>
+        private void BindPacketHandeling()
+        {
+            Bind<IPacketDispatcherFactory>().ToFactory();
+            Bind<IPacketDispatcher>().To<PacketDispatcher>();
+
+            return;
+        }
+
+        /// <summary>
         /// Called by Ninject to bind all desired objects.
         /// </summary>
         public override void Load()
@@ -117,6 +130,7 @@ namespace SharpBattleNet.Framework.Networking
             BindUtilities();
             BindConnectionFactories();
             BindListeners();
+            BindPacketHandeling();
 
             return;
         }

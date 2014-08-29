@@ -30,7 +30,7 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
+namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
 {
     #region Usings
     using System;
@@ -41,10 +41,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
     using SharpBattleNet.Framework.Networking.Connection.Details;
     #endregion
 
-    /// <summary>
-    /// Provides common TCP connection functionality.
-    /// </summary>
-    internal abstract class TCPConnectionBase : ConnectionBase, ITCPConnection
+    internal abstract class UDPConnectionBase : ConnectionBase, IUDPConnection
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly ISocketEventPool _socketEventBag = null;
@@ -55,7 +52,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         /// be called by derived classes.
         /// </summary>
         /// <param name="socketEventBag"></param>
-        protected TCPConnectionBase(ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
+        protected UDPConnectionBase(ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
             : base(socketEventBag, socketBufferPool)
         {
             Guard.AgainstNull(socketEventBag);
@@ -67,21 +64,21 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             return;
         }
 
-        public sealed override void Send(byte[] buffer, long bufferLenght = 0, System.Net.EndPoint address = null)
+        public override void Send(byte[] buffer, long bufferLenght = 0, System.Net.EndPoint address = null)
         {
             if(0 == bufferLenght)
             {
-                Socket.Send(buffer, buffer.Length, SocketFlags.None);
-            } 
+                Socket.SendTo(buffer, buffer.Length, SocketFlags.None, address);
+            }
             else
             {
-                Socket.Send(buffer, (int)bufferLenght, SocketFlags.None);
+                Socket.SendTo(buffer, (int) bufferLenght, SocketFlags.None, address);
             }
 
             return;
         }
 
-        public sealed override void StartReceiving()
+        public override void StartReceiving()
         {
             SocketAsyncEventArgs socketEvent = null;
 
@@ -92,7 +89,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 
             try
             {
-                if (false == Socket.ReceiveAsync(socketEvent))
+                if (false == Socket.ReceiveFromAsync(socketEvent))
                 {
                     HandleReceive(socketEvent);
                 }
@@ -113,29 +110,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
                 if (null != socketEvent)
                 {
                     RecycleReceiveEvent(socketEvent);
-                }
-            }
-
-            return;
-        }
-
-        /// <summary>
-        /// Implements the <see cref="ITCPConnection.Disconnect"/> 
-        /// method. Closes the socket and disconnects from the remote
-        /// side.
-        /// </summary>
-        public void Disconnect()
-        {
-            if(null != Socket)
-            {
-                try
-                {
-                    Socket.Disconnect(true);
-                }
-                catch (Exception)
-                {
-                    // Don't really care here because system is going to remove all the stuff from itself
-                    // in any case.
                 }
             }
 

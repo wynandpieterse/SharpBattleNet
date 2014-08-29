@@ -44,7 +44,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
     /// <summary>
     /// Implements the <see cref="IBindableUDPConnection"/> class.
     /// </summary>
-    internal sealed class BindableUDPConnection : ConnectionBase, IBindableUDPConnection
+    internal sealed class BindableUDPConnection : UDPConnectionBase, IBindableUDPConnection
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly ISocketEventPool _socketEventBag = null;

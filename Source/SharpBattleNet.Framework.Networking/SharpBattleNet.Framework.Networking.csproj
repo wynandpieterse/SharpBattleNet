@@ -75,6 +75,7 @@
     <Compile Include="Connection\TCP\IListenerTCPConnectionFactory.cs" />
     <Compile Include="Connection\TCP\ITCPConnection.cs" />
     <Compile Include="Connection\UDP\Details\BindableUDPConnection.cs" />
+    <Compile Include="Connection\UDP\Details\UDPConnectionBase.cs" />
     <Compile Include="Connection\UDP\IBindableUDPConnection.cs" />
     <Compile Include="Connection\UDP\IBindableUDPConnectionFactory.cs" />
     <Compile Include="Connection\UDP\IUDPConnection.cs" />

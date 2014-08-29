@@ -40,7 +40,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP
 
     public interface IConnectableTCPConnectionListener
     {
-        void ConnectionFailed(EndPoint remoteEndpoint);
-        bool ConnectionSucceeded(EndPoint remoteEndpoint);
+        void ConnectionFailed(IConnectableTCPConnection connection, EndPoint remoteEndpoint);
+        bool ConnectionSucceeded(IConnectableTCPConnection connection, EndPoint remoteEndpoint);
     }
 }

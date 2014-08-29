@@ -147,13 +147,13 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
                 _logger.Debug("Failed to connect to {0}", socketEvent.RemoteEndPoint);
                 _logger.Trace("Stated reason for failure to connect is {0}", socketEvent.SocketError);
 
-                _listener.ConnectionFailed(_addressToConnect);
+                _listener.ConnectionFailed(this, _addressToConnect);
 
                 Socket.Close();
             }
             else
             {
-                if (false == _listener.ConnectionSucceeded(_addressToConnect))
+                if (false == _listener.ConnectionSucceeded(this, _addressToConnect))
                 {
                     _logger.Trace("User refusing to connect to {0}", socketEvent.RemoteEndPoint);
 
@@ -210,7 +210,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             {
                 _logger.Debug("Socket disposed before any operation was performed on it", ex);
 
-                _listener.ConnectionFailed(_addressToConnect);
+                _listener.ConnectionFailed(this, _addressToConnect);
 
                 return;
             }
@@ -218,7 +218,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             {
                 _logger.Warn("Socket failed to bind properly", ex);
 
-                _listener.ConnectionFailed(_addressToConnect);
+                _listener.ConnectionFailed(this, _addressToConnect);
 
                 return;
             }

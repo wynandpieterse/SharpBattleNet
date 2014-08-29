@@ -43,12 +43,5 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP
     /// </summary>
     public interface IBindableUDPConnection : IUDPConnection
     {
-        /// <summary>
-        /// Binds this UDP connection to the specified endpoint.
-        /// </summary>
-        /// <param name="address">
-        /// The endpoint to bind to.
-        /// </param>
-        void Bind(EndPoint address);
     }
 }

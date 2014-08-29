@@ -34,6 +34,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP
 {
     #region Usings
     using System;
+    using System.Net;
     #endregion
     
     /// <summary>
@@ -46,6 +47,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP
         /// Constructs a brand new <see cref="IBindableUDPConnection"/> object.
         /// </summary>
         /// <returns>A <see cref="IBindableUDPConnection"/> object.</returns>
-        IBindableUDPConnection Create();
+        IBindableUDPConnection Create(EndPoint address);
     }
 }

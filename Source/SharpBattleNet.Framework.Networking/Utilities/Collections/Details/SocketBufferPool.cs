@@ -30,39 +30,29 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Utilities.Collections
+namespace SharpBattleNet.Framework.Networking.Utilities.Collections.Details
 {
     #region Usings
     using System;
+    using SharpBattleNet.Framework.External.BufferPool;
     #endregion
 
     /// <summary>
-    /// Manages buffer pools. Request a buffer pool, then use the methods inside
-    /// <see cref="IBufferPool"/> to manage the buffers inside it.
+    /// Marker interface implementation. Contained inside the Ninject IoC
+    /// container.
     /// </summary>
-    public interface IBufferPoolManager
+    internal sealed class SocketBufferPool : BufferPool, ISocketBufferPool
     {
         /// <summary>
-        /// Creates a brand new buffer pool with allocations handeling from the
-        /// page size.
+        /// Initializes a new instance of the SocketBufferPool class
         /// </summary>
-        /// <param name="name">The globally unique buffer pool name.</param>
-        /// <param name="pageSize">
-        /// The size of each allocation from the pool.
-        /// </param>
-        /// <returns>
-        /// A refernce to the <see cref="IBufferPool"/> that was created.
-        /// </returns>
-        IBufferPool Create(string name, int pageSize);
-
-        /// <summary>
-        /// Requests a previously created buffer pool. Will fail if the pool does
-        /// not exist.
-        /// </summary>
-        /// <param name="name">The name of the pool to acquire.</param>
-        /// <returns>
-        /// A reference to the <see cref="IBufferPool"/> with the passed in name.
-        /// </returns>
-        IBufferPool Get(string name);
+        /// <param name="slabSize">Length, in bytes, of a slab in the BufferPool</param>
+        /// <param name="initialSlabs">Number of slabs to create initially</param>
+        /// <param name="subsequentSlabs">Number of additional slabs to create at a time</param>
+        public SocketBufferPool(long slabSize, int initialSlabs, int subsequentSlabs)
+            : base(slabSize, initialSlabs, subsequentSlabs)
+        {
+            return;
+        }
     }
 }

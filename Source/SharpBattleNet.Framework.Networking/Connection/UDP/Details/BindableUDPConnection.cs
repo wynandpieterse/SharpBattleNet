@@ -39,7 +39,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
     using SharpBattleNet.Framework.Networking.Connection.Details;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
-    using SharpBattleNet.Framework.Utilities.Collections;
     #endregion
 
     /// <summary>
@@ -49,6 +48,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly ISocketEventPool _socketEventBag = null;
+        private readonly ISocketBufferPool _socketBufferPool = null;
 
         /// <summary>
         /// Constructs an empty <see cref="BindableUDPConnection"/>.
@@ -57,13 +57,14 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
         /// Pool of <see cref="SocketAsyncEventArgs"/> object. Usefull
         /// for performance reasons.
         /// </param>
-        public BindableUDPConnection(ISocketEventPool socketEventBag, IBufferPoolManager bufferPoolManager)
-            : base(socketEventBag, bufferPoolManager)
+        public BindableUDPConnection(ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
+            : base(socketEventBag, socketBufferPool)
         {
             Guard.AgainstNull(socketEventBag);
-            Guard.AgainstNull(bufferPoolManager);
+            Guard.AgainstNull(socketBufferPool);
 
             _socketEventBag = socketEventBag;
+            _socketBufferPool = socketBufferPool;
 
             return;
         }

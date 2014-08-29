@@ -75,18 +75,6 @@ namespace SharpBattleNet.Framework
         }
 
         /// <summary>
-        /// Configures utility interfaces with IoC
-        /// </summary>
-        private void ConfigureUtilities()
-        {
-            Bind<IBufferPoolFactory>().ToFactory();
-            Bind<IBufferPoolManager>().To<BufferPoolManager>().InSingletonScope();
-            Bind<IBufferPool>().To<BufferPool>();
-
-            return;
-        }
-
-        /// <summary>
         /// Creates the application write directory if it does not exists.
         /// </summary>
         private void ConfigureWriteDirectory()
@@ -274,7 +262,6 @@ namespace SharpBattleNet.Framework
         /// </summary>
         public override void Load()
         {
-            ConfigureUtilities();
             ConfigureWriteDirectory();
             ConfigureConfiguration();
             ConfigureLogging();

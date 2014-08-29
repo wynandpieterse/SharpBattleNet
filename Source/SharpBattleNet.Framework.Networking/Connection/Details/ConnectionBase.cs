@@ -53,6 +53,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
 
         private readonly ISocketEventPool _socketEventBag = null;
         private readonly ISocketBufferPool _socketBufferPool = null;
+        private readonly IConnectionNotifications _notificationListener = null;
 
         protected Socket Socket { get; set; }
 
@@ -63,11 +64,13 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         /// Reference to a pool of <see cref="SocketAsyncEventArgs"/>. Mainly
         /// used for performance benefits.
         /// </param>
-        public ConnectionBase(ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
+        public ConnectionBase(IConnectionNotifications notificationListener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
         {
+            Guard.AgainstNull(notificationListener);
             Guard.AgainstNull(socketEventBag);
             Guard.AgainstNull(socketBufferPool);
 
+            _notificationListener = notificationListener;
             _socketEventBag = socketEventBag;
             _socketBufferPool = socketBufferPool;
 
@@ -167,30 +170,15 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
             // A receive of 0 usually means that the stream was closed.
             if (socketEvent.BytesTransferred == 0)
             {
-                if (SocketType.Stream == Socket.SocketType)
-                {
-                    _logger.Debug("Connection from {0} closed normally", Socket.RemoteEndPoint);
-                }
-                else if(SocketType.Dgram == Socket.SocketType)
-                {
-                    _logger.Debug("Connection from {0} closed normally", socketEvent.RemoteEndPoint);
-                }
+                _logger.Debug("Connection from {0} closed normally", socketEvent.RemoteEndPoint);
 
                 return;
             }
 
-            // Start receiving immediatly again.
-            StartReceiving();
-
-            // TODO : Fix this by buffering the data and handing it of to the packet
-            // manager for multiplexing it.
-            byte[] buffer = new byte[1024];
-            IBuffer bufferObject = socketEvent.UserToken as IBuffer;
-
-            bufferObject.CopyTo(buffer, 0, socketEvent.BytesTransferred);
-            _logger.Info(Encoding.ASCII.GetString(buffer, 0, socketEvent.BytesTransferred));
+            _notificationListener.OnReceive(socketEvent.RemoteEndPoint, socketEvent.UserToken as IBuffer);
 
             RecycleReceiveEvent(socketEvent);
+            StartReceiving();
 
             return;
         }

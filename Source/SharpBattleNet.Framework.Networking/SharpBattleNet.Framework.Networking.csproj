@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Connection\Details\ConnectionBase.cs" />
     <Compile Include="Connection\IConnection.cs" />
+    <Compile Include="Connection\IConnectionNotifications.cs" />
     <Compile Include="Connection\TCP\Details\TCPConnectionBase.cs" />
     <Compile Include="Connection\TCP\Details\ConnectibleTCPConnection.cs" />
     <Compile Include="Connection\TCP\Details\ListenerTCPConnection.cs" />

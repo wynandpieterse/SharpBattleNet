@@ -49,6 +49,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP
         /// function on the returned object.
         /// </summary>
         /// <returns></returns>
-        IConnectableTCPConnection Create(EndPoint addressToConnect, IConnectableTCPConnectionListener listener);
+        IConnectableTCPConnection Create(EndPoint addressToConnect, IConnectableTCPConnectionListener listener, IConnectionNotifications notificationListener);
     }
 }

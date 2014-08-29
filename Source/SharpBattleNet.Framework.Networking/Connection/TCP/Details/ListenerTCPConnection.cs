@@ -50,6 +50,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 
         private readonly ISocketEventPool _socketEventBag = null;
         private readonly ISocketBufferPool _socketBufferPool = null;
+        private readonly IConnectionNotifications _notificationListener = null;
 
         /// <summary>
         /// Constructs an empty <see cref="ListenerTCPConnection"/> object.
@@ -58,8 +59,8 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         /// Collection of <see cref="SocketAsyncEventArgs"/> object. Usefull
         /// for performance reasons.
         /// </param>
-        public ListenerTCPConnection(Socket acceptedSocket, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
-            : base(socketEventBag, socketBufferPool)
+        public ListenerTCPConnection(Socket acceptedSocket, IConnectionNotifications notificationListener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
+            : base(notificationListener, socketEventBag, socketBufferPool)
         {
             Guard.AgainstNull(acceptedSocket);
             Guard.AgainstNull(socketEventBag);
@@ -69,6 +70,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 
             _socketEventBag = socketEventBag;
             _socketBufferPool = socketBufferPool;
+            _notificationListener = notificationListener;
 
             return;
         }

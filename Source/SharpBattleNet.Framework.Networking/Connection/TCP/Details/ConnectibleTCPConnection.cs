@@ -53,6 +53,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 
         private readonly EndPoint _addressToConnect = null;
         private readonly IConnectableTCPConnectionListener _listener = null;
+        private readonly IConnectionNotifications _notificationListener = null;
 
         /// <summary>
         /// Constructs an empty <see cref="ConnectibleTCPConnection"/>.
@@ -60,8 +61,8 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         /// <param name="socketEventBag">
         /// Pool of <see cref="SocketAsyncEventArgs"/> for performance reasons.
         /// </param>
-        public ConnectibleTCPConnection(EndPoint addressToConnect, IConnectableTCPConnectionListener listener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
-            : base(socketEventBag, socketBufferPool)
+        public ConnectibleTCPConnection(EndPoint addressToConnect, IConnectableTCPConnectionListener listener, IConnectionNotifications notificationListener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
+            : base(notificationListener, socketEventBag, socketBufferPool)
         {
             Guard.AgainstNull(addressToConnect);
             Guard.AgainstNull(listener);
@@ -72,6 +73,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             _socketBufferPool = socketBufferPool;
             _addressToConnect = addressToConnect;
             _listener = listener;
+            _notificationListener = notificationListener;
 
             Start();
 

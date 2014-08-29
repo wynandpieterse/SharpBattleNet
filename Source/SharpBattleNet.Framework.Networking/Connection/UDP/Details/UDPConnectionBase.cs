@@ -46,20 +46,22 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly ISocketEventPool _socketEventBag = null;
         private readonly ISocketBufferPool _socketBufferPool = null;
+        private readonly IConnectionNotifications _notificationListener = null;
 
         /// <summary>
         /// Construct an empty <see cref="TCPConnectionBase"/>. Should
         /// be called by derived classes.
         /// </summary>
         /// <param name="socketEventBag"></param>
-        protected UDPConnectionBase(ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
-            : base(socketEventBag, socketBufferPool)
+        protected UDPConnectionBase(IConnectionNotifications notificationListener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
+            : base(notificationListener, socketEventBag, socketBufferPool)
         {
             Guard.AgainstNull(socketEventBag);
             Guard.AgainstNull(socketBufferPool);
 
             _socketEventBag = socketEventBag;
             _socketBufferPool = socketBufferPool;
+            _notificationListener = notificationListener;
 
             return;
         }
@@ -75,6 +77,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
                 Socket.SendTo(buffer, (int) bufferLenght, SocketFlags.None, address);
             }
 
+            _notificationListener.OnSend(address, buffer, bufferLenght);
             return;
         }
 

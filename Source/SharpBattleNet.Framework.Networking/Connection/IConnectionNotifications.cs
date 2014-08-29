@@ -30,25 +30,19 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Networking.Connection.TCP
+namespace SharpBattleNet.Framework.Networking.Connection
 {
     #region Usings
+    using SharpBattleNet.Framework.External.BufferPool;
     using System;
-    using System.Net.Sockets;
+    using System.Net;
     #endregion
 
-    /// <summary>
-    /// Contains functionality to construct <see cref="IListenerTCPConnection"/>
-    /// </summary>
-    public interface IListenerTCPConnectionFactory
+    public interface IConnectionNotifications
     {
-        /// <summary>
-        /// Creates a brand new Listener TCP connection. Used by the TCP listener
-        /// subsystem to accept new clients
-        /// </summary>
-        /// <returns>
-        /// A listener socket that can be used to receive client commands
-        /// </returns>
-        IListenerTCPConnection Create(Socket acceptedSocket, IConnectionNotifications notificationListener);
+        void OnSend(EndPoint remoteAddress, byte[] dataBuffer, int dataSent);
+        void OnReceive(EndPoint remoteAddress, IBuffer dataBuffer);
+        void OnFinished();
+        void OnException(Exception exception);
     }
 }

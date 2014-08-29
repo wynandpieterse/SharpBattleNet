@@ -52,9 +52,11 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
 
         private readonly ISocketEventPool _socketEvents = null;
         private readonly IListenerTCPConnectionFactory _listenerFactory = null;
+        private readonly IListenerAcceptor _acceptor = null;
+        private readonly IConnectionNotifications _notificationListener = null;
+        private readonly EndPoint _listenEndpoint = null;
 
         private Socket _listener = null;
-        private Func<IConnection, bool> _accepted = null;
 
         /// <summary>
         /// Constructs an empty <see cref="TCPListener"/>.
@@ -67,13 +69,18 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
         /// Factory that is used to create new TCP listener connections when
         /// a client is accepted.
         /// </param>
-        public TCPListener(ISocketEventPool socketEvents, IListenerTCPConnectionFactory listenerFactory)
+        public TCPListener(EndPoint listenEndpoint, IListenerAcceptor acceptor, IConnectionNotifications notificationListener, ISocketEventPool socketEvents, IListenerTCPConnectionFactory listenerFactory)
         {
             Guard.AgainstNull(socketEvents);
             Guard.AgainstNull(listenerFactory);
 
             _socketEvents = socketEvents;
             _listenerFactory = listenerFactory;
+            _acceptor = acceptor;
+            _notificationListener = notificationListener;
+            _listenEndpoint = listenEndpoint;
+
+            Start();
 
             return;
         }
@@ -164,11 +171,14 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
             {
                 try
                 {
-                    connection = _listenerFactory.Create();
-                    connection.Start(socketEvent.AcceptSocket);
-                    if (false == _accepted(connection))
+                    connection = _listenerFactory.Accepted(socketEvent.AcceptSocket, _notificationListener);
+                    if (false == _acceptor.ShouldAccept(socketEvent.AcceptSocket.RemoteEndPoint, connection))
                     {
                         connection.Disconnect();
+                    }
+                    else
+                    {
+                        _acceptor.Accepted(socketEvent.AcceptSocket.RemoteEndPoint, connection);
                     }
                 }
                 catch(Exception ex)
@@ -243,20 +253,15 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
         /// return true if the client should be accepted or false if the client
         /// should be disconnected.
         /// </param>
-        public void Start(EndPoint address, Func<IConnection, bool> accepted)
+        private void Start()
         {
-            Guard.AgainstNull(address);
-            Guard.AgainstNull(accepted);
+            _logger.Info("Started listening for connections on {0}", _listenEndpoint);
 
-            _accepted = accepted;
-
-            _logger.Info("Started listening for connections on {0}", address);
-
-            _listener = new Socket(address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            _listener = new Socket(_listenEndpoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
             try
             {
-                _listener.Bind(address);
+                _listener.Bind(_listenEndpoint);
                 _listener.Listen(64);
             }
             catch (ObjectDisposedException ex)

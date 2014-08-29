@@ -34,6 +34,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP
 {
     #region Usings
     using System;
+    using System.Net.Sockets;
     #endregion
 
     /// <summary>
@@ -48,6 +49,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP
         /// <returns>
         /// A listener socket that can be used to receive client commands
         /// </returns>
-        IListenerTCPConnection Create();
+        IListenerTCPConnection Accepted(Socket acceptedSocket, IConnectionNotifications notificationListener);
     }
 }

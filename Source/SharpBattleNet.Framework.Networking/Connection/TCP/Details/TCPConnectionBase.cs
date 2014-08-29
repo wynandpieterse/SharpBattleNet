@@ -49,20 +49,79 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly ISocketEventPool _socketEventBag = null;
         private readonly ISocketBufferPool _socketBufferPool = null;
+        private readonly IConnectionNotifications _notificationListener = null;
 
         /// <summary>
         /// Construct an empty <see cref="TCPConnectionBase"/>. Should
         /// be called by derived classes.
         /// </summary>
         /// <param name="socketEventBag"></param>
-        protected TCPConnectionBase(ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
-            : base(socketEventBag, socketBufferPool)
+        protected TCPConnectionBase(IConnectionNotifications notificationListener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
+            : base(notificationListener, socketEventBag, socketBufferPool)
         {
             Guard.AgainstNull(socketEventBag);
             Guard.AgainstNull(socketBufferPool);
 
             _socketEventBag = socketEventBag;
             _socketBufferPool = socketBufferPool;
+            _notificationListener = notificationListener;
+
+            return;
+        }
+
+        public sealed override void Send(byte[] buffer, int bufferLenght = 0, System.Net.EndPoint address = null)
+        {
+            if(0 == bufferLenght)
+            {
+                Socket.Send(buffer, buffer.Length, SocketFlags.None);
+            } 
+            else
+            {
+                Socket.Send(buffer, (int)bufferLenght, SocketFlags.None);
+            }
+
+            return;
+        }
+
+        public sealed override void StartReceiving()
+        {
+            SocketAsyncEventArgs socketEvent = null;
+
+            Guard.AgainstNull(Socket);
+
+            // Give me a nice, clean and fresh SAEA object to work with please.
+            socketEvent = RequestReceiveEvent();
+
+            // HACK : Windows does not seem to set the remote end-point on SAEA when we do operations
+            // on TCP. Here we force set it so that stuff down the line can use the information
+            // regardless of protocol
+            socketEvent.RemoteEndPoint = Socket.RemoteEndPoint;
+
+            try
+            {
+                if (false == Socket.ReceiveAsync(socketEvent))
+                {
+                    HandleReceive(socketEvent);
+                }
+            }
+            catch (ObjectDisposedException ex)
+            {
+                _logger.Trace("Socket object disposed. Returning from receive loop", ex);
+
+                if (null != socketEvent)
+                {
+                    RecycleReceiveEvent(socketEvent);
+                }
+            }
+            catch (SocketException ex)
+            {
+                _logger.Debug("Socket exception", ex);
+
+                if (null != socketEvent)
+                {
+                    RecycleReceiveEvent(socketEvent);
+                }
+            }
 
             return;
         }

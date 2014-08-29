@@ -30,7 +30,7 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
+namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
 {
     #region Usings
     using System;
@@ -38,39 +38,83 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
     using NLog;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
+    using SharpBattleNet.Framework.Networking.Connection.Details;
     #endregion
 
-    /// <summary>
-    /// Implements <see cref="IListenerTCPConnection"/> to provide listeners
-    /// with a way to communicate with the outside world.
-    /// </summary>
-    internal sealed class ListenerTCPConnection : TCPConnectionBase, IListenerTCPConnection
+    internal abstract class UDPConnectionBase : ConnectionBase, IUDPConnection
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
         private readonly ISocketEventPool _socketEventBag = null;
         private readonly ISocketBufferPool _socketBufferPool = null;
         private readonly IConnectionNotifications _notificationListener = null;
 
         /// <summary>
-        /// Constructs an empty <see cref="ListenerTCPConnection"/> object.
+        /// Construct an empty <see cref="TCPConnectionBase"/>. Should
+        /// be called by derived classes.
         /// </summary>
-        /// <param name="socketEventBag">
-        /// Collection of <see cref="SocketAsyncEventArgs"/> object. Usefull
-        /// for performance reasons.
-        /// </param>
-        public ListenerTCPConnection(Socket acceptedSocket, IConnectionNotifications notificationListener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
+        /// <param name="socketEventBag"></param>
+        protected UDPConnectionBase(IConnectionNotifications notificationListener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
             : base(notificationListener, socketEventBag, socketBufferPool)
         {
-            Guard.AgainstNull(acceptedSocket);
             Guard.AgainstNull(socketEventBag);
             Guard.AgainstNull(socketBufferPool);
-
-            Socket = acceptedSocket;
 
             _socketEventBag = socketEventBag;
             _socketBufferPool = socketBufferPool;
             _notificationListener = notificationListener;
+
+            return;
+        }
+
+        public override void Send(byte[] buffer, int bufferLenght = 0, System.Net.EndPoint address = null)
+        {
+            if(0 == bufferLenght)
+            {
+                Socket.SendTo(buffer, buffer.Length, SocketFlags.None, address);
+            }
+            else
+            {
+                Socket.SendTo(buffer, (int) bufferLenght, SocketFlags.None, address);
+            }
+
+            _notificationListener.OnSend(address, buffer, bufferLenght);
+            return;
+        }
+
+        public override void StartReceiving()
+        {
+            SocketAsyncEventArgs socketEvent = null;
+
+            Guard.AgainstNull(Socket);
+
+            // Give me a nice, clean and fresh SAEA object to work with please.
+            socketEvent = RequestReceiveEvent();
+
+            try
+            {
+                if (false == Socket.ReceiveFromAsync(socketEvent))
+                {
+                    HandleReceive(socketEvent);
+                }
+            }
+            catch (ObjectDisposedException ex)
+            {
+                _logger.Trace("Socket object disposed. Returning from receive loop", ex);
+
+                if (null != socketEvent)
+                {
+                    RecycleReceiveEvent(socketEvent);
+                }
+            }
+            catch (SocketException ex)
+            {
+                _logger.Debug("Socket exception", ex);
+
+                if (null != socketEvent)
+                {
+                    RecycleReceiveEvent(socketEvent);
+                }
+            }
 
             return;
         }

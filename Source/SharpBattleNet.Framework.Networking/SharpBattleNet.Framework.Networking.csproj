@@ -66,19 +66,23 @@
   <ItemGroup>
     <Compile Include="Connection\Details\ConnectionBase.cs" />
     <Compile Include="Connection\IConnection.cs" />
+    <Compile Include="Connection\IConnectionNotifications.cs" />
     <Compile Include="Connection\TCP\Details\TCPConnectionBase.cs" />
     <Compile Include="Connection\TCP\Details\ConnectibleTCPConnection.cs" />
     <Compile Include="Connection\TCP\Details\ListenerTCPConnection.cs" />
     <Compile Include="Connection\TCP\IConnectableTCPConnection.cs" />
     <Compile Include="Connection\TCP\IConnectableTCPConnectionFactory.cs" />
+    <Compile Include="Connection\TCP\IConnectableTCPConnectionListener.cs" />
     <Compile Include="Connection\TCP\IListenerTCPConnection.cs" />
     <Compile Include="Connection\TCP\IListenerTCPConnectionFactory.cs" />
     <Compile Include="Connection\TCP\ITCPConnection.cs" />
     <Compile Include="Connection\UDP\Details\BindableUDPConnection.cs" />
+    <Compile Include="Connection\UDP\Details\UDPConnectionBase.cs" />
     <Compile Include="Connection\UDP\IBindableUDPConnection.cs" />
     <Compile Include="Connection\UDP\IBindableUDPConnectionFactory.cs" />
     <Compile Include="Connection\UDP\IUDPConnection.cs" />
     <Compile Include="Listeners\IListener.cs" />
+    <Compile Include="Listeners\IListenerAcceptor.cs" />
     <Compile Include="Listeners\TCP\Details\TCPListener.cs" />
     <Compile Include="Listeners\TCP\ITCPListener.cs" />
     <Compile Include="Listeners\TCP\ITCPListenerFactory.cs" />

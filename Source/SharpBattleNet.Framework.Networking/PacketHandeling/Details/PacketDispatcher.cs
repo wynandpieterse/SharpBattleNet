@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using SharpBattleNet.Framework.Networking.Connection;
 using SharpBattleNet.Framework.External.BufferPool;
 using System.Reflection;
-using SharpBattleNet.Framework.Utilities.Debugging;
 using SharpBattleNet.Framework.Utilities.Extensions;
 using NLog;
 

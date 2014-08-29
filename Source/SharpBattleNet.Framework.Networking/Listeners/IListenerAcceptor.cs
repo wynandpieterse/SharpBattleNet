@@ -30,21 +30,17 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Networking.Connection.TCP
+namespace SharpBattleNet.Framework.Networking.Listeners
 {
     #region Usings
     using System;
-    using System.Net.Sockets;
+    using System.Net;
+    using SharpBattleNet.Framework.Networking.Connection;
     #endregion
 
-    /// <summary>
-    /// Created by the TCP listener subsystem. These connections are used from
-    /// there on to handle receives from clients. After the listener accepts
-    /// the connection and the server agrees, the listener starts receiving.
-    /// 
-    /// This is used from the server side of the system.
-    /// </summary>
-    public interface IListenerTCPConnection : ITCPConnection
+    public interface IListenerAcceptor
     {
+        bool ShouldAccept(EndPoint remoteEndpoint, IConnection remoteConnection);
+        void Accepted(EndPoint remoteEndpoint, IConnection remoteConnection);
     }
 }

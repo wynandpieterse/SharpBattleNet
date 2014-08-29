@@ -42,8 +42,6 @@ namespace SharpBattleNet.Framework
     using NLog.Targets;
     using NLog.Config;
     using SharpBattleNet.Framework.Utilities.Debugging;
-    using SharpBattleNet.Framework.Utilities.Collections;
-    using SharpBattleNet.Framework.Utilities.Collections.Details;
     using Ninject.Extensions.Factory;
     #endregion
 

@@ -36,6 +36,7 @@ namespace SharpBattleNet.Framework.Networking
     using System;
     using Ninject.Modules;
     using Ninject.Extensions.Factory;
+    using SharpBattleNet.Framework.External.BufferPool;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Networking.Utilities.Collections.Details;
     using SharpBattleNet.Framework.Networking.Connection.TCP;
@@ -46,7 +47,6 @@ namespace SharpBattleNet.Framework.Networking
     using SharpBattleNet.Framework.Networking.Listeners.TCP.Details;
     using SharpBattleNet.Framework.Networking.Listeners.UDP;
     using SharpBattleNet.Framework.Networking.Listeners.UDP.Details;
-    
     #endregion
 
     /// <summary>
@@ -55,11 +55,25 @@ namespace SharpBattleNet.Framework.Networking
     public sealed class NetworkModule : NinjectModule
     {
         /// <summary>
+        /// Creates a pool of bytes that the networking subsystem will use to
+        /// receive and send messages for performance reason in regard to
+        /// garbage collection.
+        /// </summary>
+        /// <returns>
+        /// The pool object to use for byte buffer allocations
+        /// </returns>
+        private SocketBufferPool CreateSocketBufferPool()
+        {
+            return new SocketBufferPool(1 * 1024 * 1024, 64, 8);
+        }
+
+        /// <summary>
         /// Binds all utility classes to the container.
         /// </summary>
         private void BindUtilities()
         {
             Bind<ISocketEventPool>().To<SocketEventPool>().InSingletonScope();
+            Bind<ISocketBufferPool>().ToConstant<SocketBufferPool>(CreateSocketBufferPool()).InSingletonScope();
 
             return;
         }

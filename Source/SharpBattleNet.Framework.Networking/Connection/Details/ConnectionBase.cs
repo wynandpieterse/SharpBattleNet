@@ -40,7 +40,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
     using NLog;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
-    using SharpBattleNet.Framework.Utilities.Collections;
+    using SharpBattleNet.Framework.External.BufferPool;
     #endregion
 
     /// <summary>
@@ -52,7 +52,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         private readonly ISocketEventPool _socketEventBag = null;
-        private readonly IBufferPool _bufferPool = null;
+        private readonly ISocketBufferPool _socketBufferPool = null;
 
         protected Socket Socket { get; set; }
 
@@ -63,13 +63,13 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         /// Reference to a pool of <see cref="SocketAsyncEventArgs"/>. Mainly
         /// used for performance benefits.
         /// </param>
-        public ConnectionBase(ISocketEventPool socketEventBag, IBufferPoolManager bufferPoolManager)
+        public ConnectionBase(ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
         {
             Guard.AgainstNull(socketEventBag);
-            Guard.AgainstNull(bufferPoolManager);
+            Guard.AgainstNull(socketBufferPool);
 
             _socketEventBag = socketEventBag;
-            _bufferPool = bufferPoolManager.Get("NetworkTransmission");
+            _socketBufferPool = socketBufferPool;
 
             return;
         }
@@ -140,9 +140,9 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
                 socketEvent = new SocketAsyncEventArgs();
             }
 
-            ArraySegment<byte> buffer = _bufferPool.Request();
+            IBuffer buffer = _socketBufferPool.GetBuffer(1024);
 
-            socketEvent.SetBuffer(buffer.Array, buffer.Offset, buffer.Count);
+            socketEvent.BufferList = buffer.GetSegments();
             socketEvent.UserToken = buffer;
             socketEvent.Completed += HandleReceiveEvent;
 
@@ -161,11 +161,11 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         {
             Guard.AgainstNull(socketEvent);
 
-            ArraySegment<byte> buffer = (ArraySegment<byte>)socketEvent.UserToken;
+            IBuffer buffer = socketEvent.UserToken as IBuffer;
 
-            _bufferPool.Recycle(buffer);
+            buffer.Dispose();
 
-            socketEvent.SetBuffer(null, 0, 0);
+            socketEvent.BufferList = null;
             socketEvent.Completed -= HandleReceiveEvent;
 
             if (false == _socketEventBag.TryAdd(socketEvent))
@@ -209,8 +209,14 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
 
             // TODO : Fix this by buffering the data and handing it of to the packet
             // manager for multiplexing it.
-            ArraySegment<byte> buffer = (ArraySegment<byte>)socketEvent.UserToken;
-            _logger.Info(Encoding.ASCII.GetString(buffer.Array, buffer.Offset, socketEvent.BytesTransferred));
+            //ArraySegment<byte> buffer = (ArraySegment<byte>)socketEvent.UserToken;
+            //_logger.Info(Encoding.ASCII.GetString(buffer.Array, buffer.Offset, socketEvent.BytesTransferred));
+
+            byte[] buffer = new byte[1024];
+            IBuffer bufferObject = socketEvent.UserToken as IBuffer;
+
+            bufferObject.CopyTo(buffer, 0, socketEvent.BytesTransferred);
+            _logger.Info(Encoding.ASCII.GetString(buffer, 0, socketEvent.BytesTransferred));
 
             RecycleReceiveEvent(socketEvent);
 

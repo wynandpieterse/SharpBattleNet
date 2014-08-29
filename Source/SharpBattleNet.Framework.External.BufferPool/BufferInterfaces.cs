@@ -113,7 +113,7 @@ namespace SharpBattleNet.Framework.External.BufferPool
     /// <summary>
     /// Represents a pool of IBuffer objects 
     /// </summary>
-    internal interface IBufferPool
+    public interface IBufferPool
     {
         /// <summary>
         /// Gets the initial number of slabs created

@@ -41,7 +41,6 @@ namespace SharpBattleNet.Server.MasterServer
     using SharpBattleNet.Framework.Networking.Listeners.TCP;
     using SharpBattleNet.Framework.Networking.Connection;
     using SharpBattleNet.Framework.Networking.Connection.TCP;
-    using SharpBattleNet.Framework.Utilities.Collections;
     #endregion
 
     internal sealed class MasterServerProgram : IProgram
@@ -52,13 +51,12 @@ namespace SharpBattleNet.Server.MasterServer
         private ITCPListener _listener = null;
         private readonly IConnectableTCPConnectionFactory _connectionFactory = null;
         private IConnectableTCPConnection _connect = null;
-        private readonly IBufferPoolManager _bufferPoolManager = null;
 
-        public MasterServerProgram(ITCPListenerFactory listenerFactory, IConnectableTCPConnectionFactory connectionFactory, IBufferPoolManager bufferPoolManager)
+        public MasterServerProgram(ITCPListenerFactory listenerFactory, IConnectableTCPConnectionFactory connectionFactory)
         {
             _listenerFactory = listenerFactory;
             _connectionFactory = connectionFactory;
-            _bufferPoolManager = bufferPoolManager;
+
             return;
         }
 
@@ -84,8 +82,6 @@ namespace SharpBattleNet.Server.MasterServer
         public void Start()
         {
             _logger.Info("Hello, World");
-
-            _bufferPoolManager.Create("NetworkTransmission", 1024);
 
             _listener = _listenerFactory.Create();
 

@@ -402,7 +402,7 @@ namespace SharpBattleNet.Framework.External.BufferPool
     /// <summary>
     /// Provides a pool of buffers that can be used to efficiently allocate memory for asynchronous socket operations
     /// </summary>
-    public sealed class BufferPool : IBufferPool
+    public class BufferPool : IBufferPool
     {
         /// <summary>
         /// The minimum size of a slab.

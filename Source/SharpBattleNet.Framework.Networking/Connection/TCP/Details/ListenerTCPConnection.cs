@@ -58,38 +58,19 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         /// Collection of <see cref="SocketAsyncEventArgs"/> object. Usefull
         /// for performance reasons.
         /// </param>
-        public ListenerTCPConnection(ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
+        public ListenerTCPConnection(Socket acceptedSocket, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
             : base(socketEventBag, socketBufferPool)
         {
+            Guard.AgainstNull(acceptedSocket);
             Guard.AgainstNull(socketEventBag);
             Guard.AgainstNull(socketBufferPool);
+
+            Socket = acceptedSocket;
 
             _socketEventBag = socketEventBag;
             _socketBufferPool = socketBufferPool;
 
             return;
         }
-
-        #region IListenerTCPConnection Members
-
-        /// <summary>
-        /// Called by the listener subsystem to start the client socket
-        /// and begin receiving data.
-        /// </summary>
-        /// <param name="acceptedSocket">
-        /// The operating system socket that was accepted by the listener.
-        /// </param>
-        public void Start(Socket acceptedSocket)
-        {
-            Guard.AgainstNull(acceptedSocket);
-
-            Socket = acceptedSocket;
-
-            StartReceiving();
-
-            return;
-        }
-
-        #endregion
     }
 }

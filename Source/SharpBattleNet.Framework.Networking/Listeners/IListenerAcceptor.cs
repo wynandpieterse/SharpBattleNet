@@ -30,22 +30,17 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Networking.Listeners.UDP
+namespace SharpBattleNet.Framework.Networking.Listeners
 {
     #region Usings
     using System;
+    using System.Net;
+    using SharpBattleNet.Framework.Networking.Connection;
     #endregion
-    
-    /// <summary>
-    /// Constructs <see cref="IUDPListener"/> objects ready for use.
-    /// </summary>
-    public interface IUDPListenerFactory
+
+    public interface IListenerAcceptor
     {
-        /// <summary>
-        /// Constructs a brand new <see cref="IUDPListener"/> object ready
-        /// for use.
-        /// </summary>
-        /// <returns>A new <see cref="IUDPListener"/> object.</returns>
-        IUDPListener Create(IListenerAcceptor acceptor);
+        bool ShouldAccept(EndPoint remoteEndpoint, IConnection remoteConnection);
+        void Accepted(EndPoint remoteEndpoint, IConnection remoteConnection);
     }
 }

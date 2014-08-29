@@ -82,6 +82,7 @@
     <Compile Include="Connection\UDP\IBindableUDPConnectionFactory.cs" />
     <Compile Include="Connection\UDP\IUDPConnection.cs" />
     <Compile Include="Listeners\IListener.cs" />
+    <Compile Include="Listeners\IListenerAcceptor.cs" />
     <Compile Include="Listeners\TCP\Details\TCPListener.cs" />
     <Compile Include="Listeners\TCP\ITCPListener.cs" />
     <Compile Include="Listeners\TCP\ITCPListenerFactory.cs" />

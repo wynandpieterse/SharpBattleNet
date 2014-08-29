@@ -33,7 +33,9 @@
 namespace SharpBattleNet.Framework.Networking.Listeners.TCP
 {
     #region Usings
-    using System;
+    using SharpBattleNet.Framework.Networking.Connection;
+using System;
+    using System.Net;
     #endregion
 
     /// <summary>
@@ -46,6 +48,6 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP
         /// use.
         /// </summary>
         /// <returns>A new <see cref="ITCPListener"/>.</returns>
-        ITCPListener Create();
+        ITCPListener Create(EndPoint listenEndpoint, IListenerAcceptor acceptor, IConnectionNotifications notificationListener);
     }
 }

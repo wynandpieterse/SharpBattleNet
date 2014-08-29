@@ -44,18 +44,6 @@ namespace SharpBattleNet.Framework.Networking.Listeners
     /// </summary>
     public interface IListener
     {
-        /// <summary>
-        /// Starts the listener so that it's ready to accept connections.
-        /// </summary>
-        /// <param name="address">
-        /// The local endpoint that this listener should listen on for new
-        /// connections.
-        /// </param>
-        /// <param name="accepted">
-        /// The callback that the listener will call when there is a new
-        /// connection accepted. The callback should return true to accept
-        /// the connection and false to close the connection.
-        /// </param>
-        void Start(EndPoint address, Func<IConnection, bool> accepted);
+        
     }
 }

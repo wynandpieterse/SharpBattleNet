@@ -71,6 +71,7 @@
     <Compile Include="Connection\TCP\Details\ListenerTCPConnection.cs" />
     <Compile Include="Connection\TCP\IConnectableTCPConnection.cs" />
     <Compile Include="Connection\TCP\IConnectableTCPConnectionFactory.cs" />
+    <Compile Include="Connection\TCP\IConnectableTCPConnectionListener.cs" />
     <Compile Include="Connection\TCP\IListenerTCPConnection.cs" />
     <Compile Include="Connection\TCP\IListenerTCPConnectionFactory.cs" />
     <Compile Include="Connection\TCP\ITCPConnection.cs" />

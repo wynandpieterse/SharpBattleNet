@@ -51,8 +51,8 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         private readonly ISocketEventPool _socketEventBag = null;
         private readonly ISocketBufferPool _socketBufferPool = null;
 
-        private EndPoint _connectionEndPoint = null;
-        private Func<IConnection, bool, bool> _connectCallback = null;
+        private readonly EndPoint _addressToConnect = null;
+        private readonly IConnectableTCPConnectionListener _listener = null;
 
         /// <summary>
         /// Constructs an empty <see cref="ConnectibleTCPConnection"/>.
@@ -60,14 +60,20 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         /// <param name="socketEventBag">
         /// Pool of <see cref="SocketAsyncEventArgs"/> for performance reasons.
         /// </param>
-        public ConnectibleTCPConnection(ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
+        public ConnectibleTCPConnection(EndPoint addressToConnect, IConnectableTCPConnectionListener listener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
             : base(socketEventBag, socketBufferPool)
         {
+            Guard.AgainstNull(addressToConnect);
+            Guard.AgainstNull(listener);
             Guard.AgainstNull(socketEventBag);
             Guard.AgainstNull(socketBufferPool);
 
             _socketEventBag = socketEventBag;
             _socketBufferPool = socketBufferPool;
+            _addressToConnect = addressToConnect;
+            _listener = listener;
+
+            Start();
 
             return;
         }
@@ -90,7 +96,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
                 socketEvent = new SocketAsyncEventArgs();
             }
 
-            socketEvent.RemoteEndPoint = _connectionEndPoint;
+            socketEvent.RemoteEndPoint = _addressToConnect;
             socketEvent.Completed += HandleConnectEvent;
 
             return socketEvent;
@@ -133,7 +139,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         private void ProcessConnect(SocketAsyncEventArgs socketEvent)
         {
             Guard.AgainstNull(socketEvent);
-            Guard.AgainstNull(_connectCallback);
+            Guard.AgainstNull(_listener);
             Guard.AgainstNull(Socket);
 
             if (SocketError.Success != socketEvent.SocketError)
@@ -141,13 +147,13 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
                 _logger.Debug("Failed to connect to {0}", socketEvent.RemoteEndPoint);
                 _logger.Trace("Stated reason for failure to connect is {0}", socketEvent.SocketError);
 
-                _connectCallback(this, false);
+                _listener.ConnectionFailed(_addressToConnect);
 
                 Socket.Close();
             }
             else
             {
-                if (false == _connectCallback(this, true))
+                if (false == _listener.ConnectionSucceeded(_addressToConnect))
                 {
                     _logger.Trace("User refusing to connect to {0}", socketEvent.RemoteEndPoint);
 
@@ -156,8 +162,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
                 else
                 {
                     _logger.Trace("User accepted connection to {0}", socketEvent.RemoteEndPoint);
-
-                    StartReceiving();
                 }
             }
 
@@ -179,48 +183,24 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             return;
         }
 
-        #region IConnectableTCPConnection Members
-
         /// <inheritdoc/>
-        public void Start(EndPoint address, Func<IConnection, bool, bool> connected)
+        private void Start()
         {
             SocketAsyncEventArgs socketEvent = null;
 
-            Guard.AgainstNull(address);
-            Guard.AgainstNull(connected);
+            Guard.AgainstNull(_addressToConnect);
+            Guard.AgainstNull(_listener);
 
-            _connectCallback = connected;
-            _connectionEndPoint = address;
-
-            _logger.Debug("Connecting with TCP socket to {0}", address);
+            _logger.Debug("Connecting with TCP socket to {0}", _addressToConnect);
 
             socketEvent = RequestSocketEvent();
 
-            Socket = new Socket(address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            Socket = new Socket(_addressToConnect.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
             try
             {
                 Socket.Bind(new IPEndPoint(IPAddress.Any, 0));
-            }
-            catch (ObjectDisposedException ex)
-            {
-                _logger.Debug("Socket disposed before any operation was performed on it", ex);
 
-                _connectCallback(this, false);
-
-                return;
-            }
-            catch (SocketException ex)
-            {
-                _logger.Warn("Socket failed to bind properly", ex);
-
-                _connectCallback(this, false);
-
-                return;
-            }
-
-            try
-            {
                 if (false == Socket.ConnectAsync(socketEvent))
                 {
                     ProcessConnect(socketEvent);
@@ -228,24 +208,22 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             }
             catch (ObjectDisposedException ex)
             {
-                _logger.Debug("Socket disposed before connection could be performed on it", ex);
+                _logger.Debug("Socket disposed before any operation was performed on it", ex);
 
-                _connectCallback(this, false);
+                _listener.ConnectionFailed(_addressToConnect);
 
                 return;
             }
             catch (SocketException ex)
             {
-                _logger.Debug("Socket error on connect operation", ex);
+                _logger.Warn("Socket failed to bind properly", ex);
 
-                _connectCallback(this, false);
+                _listener.ConnectionFailed(_addressToConnect);
 
                 return;
             }
 
             return;
         }
-
-        #endregion
     }
 }

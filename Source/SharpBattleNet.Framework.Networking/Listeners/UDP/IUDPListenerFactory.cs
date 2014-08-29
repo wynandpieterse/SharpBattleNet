@@ -46,6 +46,6 @@ namespace SharpBattleNet.Framework.Networking.Listeners.UDP
         /// for use.
         /// </summary>
         /// <returns>A new <see cref="IUDPListener"/> object.</returns>
-        IUDPListener Create(IListenerAcceptor acceptor);
+        IUDPListener Listen(IListenerAcceptor acceptor);
     }
 }

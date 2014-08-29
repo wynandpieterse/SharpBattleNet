@@ -49,6 +49,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP
         /// <returns>
         /// A listener socket that can be used to receive client commands
         /// </returns>
-        IListenerTCPConnection Create(Socket acceptedSocket, IConnectionNotifications notificationListener);
+        IListenerTCPConnection Accepted(Socket acceptedSocket, IConnectionNotifications notificationListener);
     }
 }

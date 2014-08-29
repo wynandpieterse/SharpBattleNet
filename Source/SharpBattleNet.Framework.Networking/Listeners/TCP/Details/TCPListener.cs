@@ -171,7 +171,7 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
             {
                 try
                 {
-                    connection = _listenerFactory.Create(socketEvent.AcceptSocket, _notificationListener);
+                    connection = _listenerFactory.Accepted(socketEvent.AcceptSocket, _notificationListener);
                     if (false == _acceptor.ShouldAccept(socketEvent.AcceptSocket.RemoteEndPoint, connection))
                     {
                         connection.Disconnect();

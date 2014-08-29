@@ -48,6 +48,6 @@ using System;
         /// use.
         /// </summary>
         /// <returns>A new <see cref="ITCPListener"/>.</returns>
-        ITCPListener Create(EndPoint listenEndpoint, IListenerAcceptor acceptor, IConnectionNotifications notificationListener);
+        ITCPListener Listen(EndPoint listenEndpoint, IListenerAcceptor acceptor, IConnectionNotifications notificationListener);
     }
 }

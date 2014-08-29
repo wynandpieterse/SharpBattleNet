@@ -86,7 +86,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         /// of this parameter is 0, the length is deducted from the buffer itself.
         /// </param>
         /// <param name="address">The remote endpoint to send the data to.</param>
-        public virtual void Send(byte[] buffer, long bufferLenght = 0, EndPoint address = null)
+        public virtual void Send(byte[] buffer, int bufferLenght = 0, EndPoint address = null)
         {
             return;
         }
@@ -123,6 +123,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
             socketEvent.BufferList = buffer.GetSegments();
             socketEvent.UserToken = buffer;
             socketEvent.Completed += HandleReceiveEvent;
+            socketEvent.RemoteEndPoint = null;
 
             return socketEvent;
         }
@@ -145,6 +146,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
 
             socketEvent.BufferList = null;
             socketEvent.Completed -= HandleReceiveEvent;
+            socketEvent.RemoteEndPoint = null;
 
             if (false == _socketEventBag.TryAdd(socketEvent))
             {
@@ -175,7 +177,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
                 return;
             }
 
-            _notificationListener.OnReceive(socketEvent.RemoteEndPoint, socketEvent.UserToken as IBuffer);
+            _notificationListener.OnReceive(socketEvent.RemoteEndPoint, socketEvent.UserToken as IBuffer, socketEvent.BytesTransferred);
 
             RecycleReceiveEvent(socketEvent);
             StartReceiving();

@@ -66,7 +66,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
             return;
         }
 
-        public override void Send(byte[] buffer, long bufferLenght = 0, System.Net.EndPoint address = null)
+        public override void Send(byte[] buffer, int bufferLenght = 0, System.Net.EndPoint address = null)
         {
             if(0 == bufferLenght)
             {

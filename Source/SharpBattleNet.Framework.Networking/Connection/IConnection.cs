@@ -57,7 +57,7 @@ namespace SharpBattleNet.Framework.Networking.Connection
         /// The remote address to send the buffer to if this is a connectionless
         /// protocol.
         /// </param>
-        void Send(byte[] buffer, long bufferLenght = 0, EndPoint destination = null);
+        void Send(byte[] buffer, int bufferLenght = 0, EndPoint destination = null);
 
         void StartReceiving();
     }

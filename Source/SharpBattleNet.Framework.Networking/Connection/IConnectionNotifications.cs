@@ -41,7 +41,7 @@ namespace SharpBattleNet.Framework.Networking.Connection
     public interface IConnectionNotifications
     {
         void OnSend(EndPoint remoteAddress, byte[] dataBuffer, int dataSent);
-        void OnReceive(EndPoint remoteAddress, IBuffer dataBuffer);
+        void OnReceive(EndPoint remoteAddress, IBuffer dataBuffer, int dataReceived);
         void OnFinished();
         void OnException(Exception exception);
     }

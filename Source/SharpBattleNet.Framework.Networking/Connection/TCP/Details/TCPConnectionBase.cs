@@ -69,7 +69,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             return;
         }
 
-        public sealed override void Send(byte[] buffer, long bufferLenght = 0, System.Net.EndPoint address = null)
+        public sealed override void Send(byte[] buffer, int bufferLenght = 0, System.Net.EndPoint address = null)
         {
             if(0 == bufferLenght)
             {
@@ -91,6 +91,11 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 
             // Give me a nice, clean and fresh SAEA object to work with please.
             socketEvent = RequestReceiveEvent();
+
+            // HACK : Windows does not seem to set the remote end-point on SAEA when we do operations
+            // on TCP. Here we force set it so that stuff down the line can use the information
+            // regardless of protocol
+            socketEvent.RemoteEndPoint = Socket.RemoteEndPoint;
 
             try
             {

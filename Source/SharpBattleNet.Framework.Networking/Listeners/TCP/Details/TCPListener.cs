@@ -172,13 +172,13 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
                 try
                 {
                     connection = _listenerFactory.Create(socketEvent.AcceptSocket, _notificationListener);
-                    if (false == _acceptor.ShouldAccept(socketEvent.RemoteEndPoint, connection))
+                    if (false == _acceptor.ShouldAccept(socketEvent.AcceptSocket.RemoteEndPoint, connection))
                     {
                         connection.Disconnect();
                     }
                     else
                     {
-                        _acceptor.Accepted(socketEvent.RemoteEndPoint, connection);
+                        _acceptor.Accepted(socketEvent.AcceptSocket.RemoteEndPoint, connection);
                     }
                 }
                 catch(Exception ex)

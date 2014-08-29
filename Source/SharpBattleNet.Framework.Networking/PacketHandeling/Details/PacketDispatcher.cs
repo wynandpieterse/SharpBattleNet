@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SharpBattleNet.Framework.Networking.Connection;
+using SharpBattleNet.Framework.External.BufferPool;
 
 namespace SharpBattleNet.Framework.Networking.PacketHandeling.Details
 {
@@ -36,7 +37,7 @@ namespace SharpBattleNet.Framework.Networking.PacketHandeling.Details
             return;
         }
 
-        public void Process(ArraySegment<byte> buffer)
+        public void Process(IBuffer buffer)
         {
 
 

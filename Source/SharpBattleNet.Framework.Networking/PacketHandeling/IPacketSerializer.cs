@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SharpBattleNet.Framework.External.BufferPool;
+using SharpBattleNet.Framework.Networking.Connection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +10,7 @@ namespace SharpBattleNet.Framework.Networking.PacketHandeling
 {
     public interface IPacketSerializer
     {
-        void Serialize(IPacketOut packet, ArraySegment<byte> buffer);
-        void Deserialize(ArraySegment<byte> buffer, IPacketIn packet);
+        void Serialize(IConnection connection, IPacketOut packet, IBuffer buffer);
+        void Deserialize(IConnection connection, IPacketIn packet, IBuffer buffer);
     }
 }

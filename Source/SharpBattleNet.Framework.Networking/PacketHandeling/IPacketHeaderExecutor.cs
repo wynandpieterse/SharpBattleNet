@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SharpBattleNet.Framework.External.BufferPool;
+using SharpBattleNet.Framework.Networking.Connection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +10,6 @@ namespace SharpBattleNet.Framework.Networking.PacketHandeling
 {
     public interface IPacketHeaderExecutor
     {
-        bool Handle(ArraySegment<byte> dataBuffer, out uint id, out uint lenght);
+        bool Handle(IConnection connection, IBuffer completeBuffer, out uint id, out uint lenght);
     }
 }

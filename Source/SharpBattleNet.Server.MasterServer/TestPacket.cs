@@ -6,12 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using SharpBattleNet.Framework.Networking.Connection;
 using SharpBattleNet.Framework.Networking.PacketHandeling.Utilities;
+using SharpBattleNet.Framework.External.BufferPool;
 
 namespace SharpBattleNet.Server.MasterServer
 {
     public sealed class HeaderExecutor : IPacketHeaderExecutor
     {
-        public bool Handle(ArraySegment<byte> dataBuffer, out uint id, out uint lenght)
+        public bool Handle(IConnection connection, IBuffer dataBuffer, out uint id, out uint lenght)
         {
             id = 0;
             lenght = 0;
@@ -35,12 +36,12 @@ namespace SharpBattleNet.Server.MasterServer
 
         internal class Serializer : PacketSerializerHelper<In, Out>
         {
-            protected override void Deserialize(ArraySegment<byte> buffer, In packet)
+            protected override void Deserialize(IConnection connection, In packet, IBuffer buffer)
             {
                 return;
             }
 
-            protected override void Serialize(Out packet, ArraySegment<byte> buffer)
+            protected override void Serialize(IConnection connection, Out packet, IBuffer buffer)
             {
                 return;
             }

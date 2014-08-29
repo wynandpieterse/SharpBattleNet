@@ -89,6 +89,15 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         }
 
         /// <summary>
+        /// Starts asynchronously receiving data on the socket. This should be
+        /// called after the socket is bound and connected.
+        /// </summary>
+        public virtual void StartReceiving()
+        {
+            return;
+        }
+
+        /// <summary>
         /// Creates an empty <see cref="SocketAsyncEventArgs"/> that can
         /// be used to receive data. Sets the event callback and requests
         /// a buffer from the buffer pool to receive the data in.
@@ -195,15 +204,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         {
             HandleReceive(socketEvent);
 
-            return;
-        }
-
-        /// <summary>
-        /// Starts asynchronously receiving data on the socket. This should be
-        /// called after the socket is bound and connected.
-        /// </summary>
-        public virtual void StartReceiving()
-        {
             return;
         }
     }

@@ -39,7 +39,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
     using SharpBattleNet.Framework.Networking.Connection.Details;
-    using SharpBattleNet.Framework.Utilities.Collections;
     #endregion
 
     /// <summary>
@@ -49,19 +48,21 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly ISocketEventPool _socketEventBag = null;
+        private readonly ISocketBufferPool _socketBufferPool = null;
 
         /// <summary>
         /// Construct an empty <see cref="TCPConnectionBase"/>. Should
         /// be called by derived classes.
         /// </summary>
         /// <param name="socketEventBag"></param>
-        protected TCPConnectionBase(ISocketEventPool socketEventBag, IBufferPoolManager bufferPoolManager)
-            : base(socketEventBag, bufferPoolManager)
+        protected TCPConnectionBase(ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
+            : base(socketEventBag, socketBufferPool)
         {
             Guard.AgainstNull(socketEventBag);
-            Guard.AgainstNull(bufferPoolManager);
+            Guard.AgainstNull(socketBufferPool);
 
             _socketEventBag = socketEventBag;
+            _socketBufferPool = socketBufferPool;
 
             return;
         }

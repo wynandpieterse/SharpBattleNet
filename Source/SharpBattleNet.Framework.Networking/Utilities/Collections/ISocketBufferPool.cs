@@ -30,21 +30,18 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Utilities.Collections
+namespace SharpBattleNet.Framework.Networking.Utilities.Collections
 {
     #region Usings
     using System;
+    using SharpBattleNet.Framework.External.BufferPool;
     #endregion
 
     /// <summary>
-    /// Factory to create <see cref="IBufferPool"/> instances.
+    /// Marker interface to make working with buffer pools from ServerToolkit
+    /// project easier inside the networking library.
     /// </summary>
-    public interface IBufferPoolFactory
+    public interface ISocketBufferPool : IBufferPool
     {
-        /// <summary>
-        /// Creates a <see cref="IBufferPool"/> instance.
-        /// </summary>
-        /// <returns>A new <see cref="IBufferPool"/>.</returns>
-        IBufferPool Create();
     }
 }

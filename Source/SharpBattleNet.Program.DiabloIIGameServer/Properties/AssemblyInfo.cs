@@ -46,6 +46,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: Guid("1ac8beae-00bb-4b05-a0d3-17fe892ad8b0")]
-[assembly: AssemblyVersion("0.0.14.0")]
+[assembly: AssemblyVersion("0.0.15.0")]
 [assembly: AssemblyFileVersion("0.0.14.0")]
 #endregion

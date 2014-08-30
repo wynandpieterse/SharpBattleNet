@@ -11,7 +11,7 @@
 	:: server connection
 	::
 	set title=Local Test Server
-	set address=localhost
+	set address=127.0.0.1
 	set timezone=1
 	
 

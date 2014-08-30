@@ -65,9 +65,9 @@ namespace SharpBattleNet.Server.MasterServer
 
         public void Start()
         {
-            _listener = _listenerFactory.Listen(new IPEndPoint(IPAddress.Any, 6200), this, this);
+            _listener = _listenerFactory.Listen(new IPEndPoint(IPAddress.Any, 6112), this, this);
 
-            _connect = _connectionFactory.Connect(new IPEndPoint(IPAddress.Loopback, 6200), this, this);
+            _connect = _connectionFactory.Connect(new IPEndPoint(IPAddress.Loopback, 6112), this, this);
 
             return;
         }

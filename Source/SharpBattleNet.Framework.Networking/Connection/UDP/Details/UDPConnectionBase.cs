@@ -99,7 +99,9 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
             }
             catch (ObjectDisposedException ex)
             {
-                _logger.Trace("Socket object disposed. Returning from receive loop", ex);
+                _logger.Trace(String.Format("Socket was disposed during UDP receive operation on local address {0}", Socket.LocalEndPoint), ex);
+
+                // TODO : Put OnError here for consumers
 
                 if (null != socketEvent)
                 {
@@ -108,7 +110,9 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
             }
             catch (SocketException ex)
             {
-                _logger.Debug("Socket exception", ex);
+                _logger.Trace(String.Format("Socket has encountered an error while doing a UDP receive on {0}", Socket.LocalEndPoint), ex);
+
+                // TODO : Put OnError here for consumers
 
                 if (null != socketEvent)
                 {

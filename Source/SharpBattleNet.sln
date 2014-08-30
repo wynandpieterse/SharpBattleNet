@@ -7,6 +7,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Servers", "Servers", "{B8200D93-916B-4CC2-ADE0-6F0B4466386A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{D7133F8D-49F7-4D74-BD07-E96B8124C177}"
+	ProjectSection(SolutionItems) = preProject
+		..\Tools\InstallGateways.bat = ..\Tools\InstallGateways.bat
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{5E899FB9-1537-4C9E-8B0D-6986D12A830B}"
 	ProjectSection(SolutionItems) = preProject

@@ -10,7 +10,7 @@
 
 	:: server connection
 	::
-	set title=Your Server Name
+	set title=Local Test Server
 	set address=localhost
 	set timezone=1
 	
@@ -19,7 +19,7 @@
 	::
 	set starcraft=true
 	set warcraft3=true
-	set diablo2=false
+	set diablo2=true
 	
 	
 :: --  CONFIGURATION END  --

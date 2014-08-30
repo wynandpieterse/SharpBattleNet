@@ -65,6 +65,13 @@ namespace SharpBattleNet.Server.MasterServer
 
         public void Start()
         {
+            _logger.Fatal("Fatal");
+            _logger.Error("Error");
+            _logger.Warn("Warning");
+            _logger.Info("Information");
+            _logger.Debug("Debug");
+            _logger.Trace("Trace");
+
             _listener = _listenerFactory.Listen(new IPEndPoint(IPAddress.Any, 6112), this, this);
 
             _connect = _connectionFactory.Connect(new IPEndPoint(IPAddress.Loopback, 6112), this, this);

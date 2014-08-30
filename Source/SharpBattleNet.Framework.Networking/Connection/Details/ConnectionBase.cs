@@ -139,6 +139,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         protected void RecycleReceiveEvent(SocketAsyncEventArgs socketEvent)
         {
             Guard.AgainstNull(socketEvent);
+            Guard.AgainstNull(socketEvent.UserToken);
 
             IBuffer buffer = socketEvent.UserToken as IBuffer;
 
@@ -150,7 +151,9 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
 
             if (false == _socketEventBag.TryAdd(socketEvent))
             {
-                _logger.Trace("Failed to insert receive socket event back into event pool");
+                // Don't worry too much if it fails, as the GC will re-collect it when it sees
+                // no more references to it.
+                _logger.Debug("Failed to re-insert a receive socket event object back into pool");
             }
 
             return;
@@ -168,11 +171,13 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         protected void HandleReceive(SocketAsyncEventArgs socketEvent)
         {
             Guard.AgainstNull(socketEvent);
+            Guard.AgainstNull(socketEvent.RemoteEndPoint);
+            Guard.AgainstNull(socketEvent.UserToken);
 
             // A receive of 0 usually means that the stream was closed.
             if (socketEvent.BytesTransferred == 0)
             {
-                _logger.Debug("Connection from {0} closed normally", socketEvent.RemoteEndPoint);
+                _logger.Info("Connection from address {0} closed normally", socketEvent.RemoteEndPoint);
 
                 return;
             }
@@ -192,6 +197,8 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         /// <param name="socketEvent">Contains details about the receive event.</param>
         protected void HandleReceiveEvent(object sender, SocketAsyncEventArgs socketEvent)
         {
+            Guard.AgainstNull(socketEvent);
+
             HandleReceive(socketEvent);
 
             return;

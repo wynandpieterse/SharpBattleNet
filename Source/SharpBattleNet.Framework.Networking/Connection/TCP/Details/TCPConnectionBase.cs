@@ -80,6 +80,8 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
                 Socket.Send(buffer, (int)bufferLenght, SocketFlags.None);
             }
 
+            // TODO : Place OnSend operation here
+
             return;
         }
 
@@ -106,7 +108,9 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             }
             catch (ObjectDisposedException ex)
             {
-                _logger.Trace("Socket object disposed. Returning from receive loop", ex);
+                _logger.Trace(String.Format("Socket was disposed during TCP receive operation on address {0}", Socket.RemoteEndPoint), ex);
+
+                // TODO : Put OnError here for consumers
 
                 if (null != socketEvent)
                 {
@@ -115,7 +119,9 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             }
             catch (SocketException ex)
             {
-                _logger.Debug("Socket exception", ex);
+                _logger.Trace(String.Format("Socket has encountered an error while doing a TCP receive from {0}", Socket.RemoteEndPoint), ex);
+
+                // TODO : Put OnError here for consumers
 
                 if (null != socketEvent)
                 {
@@ -133,6 +139,8 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         /// </summary>
         public void Disconnect()
         {
+            _logger.Trace("TCP socket disconnecting from {0}", Socket.RemoteEndPoint);
+
             if(null != Socket)
             {
                 try

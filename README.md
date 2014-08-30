@@ -40,5 +40,6 @@ I just want to say thanks to the following people for the awesome libraries they
 helps with the development of these software.
 
  + ServerToolkit - BufferPool - [Tenor](https://github.com/tenor)
+ + Gateway Installer - [HarpyWar](https://github.com/HarpyWar)
 
 Version 0.0.14

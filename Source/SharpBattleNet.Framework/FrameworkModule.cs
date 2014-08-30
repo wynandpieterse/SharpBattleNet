@@ -43,6 +43,8 @@ namespace SharpBattleNet.Framework
     using NLog.Config;
     using SharpBattleNet.Framework.Utilities.Debugging;
     using Ninject.Extensions.Factory;
+    using NLog.Conditions;
+    using System.Collections.Generic;
     #endregion
 
     /// <summary>
@@ -182,6 +184,7 @@ namespace SharpBattleNet.Framework
 
             var configSource = Kernel.Get<IConfigSource>();
             var source = configSource.Configs["General"];
+
             if(null != source)
             {
                 if(true == source.GetBoolean("LogConsole"))
@@ -189,7 +192,15 @@ namespace SharpBattleNet.Framework
                     var consoleTarget = new ColoredConsoleTarget();
                     config.AddTarget("console", consoleTarget);
 
-                    consoleTarget.Layout = @"${date:format=HH\\:MM\\:ss} ${message}";
+                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Fatal", ConsoleOutputColor.Red, ConsoleOutputColor.NoChange));
+                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Error", ConsoleOutputColor.DarkRed, ConsoleOutputColor.NoChange));
+                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Warn", ConsoleOutputColor.Yellow, ConsoleOutputColor.NoChange));
+                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Info", ConsoleOutputColor.White, ConsoleOutputColor.NoChange));
+                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Debug", ConsoleOutputColor.Gray, ConsoleOutputColor.NoChange));
+                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Trace", ConsoleOutputColor.DarkGray, ConsoleOutputColor.NoChange));
+
+                    consoleTarget.UseDefaultRowHighlightingRules = false;
+                    consoleTarget.Layout = @"${message}";
 
                     var consoleRule = new LoggingRule("*", GetLogLevel(source.Get("LogConsoleLevel")), consoleTarget);
                     config.LoggingRules.Add(consoleRule);
@@ -231,7 +242,7 @@ namespace SharpBattleNet.Framework
                 config.AddTarget("file", fileTarget);
 
                 fileTarget.FileName = logFilename;
-                fileTarget.Layout = @"${date:format=HH\\:MM\\:ss} ${logger} ${message}";
+                fileTarget.Layout = @"${processtime} ${threadid} ${level} ${logger} ${message}";
 
                 var fileRule = new LoggingRule("*", LogLevel.Debug, fileTarget);
                 config.LoggingRules.Add(fileRule);

@@ -30,21 +30,17 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Utilities.Collections
+namespace SharpBattleNet.Framework.Networking.Listeners
 {
     #region Usings
     using System;
+    using System.Net;
+    using SharpBattleNet.Framework.Networking.Connection;
     #endregion
 
-    /// <summary>
-    /// Factory to create <see cref="IBufferPool"/> instances.
-    /// </summary>
-    public interface IBufferPoolFactory
+    public interface IListenerAcceptor
     {
-        /// <summary>
-        /// Creates a <see cref="IBufferPool"/> instance.
-        /// </summary>
-        /// <returns>A new <see cref="IBufferPool"/>.</returns>
-        IBufferPool Create();
+        bool ShouldAccept(EndPoint remoteEndpoint, IConnection remoteConnection);
+        void Accepted(EndPoint remoteEndpoint, IConnection remoteConnection);
     }
 }

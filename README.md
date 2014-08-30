@@ -25,4 +25,21 @@ This project is completely open source, and community involvement is highly enco
 
 If you wish to contribute ideas or code, please fork this repository and make a pull request.
 
-Version 0.0.14
+## Libraries
+
+SharpBattleNet uses the following libraries from NuGet and different places.
+
+ + Nini Configuration Library
+ + NLog Logging Library
+ + Ninject Dependcy Injection Library
+ + Ninject.Factory Extension Library
+
+## Thanks
+
+I just want to say thanks to the following people for the awesome libraries they have made available that really
+helps with the development of these software.
+
+ + ServerToolkit - BufferPool - [Tenor](https://github.com/tenor)
+ + Gateway Installer - [HarpyWar](https://github.com/HarpyWar)
+
+Version 0.0.15

@@ -43,18 +43,5 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP
     /// </summary>
     public interface IConnectableTCPConnection : ITCPConnection
     {
-        /// <summary>
-        /// Starts an asynchronous connection to a TCP server. After a connection
-        /// has been established, the connected callback is called. The connected
-        /// callback specified wheter the connection was successfull or not.
-        /// 
-        /// After the callback returns true, the connection is handed over to the
-        /// packet multiplexer that handles incomming packets for the system.
-        /// </summary>
-        /// <param name="address">The remote address to connect to</param>
-        /// <param name="connected">
-        /// Callback that gets called with details about connection success.
-        /// </param>
-        void Start(EndPoint address, Func<IConnection, bool, bool> connected);
     }
 }

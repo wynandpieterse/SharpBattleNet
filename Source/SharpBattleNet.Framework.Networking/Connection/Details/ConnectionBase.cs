@@ -40,7 +40,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
     using NLog;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
-    using SharpBattleNet.Framework.Utilities.Collections;
+    using SharpBattleNet.Framework.External.BufferPool;
     #endregion
 
     /// <summary>
@@ -52,7 +52,8 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         private readonly ISocketEventPool _socketEventBag = null;
-        private readonly IBufferPool _bufferPool = null;
+        private readonly ISocketBufferPool _socketBufferPool = null;
+        private readonly IConnectionNotifications _notificationListener = null;
 
         protected Socket Socket { get; set; }
 
@@ -63,18 +64,18 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         /// Reference to a pool of <see cref="SocketAsyncEventArgs"/>. Mainly
         /// used for performance benefits.
         /// </param>
-        public ConnectionBase(ISocketEventPool socketEventBag, IBufferPoolManager bufferPoolManager)
+        public ConnectionBase(IConnectionNotifications notificationListener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
         {
+            Guard.AgainstNull(notificationListener);
             Guard.AgainstNull(socketEventBag);
-            Guard.AgainstNull(bufferPoolManager);
+            Guard.AgainstNull(socketBufferPool);
 
+            _notificationListener = notificationListener;
             _socketEventBag = socketEventBag;
-            _bufferPool = bufferPoolManager.Get("NetworkTransmission");
+            _socketBufferPool = socketBufferPool;
 
             return;
         }
-
-        #region IConnection Methods
 
         /// <summary>
         /// Sends the specified buffer to the specified destination.
@@ -85,42 +86,19 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         /// of this parameter is 0, the length is deducted from the buffer itself.
         /// </param>
         /// <param name="address">The remote endpoint to send the data to.</param>
-        public void Send(byte[] buffer, long bufferLenght = 0, EndPoint address = null)
+        public virtual void Send(byte[] buffer, int bufferLenght = 0, EndPoint address = null)
         {
-            Guard.AgainstNull(Socket);
-            Guard.AgainstNull(buffer);
-
-            // Not using async sends because they cause extra heap allocations and what not.
-            // This way we go directly to the Windows kernel and send the stuff. May need
-            // to implement buffering down the line up till a ceiling point, but this is
-            // working fine now.
-            if (null != address)
-            {
-                if (0 == bufferLenght)
-                {
-                    Socket.SendTo(buffer, (int)buffer.LongLength, SocketFlags.None, address);
-                }
-                else
-                {
-                    Socket.SendTo(buffer, (int)bufferLenght, SocketFlags.None, address);
-                }
-            }
-            else
-            {
-                if (0 == bufferLenght)
-                {
-                    Socket.Send(buffer, (int)buffer.LongLength, SocketFlags.None);
-                }
-                else
-                {
-                    Socket.Send(buffer, (int)bufferLenght, SocketFlags.None);
-                }
-            }
-
             return;
         }
 
-        #endregion
+        /// <summary>
+        /// Starts asynchronously receiving data on the socket. This should be
+        /// called after the socket is bound and connected.
+        /// </summary>
+        public virtual void StartReceiving()
+        {
+            return;
+        }
 
         /// <summary>
         /// Creates an empty <see cref="SocketAsyncEventArgs"/> that can
@@ -131,7 +109,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         /// A <see cref="SocketAsyncEventArgs"/> that can be used for receive
         /// operations.
         /// </returns>
-        private SocketAsyncEventArgs RequestReceiveEvent()
+        protected SocketAsyncEventArgs RequestReceiveEvent()
         {
             SocketAsyncEventArgs socketEvent = null;
 
@@ -140,11 +118,12 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
                 socketEvent = new SocketAsyncEventArgs();
             }
 
-            ArraySegment<byte> buffer = _bufferPool.Request();
+            IBuffer buffer = _socketBufferPool.GetBuffer(1024);
 
-            socketEvent.SetBuffer(buffer.Array, buffer.Offset, buffer.Count);
+            socketEvent.BufferList = buffer.GetSegments();
             socketEvent.UserToken = buffer;
             socketEvent.Completed += HandleReceiveEvent;
+            socketEvent.RemoteEndPoint = null;
 
             return socketEvent;
         }
@@ -157,20 +136,24 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         /// <param name="socketEvent">
         /// The <see cref="SocketAsyncEventArgs"/> to return to the pool.
         /// </param>
-        private void RecycleReceiveEvent(SocketAsyncEventArgs socketEvent)
+        protected void RecycleReceiveEvent(SocketAsyncEventArgs socketEvent)
         {
             Guard.AgainstNull(socketEvent);
+            Guard.AgainstNull(socketEvent.UserToken);
 
-            ArraySegment<byte> buffer = (ArraySegment<byte>)socketEvent.UserToken;
+            IBuffer buffer = socketEvent.UserToken as IBuffer;
 
-            _bufferPool.Recycle(buffer);
+            buffer.Dispose();
 
-            socketEvent.SetBuffer(null, 0, 0);
+            socketEvent.BufferList = null;
             socketEvent.Completed -= HandleReceiveEvent;
+            socketEvent.RemoteEndPoint = null;
 
             if (false == _socketEventBag.TryAdd(socketEvent))
             {
-                _logger.Trace("Failed to insert receive socket event back into event pool");
+                // Don't worry too much if it fails, as the GC will re-collect it when it sees
+                // no more references to it.
+                _logger.Debug("Failed to re-insert a receive socket event object back into pool");
             }
 
             return;
@@ -185,34 +168,24 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         /// Contains operating system specific information about the receive
         /// event.
         /// </param>
-        private void HandleReceive(SocketAsyncEventArgs socketEvent)
+        protected void HandleReceive(SocketAsyncEventArgs socketEvent)
         {
             Guard.AgainstNull(socketEvent);
+            Guard.AgainstNull(socketEvent.RemoteEndPoint);
+            Guard.AgainstNull(socketEvent.UserToken);
 
             // A receive of 0 usually means that the stream was closed.
             if (socketEvent.BytesTransferred == 0)
             {
-                if (SocketType.Stream == Socket.SocketType)
-                {
-                    _logger.Debug("Connection from {0} closed normally", Socket.RemoteEndPoint);
-                }
-                else if(SocketType.Dgram == Socket.SocketType)
-                {
-                    _logger.Debug("Connection from {0} closed normally", socketEvent.RemoteEndPoint);
-                }
+                _logger.Info("Connection from address {0} closed normally", socketEvent.RemoteEndPoint);
 
                 return;
             }
 
-            // Start receiving immediatly again.
-            StartReceiving();
-
-            // TODO : Fix this by buffering the data and handing it of to the packet
-            // manager for multiplexing it.
-            ArraySegment<byte> buffer = (ArraySegment<byte>)socketEvent.UserToken;
-            _logger.Info(Encoding.ASCII.GetString(buffer.Array, buffer.Offset, socketEvent.BytesTransferred));
+            _notificationListener.OnReceive(socketEvent.RemoteEndPoint, socketEvent.UserToken as IBuffer, socketEvent.BytesTransferred);
 
             RecycleReceiveEvent(socketEvent);
+            StartReceiving();
 
             return;
         }
@@ -222,66 +195,11 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
         /// </summary>
         /// <param name="sender">The originator of the event.</param>
         /// <param name="socketEvent">Contains details about the receive event.</param>
-        private void HandleReceiveEvent(object sender, SocketAsyncEventArgs socketEvent)
+        protected void HandleReceiveEvent(object sender, SocketAsyncEventArgs socketEvent)
         {
+            Guard.AgainstNull(socketEvent);
+
             HandleReceive(socketEvent);
-
-            return;
-        }
-
-        /// <summary>
-        /// Starts asynchronously receiving data on the socket. This should be
-        /// called after the socket is bound and connected.
-        /// </summary>
-        protected void StartReceiving()
-        {
-            SocketAsyncEventArgs socketEvent = null;
-
-            Guard.AgainstNull(Socket);
-
-            // Give me a nice, clean and fresh SAEA object to work with please.
-            socketEvent = RequestReceiveEvent();
-
-            try
-            {
-                // Start handling the various socket types.
-                if (SocketType.Stream == Socket.SocketType)
-                {
-                    if (false == Socket.ReceiveAsync(socketEvent))
-                    {
-                        HandleReceive(socketEvent);
-                    }
-                }
-                else if (SocketType.Dgram == Socket.SocketType)
-                {
-                    if (false == Socket.ReceiveFromAsync(socketEvent))
-                    {
-                        HandleReceive(socketEvent);
-                    }
-                }
-                else
-                {
-                    throw new InvalidOperationException("The network library currently does not handle sockets other that stream and datagram");
-                }
-            }
-            catch (ObjectDisposedException ex)
-            {
-                _logger.Trace("Socket object disposed. Returning from receive loop", ex);
-
-                if (null != socketEvent)
-                {
-                    RecycleReceiveEvent(socketEvent);
-                }
-            }
-            catch (SocketException ex)
-            {
-                _logger.Debug("Socket exception", ex);
-
-                if (null != socketEvent)
-                {
-                    RecycleReceiveEvent(socketEvent);
-                }
-            }
 
             return;
         }

@@ -30,49 +30,29 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Utilities.Collections
+namespace SharpBattleNet.Framework.Networking.Utilities.Collections.Details
 {
     #region Usings
     using System;
+    using SharpBattleNet.Framework.External.BufferPool;
     #endregion
 
     /// <summary>
-    /// Manages a pool of byte buffer objects. Can acquire new buffer objects
-    /// that can help speed up socket and file operations without putting too
-    /// much presure on the garbage collector
+    /// Marker interface implementation. Contained inside the Ninject IoC
+    /// container.
     /// </summary>
-    public interface IBufferPool
+    internal sealed class SocketBufferPool : BufferPool, ISocketBufferPool
     {
         /// <summary>
-        /// Gets the name of this buffer pool.
+        /// Initializes a new instance of the SocketBufferPool class
         /// </summary>
-        string Name { get; }
-
-        /// <summary>
-        /// Initializes this buffer pool up to the point of using it.
-        /// </summary>
-        /// <param name="name">The name of this buffer pool.</param>
-        /// <param name="pageSize">
-        /// The page size for each allocation from this buffer pool.
-        /// </param>
-        void Initialize(string name, int pageSize);
-
-        /// <summary>
-        /// Requests a new page from the buffer pool that can be used.
-        /// </summary>
-        /// <returns>
-        /// An array segment that contains the byte buffer to be used an the
-        /// offset into it.
-        /// </returns>
-        ArraySegment<byte> Request();
-
-        /// <summary>
-        /// Recycles a previously used buffer back into the pool for later
-        /// use.
-        /// </summary>
-        /// <param name="buffer">
-        /// The array segment to recycle back into the system.
-        /// </param>
-        void Recycle(ArraySegment<byte> buffer);
+        /// <param name="slabSize">Length, in bytes, of a slab in the BufferPool</param>
+        /// <param name="initialSlabs">Number of slabs to create initially</param>
+        /// <param name="subsequentSlabs">Number of additional slabs to create at a time</param>
+        public SocketBufferPool(long slabSize, int initialSlabs, int subsequentSlabs)
+            : base(slabSize, initialSlabs, subsequentSlabs)
+        {
+            return;
+        }
     }
 }

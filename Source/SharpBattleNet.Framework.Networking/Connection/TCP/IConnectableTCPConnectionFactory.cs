@@ -34,6 +34,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP
 {
     #region Usings
     using System;
+    using System.Net;
     #endregion
 
     /// <summary>
@@ -48,6 +49,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP
         /// function on the returned object.
         /// </summary>
         /// <returns></returns>
-        IConnectableTCPConnection Create();
+        IConnectableTCPConnection Connect(EndPoint addressToConnect, IConnectableTCPConnectionListener listener, IConnectionNotifications notificationListener);
     }
 }

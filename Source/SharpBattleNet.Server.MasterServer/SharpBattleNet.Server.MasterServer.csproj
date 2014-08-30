@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SharpBattleNet.Server.MasterServer</RootNamespace>
     <AssemblyName>SharpBattleNet.Server.MasterServer</AssemblyName>
-    <TargetFrameworkVersion>v4.5.3</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -67,11 +67,16 @@
     <Compile Include="MasterServerModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MasterServerProgram.cs" />
+    <Compile Include="TestPacket.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SharpBattleNet.Framework.External.BufferPool\SharpBattleNet.Framework.External.BufferPool.csproj">
+      <Project>{c81e12fd-6309-40cb-9fe5-39735c2d1ff9}</Project>
+      <Name>SharpBattleNet.Framework.External.BufferPool</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharpBattleNet.Framework.Networking\SharpBattleNet.Framework.Networking.csproj">
       <Project>{b838d207-fad1-4ee1-95b5-dcb240d1a0aa}</Project>
       <Name>SharpBattleNet.Framework.Networking</Name>

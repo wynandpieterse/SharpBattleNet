@@ -41,10 +41,12 @@ namespace SharpBattleNet.Server.MasterServer
     using SharpBattleNet.Framework.Networking.Listeners.TCP;
     using SharpBattleNet.Framework.Networking.Connection;
     using SharpBattleNet.Framework.Networking.Connection.TCP;
-    using SharpBattleNet.Framework.Utilities.Collections;
+    using SharpBattleNet.Framework.Networking.Listeners;
+    using SharpBattleNet.Framework.External.BufferPool;
+    using System.Text;
     #endregion
 
-    internal sealed class MasterServerProgram : IProgram
+    internal sealed class MasterServerProgram : IProgram, IListenerAcceptor, IConnectionNotifications, IConnectableTCPConnectionListener
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
@@ -52,56 +54,81 @@ namespace SharpBattleNet.Server.MasterServer
         private ITCPListener _listener = null;
         private readonly IConnectableTCPConnectionFactory _connectionFactory = null;
         private IConnectableTCPConnection _connect = null;
-        private readonly IBufferPoolManager _bufferPoolManager = null;
 
-        public MasterServerProgram(ITCPListenerFactory listenerFactory, IConnectableTCPConnectionFactory connectionFactory, IBufferPoolManager bufferPoolManager)
+        public MasterServerProgram(ITCPListenerFactory listenerFactory, IConnectableTCPConnectionFactory connectionFactory)
         {
             _listenerFactory = listenerFactory;
             _connectionFactory = connectionFactory;
-            _bufferPoolManager = bufferPoolManager;
+
             return;
-        }
-
-        private bool Accepted(IConnection connection)
-        {
-            return true;
-        }
-
-        private bool OnConnected(IConnection connection, bool error)
-        {
-            if(false == error)
-            {
-                _logger.Info("Failed to connect");
-            }
-            else
-            {
-                _logger.Info("Successfull connection");
-            }
-
-            return true;
         }
 
         public void Start()
         {
-            _logger.Info("Hello, World");
+            _listener = _listenerFactory.Listen(new IPEndPoint(IPAddress.Any, 6112), this, this);
 
-            _bufferPoolManager.Create("NetworkTransmission", 1024);
-
-            _listener = _listenerFactory.Create();
-
-            _listener.Start(new IPEndPoint(IPAddress.Any, 2048), Accepted);
-
-            _connect = _connectionFactory.Create();
-
-            _connect.Start(new IPEndPoint(IPAddress.Loopback, 2048), OnConnected);
+            _connect = _connectionFactory.Connect(new IPEndPoint(IPAddress.Loopback, 6112), this, this);
 
             return;
         }
 
         public void Stop()
         {
-            _logger.Info("Bye, World");
             return;
+        }
+
+        public bool ShouldAccept(EndPoint remoteEndpoint, IConnection remoteConnection)
+        {
+            return true;
+        }
+
+        public void Accepted(EndPoint remoteEndpoint, IConnection remoteConnection)
+        {
+            _logger.Info("Got new connection from {0}", remoteEndpoint);
+
+            remoteConnection.StartReceiving();
+
+            return;
+        }
+
+        public void OnSend(EndPoint remoteAddress, byte[] dataBuffer, int dataSent)
+        {
+            return;
+        }
+
+        public void OnReceive(EndPoint remoteAddress, IBuffer dataBuffer, int bytesReceived)
+        {
+            byte[] buffer = new byte[1024];
+            dataBuffer.CopyTo(buffer, 0, bytesReceived);
+
+            _logger.Info("Got message from {0} : {1}", remoteAddress, Encoding.ASCII.GetString(buffer, 0, bytesReceived));
+
+            return;
+        }
+
+        public void OnFinished()
+        {
+            return;
+        }
+
+        public void OnException(Exception exception)
+        {
+            return;
+        }
+
+        public void ConnectionFailed(IConnectableTCPConnection connection, EndPoint remoteEndpoint)
+        {
+            _logger.Warn("Failed to connect to {0}", remoteEndpoint);
+            return;
+        }
+
+        public bool ConnectionSucceeded(IConnectableTCPConnection connection, EndPoint remoteEndpoint)
+        {
+            _logger.Info("Successfull connection to {0}", remoteEndpoint);
+
+            connection.StartReceiving();
+
+            return true;
         }
     }
 }

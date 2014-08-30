@@ -40,7 +40,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
     using SharpBattleNet.Framework.Networking.Connection.Details;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
-    using SharpBattleNet.Framework.Utilities.Collections;
     #endregion
 
     /// <summary>
@@ -50,9 +49,11 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly ISocketEventPool _socketEventBag = null;
+        private readonly ISocketBufferPool _socketBufferPool = null;
 
-        private EndPoint _connectionEndPoint = null;
-        private Func<IConnection, bool, bool> _connectCallback = null;
+        private readonly EndPoint _addressToConnect = null;
+        private readonly IConnectableTCPConnectionListener _listener = null;
+        private readonly IConnectionNotifications _notificationListener = null;
 
         /// <summary>
         /// Constructs an empty <see cref="ConnectibleTCPConnection"/>.
@@ -60,13 +61,21 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         /// <param name="socketEventBag">
         /// Pool of <see cref="SocketAsyncEventArgs"/> for performance reasons.
         /// </param>
-        public ConnectibleTCPConnection(ISocketEventPool socketEventBag, IBufferPoolManager bufferPoolManager)
-            : base(socketEventBag, bufferPoolManager)
+        public ConnectibleTCPConnection(EndPoint addressToConnect, IConnectableTCPConnectionListener listener, IConnectionNotifications notificationListener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
+            : base(notificationListener, socketEventBag, socketBufferPool)
         {
+            Guard.AgainstNull(addressToConnect);
+            Guard.AgainstNull(listener);
             Guard.AgainstNull(socketEventBag);
-            Guard.AgainstNull(bufferPoolManager);
+            Guard.AgainstNull(socketBufferPool);
 
             _socketEventBag = socketEventBag;
+            _socketBufferPool = socketBufferPool;
+            _addressToConnect = addressToConnect;
+            _listener = listener;
+            _notificationListener = notificationListener;
+
+            Start();
 
             return;
         }
@@ -89,7 +98,7 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
                 socketEvent = new SocketAsyncEventArgs();
             }
 
-            socketEvent.RemoteEndPoint = _connectionEndPoint;
+            socketEvent.RemoteEndPoint = _addressToConnect;
             socketEvent.Completed += HandleConnectEvent;
 
             return socketEvent;
@@ -112,7 +121,10 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
 
             if(false == _socketEventBag.TryAdd(socketEvent))
             {
-                _logger.Trace("Failed to add socket event back to socket event pool");
+                // Don't worry too much about object not being returned to pool as
+                // the garbage collector will recollect it when it finds no more
+                // references to it
+                _logger.Debug("Failed to re-add a connection socket event to pool");
             }
 
             return;
@@ -132,31 +144,28 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         private void ProcessConnect(SocketAsyncEventArgs socketEvent)
         {
             Guard.AgainstNull(socketEvent);
-            Guard.AgainstNull(_connectCallback);
+            Guard.AgainstNull(_listener);
             Guard.AgainstNull(Socket);
 
             if (SocketError.Success != socketEvent.SocketError)
             {
-                _logger.Debug("Failed to connect to {0}", socketEvent.RemoteEndPoint);
-                _logger.Trace("Stated reason for failure to connect is {0}", socketEvent.SocketError);
+                _logger.Trace("Failed to make a TCP connection to {0}. Stated socket error is {1}", _addressToConnect, socketEvent.SocketError);
 
-                _connectCallback(this, false);
+                _listener.ConnectionFailed(this, _addressToConnect);
 
                 Socket.Close();
             }
             else
             {
-                if (false == _connectCallback(this, true))
+                if (false == _listener.ConnectionSucceeded(this, _addressToConnect))
                 {
-                    _logger.Trace("User refusing to connect to {0}", socketEvent.RemoteEndPoint);
+                    _logger.Trace("The user who initiated the TCP connection to {0} does not want it anymore", _addressToConnect);
 
                     Socket.Close();
                 }
                 else
                 {
-                    _logger.Trace("User accepted connection to {0}", socketEvent.RemoteEndPoint);
-
-                    StartReceiving();
+                    _logger.Trace("User has accepted the TCP connection to {0}", _addressToConnect);
                 }
             }
 
@@ -178,48 +187,24 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             return;
         }
 
-        #region IConnectableTCPConnection Members
-
         /// <inheritdoc/>
-        public void Start(EndPoint address, Func<IConnection, bool, bool> connected)
+        private void Start()
         {
             SocketAsyncEventArgs socketEvent = null;
 
-            Guard.AgainstNull(address);
-            Guard.AgainstNull(connected);
+            Guard.AgainstNull(_addressToConnect);
+            Guard.AgainstNull(_listener);
 
-            _connectCallback = connected;
-            _connectionEndPoint = address;
-
-            _logger.Debug("Connecting with TCP socket to {0}", address);
+            _logger.Trace("Attempting to create a TCP connection to {0}...", _addressToConnect);
 
             socketEvent = RequestSocketEvent();
 
-            Socket = new Socket(address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            Socket = new Socket(_addressToConnect.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
             try
             {
                 Socket.Bind(new IPEndPoint(IPAddress.Any, 0));
-            }
-            catch (ObjectDisposedException ex)
-            {
-                _logger.Debug("Socket disposed before any operation was performed on it", ex);
 
-                _connectCallback(this, false);
-
-                return;
-            }
-            catch (SocketException ex)
-            {
-                _logger.Warn("Socket failed to bind properly", ex);
-
-                _connectCallback(this, false);
-
-                return;
-            }
-
-            try
-            {
                 if (false == Socket.ConnectAsync(socketEvent))
                 {
                     ProcessConnect(socketEvent);
@@ -227,24 +212,23 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             }
             catch (ObjectDisposedException ex)
             {
-                _logger.Debug("Socket disposed before connection could be performed on it", ex);
+                _logger.Trace(String.Format("Socket for outbound TCP connection on address {0} was disposed before operation could be completed", _addressToConnect), ex);
 
-                _connectCallback(this, false);
+                _listener.ConnectionFailed(this, _addressToConnect);
 
                 return;
             }
             catch (SocketException ex)
             {
-                _logger.Debug("Socket error on connect operation", ex);
+                _logger.Warn("Socket failed to bind properly", ex);
+                _logger.Trace(String.Format("Socket encountered an error while trying to connect with a TCP socket to {0}", _addressToConnect), ex);
 
-                _connectCallback(this, false);
+                _listener.ConnectionFailed(this, _addressToConnect);
 
                 return;
             }
 
             return;
         }
-
-        #endregion
     }
 }

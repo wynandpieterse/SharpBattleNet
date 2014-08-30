@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SharpBattleNet.Framework.Networking</RootNamespace>
     <AssemblyName>SharpBattleNet.Framework.Networking</AssemblyName>
-    <TargetFrameworkVersion>v4.5.3</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -66,19 +66,23 @@
   <ItemGroup>
     <Compile Include="Connection\Details\ConnectionBase.cs" />
     <Compile Include="Connection\IConnection.cs" />
+    <Compile Include="Connection\IConnectionNotifications.cs" />
     <Compile Include="Connection\TCP\Details\TCPConnectionBase.cs" />
     <Compile Include="Connection\TCP\Details\ConnectibleTCPConnection.cs" />
     <Compile Include="Connection\TCP\Details\ListenerTCPConnection.cs" />
     <Compile Include="Connection\TCP\IConnectableTCPConnection.cs" />
     <Compile Include="Connection\TCP\IConnectableTCPConnectionFactory.cs" />
+    <Compile Include="Connection\TCP\IConnectableTCPConnectionListener.cs" />
     <Compile Include="Connection\TCP\IListenerTCPConnection.cs" />
     <Compile Include="Connection\TCP\IListenerTCPConnectionFactory.cs" />
     <Compile Include="Connection\TCP\ITCPConnection.cs" />
     <Compile Include="Connection\UDP\Details\BindableUDPConnection.cs" />
+    <Compile Include="Connection\UDP\Details\UDPConnectionBase.cs" />
     <Compile Include="Connection\UDP\IBindableUDPConnection.cs" />
     <Compile Include="Connection\UDP\IBindableUDPConnectionFactory.cs" />
     <Compile Include="Connection\UDP\IUDPConnection.cs" />
     <Compile Include="Listeners\IListener.cs" />
+    <Compile Include="Listeners\IListenerAcceptor.cs" />
     <Compile Include="Listeners\TCP\Details\TCPListener.cs" />
     <Compile Include="Listeners\TCP\ITCPListener.cs" />
     <Compile Include="Listeners\TCP\ITCPListenerFactory.cs" />
@@ -86,8 +90,24 @@
     <Compile Include="Listeners\UDP\IUDPListener.cs" />
     <Compile Include="Listeners\UDP\IUDPListenerFactory.cs" />
     <Compile Include="NetworkModule.cs" />
+    <Compile Include="PacketHandeling\Details\PacketDispatcher.cs" />
+    <Compile Include="PacketHandeling\Details\PacketDispatcherState.cs" />
+    <Compile Include="PacketHandeling\IPacket.cs" />
+    <Compile Include="PacketHandeling\IPacketDispatcher.cs" />
+    <Compile Include="PacketHandeling\IPacketDispatcherFactory.cs" />
+    <Compile Include="PacketHandeling\IPacketExecutor.cs" />
+    <Compile Include="PacketHandeling\IPacketHeaderExecutor.cs" />
+    <Compile Include="PacketHandeling\IPacketIn.cs" />
+    <Compile Include="PacketHandeling\IPacketOut.cs" />
+    <Compile Include="PacketHandeling\IPacketSerializer.cs" />
+    <Compile Include="PacketHandeling\PacketAttribute.cs" />
+    <Compile Include="PacketHandeling\PacketDetails.cs" />
+    <Compile Include="PacketHandeling\Utilities\PacketExecutorHelper.cs" />
+    <Compile Include="PacketHandeling\Utilities\PacketSerializerHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\Collections\Details\SocketBufferPool.cs" />
     <Compile Include="Utilities\Collections\Details\SocketEventPool.cs" />
+    <Compile Include="Utilities\Collections\ISocketBufferPool.cs" />
     <Compile Include="Utilities\Collections\ISocketEventPool.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +115,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\SharpBattleNet.Framework.External.BufferPool\SharpBattleNet.Framework.External.BufferPool.csproj">
+      <Project>{c81e12fd-6309-40cb-9fe5-39735c2d1ff9}</Project>
+      <Name>SharpBattleNet.Framework.External.BufferPool</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharpBattleNet.Framework\SharpBattleNet.Framework.csproj">
       <Project>{fdb8d2c5-fd13-40e7-b629-ce71a68bb7b7}</Project>
       <Name>SharpBattleNet.Framework</Name>

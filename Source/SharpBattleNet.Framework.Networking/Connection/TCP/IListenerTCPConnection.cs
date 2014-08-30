@@ -46,13 +46,5 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP
     /// </summary>
     public interface IListenerTCPConnection : ITCPConnection
     {
-        /// <summary>
-        /// Starts the listener TCP connection and receives any data that is
-        /// sent to it.
-        /// </summary>
-        /// <param name="acceptedSocket">
-        /// The client socket that was accepted from the listener
-        /// </param>
-        void Start(Socket acceptedSocket);
     }
 }

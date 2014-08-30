@@ -52,9 +52,11 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
 
         private readonly ISocketEventPool _socketEvents = null;
         private readonly IListenerTCPConnectionFactory _listenerFactory = null;
+        private readonly IListenerAcceptor _acceptor = null;
+        private readonly IConnectionNotifications _notificationListener = null;
+        private readonly EndPoint _listenEndpoint = null;
 
         private Socket _listener = null;
-        private Func<IConnection, bool> _accepted = null;
 
         /// <summary>
         /// Constructs an empty <see cref="TCPListener"/>.
@@ -67,13 +69,18 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
         /// Factory that is used to create new TCP listener connections when
         /// a client is accepted.
         /// </param>
-        public TCPListener(ISocketEventPool socketEvents, IListenerTCPConnectionFactory listenerFactory)
+        public TCPListener(EndPoint listenEndpoint, IListenerAcceptor acceptor, IConnectionNotifications notificationListener, ISocketEventPool socketEvents, IListenerTCPConnectionFactory listenerFactory)
         {
             Guard.AgainstNull(socketEvents);
             Guard.AgainstNull(listenerFactory);
 
             _socketEvents = socketEvents;
             _listenerFactory = listenerFactory;
+            _acceptor = acceptor;
+            _notificationListener = notificationListener;
+            _listenEndpoint = listenEndpoint;
+
+            Start();
 
             return;
         }
@@ -118,7 +125,11 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
 
             if(false == _socketEvents.TryAdd(socketEvent))
             {
-                _logger.Trace("Failed to add an instance of a socket event back to the socket event pool");
+                // Again, we dont really care about these SAEA objects not making
+                // it back into the pool, they will be collected by the GC when
+                // it sees that it no longer contains any references.
+
+                _logger.Trace("Failed to re-insert an accept socket event descriptor back into the pool");
             }
 
             return;
@@ -140,41 +151,37 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
 
             Guard.AgainstNull(socketEvent);
 
-            _logger.Debug("Got new TCP connection from {0}", socketEvent.AcceptSocket.RemoteEndPoint);
-
             StartAccept();
 
             if (SocketError.Success != socketEvent.SocketError)
             {
                 if (SocketError.ConnectionReset == socketEvent.SocketError)
                 {
-                    _logger.Trace("Connection reset from {0}. Possible DOS attack", socketEvent.AcceptSocket.RemoteEndPoint);
+                    _logger.Trace("TCP connection was resetted from client {0}, Possible DOS attack", socketEvent.AcceptSocket.RemoteEndPoint);
                 }
                 else
                 {
-                    if (null != socketEvent.AcceptSocket)
-                    {
-                        _logger.Warn("Socket connection from {0} failed.", socketEvent.AcceptSocket.RemoteEndPoint);
-                    }
-
-                    _logger.Trace("Socket accept fail reason : {0}", socketEvent.SocketError);
+                    _logger.Trace("TCP connection from {0} failed. Stated socket error is {1}", socketEvent.AcceptSocket.RemoteEndPoint, socketEvent.SocketError);
                 }
             }
             else
             {
+                _logger.Trace("Got new TCP connection from {0}", socketEvent.AcceptSocket.RemoteEndPoint);
+
                 try
                 {
-                    connection = _listenerFactory.Create();
-                    connection.Start(socketEvent.AcceptSocket);
-                    if (false == _accepted(connection))
+                    connection = _listenerFactory.Accepted(socketEvent.AcceptSocket, _notificationListener);
+                    if (false == _acceptor.ShouldAccept(socketEvent.AcceptSocket.RemoteEndPoint, connection))
                     {
                         connection.Disconnect();
+                    }
+                    else
+                    {
+                        _acceptor.Accepted(socketEvent.AcceptSocket.RemoteEndPoint, connection);
                     }
                 }
                 catch(Exception ex)
                 {
-                    _logger.Debug("Failed to create socket connection", ex);
-
                     socketEvent.AcceptSocket.Close();
                 }
             }
@@ -217,7 +224,7 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
             }
             catch (ObjectDisposedException ex)
             {
-                _logger.Trace("Socket disposed. Normal exception that happens at exit", ex);
+                _logger.Trace("TCP acceptor socket for address {0} was disposed during operation", _listener.LocalEndPoint);
 
                 if (null != socketEvent)
                 {
@@ -243,32 +250,25 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
         /// return true if the client should be accepted or false if the client
         /// should be disconnected.
         /// </param>
-        public void Start(EndPoint address, Func<IConnection, bool> accepted)
+        private void Start()
         {
-            Guard.AgainstNull(address);
-            Guard.AgainstNull(accepted);
+            _logger.Info("New TCP listener created for local address {0}", _listenEndpoint);
 
-            _accepted = accepted;
-
-            _logger.Info("Started listening for connections on {0}", address);
-
-            _listener = new Socket(address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            _listener = new Socket(_listenEndpoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
             try
             {
-                _listener.Bind(address);
+                _listener.Bind(_listenEndpoint);
                 _listener.Listen(64);
             }
             catch (ObjectDisposedException ex)
             {
-                _logger.Debug("Listener socket has been closed before even beginning accept operation", ex);
-
+                _logger.Debug(String.Format("TCP listener for address {0} was disposed before starting", _listenEndpoint), ex);
                 return;
             }
             catch (SocketException ex)
             {
-                _logger.Warn("Failed to set an operation on the listener socket", ex);
-
+                _logger.Warn(String.Format("TCP listener failed to bind on address {0}", _listenEndpoint), ex);
                 return;
             }
 

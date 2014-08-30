@@ -39,16 +39,18 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
     using SharpBattleNet.Framework.Networking.Connection.Details;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
-    using SharpBattleNet.Framework.Utilities.Collections;
     #endregion
 
     /// <summary>
     /// Implements the <see cref="IBindableUDPConnection"/> class.
     /// </summary>
-    internal sealed class BindableUDPConnection : ConnectionBase, IBindableUDPConnection
+    internal sealed class BindableUDPConnection : UDPConnectionBase, IBindableUDPConnection
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly ISocketEventPool _socketEventBag = null;
+        private readonly ISocketBufferPool _socketBufferPool = null;
+        private readonly EndPoint _addressToBind = null;
+        private readonly IConnectionNotifications _notificationListener = null;
 
         /// <summary>
         /// Constructs an empty <see cref="BindableUDPConnection"/>.
@@ -57,29 +59,19 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
         /// Pool of <see cref="SocketAsyncEventArgs"/> object. Usefull
         /// for performance reasons.
         /// </param>
-        public BindableUDPConnection(ISocketEventPool socketEventBag, IBufferPoolManager bufferPoolManager)
-            : base(socketEventBag, bufferPoolManager)
+        public BindableUDPConnection(EndPoint addressToBind, IConnectionNotifications notificationListener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
+            : base(notificationListener, socketEventBag, socketBufferPool)
         {
+            Guard.AgainstNull(addressToBind);
             Guard.AgainstNull(socketEventBag);
-            Guard.AgainstNull(bufferPoolManager);
+            Guard.AgainstNull(socketBufferPool);
 
             _socketEventBag = socketEventBag;
+            _socketBufferPool = socketBufferPool;
+            _addressToBind = addressToBind;
+            _notificationListener = notificationListener;
 
             return;
         }
-
-        #region IBindableUDPConnection Members
-
-        /// <summary>
-        /// Binds this UDP socket to the specified endpoint. After this
-        /// the socket is place in a receive state.
-        /// </summary>
-        /// <param name="address"></param>
-        public void Bind(EndPoint address)
-        {
-            return;
-        }
-
-        #endregion
     }
 }

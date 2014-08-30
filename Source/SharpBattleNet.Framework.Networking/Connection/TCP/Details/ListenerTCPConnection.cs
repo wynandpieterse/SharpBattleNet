@@ -38,7 +38,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
     using NLog;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
-    using SharpBattleNet.Framework.Utilities.Collections;
     #endregion
 
     /// <summary>
@@ -50,6 +49,8 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         private readonly ISocketEventPool _socketEventBag = null;
+        private readonly ISocketBufferPool _socketBufferPool = null;
+        private readonly IConnectionNotifications _notificationListener = null;
 
         /// <summary>
         /// Constructs an empty <see cref="ListenerTCPConnection"/> object.
@@ -58,37 +59,20 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         /// Collection of <see cref="SocketAsyncEventArgs"/> object. Usefull
         /// for performance reasons.
         /// </param>
-        public ListenerTCPConnection(ISocketEventPool socketEventBag, IBufferPoolManager bufferPoolManager)
-            : base(socketEventBag, bufferPoolManager)
-        {
-            Guard.AgainstNull(socketEventBag);
-            Guard.AgainstNull(bufferPoolManager);
-
-            _socketEventBag = socketEventBag;
-
-            return;
-        }
-
-        #region IListenerTCPConnection Members
-
-        /// <summary>
-        /// Called by the listener subsystem to start the client socket
-        /// and begin receiving data.
-        /// </summary>
-        /// <param name="acceptedSocket">
-        /// The operating system socket that was accepted by the listener.
-        /// </param>
-        public void Start(Socket acceptedSocket)
+        public ListenerTCPConnection(Socket acceptedSocket, IConnectionNotifications notificationListener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
+            : base(notificationListener, socketEventBag, socketBufferPool)
         {
             Guard.AgainstNull(acceptedSocket);
+            Guard.AgainstNull(socketEventBag);
+            Guard.AgainstNull(socketBufferPool);
 
             Socket = acceptedSocket;
 
-            StartReceiving();
+            _socketEventBag = socketEventBag;
+            _socketBufferPool = socketBufferPool;
+            _notificationListener = notificationListener;
 
             return;
         }
-
-        #endregion
     }
 }

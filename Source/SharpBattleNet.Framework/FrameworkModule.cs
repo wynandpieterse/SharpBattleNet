@@ -242,7 +242,7 @@ namespace SharpBattleNet.Framework
                 config.AddTarget("file", fileTarget);
 
                 fileTarget.FileName = logFilename;
-                fileTarget.Layout = @"${date:format=HH\\:MM\\:ss} ${logger} ${message}";
+                fileTarget.Layout = @"${processtime} ${threadid} ${threadname} ${level} ${logger} ${message}";
 
                 var fileRule = new LoggingRule("*", LogLevel.Debug, fileTarget);
                 config.LoggingRules.Add(fileRule);

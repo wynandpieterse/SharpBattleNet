@@ -44,15 +44,11 @@ namespace SharpBattleNet.Server.DiabloIIGameServer
 
         public void Start()
         {
-            _logger.Info("Hello, World");
-
             return;
         }
 
         public void Stop()
         {
-            _logger.Info("Bye, World");
-
             return;
         }
     }

@@ -41,26 +41,28 @@ namespace SharpBattleNet.Program.WarCraftIIIRouterServer
     #endregion
 
     /// <summary>
-    /// The main entry point for the WarCraft III Route Server. Contains the
-    /// initialization logic that starts the framework and launches the program
-    /// located inside the W3RS library assembly.
+    /// Main entry point for WarCraft III router servers. Contains the initialization logic that calls out to the framework
+    /// binary and initializes all the stuff that the route server requires.
     /// </summary>
     internal static class Program
     {
         /// <summary>
-        /// Called by Windows when the application is double clicked inside
-        /// explorer or called from the command line. Starts W3RS.
+        /// Called by Windows when the program is started. This is the main entry point for WarCraft III route server.
         /// </summary>
-        /// <param name="args">Command line arguments</param>
+        /// <param name="args">
+        /// Command line parameters passed in from windows. These can be used to configure the program from the command
+        /// line if it is required.
+        /// </param>
         /// <returns>
-        /// A integer value indicating if we exited successfully. A value of
-        /// 1 means success while a value of 0 means error.
+        /// An integer value that states wheter the program exited successfully or not. A value of 1 indicates success
+        /// while a value of 0 indicates failure.
         /// </returns>
         private static int Main(string[] args)
         {
             FrameworkProgram program = new FrameworkProgram();
 
-            // Configure W3RS via the configuration file and modules.
+            // Configure all the required modules for WarCraft III route server and return the program name for configuration
+            // values.
             program.Configure = kernel =>
                 {
                     kernel.Load<WarCraftIIIRouterServerModule>();

@@ -41,25 +41,29 @@ namespace SharpBattleNet.Program.MasterServer
     #endregion
 
     /// <summary>
-    /// Called by Windows. Contains main program logic for master server.
-    /// Initializes the framework and starts by calling the MS framework
-    /// assembly.
+    /// Contains the main program logic for the master server. It calls out to the master server framework library and
+    /// initializes everything required to run the master server.
     /// </summary>
     internal static class Program
     {
         /// <summary>
-        /// Called by Windows.
+        /// Called by Windows when the program is started. Contains all the initialization logic. Inside this function
+        /// the master server is initialized, runned and eventually returns when the program execution has finishes.
         /// </summary>
-        /// <param name="args">Parameters passed on the command line</param>
+        /// <param name="args">
+        /// Parameters passed on the command line from Windows. Can be used to customize the program and provide values
+        /// for configuration items.
+        /// </param>
         /// <returns>
-        /// Wheter the program exited successfully or failed. A value of 1
-        /// indicates success while a value of 0 indicates failure.
+        /// An integer value which indicates if the program exited successfully or not. A value of 1 indicates success
+        /// while a value of 0 indicates failure.
         /// </returns>
         private static int Main(string[] args)
         {
             FrameworkProgram program = new FrameworkProgram();
 
-            // Configure the framework and master server module.
+            // Configure all the modules that the master server requires, and return the program name for us to get
+            // configuration parameters to work.
             program.Configure = kernel =>
                 {
                     kernel.Load<MasterServerModule>();

@@ -39,7 +39,6 @@ namespace SharpBattleNet.Framework
     using Ninject.Modules;
     using SharpBattleNet.Framework.Utilities.Debugging;
     using Ninject.Extensions.Factory;
-    using NLog.Conditions;
     using System.Collections.Generic;
     #endregion
 

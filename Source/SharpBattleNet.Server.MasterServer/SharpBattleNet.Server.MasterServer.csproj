@@ -41,9 +41,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Castle.Core.3.2.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Nini">
-      <HintPath>..\packages\Trove.Nini.1.1.0.0\lib\net20\Nini.dll</HintPath>
-    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>

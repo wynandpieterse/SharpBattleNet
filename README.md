@@ -29,7 +29,6 @@ If you wish to contribute ideas or code, please fork this repository and make a 
 
 SharpBattleNet uses the following libraries from NuGet and different places.
 
- + Nini Configuration Library
  + NLog Logging Library
  + Ninject Dependcy Injection Library
  + Ninject.Factory Extension Library

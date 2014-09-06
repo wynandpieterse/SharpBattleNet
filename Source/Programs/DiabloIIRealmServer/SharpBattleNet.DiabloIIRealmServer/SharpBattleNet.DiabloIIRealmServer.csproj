@@ -22,7 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <BaseIntermediateOutputPath>../../../../Intermediate/Code/SharpBattleNet.Server.DiabloIIRealmServer/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../../../Intermediate/Code/SharpBattleNet.DiabloIIRealmServer/</BaseIntermediateOutputPath>
     <OutputPath>$(BaseIntermediateOutputPath)$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
@@ -32,7 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <BaseIntermediateOutputPath>../../../../Intermediate/Code/SharpBattleNet.Server.DiabloIIRealmServer/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../../../Intermediate/Code/SharpBattleNet.DiabloIIRealmServer/</BaseIntermediateOutputPath>
     <OutputPath>$(BaseIntermediateOutputPath)$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>

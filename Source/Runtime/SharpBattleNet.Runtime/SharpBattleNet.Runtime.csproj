@@ -23,7 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <BaseIntermediateOutputPath>../../../Intermediate/Code/SharpBattleNet.Framework/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../../Intermediate/Code/SharpBattleNet.Runtime/</BaseIntermediateOutputPath>
     <OutputPath>$(BaseIntermediateOutputPath)$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
@@ -33,7 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <BaseIntermediateOutputPath>../../../Intermediate/Code/SharpBattleNet.Framework/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../../Intermediate/Code/SharpBattleNet.Runtime/</BaseIntermediateOutputPath>
     <OutputPath>$(BaseIntermediateOutputPath)$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
     <RunCodeAnalysis>false</RunCodeAnalysis>

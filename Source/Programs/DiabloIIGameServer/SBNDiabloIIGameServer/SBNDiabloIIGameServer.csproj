@@ -20,24 +20,24 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\BinariesDebug\</OutputPath>
+    <OutputPath>..\..\..\..\BinariesDebug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <BaseIntermediateOutputPath>../../../../Intermediate/Code/SharpBattleNet.Program.DiabloIIGameServer/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../../../Intermediate/Code/SBNDiabloIIGameServer/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Binaries\</OutputPath>
+    <OutputPath>..\..\..\..\Binaries\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <BaseIntermediateOutputPath>../../../../Intermediate/Code/SharpBattleNet.Program.DiabloIIGameServer/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../../../Intermediate/Code/SBNDiabloIIGameServer/</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup>

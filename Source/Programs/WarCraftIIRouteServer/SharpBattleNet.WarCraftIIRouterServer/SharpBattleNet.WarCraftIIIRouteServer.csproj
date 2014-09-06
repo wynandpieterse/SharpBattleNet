@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <BaseIntermediateOutputPath>../../../../Intermediate/Code/SharpBattleNet.Server.WarCraftIIIRouterServer/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../../../Intermediate/Code/SharpBattleNet.WarCraftIIIRouterServer/</BaseIntermediateOutputPath>
     <OutputPath>$(BaseIntermediateOutputPath)$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -29,7 +29,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <BaseIntermediateOutputPath>../../../../Intermediate/Code/SharpBattleNet.Server.WarCraftIIIRouterServer/</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>../../../../Intermediate/Code/SharpBattleNet.WarCraftIIIRouterServer/</BaseIntermediateOutputPath>
     <OutputPath>$(BaseIntermediateOutputPath)$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
     <DefineConstants>TRACE</DefineConstants>

@@ -102,7 +102,7 @@
     <Content Include="BattleNet.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="Application.config" />
     <None Include="Packages.config" />
   </ItemGroup>
   <ItemGroup>

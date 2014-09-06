@@ -107,10 +107,6 @@
     <None Include="Packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Runtime\Networking\SharpBattleNet.Runtime.Networking\SharpBattleNet.Runtime.Networking.csproj">
-      <Project>{b838d207-fad1-4ee1-95b5-dcb240d1a0aa}</Project>
-      <Name>SharpBattleNet.Runtime.Networking</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Runtime\SharpBattleNet.Runtime\SharpBattleNet.Runtime.csproj">
       <Project>{fdb8d2c5-fd13-40e7-b629-ce71a68bb7b7}</Project>
       <Name>SharpBattleNet.Runtime</Name>

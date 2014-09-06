@@ -65,7 +65,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ninject">
-      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+      <HintPath>..\..\..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
@@ -106,6 +106,22 @@
     <None Include="Packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Runtime\SharpBattleNet.Runtime.Networking.Packets\SharpBattleNet.Runtime.Networking.Packets.csproj">
+      <Project>{cd359f42-c4e6-4c6a-a1a7-c56951c8cc8a}</Project>
+      <Name>SharpBattleNet.Runtime.Networking.Packets</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Runtime\SharpBattleNet.Runtime.Networking.TCP\SharpBattleNet.Runtime.Networking.TCP.csproj">
+      <Project>{c4e425c6-1817-4190-8358-6a822fd6d504}</Project>
+      <Name>SharpBattleNet.Runtime.Networking.TCP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Runtime\SharpBattleNet.Runtime.Networking.UDP\SharpBattleNet.Runtime.Networking.UDP.csproj">
+      <Project>{57f854bc-99db-4719-b435-7e8f3785b9e2}</Project>
+      <Name>SharpBattleNet.Runtime.Networking.UDP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Runtime\SharpBattleNet.Runtime.Networking\SharpBattleNet.Runtime.Networking.csproj">
+      <Project>{b838d207-fad1-4ee1-95b5-dcb240d1a0aa}</Project>
+      <Name>SharpBattleNet.Runtime.Networking</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Runtime\SharpBattleNet.Runtime\SharpBattleNet.Runtime.csproj">
       <Project>{fdb8d2c5-fd13-40e7-b629-ce71a68bb7b7}</Project>
       <Name>SharpBattleNet.Runtime</Name>

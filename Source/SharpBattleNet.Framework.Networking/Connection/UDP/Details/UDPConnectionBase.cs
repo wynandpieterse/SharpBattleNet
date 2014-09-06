@@ -35,7 +35,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
     #region Usings
     using System;
     using System.Net.Sockets;
-    using NLog;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
     using SharpBattleNet.Framework.Networking.Connection.Details;
@@ -43,7 +42,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
 
     internal abstract class UDPConnectionBase : ConnectionBase, IUDPConnection
     {
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly ISocketEventPool _socketEventBag = null;
         private readonly ISocketBufferPool _socketBufferPool = null;
         private readonly IConnectionNotifications _notificationListener = null;
@@ -99,8 +97,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
             }
             catch (ObjectDisposedException ex)
             {
-                _logger.Trace(String.Format("Socket was disposed during UDP receive operation on local address {0}", Socket.LocalEndPoint), ex);
-
                 // TODO : Put OnError here for consumers
 
                 if (null != socketEvent)
@@ -110,8 +106,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
             }
             catch (SocketException ex)
             {
-                _logger.Trace(String.Format("Socket has encountered an error while doing a UDP receive on {0}", Socket.LocalEndPoint), ex);
-
                 // TODO : Put OnError here for consumers
 
                 if (null != socketEvent)

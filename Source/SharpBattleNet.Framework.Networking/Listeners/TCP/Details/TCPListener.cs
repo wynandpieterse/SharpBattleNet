@@ -36,7 +36,6 @@ namespace SharpBattleNet.Framework.Networking.Listeners.TCP.Details
     using System;
     using System.Net;
     using System.Net.Sockets;
-    using NLog;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
     using SharpBattleNet.Framework.Networking.Connection;

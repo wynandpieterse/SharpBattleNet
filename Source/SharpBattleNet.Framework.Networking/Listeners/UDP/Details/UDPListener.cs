@@ -34,7 +34,6 @@ namespace SharpBattleNet.Framework.Networking.Listeners.UDP.Details
 {
     #region Usings
     using System;
-    using NLog;
     #endregion
 
     /// <summary>

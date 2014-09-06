@@ -37,9 +37,6 @@ namespace SharpBattleNet.Framework
     using System.IO;
     using Ninject;
     using Ninject.Modules;
-    using NLog;
-    using NLog.Targets;
-    using NLog.Config;
     using SharpBattleNet.Framework.Utilities.Debugging;
     using Ninject.Extensions.Factory;
     using NLog.Conditions;

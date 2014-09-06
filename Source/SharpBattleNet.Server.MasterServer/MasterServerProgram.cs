@@ -36,7 +36,6 @@ namespace SharpBattleNet.Server.MasterServer
     using System;
     using System.Net;
     using System.Net.Sockets;
-    using NLog;
     using SharpBattleNet.Framework;
     using SharpBattleNet.Framework.Networking.Listeners.TCP;
     using SharpBattleNet.Framework.Networking.Connection;
@@ -48,8 +47,6 @@ namespace SharpBattleNet.Server.MasterServer
 
     internal sealed class MasterServerProgram : IProgram, IListenerAcceptor, IConnectionNotifications, IConnectableTCPConnectionListener
     {
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
         private readonly ITCPListenerFactory _listenerFactory = null;
         private ITCPListener _listener = null;
         private readonly IConnectableTCPConnectionFactory _connectionFactory = null;
@@ -84,8 +81,6 @@ namespace SharpBattleNet.Server.MasterServer
 
         public void Accepted(EndPoint remoteEndpoint, IConnection remoteConnection)
         {
-            _logger.Info("Got new connection from {0}", remoteEndpoint);
-
             remoteConnection.StartReceiving();
 
             return;
@@ -100,8 +95,6 @@ namespace SharpBattleNet.Server.MasterServer
         {
             byte[] buffer = new byte[1024];
             dataBuffer.CopyTo(buffer, 0, bytesReceived);
-
-            _logger.Info("Got message from {0} : {1}", remoteAddress, Encoding.ASCII.GetString(buffer, 0, bytesReceived));
 
             return;
         }
@@ -118,14 +111,11 @@ namespace SharpBattleNet.Server.MasterServer
 
         public void ConnectionFailed(IConnectableTCPConnection connection, EndPoint remoteEndpoint)
         {
-            _logger.Warn("Failed to connect to {0}", remoteEndpoint);
             return;
         }
 
         public bool ConnectionSucceeded(IConnectableTCPConnection connection, EndPoint remoteEndpoint)
         {
-            _logger.Info("Successfull connection to {0}", remoteEndpoint);
-
             connection.StartReceiving();
 
             return true;

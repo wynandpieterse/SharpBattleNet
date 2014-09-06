@@ -35,7 +35,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
     #region Usings
     using System;
     using System.Net;
-    using NLog;
     using SharpBattleNet.Framework.Networking.Connection.Details;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
@@ -46,7 +45,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
     /// </summary>
     internal sealed class BindableUDPConnection : UDPConnectionBase, IBindableUDPConnection
     {
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly ISocketEventPool _socketEventBag = null;
         private readonly ISocketBufferPool _socketBufferPool = null;
         private readonly EndPoint _addressToBind = null;

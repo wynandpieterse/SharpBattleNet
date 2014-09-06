@@ -34,14 +34,11 @@ namespace SharpBattleNet.Server.DiabloIIGameServer
 {
     #region Usings
     using System;
-    using NLog;
     using SharpBattleNet.Framework;
     #endregion
 
     internal sealed class DiabloIIGameServerProgram : IProgram
     {
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
         public void Start()
         {
             return;

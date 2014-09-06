@@ -184,8 +184,6 @@ namespace SharpBattleNet.Framework
             // TODO : See if we can maybe integrate with 3rd-party solutions like
             // rocket.io or like that.
 
-            // Can't really use NLogger here because I dont know if it was configured correctly
-            // by this time
             Console.WriteLine();
             Console.WriteLine("INTERNAL SERVER ERROR:");
             Console.WriteLine(" - {0}", ex.Message);

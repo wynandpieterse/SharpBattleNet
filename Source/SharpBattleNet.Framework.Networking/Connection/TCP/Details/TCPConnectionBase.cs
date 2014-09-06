@@ -35,7 +35,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
     #region Usings
     using System;
     using System.Net.Sockets;
-    using NLog;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
     using SharpBattleNet.Framework.Networking.Connection.Details;
@@ -46,7 +45,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
     /// </summary>
     internal abstract class TCPConnectionBase : ConnectionBase, ITCPConnection
     {
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly ISocketEventPool _socketEventBag = null;
         private readonly ISocketBufferPool _socketBufferPool = null;
         private readonly IConnectionNotifications _notificationListener = null;
@@ -108,8 +106,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             }
             catch (ObjectDisposedException ex)
             {
-                _logger.Trace(String.Format("Socket was disposed during TCP receive operation on address {0}", Socket.RemoteEndPoint), ex);
-
                 // TODO : Put OnError here for consumers
 
                 if (null != socketEvent)
@@ -119,8 +115,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
             }
             catch (SocketException ex)
             {
-                _logger.Trace(String.Format("Socket has encountered an error while doing a TCP receive from {0}", Socket.RemoteEndPoint), ex);
-
                 // TODO : Put OnError here for consumers
 
                 if (null != socketEvent)
@@ -139,8 +133,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
         /// </summary>
         public void Disconnect()
         {
-            _logger.Trace("TCP socket disconnecting from {0}", Socket.RemoteEndPoint);
-
             if(null != Socket)
             {
                 try

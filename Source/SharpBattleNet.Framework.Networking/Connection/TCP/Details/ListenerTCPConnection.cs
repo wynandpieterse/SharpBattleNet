@@ -35,7 +35,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
     #region Usings
     using System;
     using System.Net.Sockets;
-    using NLog;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
     #endregion
@@ -46,8 +45,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.TCP.Details
     /// </summary>
     internal sealed class ListenerTCPConnection : TCPConnectionBase, IListenerTCPConnection
     {
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
         private readonly ISocketEventPool _socketEventBag = null;
         private readonly ISocketBufferPool _socketBufferPool = null;
         private readonly IConnectionNotifications _notificationListener = null;

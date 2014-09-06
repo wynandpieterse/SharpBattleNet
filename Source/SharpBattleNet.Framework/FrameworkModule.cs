@@ -37,12 +37,8 @@ namespace SharpBattleNet.Framework
     using System.IO;
     using Ninject;
     using Ninject.Modules;
-    using NLog;
-    using NLog.Targets;
-    using NLog.Config;
     using SharpBattleNet.Framework.Utilities.Debugging;
     using Ninject.Extensions.Factory;
-    using NLog.Conditions;
     using System.Collections.Generic;
     #endregion
 
@@ -99,139 +95,11 @@ namespace SharpBattleNet.Framework
         }
 
         /// <summary>
-        /// Returns a NLog log level depending on the passed in string.
-        /// </summary>
-        /// <param name="level">
-        /// The string to parse for log levels.
-        /// </param>
-        /// <returns>
-        /// An <see cref="LogLevel"/> enumartion converted from the level
-        /// argument.
-        /// </returns>
-        private LogLevel GetLogLevel(string level)
-        {
-            Guard.AgainstNull(level);
-            Guard.AgainstEmptyString(level);
-
-            switch (level)
-            {
-                case "Trace":
-                    return LogLevel.Trace;
-                case "Debug":
-                    return LogLevel.Debug;
-                case "Info":
-                    return LogLevel.Info;
-                case "Warn":
-                    return LogLevel.Warn;
-                case "Error":
-                    return LogLevel.Error;
-                case "Fatal":
-                    return LogLevel.Fatal;
-            }
-
-            return LogLevel.Off;
-        }
-
-        /// <summary>
-        /// Configure NLog to output to the console.
-        /// </summary>
-        /// <param name="config">The NLog configuration object to configure.</param>
-        private void ConfigureConsoleLogging(LoggingConfiguration config)
-        {
-            Guard.AgainstNull(config);
-
-            var configSource = Kernel.Get<IConfigSource>();
-            var source = configSource.Configs["General"];
-
-            if(null != source)
-            {
-                if(true == source.GetBoolean("LogConsole"))
-                {
-                    var consoleTarget = new ColoredConsoleTarget();
-                    config.AddTarget("console", consoleTarget);
-
-                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Fatal", ConsoleOutputColor.Red, ConsoleOutputColor.NoChange));
-                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Error", ConsoleOutputColor.DarkRed, ConsoleOutputColor.NoChange));
-                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Warn", ConsoleOutputColor.Yellow, ConsoleOutputColor.NoChange));
-                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Info", ConsoleOutputColor.White, ConsoleOutputColor.NoChange));
-                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Debug", ConsoleOutputColor.Gray, ConsoleOutputColor.NoChange));
-                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Trace", ConsoleOutputColor.DarkGray, ConsoleOutputColor.NoChange));
-
-                    consoleTarget.UseDefaultRowHighlightingRules = false;
-                    consoleTarget.Layout = @"${message}";
-
-                    var consoleRule = new LoggingRule("*", GetLogLevel(source.Get("LogConsoleLevel")), consoleTarget);
-                    config.LoggingRules.Add(consoleRule);
-                }
-            }
-
-            return;
-        }
-
-        /// <summary>
-        /// Configures the NLog subsystem to log to a file inside the write
-        /// directory.
-        /// </summary>
-        /// <param name="config">The NLog configuration object to configure.</param>
-        private void ConfigureFileLogging(LoggingConfiguration config)
-        {
-            Guard.AgainstNull(config);
-
-            if (true == _writeDirectorySuccessfull)
-            {
-                string logDirectory = Path.Combine(_writeDirectory, "Logs");
-                DateTime currentTime = DateTime.Now;
-                string logDate = string.Format("{0}-{1}-{2}-{3}-{4}-{5}", currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Second);
-                string logFilename = Path.Combine(logDirectory, string.Format("Log-{0}.log", logDate));
-
-                try
-                {
-                    Directory.CreateDirectory(logDirectory);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Failed to create log directory. File logs will not be written");
-                    Console.WriteLine(ex.Message);
-
-                    return;
-                }
-
-                var fileTarget = new FileTarget();
-                config.AddTarget("file", fileTarget);
-
-                fileTarget.FileName = logFilename;
-                fileTarget.Layout = @"${processtime} ${threadid} ${level} ${logger} ${message}";
-
-                var fileRule = new LoggingRule("*", LogLevel.Debug, fileTarget);
-                config.LoggingRules.Add(fileRule);
-            }
-
-            return;
-        }
-
-        /// <summary>
-        /// Configures NLog.
-        /// </summary>
-        private void ConfigureLogging()
-        {
-            var config = new LoggingConfiguration();
-
-            ConfigureConsoleLogging(config);
-            ConfigureFileLogging(config);
-
-            LogManager.Configuration = config;
-
-            return;
-        }
-
-        /// <summary>
         /// Called by Ninject to configure this module.
         /// </summary>
         public override void Load()
         {
             ConfigureWriteDirectory();
-            ConfigureLogging();
-
             return;
         }
     }

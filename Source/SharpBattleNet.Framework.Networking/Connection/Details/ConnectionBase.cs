@@ -37,7 +37,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
     using System.Net;
     using System.Net.Sockets;
     using System.Text;
-    using NLog;
     using SharpBattleNet.Framework.Networking.Utilities.Collections;
     using SharpBattleNet.Framework.Utilities.Debugging;
     using SharpBattleNet.Framework.External.BufferPool;
@@ -49,8 +48,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
     /// </summary>
     internal abstract class ConnectionBase : IConnection
     {
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
         private readonly ISocketEventPool _socketEventBag = null;
         private readonly ISocketBufferPool _socketBufferPool = null;
         private readonly IConnectionNotifications _notificationListener = null;
@@ -153,7 +150,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
             {
                 // Don't worry too much if it fails, as the GC will re-collect it when it sees
                 // no more references to it.
-                _logger.Debug("Failed to re-insert a receive socket event object back into pool");
             }
 
             return;
@@ -177,8 +173,6 @@ namespace SharpBattleNet.Framework.Networking.Connection.Details
             // A receive of 0 usually means that the stream was closed.
             if (socketEvent.BytesTransferred == 0)
             {
-                _logger.Info("Connection from address {0} closed normally", socketEvent.RemoteEndPoint);
-
                 return;
             }
 

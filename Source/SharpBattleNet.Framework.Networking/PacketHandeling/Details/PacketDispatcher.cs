@@ -9,14 +9,11 @@ using SharpBattleNet.Framework.Networking.Connection;
 using SharpBattleNet.Framework.External.BufferPool;
 using System.Reflection;
 using SharpBattleNet.Framework.Utilities.Extensions;
-using NLog;
 
 namespace SharpBattleNet.Framework.Networking.PacketHandeling.Details
 {
     internal sealed class PacketDispatcher : IPacketDispatcher
     {
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
         private readonly uint _program = 0;
         private readonly IPacketHeaderExecutor _headerExecutor = null;
 
@@ -46,11 +43,11 @@ namespace SharpBattleNet.Framework.Networking.PacketHandeling.Details
                 Type interfaceType = type.GetInterface("IPacket");
                 if(null == interfaceType)
                 {
-                    _logger.Warn("Type {0} has a Packet attribute but does not inherit from the packet interface", type);
+
                 }
                 else
                 {
-                    _logger.Debug("Found packet type on {0}", type);
+
                 }
             }
 
@@ -59,8 +56,6 @@ namespace SharpBattleNet.Framework.Networking.PacketHandeling.Details
 
         private void ProcessAssembly(Assembly assembly)
         {
-            _logger.Debug("Processing assembly {0} for packet types", assembly);
-
             assembly.GetTypes().ForEachAsync(ProcessType);
             return;
         }

@@ -37,7 +37,6 @@ namespace SharpBattleNet.Framework
     using System.IO;
     using Ninject;
     using Ninject.Modules;
-    using Nini.Config;
     using NLog;
     using NLog.Targets;
     using NLog.Config;
@@ -95,47 +94,6 @@ namespace SharpBattleNet.Framework
 
                 _writeDirectorySuccessfull = false;
             }
-
-            return;
-        }
-
-        /// <summary>
-        /// Configures the configuration subsystem that can be used by modules
-        /// to make themself configurable to the open world.
-        /// </summary>
-        private void ConfigureConfiguration()
-        {
-            string configurationDirectory = Path.Combine(_writeDirectory, "Configuration");
-            string configurationFilename = Path.Combine(configurationDirectory, string.Format("{0}.ini", _applicationName));
-
-            if (true == _writeDirectorySuccessfull)
-            {
-                Directory.CreateDirectory(configurationDirectory);
-
-                // check to see if configuration file already exist there
-                if (false == File.Exists(configurationFilename))
-                {
-                    try
-                    {
-                        // copy configuration file over
-                        File.Copy(string.Format("../Configuration/{0}.ini", _applicationName), configurationFilename);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Failed to copy over configuration to the specified application directory. Using default!!!");
-                        Console.WriteLine(ex.Message);
-
-                        configurationFilename = string.Format("../Configuration/{0}.ini");
-                    }
-                }
-            }
-            else
-            {
-                // If we failed to create the write directory, use the default configuration.
-                configurationFilename = string.Format("../Configuration/{0}.ini", _applicationName);
-            }
-
-            Bind<IConfigSource>().ToMethod(context => new IniConfigSource(configurationFilename)).InSingletonScope();
 
             return;
         }
@@ -272,7 +230,6 @@ namespace SharpBattleNet.Framework
         public override void Load()
         {
             ConfigureWriteDirectory();
-            ConfigureConfiguration();
             ConfigureLogging();
 
             return;

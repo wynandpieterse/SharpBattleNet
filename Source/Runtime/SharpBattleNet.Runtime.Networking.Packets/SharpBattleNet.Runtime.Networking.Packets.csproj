@@ -24,6 +24,7 @@
     <BaseIntermediateOutputPath>../../../Intermediate/Code/SharpBattleNet.Runtime.Networking.Packets/</BaseIntermediateOutputPath>
     <OutputPath>$(BaseIntermediateOutputPath)$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

@@ -7,8 +7,8 @@
     <ProjectGuid>{B838D207-FAD1-4EE1-95B5-DCB240D1A0AA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharpBattleNet.Framework.Networking</RootNamespace>
-    <AssemblyName>SharpBattleNet.Framework.Networking</AssemblyName>
+    <RootNamespace>SharpBattleNet.Runtime.Networking</RootNamespace>
+    <AssemblyName>SharpBattleNet.Runtime.Networking</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -25,6 +25,7 @@
     <BaseIntermediateOutputPath>../../../Intermediate/Code/SharpBattleNet.Runtime.Networking/</BaseIntermediateOutputPath>
     <OutputPath>$(BaseIntermediateOutputPath)$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

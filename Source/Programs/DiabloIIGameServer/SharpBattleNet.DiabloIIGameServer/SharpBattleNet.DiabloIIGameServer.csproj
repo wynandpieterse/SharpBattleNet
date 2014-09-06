@@ -7,8 +7,8 @@
     <ProjectGuid>{8DB14FFE-D08D-428B-AFBB-52337352FDF5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharpBattleNet.Server.DiabloIIGameServer</RootNamespace>
-    <AssemblyName>SharpBattleNet.Server.DiabloIIGameServer</AssemblyName>
+    <RootNamespace>SharpBattleNet.DiabloIIGameServer</RootNamespace>
+    <AssemblyName>SharpBattleNet.DiabloIIGameServer</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -25,6 +25,7 @@
     <BaseIntermediateOutputPath>../../../../Intermediate/Code/SharpBattleNet.DiabloIIGameServer/</BaseIntermediateOutputPath>
     <OutputPath>$(BaseIntermediateOutputPath)$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

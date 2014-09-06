@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -111,7 +111,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\SharpBattleNet.Framework\SharpBattleNet.Runtime.csproj">
+    <ProjectReference Include="..\..\SharpBattleNet.Runtime\SharpBattleNet.Runtime.csproj">
       <Project>{fdb8d2c5-fd13-40e7-b629-ce71a68bb7b7}</Project>
       <Name>SharpBattleNet.Runtime</Name>
     </ProjectReference>

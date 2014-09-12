@@ -57,6 +57,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\Application.cs" />
+    <Compile Include="Application\ApplicationMode.cs" />
+    <Compile Include="Application\Details\BaseApplicationHandler.cs" />
+    <Compile Include="Application\Details\Console\ConsoleApplicationHandler.cs" />
+    <Compile Include="Application\Details\Service\ServiceApplicationHandler.cs" />
+    <Compile Include="Application\IApplicationHandler.cs" />
+    <Compile Include="Application\IApplicationListener.cs" />
+    <Compile Include="Application\ICommandLineParser.cs" />
     <Compile Include="FrameworkProgram.cs" />
     <Compile Include="IProgram.cs" />
     <Compile Include="Utilities\Extensions\AssemblyExtensions.cs" />

@@ -36,6 +36,7 @@ namespace SBNMasterServer
     using System;
     using Ninject;
     using SharpBattleNet.Runtime;
+    using SharpBattleNet.Runtime.Application;
     using SharpBattleNet.MasterServer;
     using SharpBattleNet.Runtime.Networking;
     #endregion
@@ -60,19 +61,12 @@ namespace SBNMasterServer
         /// </returns>
         private static int Main(string[] args)
         {
-            FrameworkProgram program = new FrameworkProgram();
+            using(var application = new Application(ApplicationMode.Console, "MasterServer", args))
+            {
+                application.AddDependencyModule(new MasterServerModule());
 
-            // Configure all the modules that the master server requires, and return the program name for us to get
-            // configuration parameters to work.
-            program.Configure = kernel =>
-                {
-                    kernel.Load<MasterServerModule>();
-                    kernel.Load<NetworkModule>();
-
-                    return "MasterServer";
-                };
-
-            return program.Run(args);
+                return application.Run();
+            }
         }
     }
 }

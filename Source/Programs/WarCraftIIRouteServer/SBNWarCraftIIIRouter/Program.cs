@@ -38,6 +38,7 @@ namespace SBNWarCraftIIIRouteServer
     using SharpBattleNet.Runtime;
     using SharpBattleNet.Runtime.Networking;
     using SharpBattleNet.WarCraftIIIRouterServer;
+    using SharpBattleNet.Runtime.Application;
     #endregion
 
     /// <summary>
@@ -59,19 +60,12 @@ namespace SBNWarCraftIIIRouteServer
         /// </returns>
         private static int Main(string[] args)
         {
-            FrameworkProgram program = new FrameworkProgram();
+            using(var application = new Application(ApplicationMode.Console, "WarCraftIIIRouterServer", args))
+            {
+                application.AddDependencyModule(new WarCraftIIIRouterServerModule());
 
-            // Configure all the required modules for WarCraft III route server and return the program name for configuration
-            // values.
-            program.Configure = kernel =>
-                {
-                    kernel.Load<WarCraftIIIRouterServerModule>();
-                    kernel.Load<NetworkModule>();
-
-                    return "WarCraftIIIRouterServer";
-                };
-
-            return program.Run(args);
+                return application.Run();
+            }
         }
     }
 }

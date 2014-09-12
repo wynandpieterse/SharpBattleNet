@@ -36,6 +36,7 @@ namespace SBNDiabloIIRealmServer
     using System;
     using Ninject;
     using SharpBattleNet.Runtime;
+    using SharpBattleNet.Runtime.Application;
     using SharpBattleNet.DiabloIIRealmServer;
     using SharpBattleNet.Runtime.Networking;
     #endregion
@@ -55,18 +56,12 @@ namespace SBNDiabloIIRealmServer
         /// </returns>
         private static int Main(string[] args)
         {
-            FrameworkProgram program = new FrameworkProgram();
+            using(var application = new Application(ApplicationMode.Console, "DiabloIIRealmServer", args))
+            {
+                application.AddDependencyModule(new DiabloIIRealmServerModule());
 
-            // Configure the framework and start D2RS.
-            program.Configure = kernel =>
-                {
-                    kernel.Load<DiabloIIRealmServerModule>();
-                    kernel.Load<NetworkModule>();
-
-                    return "DiabloIIRealmServer";
-                };
-
-            return program.Run(args);
+                return application.Run();
+            }
         }
     }
 }

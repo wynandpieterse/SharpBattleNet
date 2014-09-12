@@ -36,6 +36,7 @@ namespace SBNDiabloIIGameServer
     using System;
     using Ninject;
     using SharpBattleNet.Runtime;
+    using SharpBattleNet.Runtime.Application;
     using SharpBattleNet.Runtime.Networking;
     using SharpBattleNet.DiabloIIGameServer;
     #endregion
@@ -55,18 +56,12 @@ namespace SBNDiabloIIGameServer
         /// </returns>
         private static int Main(string[] args)
         {
-            FrameworkProgram program = new FrameworkProgram();
+            using(var application = new Application(ApplicationMode.Console, "DiabloIIGameServer", args))
+            {
+                application.AddDependencyModule(new DiabloIIGameServerModule());
 
-            // Configure the framework and launches a D2 game server
-            program.Configure = kernel =>
-                {
-                    kernel.Load<DiabloIIGameServerModule>();
-                    kernel.Load<NetworkModule>();
-
-                    return "DiabloIIGameServer";
-                };
-
-            return program.Run(args);
+                return application.Run();
+            }
         }
     }
 }

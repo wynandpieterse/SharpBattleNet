@@ -8,6 +8,7 @@ namespace SharpBattleNet.Runtime.Application
 {
     public enum ApplicationMode
     {
+        Undefined = 0,
         Console,
         Service,
         GUI

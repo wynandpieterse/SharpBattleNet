@@ -25,6 +25,13 @@ This project is completely open source, and community involvement is highly enco
 
 If you wish to contribute ideas or code, please fork this repository and make a pull request.
 
+In it's current implementation it cannot do anything usefull. The client's can connect if they are registered with
+the gateway tool inside the 'Tools' folder. However, they can connect, there is no connection logic in at the moment
+to handle processing it further.
+
+My aim is to get this project running on Linux (Ubuntu) and MacOS X also. If there is any one out there with a Mac, I
+would appreciate it very much if you can test it as I do not own a Mac.
+
 ## Libraries
 
 SharpBattleNet uses the following libraries from NuGet and different places.

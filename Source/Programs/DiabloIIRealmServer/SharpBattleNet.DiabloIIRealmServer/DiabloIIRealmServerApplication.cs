@@ -35,10 +35,13 @@ namespace SharpBattleNet.DiabloIIRealmServer
     #region Usings
     using System;
     using SharpBattleNet.Runtime;
+    using SharpBattleNet.Runtime.Application;
     #endregion
 
-    internal sealed class DiabloIIRealmServerProgram : IProgram
+    internal sealed class DiabloIIRealmServerApplication : IApplicationListener
     {
+        private bool _disposed = false;
+
         public void Start()
         {
             return;
@@ -46,6 +49,30 @@ namespace SharpBattleNet.DiabloIIRealmServer
 
         public void Stop()
         {
+            return;
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (false == _disposed)
+            {
+                if (true == disposing)
+                {
+
+                }
+
+                _disposed = true;
+            }
+
+            return;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+
+            GC.SuppressFinalize(this);
+
             return;
         }
     }

@@ -36,13 +36,14 @@ namespace SharpBattleNet.DiabloIIGameServer
     using System;
     using Ninject.Modules;
     using SharpBattleNet.Runtime;
+    using SharpBattleNet.Runtime.Application;
     #endregion
 
     public sealed class DiabloIIGameServerModule : NinjectModule
     {
         public override void Load()
         {
-            Bind<IProgram>().To<DiabloIIGameServerProgram>();
+            Bind<IApplicationListener>().To<DiabloIIGameServerApplication>();
 
             return;
         }

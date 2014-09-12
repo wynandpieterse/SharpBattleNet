@@ -43,16 +43,18 @@ namespace SharpBattleNet.MasterServer
     using System.Text;
     using SharpBattleNet.Runtime.Networking.TCP.Listener;
     using SharpBattleNet.Runtime.Networking.TCP.Connection;
+    using SharpBattleNet.Runtime.Application;
     #endregion
 
-    internal sealed class MasterServerProgram : IProgram, IListenerAcceptor, IConnectionNotifications, IConnectableTCPConnectionListener
+    internal sealed class MasterServerApplication : IApplicationListener, IListenerAcceptor, IConnectionNotifications, IConnectableTCPConnectionListener
     {
         private readonly ITCPListenerFactory _listenerFactory = null;
         private ITCPListener _listener = null;
         private readonly IConnectableTCPConnectionFactory _connectionFactory = null;
         private IConnectableTCPConnection _connect = null;
+        private bool _disposed = false;
 
-        public MasterServerProgram(ITCPListenerFactory listenerFactory, IConnectableTCPConnectionFactory connectionFactory)
+        public MasterServerApplication(ITCPListenerFactory listenerFactory, IConnectableTCPConnectionFactory connectionFactory)
         {
             _listenerFactory = listenerFactory;
             _connectionFactory = connectionFactory;
@@ -76,6 +78,7 @@ namespace SharpBattleNet.MasterServer
 
         public bool ShouldAccept(EndPoint remoteEndpoint, IConnection remoteConnection)
         {
+            Console.WriteLine("Got accept request : {0}", remoteEndpoint);
             return true;
         }
 
@@ -83,6 +86,7 @@ namespace SharpBattleNet.MasterServer
         {
             remoteConnection.StartReceiving();
 
+            Console.WriteLine("Accepted remote connection : {0}", remoteEndpoint);
             return;
         }
 
@@ -95,6 +99,8 @@ namespace SharpBattleNet.MasterServer
         {
             byte[] buffer = new byte[1024];
             dataBuffer.CopyTo(buffer, 0, bytesReceived);
+
+            Console.WriteLine("Got data from {0}", remoteAddress);
 
             return;
         }
@@ -118,7 +124,33 @@ namespace SharpBattleNet.MasterServer
         {
             connection.StartReceiving();
 
+            Console.WriteLine("Connection to {0} successfull", remoteEndpoint);
+
             return true;
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (false == _disposed)
+            {
+                if (true == disposing)
+                {
+
+                }
+
+                _disposed = true;
+            }
+
+            return;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+
+            GC.SuppressFinalize(this);
+
+            return;
         }
     }
 }

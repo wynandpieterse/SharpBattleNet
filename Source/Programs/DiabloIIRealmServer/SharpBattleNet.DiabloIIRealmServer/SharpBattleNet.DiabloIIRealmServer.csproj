@@ -58,7 +58,7 @@
   <ItemGroup>
     <Compile Include="DiabloIIRealmServerModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DiabloIIRealmServerProgram.cs" />
+    <Compile Include="DiabloIIRealmServerApplication.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Runtime\SharpBattleNet.Runtime.Networking.Packets\SharpBattleNet.Runtime.Networking.Packets.csproj">

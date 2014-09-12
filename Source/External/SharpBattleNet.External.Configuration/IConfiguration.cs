@@ -10,13 +10,13 @@
 
 using System;
 
-namespace Nini.Config
+namespace SharpBattleNet.External.Configuration
 {
 	/// <include file='IConfig.xml' path='//Interface[@name="IConfig"]/docs/*' />
 	public interface IConfiguration
 	{
 		/// <include file='IConfig.xml' path='//Property[@name="ConfigSource"]/docs/*' />
-		IConfigurationSource ConfigSource { get; }
+		IConfigurationSource ConfigurationSource { get; }
 		
 		/// <include file='IConfig.xml' path='//Property[@name="Name"]/docs/*' />
 		string Name { get; set; }
@@ -43,16 +43,16 @@ namespace Nini.Config
 		string GetString (string key, string defaultValue);
 		
 		/// <include file='IConfig.xml' path='//Method[@name="GetInt"]/docs/*' />
-		int GetInt (string key);
+		int GetInteger (string key);
 		
 		/// <include file='IConfig.xml' path='//Method[@name="GetIntAlias"]/docs/*' />
-		int GetInt (string key, bool fromAlias);
+		int GetInteger (string key, bool fromAlias);
 		
 		/// <include file='IConfig.xml' path='//Method[@name="GetIntDefault"]/docs/*' />
-		int GetInt (string key, int defaultValue);
+		int GetInteger (string key, int defaultValue);
 		
 		/// <include file='IConfig.xml' path='//Method[@name="GetIntDefaultAlias"]/docs/*' />
-		int GetInt (string key, int defaultValue, bool fromAlias);
+		int GetInteger (string key, int defaultValue, bool fromAlias);
 		
 		/// <include file='IConfig.xml' path='//Method[@name="GetLong"]/docs/*' />
 		long GetLong (string key);

@@ -12,11 +12,11 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Nini.Ini
+namespace SharpBattleNet.External.Configuration.Source.INI
 {
 	#region IniWriteState enumeration
 	/// <include file='IniWriter.xml' path='//Enum[@name="IniWriteState"]/docs/*' />
-	public enum IniWriteState : int
+	public enum INIWriterState : int
 	{
 		/// <include file='IniWriter.xml' path='//Enum[@name="IniWriteState"]/Value[@name="Start"]/docs/*' />
 		Start,
@@ -33,66 +33,66 @@ namespace Nini.Ini
 	public class INIWriter : IDisposable
 	{
 		#region Private variables
-		int indentation = 0;
-		bool useValueQuotes = false;
-		IniWriteState writeState = IniWriteState.Start;
-		char commentDelimiter = ';';
-		char assignDelimiter = '=';
-		TextWriter textWriter = null;
-		string eol = "\r\n";
-		StringBuilder indentationBuffer = new StringBuilder ();
-		Stream baseStream = null;
-		bool disposed = false;
+        private int _indentation = 0;
+        private bool _useValueQuotes = false;
+        private INIWriterState _writeState = INIWriterState.Start;
+        private char _commentDelimiter = ';';
+        private char _assignDelimiter = '=';
+        private TextWriter _textWriter = null;
+        private string _endOfLine = "\r\n";
+        private StringBuilder _indentationBuilder = new StringBuilder();
+        private Stream _baseStream = null;
+		private bool _disposed = false;
 		#endregion
 		
 		#region Public properties
 		/// <include file='IniWriter.xml' path='//Property[@name="Indentation"]/docs/*' />
 		public int Indentation
 		{
-			get { return indentation; }
+			get { return _indentation; }
 			set
 			{
 				if (value < 0)
 					throw new ArgumentException ("Negative values are illegal");
 				
-				indentation = value;
-				indentationBuffer.Remove(0, indentationBuffer.Length);
+				_indentation = value;
+				_indentationBuilder.Remove(0, _indentationBuilder.Length);
 				for (int i = 0; i < value; i++)
-					indentationBuffer.Append (' ');
+					_indentationBuilder.Append (' ');
 			}
 		}
 
 		/// <include file='IniWriter.xml' path='//Property[@name="UseValueQuotes"]/docs/*' />
 		public bool UseValueQuotes
 		{
-			get { return useValueQuotes; }
-			set { useValueQuotes = value; }
+			get { return _useValueQuotes; }
+			set { _useValueQuotes = value; }
 		}
 
 		/// <include file='IniWriter.xml' path='//Property[@name="WriteState"]/docs/*' />
-		public IniWriteState WriteState
+		public INIWriterState WriteState
 		{
-			get { return writeState; }
+			get { return _writeState; }
 		}
 
 		/// <include file='IniWriter.xml' path='//Property[@name="CommentDelimiter"]/docs/*' />
 		public char CommentDelimiter
 		{
-			get { return commentDelimiter; }
-			set { commentDelimiter = value; }
+			get { return _commentDelimiter; }
+			set { _commentDelimiter = value; }
 		}
 		
 		/// <include file='IniWriter.xml' path='//Property[@name="AssignDelimiter"]/docs/*' />
 		public char AssignDelimiter
 		{
-			get { return assignDelimiter; }
-			set { assignDelimiter = value; }
+			get { return _assignDelimiter; }
+			set { _assignDelimiter = value; }
 		}
 		
 		/// <include file='IniWriter.xml' path='//Property[@name="BaseStream"]/docs/*' />
 		public Stream BaseStream
 		{
-			get { return baseStream; }
+			get { return _baseStream; }
 		}
 		#endregion
 		
@@ -106,10 +106,10 @@ namespace Nini.Ini
 		/// <include file='IniWriter.xml' path='//Constructor[@name="ConstructorTextWriter"]/docs/*' />
 		public INIWriter (TextWriter writer)
 		{
-			textWriter = writer;
+			_textWriter = writer;
 			StreamWriter streamWriter = writer as StreamWriter;
 			if (streamWriter != null) {
-				baseStream = streamWriter.BaseStream;
+				_baseStream = streamWriter.BaseStream;
 			}
 		}
 		
@@ -124,27 +124,27 @@ namespace Nini.Ini
 		/// <include file='IniWriter.xml' path='//Method[@name="Close"]/docs/*' />
 		public void Close ()
 		{
-			textWriter.Close ();
-			writeState = IniWriteState.Closed;
+			_textWriter.Close ();
+			_writeState = INIWriterState.Closed;
 		}
 		
 		/// <include file='IniWriter.xml' path='//Method[@name="Flush"]/docs/*' />
 		public void Flush ()
 		{
-			textWriter.Flush ();
+			_textWriter.Flush ();
 		}
 		
 		/// <include file='IniWriter.xml' path='//Method[@name="ToString"]/docs/*' />
 		public override string ToString ()
 		{
-			return textWriter.ToString ();
+			return _textWriter.ToString ();
 		}
 		
 		/// <include file='IniWriter.xml' path='//Method[@name="WriteSection"]/docs/*' />
 		public void WriteSection (string section)
 		{
 			ValidateState ();
-			writeState = IniWriteState.Section;
+			_writeState = INIWriterState.Section;
 			WriteLine ("[" + section + "]");
 		}
 		
@@ -152,7 +152,7 @@ namespace Nini.Ini
 		public void WriteSection (string section, string comment)
 		{
 			ValidateState ();
-			writeState = IniWriteState.Section;
+			_writeState = INIWriterState.Section;
 			WriteLine ("[" + section + "]" + Comment(comment));
 		}
 		
@@ -160,22 +160,22 @@ namespace Nini.Ini
 		public void WriteKey (string key, string value)
 		{
 			ValidateStateKey ();
-			WriteLine (key + " " + assignDelimiter + " " + GetKeyValue (value));
+			WriteLine (key + " " + _assignDelimiter + " " + GetKeyValue (value));
 		}
 		
 		/// <include file='IniWriter.xml' path='//Method[@name="WriteKeyComment"]/docs/*' />
 		public void WriteKey (string key, string value, string comment)
 		{
 			ValidateStateKey ();
-			WriteLine (key + " " + assignDelimiter + " " + GetKeyValue (value) + Comment (comment));
+			WriteLine (key + " " + _assignDelimiter + " " + GetKeyValue (value) + Comment (comment));
 		}
 	
 		/// <include file='IniWriter.xml' path='//Method[@name="WriteEmpty"]/docs/*' />
 		public void WriteEmpty ()
 		{
 			ValidateState ();
-			if (writeState == IniWriteState.Start) {
-				writeState = IniWriteState.BeforeFirstSection;
+			if (_writeState == INIWriterState.Start) {
+				_writeState = INIWriterState.BeforeFirstSection;
 			}
 			WriteLine ("");
 		}
@@ -184,13 +184,13 @@ namespace Nini.Ini
 		public void WriteEmpty (string comment)
 		{
 			ValidateState ();
-			if (writeState == IniWriteState.Start) {
-				writeState = IniWriteState.BeforeFirstSection;
+			if (_writeState == INIWriterState.Start) {
+				_writeState = INIWriterState.BeforeFirstSection;
 			}
 			if (comment == null) {
 				WriteLine ("");
 			} else {
-				WriteLine (commentDelimiter + " " + comment);
+				WriteLine (_commentDelimiter + " " + comment);
 			}
 		}
 		
@@ -205,11 +205,11 @@ namespace Nini.Ini
 		/// <include file='IniWriter.xml' path='//Method[@name="DisposeBoolean"]/docs/*' />
 		protected virtual void Dispose (bool disposing)
 		{
-			if (!disposed) 
+			if (!_disposed) 
 			{
-				textWriter.Close ();
-				baseStream.Close ();
-				disposed = true;
+				_textWriter.Close ();
+				_baseStream.Close ();
+				_disposed = true;
 
 				if (disposing) 
 				{
@@ -235,7 +235,7 @@ namespace Nini.Ini
 		{
 			string result;
 
-			if (useValueQuotes) {
+			if (_useValueQuotes) {
 				result = MassageValue ('"' + text + '"');
 			} else {
 				result = MassageValue (text);
@@ -251,12 +251,12 @@ namespace Nini.Ini
 		{
 			ValidateState ();
 
-			switch (writeState)
+			switch (_writeState)
 			{
-			case IniWriteState.BeforeFirstSection:
-			case IniWriteState.Start:
+			case INIWriterState.BeforeFirstSection:
+			case INIWriterState.Start:
 				throw  new InvalidOperationException ("The WriteState is not Section");
-			case IniWriteState.Closed:
+			case INIWriterState.Closed:
 				throw  new InvalidOperationException ("The writer is closed");
 			}
 		}
@@ -266,7 +266,7 @@ namespace Nini.Ini
 		/// </summary>
 		private void ValidateState ()
 		{
-			if (writeState == IniWriteState.Closed) {
+			if (_writeState == INIWriterState.Closed) {
 				throw  new InvalidOperationException ("The writer is closed");
 			}
 		}
@@ -276,7 +276,7 @@ namespace Nini.Ini
 		/// </summary>
 		private string Comment (string text)
 		{
-			return (text == null) ? "" : (" " + commentDelimiter + " " + text);
+			return (text == null) ? "" : (" " + _commentDelimiter + " " + text);
 		}
 		
 		/// <summary>
@@ -284,7 +284,7 @@ namespace Nini.Ini
 		/// </summary>
 		private void Write (string value)
 		{
-			textWriter.Write (indentationBuffer.ToString () + value);
+			_textWriter.Write (_indentationBuilder.ToString () + value);
 		}
 		
 		/// <summary>
@@ -292,7 +292,7 @@ namespace Nini.Ini
 		/// </summary>
 		private void WriteLine (string value)
 		{
-			Write (value + eol);
+			Write (value + _endOfLine);
 		}
 
 		/// <summary>

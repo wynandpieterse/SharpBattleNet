@@ -1,22 +1,22 @@
 using System;
 using System.Collections;
 
-namespace Nini.Util
+namespace SharpBattleNet.External.Configuration.Utilities
 {
 	//[Serializable]
 	/// <include file='OrderedList.xml' path='//Class[@name="OrderedList"]/docs/*' />
 	public class OrderedList : ICollection, IDictionary, IEnumerable
 	{
 		#region Private variables
-		Hashtable table = new Hashtable ();
-		ArrayList list = new ArrayList ();
+		private Hashtable _table = new Hashtable ();
+		private ArrayList _list = new ArrayList ();
 		#endregion
 
 		#region Public properties
 		/// <include file='OrderedList.xml' path='//Property[@name="Count"]/docs/*' />
 		public int Count 
 		{
-			get { return list.Count; }
+			get { return _list.Count; }
 		}
 
 		/// <include file='OrderedList.xml' path='//Property[@name="IsFixedSize"]/docs/*' />
@@ -40,28 +40,28 @@ namespace Nini.Util
 		/// <include file='OrderedList.xml' path='//Property[@name="ItemIndex"]/docs/*' />
 		public object this[int index] 
 		{
-			get { return ((DictionaryEntry) list[index]).Value; }
+			get { return ((DictionaryEntry) _list[index]).Value; }
 			set 
 			{
 				if (index < 0 || index >= Count)
 					throw new ArgumentOutOfRangeException ("index");
 
-				object key = ((DictionaryEntry) list[index]).Key;
-				list[index] = new DictionaryEntry (key, value);
-				table[key] = value;
+				object key = ((DictionaryEntry) _list[index]).Key;
+				_list[index] = new DictionaryEntry (key, value);
+				_table[key] = value;
 			}
 		}
 
 		/// <include file='OrderedList.xml' path='//Property[@name="ItemKey"]/docs/*' />
 		public object this[object key] 
 		{
-			get { return table[key]; }
+			get { return _table[key]; }
 			set 
 			{
-				if (table.Contains (key))
+				if (_table.Contains (key))
 				{
-					table[key] = value;
-					table[IndexOf (key)] = new DictionaryEntry (key, value);
+					_table[key] = value;
+					_table[IndexOf (key)] = new DictionaryEntry (key, value);
 					return;
 				}
 				Add (key, value);
@@ -74,9 +74,9 @@ namespace Nini.Util
 			get 
 			{ 
 				ArrayList retList = new ArrayList ();
-				for (int i = 0; i < list.Count; i++)
+				for (int i = 0; i < _list.Count; i++)
 				{
-					retList.Add ( ((DictionaryEntry)list[i]).Key );
+					retList.Add ( ((DictionaryEntry)_list[i]).Key );
 				}
 				return retList;
 			}
@@ -88,9 +88,9 @@ namespace Nini.Util
 			get 
 			{
 				ArrayList retList = new ArrayList ();
-				for (int i = 0; i < list.Count; i++)
+				for (int i = 0; i < _list.Count; i++)
 				{
-					retList.Add ( ((DictionaryEntry)list[i]).Value );
+					retList.Add ( ((DictionaryEntry)_list[i]).Value );
 				}
 				return retList;
 			}
@@ -107,33 +107,33 @@ namespace Nini.Util
 		/// <include file='OrderedList.xml' path='//Method[@name="Add"]/docs/*' />
 		public void Add (object key, object value)
 		{
-			table.Add (key, value);
-			list.Add (new DictionaryEntry (key, value));
+			_table.Add (key, value);
+			_list.Add (new DictionaryEntry (key, value));
 		}
 
 		/// <include file='OrderedList.xml' path='//Method[@name="Clear"]/docs/*' />
 		public void Clear ()
 		{
-			table.Clear ();
-			list.Clear ();
+			_table.Clear ();
+			_list.Clear ();
 		}
 
 		/// <include file='OrderedList.xml' path='//Method[@name="Contains"]/docs/*' />
 		public bool Contains (object key)
 		{
-			return table.Contains (key);
+			return _table.Contains (key);
 		}
 
 		/// <include file='OrderedList.xml' path='//Method[@name="CopyTo"]/docs/*' />
 		public void CopyTo (Array array, int index)
 		{
-			table.CopyTo (array, index);
+			_table.CopyTo (array, index);
 		}
 		
 		/// <include file='OrderedList.xml' path='//Method[@name="CopyToStrong"]/docs/*' />
 		public void CopyTo (DictionaryEntry[] array, int index)
 		{
-			table.CopyTo (array, index);
+			_table.CopyTo (array, index);
 		}
 
 		/// <include file='OrderedList.xml' path='//Method[@name="Insert"]/docs/*' />
@@ -142,15 +142,15 @@ namespace Nini.Util
 			if (index > Count)
 				throw new ArgumentOutOfRangeException ("index");
 
-			table.Add (key, value);
-			list.Insert (index, new DictionaryEntry (key, value));
+			_table.Add (key, value);
+			_list.Insert (index, new DictionaryEntry (key, value));
 		}
 
 		/// <include file='OrderedList.xml' path='//Method[@name="Remove"]/docs/*' />
 		public void Remove (object key)
 		{
-			table.Remove (key);
-			list.RemoveAt (IndexOf (key));
+			_table.Remove (key);
+			_list.RemoveAt (IndexOf (key));
 		}
 
 		/// <include file='OrderedList.xml' path='//Method[@name="RemoveAt"]/docs/*' />
@@ -159,35 +159,35 @@ namespace Nini.Util
 			if (index >= Count)
 				throw new ArgumentOutOfRangeException ("index");
 
-			table.Remove ( ((DictionaryEntry)list[index]).Key );
-			list.RemoveAt (index);
+			_table.Remove ( ((DictionaryEntry)_list[index]).Key );
+			_list.RemoveAt (index);
 		}
 
 		/// <include file='OrderedList.xml' path='//Method[@name="GetEnumerator"]/docs/*' />
 		public IEnumerator GetEnumerator () 
 		{
-			return new OrderedListEnumerator (list);
+			return new OrderedListEnumerator (_list);
 		}
 
 		/// <include file='OrderedList.xml' path='//Method[@name="GetDictionaryEnumerator"]/docs/*' />
 		IDictionaryEnumerator IDictionary.GetEnumerator ()
 		{
-			return new OrderedListEnumerator (list);
+			return new OrderedListEnumerator (_list);
 		}
 
 		/// <include file='OrderedList.xml' path='//Method[@name="GetIEnumerator"]/docs/*' />
 		IEnumerator IEnumerable.GetEnumerator ()
 		{
-			return new OrderedListEnumerator (list);
+			return new OrderedListEnumerator (_list);
 		}
 		#endregion
 
 		#region Private variables
 		private int IndexOf (object key)
 		{
-			for (int i = 0; i < list.Count; i++)
+			for (int i = 0; i < _list.Count; i++)
 			{
-				if (((DictionaryEntry) list[i]).Key.Equals (key))
+				if (((DictionaryEntry) _list[i]).Key.Equals (key))
 				{
 					return i;
 				}

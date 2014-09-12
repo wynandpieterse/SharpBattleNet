@@ -64,7 +64,6 @@
     <Compile Include="OrderedList.cs" />
     <Compile Include="OrderedListEnumerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegistryConfigSource.cs" />
     <Compile Include="XMLConfigurationSource.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

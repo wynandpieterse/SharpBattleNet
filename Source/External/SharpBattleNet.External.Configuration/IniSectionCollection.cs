@@ -8,48 +8,48 @@
 // 
 #endregion
 
+using SharpBattleNet.External.Configuration.Utilities;
 using System;
 using System.Collections;
-using Nini.Util;
 
-namespace Nini.Ini
+namespace SharpBattleNet.External.Configuration.Source.INI
 {
 	/// <include file='IniSectionCollection.xml' path='//Class[@name="IniSectionCollection"]/docs/*' />
 	public class INISectionCollection : ICollection, IEnumerable
 	{
 		#region Private variables
-		OrderedList list = new OrderedList ();
+		private OrderedList _list = new OrderedList ();
 		#endregion
 
 		#region Public properties	
 		/// <include file='IniSectionCollection.xml' path='//Property[@name="ItemIndex"]/docs/*' />
 		public INISection this[int index]
 		{
-			get { return (INISection)list[index]; }
+			get { return (INISection)_list[index]; }
 		}
 		
 		/// <include file='IniSectionCollection.xml' path='//Property[@name="ItemName"]/docs/*' />
 		public INISection this[string configName]
 		{
-			get { return (INISection)list[configName]; }
+			get { return (INISection)_list[configName]; }
 		}
 
 		/// <include file='IniSectionCollection.xml' path='//Property[@name="Count"]/docs/*' />
 		public int Count
 		{
-			get { return list.Count; }
+			get { return _list.Count; }
 		}
 		
 		/// <include file='IniSectionCollection.xml' path='//Property[@name="SyncRoot"]/docs/*' />
 		public object SyncRoot
 		{
-			get { return list.SyncRoot; }
+			get { return _list.SyncRoot; }
 		}
 		
 		/// <include file='IniSectionCollection.xml' path='//Property[@name="IsSynchronized"]/docs/*' />
 		public bool IsSynchronized
 		{
-			get { return list.IsSynchronized; }
+			get { return _list.IsSynchronized; }
 		}
 		#endregion
 
@@ -57,35 +57,35 @@ namespace Nini.Ini
 		/// <include file='IniSectionCollection.xml' path='//Method[@name="Add"]/docs/*' />
 		public void Add (INISection section)
 		{
-			if (list.Contains (section)) {
+			if (_list.Contains (section)) {
 				throw new ArgumentException ("IniSection already exists");
 			}
 			
-			list.Add (section.Name, section);
+			_list.Add (section.Name, section);
 		}
 		
 		/// <include file='IniSectionCollection.xml' path='//Method[@name="Remove"]/docs/*' />
 		public void Remove (string config)
 		{
-			list.Remove (config);
+			_list.Remove (config);
 		}
 		
 		/// <include file='IniSectionCollection.xml' path='//Method[@name="CopyTo"]/docs/*' />
 		public void CopyTo (Array array, int index) 
 		{
-			list.CopyTo (array, index);
+			_list.CopyTo (array, index);
 		}
 		
 		/// <include file='IniSectionCollection.xml' path='//Method[@name="CopyToStrong"]/docs/*' />
 		public void CopyTo (INISection[] array, int index)
 		{
-			((ICollection)list).CopyTo (array, index);
+			((ICollection)_list).CopyTo (array, index);
 		}
 
 		/// <include file='IniSectionCollection.xml' path='//Method[@name="GetEnumerator"]/docs/*' />
 		public IEnumerator GetEnumerator () 
 		{
-			return list.GetEnumerator ();
+			return _list.GetEnumerator ();
 		}
 		#endregion
 		

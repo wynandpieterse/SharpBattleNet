@@ -1,14 +1,14 @@
 using System;
 using System.Collections;
 
-namespace Nini.Util
+namespace SharpBattleNet.External.Configuration.Utilities
 {
 	/// <include file='OrderedListEnumerator.xml' path='//Class[@name="OrderedListEnumerator"]/docs/*' />
 	public class OrderedListEnumerator : IDictionaryEnumerator
 	{
 		#region Private variables
-		int index = -1;
-		ArrayList list;
+		private int _index = -1;
+		private ArrayList _list;
 		#endregion
 
 		#region Constructors
@@ -17,7 +17,7 @@ namespace Nini.Util
 		/// </summary>
 		internal OrderedListEnumerator (ArrayList arrayList)
 		{
-			list = arrayList;
+			_list = arrayList;
 		}
 		#endregion
 
@@ -27,10 +27,10 @@ namespace Nini.Util
 		{
 			get 
 			{
-				if (index < 0 || index >= list.Count)
+				if (_index < 0 || _index >= _list.Count)
 					throw new InvalidOperationException ();
 
-				return list[index];
+				return _list[_index];
 			}
 		}
 		
@@ -39,10 +39,10 @@ namespace Nini.Util
 		{
 			get 
 			{
-				if (index < 0 || index >= list.Count)
+				if (_index < 0 || _index >= _list.Count)
 					throw new InvalidOperationException ();
 
-				return (DictionaryEntry)list[index];
+				return (DictionaryEntry)_list[_index];
 			}
 		}
 
@@ -69,8 +69,8 @@ namespace Nini.Util
 		/// <include file='OrderedListEnumerator.xml' path='//Method[@name="MoveNext"]/docs/*' />
 		public bool MoveNext ()
 		{
-			index++;
-			if (index >= list.Count)
+			_index++;
+			if (_index >= _list.Count)
 				return false;
 
 			return true;
@@ -79,7 +79,7 @@ namespace Nini.Util
 		/// <include file='OrderedListEnumerator.xml' path='//Method[@name="Reset"]/docs/*' />
 		public void Reset ()
 		{
-			index = -1;
+			_index = -1;
 		}
 		#endregion
 	}

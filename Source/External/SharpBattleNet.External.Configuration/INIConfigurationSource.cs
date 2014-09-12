@@ -11,17 +11,16 @@
 using System;
 using System.IO;
 using System.Collections;
-using Nini.Ini;
 
-namespace Nini.Config
+namespace SharpBattleNet.External.Configuration.Source.INI
 {
 	/// <include file='IniConfigSource.xml' path='//Class[@name="IniConfigSource"]/docs/*' />
 	public class INIConfigurationSource : ConfigurationSourceBase
 	{
 		#region Private variables
-		INIDocument iniDocument = null;
-		string savePath = null;
-		bool caseSensitive = true;
+		private INIDocument _iniDocument = null;
+		private string _savePath = null;
+		private bool _caseSensitive = true;
 		#endregion
 		
 		#region Public properties
@@ -31,7 +30,7 @@ namespace Nini.Config
 		/// <include file='IniConfigSource.xml' path='//Constructor[@name="Constructor"]/docs/*' />
 		public INIConfigurationSource ()
 		{
-			iniDocument = new INIDocument ();
+			_iniDocument = new INIDocument ();
 		}
 
 		/// <include file='IniConfigSource.xml' path='//Constructor[@name="ConstructorPath"]/docs/*' />
@@ -63,14 +62,14 @@ namespace Nini.Config
 		/// <include file='IniConfigSource.xml' path='//Property[@name="CaseSensitive"]/docs/*' />
 		public bool CaseSensitive
 		{
-			get { return caseSensitive; }
-			set { caseSensitive = value; }
+			get { return _caseSensitive; }
+			set { _caseSensitive = value; }
 		}
 
 		/// <include file='IniConfigSource.xml' path='//Property[@name="SavePath"]/docs/*' />
 		public string SavePath
 		{
-			get { return savePath; }
+			get { return _savePath; }
 		}
 		#endregion
 		
@@ -79,7 +78,7 @@ namespace Nini.Config
 		public void Load (string filePath)
 		{
 			Load (new StreamReader (filePath));
-			this.savePath = filePath;
+			this._savePath = filePath;
 		}
 		
 		/// <include file='IniConfigSource.xml' path='//Method[@name="LoadTextReader"]/docs/*' />
@@ -91,10 +90,10 @@ namespace Nini.Config
 		/// <include file='IniConfigSource.xml' path='//Method[@name="LoadIniDocument"]/docs/*' />
 		public void Load (INIDocument document)
 		{
-			this.Configs.Clear ();
+			this.Configurations.Clear ();
 
 			this.Merge (this); // required for SaveAll
-			iniDocument = document;
+			_iniDocument = document;
 			Load ();
 		}
 		
@@ -111,56 +110,56 @@ namespace Nini.Config
 				throw new ArgumentException ("Source cannot be saved in this state");
 			}
 
-			MergeConfigsIntoDocument ();
+			MergeConfigurationsIntoDocument ();
 			
-			iniDocument.Save (this.savePath);
+			_iniDocument.Save (this._savePath);
 			base.Save ();
 		}
 		
 		/// <include file='IniConfigSource.xml' path='//Method[@name="SavePath"]/docs/*' />
 		public void Save (string path)
 		{
-			this.savePath = path;
+			this._savePath = path;
 			this.Save ();
 		}
 		
 		/// <include file='IniConfigSource.xml' path='//Method[@name="SaveTextWriter"]/docs/*' />
 		public void Save (TextWriter writer)
 		{
-			MergeConfigsIntoDocument ();
-			iniDocument.Save (writer);
-			savePath = null;
+			MergeConfigurationsIntoDocument ();
+			_iniDocument.Save (writer);
+			_savePath = null;
 			OnSaved (new EventArgs ());
 		}
 
 		/// <include file='IniConfigSource.xml' path='//Method[@name="SaveStream"]/docs/*' />
 		public void Save (Stream stream)
 		{
-			MergeConfigsIntoDocument ();
-			iniDocument.Save (stream);
-			savePath = null;
+			MergeConfigurationsIntoDocument ();
+			_iniDocument.Save (stream);
+			_savePath = null;
 			OnSaved (new EventArgs ());
 		}
 
 		/// <include file='IConfigSource.xml' path='//Method[@name="Reload"]/docs/*' />
 		public override void Reload ()
 		{
-			if (savePath == null) {
+			if (_savePath == null) {
 				throw new ArgumentException ("Error reloading: You must have "
 							+ "the loaded the source from a file");
 			}
 
-			iniDocument = new INIDocument (savePath);
-			MergeDocumentIntoConfigs ();
+			_iniDocument = new INIDocument (_savePath);
+			MergeDocumentIntoConfigurations ();
 			base.Reload ();
 		}
 
 		/// <include file='IniConfigSource.xml' path='//Method[@name="ToString"]/docs/*' />
 		public override string ToString ()
 		{
-			MergeConfigsIntoDocument ();
+			MergeConfigurationsIntoDocument ();
 			StringWriter writer = new StringWriter ();
-			iniDocument.Save (writer);
+			_iniDocument.Save (writer);
 
 			return writer.ToString ();
 		}
@@ -171,23 +170,23 @@ namespace Nini.Config
 		/// Merges all of the configs from the config collection into the 
 		/// IniDocument before it is saved.  
 		/// </summary>
-		private void MergeConfigsIntoDocument ()
+		private void MergeConfigurationsIntoDocument ()
 		{
 			RemoveSections ();
-			foreach (IConfiguration config in this.Configs)
+			foreach (IConfiguration config in this.Configurations)
 			{
 				string[] keys = config.GetKeys ();
 
 				// Create a new section if one doesn't exist
-				if (iniDocument.Sections[config.Name] == null) {
+				if (_iniDocument.Sections[config.Name] == null) {
 					INISection section = new INISection (config.Name);
-					iniDocument.Sections.Add (section);
+					_iniDocument.Sections.Add (section);
 				}
 				RemoveKeys (config.Name);
 
 				for (int i = 0; i < keys.Length; i++)
 				{
-					iniDocument.Sections[config.Name].Set (keys[i], config.Get (keys[i]));
+					_iniDocument.Sections[config.Name].Set (keys[i], config.Get (keys[i]));
 				}
 			}
 		}
@@ -198,11 +197,11 @@ namespace Nini.Config
 		private void RemoveSections ()
 		{
 			INISection section = null;
-			for (int i = 0; i < iniDocument.Sections.Count; i++)
+			for (int i = 0; i < _iniDocument.Sections.Count; i++)
 			{
-				section = iniDocument.Sections[i];
-				if (this.Configs[section.Name] == null) {
-					iniDocument.Sections.Remove (section.Name);
+				section = _iniDocument.Sections[i];
+				if (this.Configurations[section.Name] == null) {
+					_iniDocument.Sections.Remove (section.Name);
 				}
 			}
 		}
@@ -212,12 +211,12 @@ namespace Nini.Config
 		/// </summary>
 		private void RemoveKeys (string sectionName)
 		{
-			INISection section = iniDocument.Sections[sectionName];
+			INISection section = _iniDocument.Sections[sectionName];
 
 			if (section != null) {
 				foreach (string key in section.GetKeys ())
 				{
-					if (this.Configs[sectionName].Get (key) == null) {
+					if (this.Configurations[sectionName].Get (key) == null) {
 						section.Remove (key);
 					}
 				}
@@ -233,21 +232,21 @@ namespace Nini.Config
 			INISection section = null;
 			INIItem item = null;
 
-			for (int j = 0; j < iniDocument.Sections.Count; j++)
+			for (int j = 0; j < _iniDocument.Sections.Count; j++)
 			{
-				section = iniDocument.Sections[j];
+				section = _iniDocument.Sections[j];
 				config = new INIConfiguration (section.Name, this);
 
 				for (int i = 0; i < section.ItemCount; i++)
 				{
 					item = section.GetItem (i);
 					
-					if  (item.Type == IniType.Key) {
+					if  (item.Type == INIType.Key) {
 						config.Add (item.Name, item.Value);
 					}
 				}
 				
-				this.Configs.Add (config);
+				this.Configurations.Add (config);
 			}
 		}
 
@@ -255,38 +254,38 @@ namespace Nini.Config
 		/// Merges the IniDocument into the Configs when the document is 
 		/// reloaded.  
 		/// </summary>
-		private void MergeDocumentIntoConfigs ()
+		private void MergeDocumentIntoConfigurations ()
 		{
 			// Remove all missing configs first
-			RemoveConfigs ();
+			RemoveConfigurations ();
 
 			INISection section = null;
-			for (int i = 0; i < iniDocument.Sections.Count; i++)
+			for (int i = 0; i < _iniDocument.Sections.Count; i++)
 			{
-				section = iniDocument.Sections[i];
+				section = _iniDocument.Sections[i];
 
-				IConfiguration config = this.Configs[section.Name];
+				IConfiguration config = this.Configurations[section.Name];
 				if (config == null) {
 					// The section is new so add it
 					config = new ConfigurationBase (section.Name, this);
-					this.Configs.Add (config);
+					this.Configurations.Add (config);
 				}				
-				RemoveConfigKeys (config);
+				RemoveConfigurationKeys (config);
 			}
 		}
 
 		/// <summary>
 		/// Removes all configs that are not in the newly loaded INI doc.  
 		/// </summary>
-		private void RemoveConfigs ()
+		private void RemoveConfigurations ()
 		{
 			IConfiguration config = null;
-			for (int i = this.Configs.Count - 1; i > -1; i--)
+			for (int i = this.Configurations.Count - 1; i > -1; i--)
 			{
-				config = this.Configs[i];
+				config = this.Configurations[i];
 				// If the section is not present in the INI doc
-				if (iniDocument.Sections[config.Name] == null) {
-					this.Configs.Remove (config);
+				if (_iniDocument.Sections[config.Name] == null) {
+					this.Configurations.Remove (config);
 				}
 			}
 		}
@@ -294,9 +293,9 @@ namespace Nini.Config
 		/// <summary>
 		/// Removes all INI keys that were removed as config keys.
 		/// </summary>
-		private void RemoveConfigKeys (IConfiguration config)
+		private void RemoveConfigurationKeys (IConfiguration config)
 		{
-			INISection section = iniDocument.Sections[config.Name];
+			INISection section = _iniDocument.Sections[config.Name];
 
 			// Remove old keys
 			string[] configKeys = config.GetKeys ();
@@ -322,7 +321,7 @@ namespace Nini.Config
 		/// </summary>
 		private bool IsSavable ()
 		{
-			return (this.savePath != null);
+			return (this._savePath != null);
 		}
 		#endregion
 	}

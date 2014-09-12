@@ -10,26 +10,26 @@
 
 using System;
 using System.Collections;
-using Nini.Util;
+using SharpBattleNet.External.Configuration.Utilities;
 
-namespace Nini.Ini
+namespace SharpBattleNet.External.Configuration.Source.INI
 {
 	/// <include file='IniSection.xml' path='//Class[@name="IniSection"]/docs/*' />
 	public class INISection
 	{
 		#region Private variables
-		OrderedList configList = new OrderedList ();
-		string name = "";
-		string comment = null;
-		int commentCount = 0;
+		private OrderedList _configurationList = new OrderedList ();
+		private string _name = "";
+		private string _comment = null;
+		private int _commentCount = 0;
 		#endregion
 
 		#region Constructors
 		/// <include file='IniSection.xml' path='//Constructor[@name="ConstructorComment"]/docs/*' />
 		public INISection (string name, string comment)
 		{
-			this.name = name;
-			this.comment = comment;
+			this._name = name;
+			this._comment = comment;
 		}
 		
 		/// <include file='IniSection.xml' path='//Constructor[@name="Constructor"]/docs/*' />
@@ -43,19 +43,19 @@ namespace Nini.Ini
 		/// <include file='IniSection.xml' path='//Property[@name="Name"]/docs/*' />
 		public string Name
 		{
-			get { return name; }
+			get { return _name; }
 		}
 		
 		/// <include file='IniSection.xml' path='//Property[@name="Comment"]/docs/*' />
 		public string Comment
 		{
-			get { return comment; }
+			get { return _comment; }
 		}
 		
 		/// <include file='IniSection.xml' path='//Property[@name="ItemCount"]/docs/*' />
 		public int ItemCount
 		{
-			get { return configList.Count; }
+			get { return _configurationList.Count; }
 		}
 		#endregion
 
@@ -67,7 +67,7 @@ namespace Nini.Ini
 			string result = null;
 
 			if (Contains (key)) {
-				INIItem item = (INIItem)configList[key];
+				INIItem item = (INIItem)_configurationList[key];
 				result = item.Value;
 			}
 
@@ -77,7 +77,7 @@ namespace Nini.Ini
 		/// <include file='IniSection.xml' path='//Method[@name="GetItem"]/docs/*' />
 		public INIItem GetItem (int index)
 		{
-			return (INIItem)configList[index];
+			return (INIItem)_configurationList[index];
 		}
 		
 		/// <include file='IniSection.xml' path='//Method[@name="GetKeys"]/docs/*' />
@@ -86,10 +86,10 @@ namespace Nini.Ini
 			ArrayList list = new ArrayList ();
 			INIItem item = null;
 			
-			for (int i = 0; i < configList.Count; i++)
+			for (int i = 0; i < _configurationList.Count; i++)
 			{
-				item = (INIItem)configList[i]; 
-				if (item.Type == IniType.Key) {
+				item = (INIItem)_configurationList[i]; 
+				if (item.Type == INIType.Key) {
 					list.Add (item.Name);
 				}
 			}
@@ -102,7 +102,7 @@ namespace Nini.Ini
 		/// <include file='IniSection.xml' path='//Method[@name="Contains"]/docs/*' />
 		public bool Contains (string key)
 		{
-			return (configList[key] != null); 
+			return (_configurationList[key] != null); 
 		}
 		
 		/// <include file='IniSection.xml' path='//Method[@name="SetKeyComment"]/docs/*' />
@@ -111,12 +111,12 @@ namespace Nini.Ini
 			INIItem item = null;
 
 			if (Contains (key)) {
-				item = (INIItem)configList[key];
+				item = (INIItem)_configurationList[key];
 				item.Value = value;
 				item.Comment = comment;
 			} else {
-				item = new INIItem (key, value, IniType.Key, comment);
-				configList.Add (key, item);
+				item = new INIItem (key, value, INIType.Key, comment);
+				_configurationList.Add (key, item);
 			}
 		}
 
@@ -129,12 +129,12 @@ namespace Nini.Ini
 		/// <include file='IniSection.xml' path='//Method[@name="SetComment"]/docs/*' />
 		public void Set (string comment)
 		{
-			string name = "#comment" + commentCount;
+			string name = "#comment" + _commentCount;
 			INIItem item = new INIItem (name, null, 
-										IniType.Empty, comment);
-			configList.Add (name, item);
+										INIType.Empty, comment);
+			_configurationList.Add (name, item);
 			
-			commentCount++;
+			_commentCount++;
 		}
 		
 		/// <include file='IniSection.xml' path='//Method[@name="SetNoComment"]/docs/*' />
@@ -147,7 +147,7 @@ namespace Nini.Ini
 		public void Remove (string key)
 		{
 			if (Contains (key)) {
-				configList.Remove (key);
+				_configurationList.Remove (key);
 			}
 		}
 		#endregion

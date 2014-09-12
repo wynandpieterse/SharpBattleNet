@@ -15,13 +15,13 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.Text.RegularExpressions;
 
-namespace Nini.Util
+namespace SharpBattleNet.External.Configuration.Source.CommandLine
 {
 	/// <include file='ArgvParser.xml' path='//Class[@name="ArgvParser"]/docs/*' />
 	public class CommandLineArgumentParser
 	{
 		#region Private variables
-		StringDictionary parameters;
+		private StringDictionary _parameters;
 		#endregion
 		
 		#region Constructors
@@ -57,7 +57,7 @@ namespace Nini.Util
 		public string this [string param]
 		{
 			get {
-				return parameters[param];
+				return _parameters[param];
 			}
 		}
 		#endregion
@@ -66,7 +66,7 @@ namespace Nini.Util
 		// Extract command line parameters and values stored in a string array
 		private void Extract(string[] args)
 		{
-			parameters = new StringDictionary();
+			_parameters = new StringDictionary();
 			Regex splitter = new Regex (@"^([/-]|--){1}(?<name>\w+)([:=])?(?<value>.+)?$",
 										RegexOptions.Compiled);
 			char[] trimChars = {'"','\''};
@@ -82,12 +82,12 @@ namespace Nini.Util
 				if (!part.Success) {
 					// Found a value (for the last parameter found (space separator))
 					if (parameter != null) {
-						parameters[parameter] = arg.Trim (trimChars);
+						_parameters[parameter] = arg.Trim (trimChars);
 					}
 				} else {
 					// Matched a name, optionally with inline value
 					parameter = part.Groups["name"].Value;
-					parameters.Add (parameter, 
+					_parameters.Add (parameter, 
 									part.Groups["value"].Value.Trim (trimChars));
 				}
 			}

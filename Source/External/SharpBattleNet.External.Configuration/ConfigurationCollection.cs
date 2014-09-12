@@ -11,27 +11,27 @@
 using System;
 using System.Collections;
 
-namespace Nini.Config
+namespace SharpBattleNet.External.Configuration
 {
 	#region ConfigEventHandler class
 	/// <include file='ConfigEventArgs.xml' path='//Delegate[@name="ConfigEventHandler"]/docs/*' />
-	public delegate void ConfigEventHandler (object sender, ConfigEventArgs e);
+	public delegate void ConfigurationEventHandler (object sender, ConfigurationEventArguments e);
 
 	/// <include file='ConfigEventArgs.xml' path='//Class[@name="ConfigEventArgs"]/docs/*' />
-	public class ConfigEventArgs : EventArgs
+	public class ConfigurationEventArguments : EventArgs
 	{
-		IConfiguration config = null;
+		private IConfiguration _configuration = null;
 
 		/// <include file='ConfigEventArgs.xml' path='//Constructor[@name="ConstructorIConfig"]/docs/*' />
-		public ConfigEventArgs (IConfiguration config)
+		public ConfigurationEventArguments (IConfiguration config)
 		{
-			this.config = config;
+			this._configuration = config;
 		}
 
 		/// <include file='ConfigEventArgs.xml' path='//Property[@name="Config"]/docs/*' />
-		public IConfiguration Config
+		public IConfiguration Configuration
 		{
-			get { return config; }
+			get { return _configuration; }
 		}
 	}
 	#endregion
@@ -40,15 +40,15 @@ namespace Nini.Config
 	public class ConfigurationCollection : ICollection, IEnumerable, IList
 	{
 		#region Private variables
-		ArrayList configList = new ArrayList ();
-		ConfigurationSourceBase owner = null;
+		private ArrayList _configurationList = new ArrayList ();
+		private ConfigurationSourceBase _owner = null;
 		#endregion
 
 		#region Constructors
 		/// <include file='ConfigCollection.xml' path='//Constructor[@name="Constructor"]/docs/*' />
 		public ConfigurationCollection (ConfigurationSourceBase owner)
 		{
-			this.owner = owner;
+			this._owner = owner;
 		}
 		#endregion
 		
@@ -56,7 +56,7 @@ namespace Nini.Config
 		/// <include file='ConfigCollection.xml' path='//Property[@name="Count"]/docs/*' />
 		public int Count
 		{
-			get { return configList.Count; }
+			get { return _configurationList.Count; }
 		}
 		
 		/// <include file='ConfigCollection.xml' path='//Property[@name="IsSynchronized"]/docs/*' />
@@ -74,13 +74,13 @@ namespace Nini.Config
 		/// <include file='ConfigCollection.xml' path='//Property[@name="ItemIndex"]/docs/*' />
 		public IConfiguration this[int index]
 		{
-			get { return (IConfiguration)configList[index]; }
+			get { return (IConfiguration)_configurationList[index]; }
 		}
 
 		/// <include file='ConfigCollection.xml' path='//Property[@name="ItemIndex"]/docs/*' />
 		object IList.this[int index]
 		{
-			get { return configList[index]; }
+			get { return _configurationList[index]; }
 			set {  }
 		}
 		
@@ -91,7 +91,7 @@ namespace Nini.Config
 			{
 				IConfiguration result = null;
 
-				foreach (IConfiguration config in configList)
+				foreach (IConfiguration config in _configurationList)
 				{
 					if (config.Name == configName) {
 						result = config;
@@ -120,7 +120,7 @@ namespace Nini.Config
 		/// <include file='ConfigCollection.xml' path='//Method[@name="Add"]/docs/*' />
 		public void Add (IConfiguration config)
 		{
-			if (configList.Contains (config)) {
+			if (_configurationList.Contains (config)) {
 				throw new ArgumentException ("IConfig already exists");
 			}
 			IConfiguration existingConfig = this[config.Name];
@@ -133,8 +133,8 @@ namespace Nini.Config
 					existingConfig.Set (keys[i], config.Get (keys[i]));
 				}
 			} else {
-				configList.Add (config);
-				OnConfigAdded (new ConfigEventArgs (config));
+				_configurationList.Add (config);
+				OnConfigurationAdded (new ConfigurationEventArguments (config));
 			}
 		}
 
@@ -157,9 +157,9 @@ namespace Nini.Config
 			ConfigurationBase result = null;
 
 			if (this[name] == null) {
-				result = new ConfigurationBase (name, owner);
-				configList.Add (result);
-				OnConfigAdded (new ConfigEventArgs (result));
+				result = new ConfigurationBase (name, _owner);
+				_configurationList.Add (result);
+				OnConfigurationAdded (new ConfigurationEventArguments (result));
 			} else {
 				throw new ArgumentException ("An IConfig of that name already exists");
 			}
@@ -170,90 +170,90 @@ namespace Nini.Config
 		/// <include file='ConfigCollection.xml' path='//Method[@name="Remove"]/docs/*' />
 		public void Remove (IConfiguration config)
 		{
-			configList.Remove (config);
-			OnConfigRemoved (new ConfigEventArgs (config));
+			_configurationList.Remove (config);
+			OnConfigurationRemoved (new ConfigurationEventArguments (config));
 		}
 
 		/// <include file='ConfigCollection.xml' path='//Method[@name="Remove"]/docs/*' />
 		public void Remove (object config)
 		{
-			configList.Remove (config);
-			OnConfigRemoved (new ConfigEventArgs ((IConfiguration)config));
+			_configurationList.Remove (config);
+			OnConfigurationRemoved (new ConfigurationEventArguments ((IConfiguration)config));
 		}
 
 		/// <include file='ConfigCollection.xml' path='//Method[@name="RemoveAt"]/docs/*' />
 		public void RemoveAt (int index)
 		{
-			IConfiguration config = (IConfiguration)configList[index];
-			configList.RemoveAt (index);
-			OnConfigRemoved (new ConfigEventArgs (config));
+			IConfiguration config = (IConfiguration)_configurationList[index];
+			_configurationList.RemoveAt (index);
+			OnConfigurationRemoved (new ConfigurationEventArguments (config));
 		}
 
 		/// <include file='ConfigCollection.xml' path='//Method[@name="Clear"]/docs/*' />
 		public void Clear ()
 		{
-			configList.Clear ();
+			_configurationList.Clear ();
 		}
 		
 		/// <include file='ConfigCollection.xml' path='//Method[@name="GetEnumerator"]/docs/*' />
 		public IEnumerator GetEnumerator ()
 		{
-			return configList.GetEnumerator ();
+			return _configurationList.GetEnumerator ();
 		}
 		
 		/// <include file='ConfigCollection.xml' path='//Method[@name="CopyTo"]/docs/*' />
 		public void CopyTo (Array array, int index)
 		{
-			configList.CopyTo (array, index);
+			_configurationList.CopyTo (array, index);
 		}
 		
 		/// <include file='ConfigCollection.xml' path='//Method[@name="CopyToStrong"]/docs/*' />
 		public void CopyTo (IConfiguration[] array, int index)
 		{
-			((ICollection)configList).CopyTo (array, index);
+			((ICollection)_configurationList).CopyTo (array, index);
 		}
 
 		/// <include file='ConfigCollection.xml' path='//Method[@name="Contains"]/docs/*' />
 		public bool Contains (object config)
 		{
-			return configList.Contains (config);
+			return _configurationList.Contains (config);
 		}
 
 		/// <include file='ConfigCollection.xml' path='//Method[@name="IndexOf"]/docs/*' />
 		public int IndexOf (object config)
 		{
-			return configList.IndexOf (config);
+			return _configurationList.IndexOf (config);
 		}
 
 		/// <include file='ConfigCollection.xml' path='//Method[@name="Insert"]/docs/*' />
 		public void Insert (int index, object config)
 		{
-			configList.Insert (index, config);
+			_configurationList.Insert (index, config);
 		}
 		#endregion
 
 		#region Public events
 		/// <include file='ConfigCollection.xml' path='//Event[@name="ConfigAdded"]/docs/*' />
-		public event ConfigEventHandler ConfigAdded;
+		public event ConfigurationEventHandler ConfigurationAdded;
 
 		/// <include file='ConfigCollection.xml' path='//Event[@name="ConfigRemoved"]/docs/*' />
-		public event ConfigEventHandler ConfigRemoved;
+		public event ConfigurationEventHandler ConfigurationRemoved;
 		#endregion
 
 		#region Protected methods
 		/// <include file='ConfigCollection.xml' path='//Method[@name="OnConfigAdded"]/docs/*' />
-		protected void OnConfigAdded (ConfigEventArgs e)
+		protected void OnConfigurationAdded (ConfigurationEventArguments e)
 		{
-			if (ConfigAdded != null) {
-				ConfigAdded (this, e);
+			if (ConfigurationAdded != null) {
+				ConfigurationAdded (this, e);
 			}
 		}
 
 		/// <include file='ConfigCollection.xml' path='//Method[@name="OnConfigRemoved"]/docs/*' />
-		protected void OnConfigRemoved (ConfigEventArgs e)
+		protected void OnConfigurationRemoved (ConfigurationEventArguments e)
 		{
-			if (ConfigRemoved != null) {
-				ConfigRemoved (this, e);
+			if (ConfigurationRemoved != null) {
+				ConfigurationRemoved (this, e);
 			}
 		}
 		#endregion

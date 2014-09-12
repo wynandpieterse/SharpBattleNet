@@ -13,23 +13,23 @@ using System.IO;
 using System.Xml;
 using System.Collections;
 
-namespace Nini.Config
+namespace SharpBattleNet.External.Configuration.Source.XML
 {
 	/// <include file='XmlConfigSource.xml' path='//Class[@name="XmlConfigSource"]/docs/*' />
 	public class XMLConfigurationSource : ConfigurationSourceBase
 	{
 		#region Private variables
-		XmlDocument configDoc = null;
-		string savePath = null;
+		private XmlDocument _configurationDocument = null;
+		private string savePath = null;
 		#endregion
 
 		#region Constructors
 		/// <include file='XmlConfigSource.xml' path='//Constructor[@name="Constructor"]/docs/*' />
 		public XMLConfigurationSource ()
 		{
-			configDoc = new XmlDocument ();
-			configDoc.LoadXml ("<Nini/>");
-			PerformLoad (configDoc);
+			_configurationDocument = new XmlDocument ();
+			_configurationDocument.LoadXml ("<Nini/>");
+			PerformLoad (_configurationDocument);
 		}
 
 		/// <include file='XmlConfigSource.xml' path='//Constructor[@name="ConstructorPath"]/docs/*' />
@@ -58,17 +58,17 @@ namespace Nini.Config
 		public void Load (string path)
 		{
 			savePath = path;
-			configDoc = new XmlDocument ();
-			configDoc.Load (path);
-			PerformLoad (configDoc);
+			_configurationDocument = new XmlDocument ();
+			_configurationDocument.Load (path);
+			PerformLoad (_configurationDocument);
 		}
 
 		/// <include file='XmlConfigSource.xml' path='//Method[@name="LoadXmlReader"]/docs/*' />
 		public void Load (XmlReader reader)
 		{
-			configDoc = new XmlDocument ();
-			configDoc.Load (reader);
-			PerformLoad (configDoc);
+			_configurationDocument = new XmlDocument ();
+			_configurationDocument.Load (reader);
+			PerformLoad (_configurationDocument);
 		}
 
 		/// <include file='XmlConfigSource.xml' path='//Method[@name="Save"]/docs/*' />
@@ -78,8 +78,8 @@ namespace Nini.Config
 				throw new ArgumentException ("Source cannot be saved in this state");
 			}
 
-			MergeConfigsIntoDocument ();
-			configDoc.Save (savePath);
+			MergeConfigurationsIntoDocument ();
+			_configurationDocument.Save (savePath);
 			base.Save ();
 		}
 		
@@ -93,8 +93,8 @@ namespace Nini.Config
 		/// <include file='XmlConfigSource.xml' path='//Method[@name="SaveTextWriter"]/docs/*' />
 		public void Save (TextWriter writer)
 		{
-			MergeConfigsIntoDocument ();
-			configDoc.Save (writer);
+			MergeConfigurationsIntoDocument ();
+			_configurationDocument.Save (writer);
 			savePath = null;
 			OnSaved (new EventArgs ());
 		}
@@ -102,8 +102,8 @@ namespace Nini.Config
 		/// <include file='XmlConfigSource.xml' path='//Method[@name="SaveStream"]/docs/*' />
 		public void Save (Stream stream)
 		{
-			MergeConfigsIntoDocument ();
-			configDoc.Save (stream);
+			MergeConfigurationsIntoDocument ();
+			_configurationDocument.Save (stream);
 			savePath = null;
 			OnSaved (new EventArgs ());
 		}
@@ -116,18 +116,18 @@ namespace Nini.Config
 							+ "the loaded the source from a file");
 			}
 
-			configDoc = new XmlDocument ();
-			configDoc.Load (savePath);
-			MergeDocumentIntoConfigs ();
+			_configurationDocument = new XmlDocument ();
+			_configurationDocument.Load (savePath);
+			MergeDocumentIntoConfigurations ();
 			base.Reload ();
 		}
 
 		/// <include file='XmlConfigSource.xml' path='//Method[@name="ToString"]/docs/*' />
 		public override string ToString ()
 		{
-			MergeConfigsIntoDocument ();
+			MergeConfigurationsIntoDocument ();
 			StringWriter writer = new StringWriter ();
-			configDoc.Save (writer);
+			_configurationDocument.Save (writer);
 
 			return writer.ToString ();
 		}
@@ -138,17 +138,17 @@ namespace Nini.Config
 		/// Merges all of the configs from the config collection into the 
 		/// XmlDocument.
 		/// </summary>
-		private void MergeConfigsIntoDocument ()
+		private void MergeConfigurationsIntoDocument ()
 		{
 			RemoveSections ();
-			foreach (IConfiguration config in this.Configs)
+			foreach (IConfiguration config in this.Configurations)
 			{
 				string[] keys = config.GetKeys ();
 
 				XmlNode node = GetSectionByName (config.Name);
 				if (node == null) {
 					node = SectionNode (config.Name);
-					configDoc.DocumentElement.AppendChild (node);
+					_configurationDocument.DocumentElement.AppendChild (node);
 				}
 				RemoveKeys (config.Name);
 				
@@ -166,15 +166,15 @@ namespace Nini.Config
 		{
 			XmlAttribute attr = null;
 
-			foreach (XmlNode node in configDoc.DocumentElement.ChildNodes)
+			foreach (XmlNode node in _configurationDocument.DocumentElement.ChildNodes)
 			{
 				if (node.NodeType == XmlNodeType.Element
 					&& node.Name == "Section") {
 
 					attr = node.Attributes["Name"];
 					if (attr != null) {
-						if (this.Configs[attr.Value] == null) {
-							configDoc.DocumentElement.RemoveChild (node);
+						if (this.Configurations[attr.Value] == null) {
+							_configurationDocument.DocumentElement.RemoveChild (node);
 						}
 					} else {
 						throw new ArgumentException ("Section name attribute not found");
@@ -199,7 +199,7 @@ namespace Nini.Config
 
 						keyName = node.Attributes["Name"];
 						if (keyName != null) {
-							if (this.Configs[sectionName].Get (keyName.Value) == null) {
+							if (this.Configurations[sectionName].Get (keyName.Value) == null) {
 								sectionNode.RemoveChild (node);
 							}
 						} else {
@@ -215,7 +215,7 @@ namespace Nini.Config
 		/// </summary>
 		private void PerformLoad (XmlDocument document)
 		{
-			this.Configs.Clear ();
+			this.Configurations.Clear ();
 
 			this.Merge (this); // required for SaveAll
 			
@@ -238,7 +238,7 @@ namespace Nini.Config
 				if (child.NodeType == XmlNodeType.Element
 					&& child.Name == "Section") {
 					config = new ConfigurationBase (child.Attributes["Name"].Value, this);
-					this.Configs.Add (config);
+					this.Configurations.Add (config);
 					LoadKeys (child, config);
 				}
 			}
@@ -278,9 +278,9 @@ namespace Nini.Config
 		/// </summary>
 		private void CreateKey (XmlNode sectionNode, string key, string value)
 		{
-			XmlNode node = configDoc.CreateElement ("Key");
-			XmlAttribute keyAttr = configDoc.CreateAttribute ("Name");
-			XmlAttribute valueAttr = configDoc.CreateAttribute ("Value");
+			XmlNode node = _configurationDocument.CreateElement ("Key");
+			XmlAttribute keyAttr = _configurationDocument.CreateAttribute ("Name");
+			XmlAttribute valueAttr = _configurationDocument.CreateAttribute ("Value");
 			keyAttr.Value = key;
 			valueAttr.Value = value;
 
@@ -295,8 +295,8 @@ namespace Nini.Config
 		/// </summary>
 		private XmlNode SectionNode (string name)
 		{
-			XmlNode result = configDoc.CreateElement ("Section");
-			XmlAttribute nameAttr = configDoc.CreateAttribute ("Name");
+			XmlNode result = _configurationDocument.CreateElement ("Section");
+			XmlAttribute nameAttr = _configurationDocument.CreateAttribute ("Name");
 			nameAttr.Value = name;
 			result.Attributes.Append (nameAttr);
 			
@@ -310,7 +310,7 @@ namespace Nini.Config
 		{
 			XmlNode result = null;
 
-			foreach (XmlNode node in configDoc.DocumentElement.ChildNodes)
+			foreach (XmlNode node in _configurationDocument.DocumentElement.ChildNodes)
 			{
 				if (node.NodeType == XmlNodeType.Element
 					&& node.Name == "Section"
@@ -349,32 +349,32 @@ namespace Nini.Config
 		private bool IsSavable ()
 		{
 			return (this.savePath != null
-					&& configDoc != null);
+					&& _configurationDocument != null);
 		}
 
 		/// <summary>
 		/// Merges the XmlDocument into the Configs when the document is 
 		/// reloaded.  
 		/// </summary>
-		private void MergeDocumentIntoConfigs ()
+		private void MergeDocumentIntoConfigurations ()
 		{
 			// Remove all missing configs first
-			RemoveConfigs ();
+			RemoveConfigurations ();
 
-			foreach (XmlNode node in configDoc.DocumentElement.ChildNodes)
+			foreach (XmlNode node in _configurationDocument.DocumentElement.ChildNodes)
 			{
 				// If node is a section node
 				if (node.NodeType == XmlNodeType.Element
 					&& node.Name == "Section") {
 
 					string sectionName = node.Attributes["Name"].Value;
-					IConfiguration config = this.Configs[sectionName];
+					IConfiguration config = this.Configurations[sectionName];
 					if (config == null) {
 						// The section is new so add it
 						config = new ConfigurationBase (sectionName, this);
-						this.Configs.Add (config);
+						this.Configurations.Add (config);
 					}				
-					RemoveConfigKeys (config);
+					RemoveConfigurationKey (config);
 				}
 			}
 		}
@@ -382,15 +382,15 @@ namespace Nini.Config
 		/// <summary>
 		/// Removes all configs that are not in the newly loaded XmlDocument.  
 		/// </summary>
-		private void RemoveConfigs ()
+		private void RemoveConfigurations ()
 		{
 			IConfiguration config = null;
-			for (int i = this.Configs.Count - 1; i > -1; i--)
+			for (int i = this.Configurations.Count - 1; i > -1; i--)
 			{
-				config = this.Configs[i];
+				config = this.Configurations[i];
 				// If the section is not present in the XmlDocument
 				if (GetSectionByName (config.Name) == null) {
-					this.Configs.Remove (config);
+					this.Configurations.Remove (config);
 				}
 			}
 		}
@@ -398,7 +398,7 @@ namespace Nini.Config
 		/// <summary>
 		/// Removes all XML keys that were removed as config keys.
 		/// </summary>
-		private void RemoveConfigKeys (IConfiguration config)
+		private void RemoveConfigurationKey (IConfiguration config)
 		{
 			XmlNode section = GetSectionByName (config.Name);
 

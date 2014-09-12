@@ -11,22 +11,22 @@
 using System;
 using System.Collections;
 
-namespace Nini.Config
+namespace SharpBattleNet.External.Configuration
 {
 	/// <include file='AliasText.xml' path='//Class[@name="AliasText"]/docs/*' />
 	public class AliasText
 	{
 		#region Private variables
-		Hashtable intAlias = null;
-		Hashtable booleanAlias = null;
+		private Hashtable _integerAlias = null;
+		private Hashtable _booleanAlias = null;
 		#endregion
 
 		#region Constructors
 		/// <include file='AliasText.xml' path='//Constructor[@name="AliasText"]/docs/*' />
 		public AliasText ()
 		{
-			intAlias = InsensitiveHashtable ();
-			booleanAlias = InsensitiveHashtable ();
+			_integerAlias = InsensitiveHashtable ();
+			_booleanAlias = InsensitiveHashtable ();
 			DefaultAliasLoad ();
 		}
 		#endregion
@@ -35,21 +35,21 @@ namespace Nini.Config
 		/// <include file='AliasText.xml' path='//Method[@name="AddAliasInt"]/docs/*' />
 		public void AddAlias (string key, string alias, int value)
 		{
-			if (intAlias.Contains (key)) {
-				Hashtable keys = (Hashtable)intAlias[key];
+			if (_integerAlias.Contains (key)) {
+				Hashtable keys = (Hashtable)_integerAlias[key];
 				
 				keys[alias] = value;
 			} else {
 				Hashtable keys = InsensitiveHashtable ();
 				keys[alias] = value;
-				intAlias.Add (key, keys);
+				_integerAlias.Add (key, keys);
 			}
 		}
 		
 		/// <include file='AliasText.xml' path='//Method[@name="AddAliasBoolean"]/docs/*' />
 		public void AddAlias (string alias, bool value)
 		{
-			booleanAlias[alias] = value;
+			_booleanAlias[alias] = value;
 		}
 		
 #if (NET_COMPACT_1_0)
@@ -64,16 +64,16 @@ namespace Nini.Config
 		/// <include file='AliasText.xml' path='//Method[@name="ContainsBoolean"]/docs/*' />
 		public bool ContainsBoolean (string key)
 		{
-			return booleanAlias.Contains (key);
+			return _booleanAlias.Contains (key);
 		}
 		
 		/// <include file='AliasText.xml' path='//Method[@name="ContainsInt"]/docs/*' />
-		public bool ContainsInt (string key, string alias)
+		public bool ContainsInteger (string key, string alias)
 		{
 			bool result = false;
 
-			if (intAlias.Contains (key)) {
-				Hashtable keys = (Hashtable)intAlias[key];
+			if (_integerAlias.Contains (key)) {
+				Hashtable keys = (Hashtable)_integerAlias[key];
 				result = (keys.Contains (alias));
 			}
 			
@@ -83,21 +83,21 @@ namespace Nini.Config
 		/// <include file='AliasText.xml' path='//Method[@name="GetBoolean"]/docs/*' />
 		public bool GetBoolean (string key)
 		{
-			if (!booleanAlias.Contains (key)) {
+			if (!_booleanAlias.Contains (key)) {
 				throw new ArgumentException ("Alias does not exist for text");
 			}
 			
-			return (bool)booleanAlias[key];
+			return (bool)_booleanAlias[key];
 		}
 		
 		/// <include file='AliasText.xml' path='//Method[@name="GetInt"]/docs/*' />
-		public int GetInt (string key, string alias)
+		public int GetInteger (string key, string alias)
 		{
-			if (!intAlias.Contains (key)) {
+			if (!_integerAlias.Contains (key)) {
 				throw new ArgumentException ("Alias does not exist for key");
 			}
 
-			Hashtable keys = (Hashtable)intAlias[key];
+			Hashtable keys = (Hashtable)_integerAlias[key];
 
 			if (!keys.Contains (alias)) {
 				throw new ArgumentException ("Config value does not match a " +

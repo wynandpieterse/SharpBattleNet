@@ -11,9 +11,9 @@
 using System;
 using System.Collections;
 using System.Globalization;
-using Nini.Util;
+using SharpBattleNet.External.Configuration.Utilities;
 
-namespace Nini.Config
+namespace SharpBattleNet.External.Configuration
 {
 	#region ConfigKeyEventArgs class
 	/// <include file='ConfigKeyEventArgs.xml' path='//Delegate[@name="ConfigKeyEventHandler"]/docs/*' />
@@ -50,23 +50,23 @@ namespace Nini.Config
 	public class ConfigurationBase : IConfiguration
 	{
 		#region Private variables
-		string configName = null;
-		IConfigurationSource configSource = null;
-		AliasText aliasText = null;
-		IFormatProvider format = NumberFormatInfo.CurrentInfo;
+		private string _configurationName = null;
+		private IConfigurationSource _configurationSource = null;
+		private AliasText _aliasText = null;
+		private IFormatProvider _format = NumberFormatInfo.CurrentInfo;
 		#endregion
 
 		#region Protected variables
-		protected OrderedList keys = new OrderedList ();
+		protected OrderedList _keys = new OrderedList ();
 		#endregion
 		
 		#region Constructors
 		/// <include file='ConfigBase.xml' path='//Constructor[@name="ConfigBase"]/docs/*' />
 		public ConfigurationBase (string name, IConfigurationSource source)
 		{
-			configName = name;
-			configSource = source;
-			aliasText = new AliasText ();
+			_configurationName = name;
+			_configurationSource = source;
+			_aliasText = new AliasText ();
 		}
 		#endregion
 
@@ -74,24 +74,24 @@ namespace Nini.Config
 		/// <include file='IConfig.xml' path='//Property[@name="Name"]/docs/*' />
 		public string Name
 		{
-			get { return configName; }
+			get { return _configurationName; }
 			set {
-				if (configName != value) {
+				if (_configurationName != value) {
 					Rename (value);
 				}
 			}
 		}
 		
 		/// <include file='IConfig.xml' path='//Property[@name="ConfigSource"]/docs/*' />
-		public IConfigurationSource ConfigSource
+		public IConfigurationSource ConfigurationSource
 		{
-			get { return configSource; }
+			get { return _configurationSource; }
 		}
 		
 		/// <include file='IConfig.xml' path='//Property[@name="Alias"]/docs/*' />
 		public AliasText Alias
 		{
-			get { return aliasText; }
+			get { return _aliasText; }
 		}
 		#endregion
 
@@ -107,8 +107,8 @@ namespace Nini.Config
 		{
 			string result = null;
 			
-			if (keys.Contains (key)) {
-				result = keys[key].ToString ();
+			if (_keys.Contains (key)) {
+				result = _keys[key].ToString ();
 			}
 
 			return result;
@@ -125,7 +125,7 @@ namespace Nini.Config
 		/// <include file='IConfig.xml' path='//Method[@name="GetExpanded"]/docs/*' />
 		public string GetExpanded (string key)
 		{
-			return this.ConfigSource.GetExpanded(this, key);
+			return this.ConfigurationSource.GetExpanded(this, key);
 		}
 		
 		/// <include file='IConfig.xml' path='//Method[@name="Get"]/docs/*' />
@@ -141,7 +141,7 @@ namespace Nini.Config
 		}
 		
 		/// <include file='IConfig.xml' path='//Method[@name="GetInt"]/docs/*' />
-		public int GetInt (string key)
+		public int GetInteger (string key)
 		{
 			string text = Get (key);
 			
@@ -149,14 +149,14 @@ namespace Nini.Config
 				throw new ArgumentException ("Value not found: " + key);
 			}
 
-			return Convert.ToInt32 (text, format);
+			return Convert.ToInt32 (text, _format);
 		}
 		
 		/// <include file='IConfig.xml' path='//Method[@name="GetIntAlias"]/docs/*' />
-		public int GetInt (string key, bool fromAlias)
+		public int GetInteger (string key, bool fromAlias)
 		{
 			if (!fromAlias) {
-				return GetInt (key);
+				return GetInteger (key);
 			}
 
 			string result = Get (key);
@@ -165,29 +165,29 @@ namespace Nini.Config
 				throw new ArgumentException ("Value not found: " + key);
 			}
 
-			return GetIntAlias (key, result);
+			return GetIntegerAlias (key, result);
 		}
 		
 		/// <include file='IConfig.xml' path='//Method[@name="GetIntDefault"]/docs/*' />
-		public int GetInt (string key, int defaultValue)
+		public int GetInteger (string key, int defaultValue)
 		{
 			string result = Get (key);
 			
 			return (result == null)
 					? defaultValue
-					: Convert.ToInt32 (result, format);
+					: Convert.ToInt32 (result, _format);
 		}
 		
 		/// <include file='IConfig.xml' path='//Method[@name="GetIntDefaultAlias"]/docs/*' />
-		public int GetInt (string key, int defaultValue, bool fromAlias)
+		public int GetInteger (string key, int defaultValue, bool fromAlias)
 		{
 			if (!fromAlias) {
-				return GetInt (key, defaultValue);
+				return GetInteger (key, defaultValue);
 			}
 
 			string result = Get (key);
 			
-			return (result == null) ? defaultValue : GetIntAlias (key, result);
+			return (result == null) ? defaultValue : GetIntegerAlias (key, result);
 		}
 		
 		/// <include file='IConfig.xml' path='//Method[@name="GetLong"]/docs/*' />
@@ -199,7 +199,7 @@ namespace Nini.Config
 				throw new ArgumentException ("Value not found: " + key);
 			}
 			
-			return Convert.ToInt64 (text, format);
+			return Convert.ToInt64 (text, _format);
 		}
 		
 		/// <include file='IConfig.xml' path='//Method[@name="GetLongDefault"]/docs/*' />
@@ -209,7 +209,7 @@ namespace Nini.Config
 			
 			return (result == null)
 					? defaultValue
-					: Convert.ToInt64 (result, format);
+					: Convert.ToInt64 (result, _format);
 		}
 		
 		/// <include file='IConfig.xml' path='//Method[@name="GetBoolean"]/docs/*' />
@@ -241,7 +241,7 @@ namespace Nini.Config
 				throw new ArgumentException ("Value not found: " + key);
 			}
 			
-			return Convert.ToSingle (text, format);
+			return Convert.ToSingle (text, _format);
 		}
 		
 		/// <include file='IConfig.xml' path='//Method[@name="GetFloatDefault"]/docs/*' />
@@ -251,7 +251,7 @@ namespace Nini.Config
 			
 			return (result == null)
 					? defaultValue
-					: Convert.ToSingle (result, format);
+					: Convert.ToSingle (result, _format);
 		}
 
 		/// <include file='IConfig.xml' path='//Method[@name="GetDouble"]/docs/*' />
@@ -263,7 +263,7 @@ namespace Nini.Config
 				throw new ArgumentException ("Value not found: " + key);
 			}
 			
-			return Convert.ToDouble (text, format);
+			return Convert.ToDouble (text, _format);
 		}
 		
 		/// <include file='IConfig.xml' path='//Method[@name="GetDoubleDefault"]/docs/*' />
@@ -273,15 +273,15 @@ namespace Nini.Config
 			
 			return (result == null)
 					? defaultValue
-					: Convert.ToDouble (result, format);
+					: Convert.ToDouble (result, _format);
 		}
 
 		/// <include file='IConfig.xml' path='//Method[@name="GetKeys"]/docs/*' />
 		public string[] GetKeys ()
 		{
-			string[] result = new string[keys.Keys.Count];
+			string[] result = new string[_keys.Keys.Count];
 			
-			keys.Keys.CopyTo (result, 0);
+			_keys.Keys.CopyTo (result, 0);
 			
 			return result;
 		}
@@ -289,9 +289,9 @@ namespace Nini.Config
 		/// <include file='IConfig.xml' path='//Method[@name="GetValues"]/docs/*' />
 		public string[] GetValues ()
 		{
-			string[] result = new string[keys.Values.Count];
+			string[] result = new string[_keys.Values.Count];
 			
-			keys.Values.CopyTo (result, 0);
+			_keys.Values.CopyTo (result, 0);
 			
 			return result;
 		}
@@ -299,7 +299,7 @@ namespace Nini.Config
 		/// <include file='ConfigBase.xml' path='//Method[@name="Add"]/docs/*' />
 		public void Add (string key, string value)
 		{
-			keys.Add (key, value);
+			_keys.Add (key, value);
 		}
 		
 		/// <include file='IConfig.xml' path='//Method[@name="Set"]/docs/*' />
@@ -312,11 +312,11 @@ namespace Nini.Config
 			if (Get (key) == null) {
 				this.Add (key, value.ToString ());
 			} else {
-				keys[key] = value.ToString ();
+				_keys[key] = value.ToString ();
 			}
 
-			if (ConfigSource.AutoSave) {
-				ConfigSource.Save ();
+			if (ConfigurationSource.AutoSave) {
+				ConfigurationSource.Save ();
 			}
 
 			OnKeySet (new ConfigKeyEventArgs (key, value.ToString ()));
@@ -334,7 +334,7 @@ namespace Nini.Config
 				if (KeySet != null) {
 					keyValue = Get (key);
 				}
-				keys.Remove (key);
+				_keys.Remove (key);
 
 				OnKeyRemoved (new ConfigKeyEventArgs (key, keyValue));
 			}
@@ -373,23 +373,23 @@ namespace Nini.Config
 		/// </summary>
 		private void Rename (string name)
 		{
-			this.ConfigSource.Configs.Remove (this);
-			configName = name;
-			this.ConfigSource.Configs.Add (this);
+			this.ConfigurationSource.Configurations.Remove (this);
+			_configurationName = name;
+			this.ConfigurationSource.Configurations.Add (this);
 		}
 		
 		/// <summary>
 		/// Returns the integer alias first from this IConfig then 
 		/// the parent if there is none.
 		/// </summary>
-		private int GetIntAlias (string key, string alias)
+		private int GetIntegerAlias (string key, string alias)
 		{
 			int result = -1;
 			
-			if (aliasText.ContainsInt (key, alias)) {
-				result = aliasText.GetInt (key, alias);
+			if (_aliasText.ContainsInteger (key, alias)) {
+				result = _aliasText.GetInteger (key, alias);
 			} else {
-				result = ConfigSource.Alias.GetInt (key, alias);
+				result = ConfigurationSource.Alias.GetInteger (key, alias);
 			}			
 			
 			return result;
@@ -403,11 +403,11 @@ namespace Nini.Config
 		{
 			bool result = false;
 			
-			if (aliasText.ContainsBoolean (key)) {
-				result = aliasText.GetBoolean (key);
+			if (_aliasText.ContainsBoolean (key)) {
+				result = _aliasText.GetBoolean (key);
 			} else {
-				if (ConfigSource.Alias.ContainsBoolean (key)) {
-					result = ConfigSource.Alias.GetBoolean (key);
+				if (ConfigurationSource.Alias.ContainsBoolean (key)) {
+					result = ConfigurationSource.Alias.GetBoolean (key);
 				} else {
 					throw new ArgumentException 
 								("Alias value not found: " + key

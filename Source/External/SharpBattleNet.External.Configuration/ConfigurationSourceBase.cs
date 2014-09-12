@@ -12,44 +12,44 @@ using System;
 using System.Text;
 using System.Collections;
 
-namespace Nini.Config
+namespace SharpBattleNet.External.Configuration
 {
 	/// <include file='IConfigSource.xml' path='//Interface[@name="IConfigSource"]/docs/*' />
 	public abstract class ConfigurationSourceBase : IConfigurationSource
 	{
 		#region Private variables
-		ArrayList sourceList = new ArrayList ();
-		ConfigurationCollection configList = null;
-		bool autoSave = false;
-		AliasText alias = new AliasText ();
+		private ArrayList _sourceList = new ArrayList ();
+		private ConfigurationCollection _configurationList = null;
+		private bool _autoSave = false;
+		private AliasText _alias = new AliasText ();
 		#endregion
 
 		#region Constructors
 		/// <include file='ConfigSourceBase.xml' path='//Constructor[@name="Constructor"]/docs/*' />
 		public ConfigurationSourceBase ()
 		{
-			configList = new ConfigurationCollection (this);
+			_configurationList = new ConfigurationCollection (this);
 		}
 		#endregion
 		
 		#region Public properties
 		/// <include file='IConfigSource.xml' path='//Property[@name="Configs"]/docs/*' />
-		public ConfigurationCollection Configs
+		public ConfigurationCollection Configurations
 		{
-			get { return configList; }
+			get { return _configurationList; }
 		}
 		
 		/// <include file='IConfigSource.xml' path='//Property[@name="AutoSave"]/docs/*' />
 		public bool AutoSave
 		{
-			get { return autoSave; }
-			set { autoSave = value; }
+			get { return _autoSave; }
+			set { _autoSave = value; }
 		}
 		
 		/// <include file='IConfigSource.xml' path='//Property[@name="Alias"]/docs/*' />
 		public AliasText Alias
 		{
-			get { return alias; }
+			get { return _alias; }
 		}
 		#endregion
 		
@@ -57,20 +57,20 @@ namespace Nini.Config
 		/// <include file='IConfigSource.xml' path='//Method[@name="Merge"]/docs/*' />
 		public void Merge (IConfigurationSource source)
 		{
-			if (!sourceList.Contains (source))  {
-				sourceList.Add (source);
+			if (!_sourceList.Contains (source))  {
+				_sourceList.Add (source);
 			}
 			
-			foreach (IConfiguration config in source.Configs)
+			foreach (IConfiguration config in source.Configurations)
 			{
-				this.Configs.Add (config);
+				this.Configurations.Add (config);
 			}
 		}
 		
 		/// <include file='IConfigSource.xml' path='//Method[@name="AddConfig"]/docs/*' />
-		public virtual IConfiguration AddConfig (string name)
+		public virtual IConfiguration AddConfiguration (string name)
 		{
-			return configList.Add (name);
+			return _configurationList.Add (name);
 		}
 
 		/// <include file='IConfigSource.xml' path='//Method[@name="GetExpanded"]/docs/*' />
@@ -96,7 +96,7 @@ namespace Nini.Config
 		{
 			string[] keys = null;
 
-			foreach (IConfiguration config in configList)
+			foreach (IConfiguration config in _configurationList)
 			{
 				keys = config.GetKeys ();
 				for (int i = 0; i < keys.Length; i++)
@@ -194,7 +194,7 @@ namespace Nini.Config
 			string[] replaces = search.Split ('|');
 			
 			if (replaces.Length > 1) {
-				IConfiguration newConfig = this.Configs[replaces[0]];
+				IConfiguration newConfig = this.Configurations[replaces[0]];
 				if (newConfig == null) {
 					throw new ArgumentException ("Expand config not found: "
 												 + replaces[0]);

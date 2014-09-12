@@ -11,13 +11,13 @@
 using System;
 using System.IO;
 
-namespace Nini.Config
+namespace SharpBattleNet.External.Configuration
 {
 	/// <include file='IConfigSource.xml' path='//Interface[@name="IConfigSource"]/docs/*' />
 	public interface IConfigurationSource
 	{
 		/// <include file='IConfigSource.xml' path='//Property[@name="Configs"]/docs/*' />
-		ConfigurationCollection Configs { get; }
+		ConfigurationCollection Configurations { get; }
 		
 		/// <include file='IConfigSource.xml' path='//Property[@name="AutoSave"]/docs/*' />
 		bool AutoSave { get; set; }
@@ -35,7 +35,7 @@ namespace Nini.Config
 		void Reload ();
 		
 		/// <include file='IConfigSource.xml' path='//Method[@name="AddConfig"]/docs/*' />
-		IConfiguration AddConfig (string name);
+		IConfiguration AddConfiguration (string name);
 
 		/// <include file='IConfigSource.xml' path='//Method[@name="GetExpanded"]/docs/*' />
 		string GetExpanded (IConfiguration config, string key);

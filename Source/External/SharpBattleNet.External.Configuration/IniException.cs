@@ -16,7 +16,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
 
-namespace Nini.Ini
+namespace SharpBattleNet.External.Configuration.Source.INI
 {
 	/// <include file='IniException.xml' path='//Class[@name="IniException"]/docs/*' />
 #if (NET_COMPACT_1_0)
@@ -26,8 +26,8 @@ namespace Nini.Ini
 	public class INIException : SystemException /*, ISerializable */
 	{
 		#region Private variables
-		INIReader iniReader = null;
-		string message = "";
+		private INIReader _iniReader = null;
+		private string _message = "";
 		#endregion
 
 		#region Public properties
@@ -35,7 +35,7 @@ namespace Nini.Ini
 		public int LinePosition
 		{
 			get	{
-				return (iniReader == null) ? 0 : iniReader.LinePosition;
+				return (_iniReader == null) ? 0 : _iniReader.LinePosition;
 			}
 		}
 		
@@ -43,7 +43,7 @@ namespace Nini.Ini
 		public int LineNumber
 		{
 			get {
-				return (iniReader == null) ? 0 : iniReader.LineNumber;
+				return (_iniReader == null) ? 0 : _iniReader.LineNumber;
 			}
 		}
 		
@@ -51,12 +51,12 @@ namespace Nini.Ini
 		public override string Message
 		{
 			get {
-				if (iniReader == null) {
+				if (_iniReader == null) {
 					return base.Message;
 				}
 
 				return String.Format (CultureInfo.InvariantCulture, "{0} - Line: {1}, Position: {2}.",
-										message, this.LineNumber, this.LinePosition);
+										_message, this.LineNumber, this.LinePosition);
 			}
 		}
 		#endregion
@@ -66,7 +66,7 @@ namespace Nini.Ini
 		public INIException ()
 			: base ()
 		{
-			this.message  = "An error has occurred";
+			this._message  = "An error has occurred";
 		}
 		
 		/// <include file='IniException.xml' path='//Constructor[@name="ConstructorException"]/docs/*' />
@@ -79,15 +79,15 @@ namespace Nini.Ini
 		public INIException (string message)
 			: base (message)
 		{
-			this.message  = message;
+			this._message  = message;
 		}
 		
 		/// <include file='IniException.xml' path='//Constructor[@name="ConstructorTextReader"]/docs/*' />
 		internal INIException (INIReader reader, string message)
 			: this (message)
 		{
-			iniReader = reader;
-			this.message = message;
+			_iniReader = reader;
+			this._message = message;
 		}
 
 #if (NET_COMPACT_1_0)
@@ -109,10 +109,10 @@ namespace Nini.Ini
 											StreamingContext context)
 		{
 			base.GetObjectData (info, context);
-			if (iniReader != null) {
-				info.AddValue ("lineNumber", iniReader.LineNumber);
+			if (_iniReader != null) {
+				info.AddValue ("lineNumber", _iniReader.LineNumber);
 
-				info.AddValue ("linePosition", iniReader.LinePosition);
+				info.AddValue ("linePosition", _iniReader.LinePosition);
 			}
 		}
 #endif

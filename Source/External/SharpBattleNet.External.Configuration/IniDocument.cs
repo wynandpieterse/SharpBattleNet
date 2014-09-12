@@ -11,13 +11,12 @@
 using System;
 using System.IO;
 using System.Collections;
-using Nini.Util;
 
-namespace Nini.Ini
+namespace SharpBattleNet.External.Configuration.Source.INI
 {
 	#region IniFileType enumeration
 	/// <include file='IniDocument.xml' path='//Enum[@name="IniFileType"]/docs/*' />
-	public enum IniFileType
+	public enum INIFileType
 	{
 		/// <include file='IniDocument.xml' path='//Enum[@name="IniFileType"]/Value[@name="Standard"]/docs/*' />
 		Standard,
@@ -26,7 +25,7 @@ namespace Nini.Ini
 		/// <include file='IniDocument.xml' path='//Enum[@name="IniFileType"]/Value[@name="SambaStyle"]/docs/*' />
 		SambaStyle,
 		/// <include file='IniDocument.xml' path='//Enum[@name="IniFileType"]/Value[@name="MysqlStyle"]/docs/*' />
-		MysqlStyle,
+		MySQLStyle,
 		/// <include file='IniDocument.xml' path='//Enum[@name="IniFileType"]/Value[@name="WindowsStyle"]/docs/*' />
 		WindowsStyle
 	}
@@ -36,17 +35,17 @@ namespace Nini.Ini
 	public class INIDocument
 	{
 		#region Private variables
-		INISectionCollection sections = new INISectionCollection ();
-		ArrayList initialComment = new ArrayList ();
-		IniFileType fileType = IniFileType.Standard;
+		private INISectionCollection _sections = new INISectionCollection ();
+		private ArrayList _initialComment = new ArrayList ();
+		private INIFileType _fileType = INIFileType.Standard;
 		#endregion
 		
 		#region Public properties
 		/// <include file='IniDocument.xml' path='//Property[@name="FileType"]/docs/*' />
-		public IniFileType FileType
+		public INIFileType FileType
 		{
-			get { return fileType; }
-			set { fileType = value; }
+			get { return _fileType; }
+			set { _fileType = value; }
 		}
 		#endregion
 
@@ -54,49 +53,49 @@ namespace Nini.Ini
 		/// <include file='IniDocument.xml' path='//Constructor[@name="ConstructorPath"]/docs/*' />
 		public INIDocument (string filePath)
 		{
-			fileType = IniFileType.Standard;
+			_fileType = INIFileType.Standard;
 			Load (filePath);
 		}
 
 		/// <include file='IniDocument.xml' path='//Constructor[@name="ConstructorPathType"]/docs/*' />
-		public INIDocument (string filePath, IniFileType type)
+		public INIDocument (string filePath, INIFileType type)
 		{
-			fileType = type;
+			_fileType = type;
 			Load (filePath);
 		}
 
 		/// <include file='IniDocument.xml' path='//Constructor[@name="ConstructorTextReader"]/docs/*' />
 		public INIDocument (TextReader reader)
 		{
-			fileType = IniFileType.Standard;
+			_fileType = INIFileType.Standard;
 			Load (reader);
 		}
 
 		/// <include file='IniDocument.xml' path='//Constructor[@name="ConstructorTextReaderType"]/docs/*' />
-		public INIDocument (TextReader reader, IniFileType type)
+		public INIDocument (TextReader reader, INIFileType type)
 		{
-			fileType = type;
+			_fileType = type;
 			Load (reader);
 		}
 		
 		/// <include file='IniDocument.xml' path='//Constructor[@name="ConstructorStream"]/docs/*' />
 		public INIDocument (Stream stream)
 		{
-			fileType = IniFileType.Standard;
+			_fileType = INIFileType.Standard;
 			Load (stream);
 		}
 
 		/// <include file='IniDocument.xml' path='//Constructor[@name="ConstructorStreamType"]/docs/*' />
-		public INIDocument (Stream stream, IniFileType type)
+		public INIDocument (Stream stream, INIFileType type)
 		{
-			fileType = type;
+			_fileType = type;
 			Load (stream);
 		}
 
 		/// <include file='IniDocument.xml' path='//Constructor[@name="ConstructorIniReader"]/docs/*' />
 		public INIDocument (INIReader reader)
 		{
-			fileType = IniFileType.Standard;
+			_fileType = INIFileType.Standard;
 			Load (reader);
 		}
 
@@ -116,7 +115,7 @@ namespace Nini.Ini
 		/// <include file='IniDocument.xml' path='//Method[@name="LoadTextReader"]/docs/*' />
 		public void Load (TextReader reader)
 		{
-			Load (GetIniReader (reader, fileType));
+			Load (GetINIReader (reader, _fileType));
 		}
 
 		/// <include file='IniDocument.xml' path='//Method[@name="LoadStream"]/docs/*' />
@@ -134,34 +133,34 @@ namespace Nini.Ini
 		/// <include file='IniSection.xml' path='//Property[@name="Comment"]/docs/*' />
 		public INISectionCollection Sections
 		{
-			get { return sections; }
+			get { return _sections; }
 		}
 
 		/// <include file='IniDocument.xml' path='//Method[@name="SaveTextWriter"]/docs/*' />
 		public void Save (TextWriter textWriter)
 		{
-			INIWriter writer = GetIniWriter (textWriter, fileType);
+			INIWriter writer = GetINIWriter (textWriter, _fileType);
 			INIItem item = null;
 			INISection section = null;
 			
-			foreach (string comment in initialComment)
+			foreach (string comment in _initialComment)
 			{
 				writer.WriteEmpty  (comment);
 			}
 
-			for (int j = 0; j < sections.Count; j++)
+			for (int j = 0; j < _sections.Count; j++)
 			{
-				section = sections[j];
+				section = _sections[j];
 				writer.WriteSection (section.Name, section.Comment);
 				for (int i = 0; i < section.ItemCount; i++)
 				{
 					item = section.GetItem (i);
 					switch (item.Type)
 					{
-					case IniType.Key:
+					case INIType.Key:
 						writer.WriteKey (item.Name, item.Value, item.Comment);
 						break;
-					case IniType.Empty:
+					case INIType.Empty:
 						writer.WriteEmpty (item.Comment);
 						break;
 					}
@@ -201,25 +200,25 @@ namespace Nini.Ini
 				{
 					switch (reader.Type)
 					{
-					case IniType.Empty:
+					case INIType.Empty:
 						if (!sectionFound) {
-							initialComment.Add (reader.Comment);
+							_initialComment.Add (reader.Comment);
 						} else {
 							section.Set (reader.Comment);
 						}
 
 						break;
-					case IniType.Section:
+					case INIType.Section:
 						sectionFound = true;
 						// If section already exists then overwrite it
-						if (sections[reader.Name] != null) {
-							sections.Remove (reader.Name);
+						if (_sections[reader.Name] != null) {
+							_sections.Remove (reader.Name);
 						}
 						section = new INISection (reader.Name, reader.Comment);
-						sections.Add (section);
+						_sections.Add (section);
 
 						break;
-					case IniType.Key:
+					case INIType.Key:
 						if (section.GetValue (reader.Name) == null) { 
 							section.Set (reader.Name, reader.Value, reader.Comment); 
 						} 
@@ -237,32 +236,32 @@ namespace Nini.Ini
 		/// <summary>
 		/// Returns a proper INI reader depending upon the type parameter.
 		/// </summary>
-		private INIReader GetIniReader (TextReader reader, IniFileType type)
+		private INIReader GetINIReader (TextReader reader, INIFileType type)
 		{
 			INIReader result = new INIReader (reader);
 
 			switch (type)
 			{
-			case IniFileType.Standard:
+			case INIFileType.Standard:
 				// do nothing
 				break;
-			case IniFileType.PythonStyle:
+			case INIFileType.PythonStyle:
 				result.AcceptCommentAfterKey = false;
 				result.SetCommentDelimiters (new char[] { ';', '#' });
 				result.SetAssignDelimiters (new char[] { ':' });
 				break;
-			case IniFileType.SambaStyle:
+			case INIFileType.SambaStyle:
 				result.AcceptCommentAfterKey = false;
 				result.SetCommentDelimiters (new char[] { ';', '#' });
 				result.LineContinuation = true;
 				break;
-			case IniFileType.MysqlStyle:
+			case INIFileType.MySQLStyle:
 				result.AcceptCommentAfterKey = false;
 				result.AcceptNoAssignmentOperator = true;
 				result.SetCommentDelimiters (new char[] { '#' });
 				result.SetAssignDelimiters (new char[] { ':', '=' });
 				break;
-			case IniFileType.WindowsStyle:
+			case INIFileType.WindowsStyle:
 				result.ConsumeAllKeyText = true;
 				break;
 			}
@@ -273,22 +272,22 @@ namespace Nini.Ini
 		/// <summary>
 		/// Returns a proper IniWriter depending upon the type parameter.
 		/// </summary>
-		private INIWriter GetIniWriter (TextWriter reader, IniFileType type)
+		private INIWriter GetINIWriter (TextWriter reader, INIFileType type)
 		{
 			INIWriter result = new INIWriter (reader);
 
 			switch (type)
 			{
-			case IniFileType.Standard:
-			case IniFileType.WindowsStyle:
+			case INIFileType.Standard:
+			case INIFileType.WindowsStyle:
 				// do nothing
 				break;
-			case IniFileType.PythonStyle:
+			case INIFileType.PythonStyle:
 				result.AssignDelimiter = ':';
 				result.CommentDelimiter = '#';
 				break;
-			case IniFileType.SambaStyle:
-			case IniFileType.MysqlStyle:
+			case INIFileType.SambaStyle:
+			case INIFileType.MySQLStyle:
 				result.AssignDelimiter = '=';
 				result.CommentDelimiter = '#';
 				break;

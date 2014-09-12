@@ -11,15 +11,14 @@
 using System;
 using System.Collections;
 using System.Globalization;
-using Nini.Util;
 
-namespace Nini.Config
+namespace SharpBattleNet.External.Configuration.Source.INI
 {
 	/// <include file='IniConfig.xml' path='//Class[@name="IniConfig"]/docs/*' />
 	public class INIConfiguration : ConfigurationBase
 	{
 		#region Private variables
-		INIConfigurationSource parent = null;
+		private INIConfigurationSource _parent = null;
 		#endregion
 		
 		#region Constructors
@@ -27,7 +26,7 @@ namespace Nini.Config
 		public INIConfiguration (string name, IConfigurationSource source)
 			: base(name, source)
 		{
-			parent = (INIConfigurationSource)source;
+			_parent = (INIConfigurationSource)source;
 		}
 		#endregion
 
@@ -38,7 +37,7 @@ namespace Nini.Config
 		/// <include file='IniConfig.xml' path='//Method[@name="Get"]/docs/*' />
 		public override string Get (string key)
 		{
-			if (!parent.CaseSensitive) {
+			if (!_parent.CaseSensitive) {
 				key = CaseInsensitiveKeyName (key);
 			}
 
@@ -48,7 +47,7 @@ namespace Nini.Config
 		/// <include file='IniConfig.xml' path='//Method[@name="Set"]/docs/*' />
 		public override void Set (string key, object value)
 		{
-			if (!parent.CaseSensitive) {
+			if (!_parent.CaseSensitive) {
 				key = CaseInsensitiveKeyName (key);
 			}
 
@@ -58,7 +57,7 @@ namespace Nini.Config
 		/// <include file='IniConfig.xml' path='//Method[@name="Remove"]/docs/*' />
 		public override void Remove (string key)
 		{
-			if (!parent.CaseSensitive) {
+			if (!_parent.CaseSensitive) {
 				key = CaseInsensitiveKeyName (key);
 			}
 
@@ -75,7 +74,7 @@ namespace Nini.Config
 			string result = null;
 
 			string lowerKey = key.ToLower ();
-			foreach (string currentKey in keys.Keys)
+			foreach (string currentKey in _keys.Keys)
 			{
 				if (currentKey.ToLower () == lowerKey) {
 					result = currentKey;

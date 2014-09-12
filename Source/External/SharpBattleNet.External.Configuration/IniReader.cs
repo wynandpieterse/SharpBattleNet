@@ -13,11 +13,11 @@ using System.IO;
 using System.Text;
 using System.Collections;
 
-namespace Nini.Ini
+namespace SharpBattleNet.External.Configuration.Source.INI
 {
 	#region IniReadState enumeration
 	/// <include file='IniReader.xml' path='//Enum[@name="IniReadState"]/docs/*' />
-	public enum IniReadState : int
+	public enum INIReadState : int
 	{
 		/// <include file='IniReader.xml' path='//Enum[@name="IniReadState"]/Value[@name="Closed"]/docs/*' />
 		Closed,
@@ -34,7 +34,7 @@ namespace Nini.Ini
 
 	#region IniType enumeration
 	/// <include file='IniReader.xml' path='//Enum[@name="IniType"]/docs/*' />
-	public enum IniType : int
+	public enum INIType : int
 	{
 		/// <include file='IniReader.xml' path='//Enum[@name="IniType"]/Value[@name="Section"]/docs/*' />
 		Section,
@@ -49,101 +49,101 @@ namespace Nini.Ini
 	public class INIReader : IDisposable
 	{
 		#region Private variables
-		int lineNumber = 1;
-		int column = 1;
-		IniType iniType = IniType.Empty;
-		TextReader textReader = null;
-		bool ignoreComments = false;
-		StringBuilder name = new StringBuilder ();
-		StringBuilder value = new StringBuilder ();
-		StringBuilder comment = new StringBuilder ();
-		IniReadState readState = IniReadState.Initial;
-		bool hasComment = false;
-		bool disposed = false;
-		bool lineContinuation = false;
-		bool acceptCommentAfterKey = true;
-		bool acceptNoAssignmentOperator = false;
-		bool consumeAllKeyText = false;
-		char[] commentDelimiters = new char[] { ';' };
-		char[] assignDelimiters = new char[] { '=' };
+        private int _lineNumber = 1;
+        private int _column = 1;
+        private INIType _iniType = INIType.Empty;
+        private TextReader _textReader = null;
+        private bool _ignoreComments = false;
+        private StringBuilder _name = new StringBuilder();
+        private StringBuilder _value = new StringBuilder();
+        private StringBuilder _comment = new StringBuilder();
+        private INIReadState _readState = INIReadState.Initial;
+        private bool _hasComment = false;
+        private bool _disposed = false;
+        private bool _lineContinuation = false;
+        private bool _acceptCommentAfterKey = true;
+        private bool _acceptNoAssignmentOperator = false;
+        private bool _consumeAllKeyText = false;
+        private char[] _commentDelimiters = new char[] { ';' };
+		private char[] _assignDelimeters = new char[] { '=' };
 		#endregion
 
 		#region Public properties
 		/// <include file='IniReader.xml' path='//Property[@name="Name"]/docs/*' />
 		public string Name
 		{
-			get { return this.name.ToString (); }
+			get { return this._name.ToString (); }
 		}
 		
 		/// <include file='IniReader.xml' path='//Property[@name="Value"]/docs/*' />
 		public string Value
 		{
-			get { return this.value.ToString (); }
+			get { return this._value.ToString (); }
 		}
 		
 		/// <include file='IniReader.xml' path='//Property[@name="Type"]/docs/*' />
-		public IniType Type
+		public INIType Type
 		{
-			get { return iniType; }
+			get { return _iniType; }
 		}
 		
 		/// <include file='IniReader.xml' path='//Property[@name="Comment"]/docs/*' />
 		public string Comment
 		{
-			get { return (hasComment) ? this.comment.ToString () : null; }
+			get { return (_hasComment) ? this._comment.ToString () : null; }
 		}
 		
 		/// <include file='IniReader.xml' path='//Property[@name="LineNumber"]/docs/*' />
 		public int LineNumber
 		{
-			get { return lineNumber; }
+			get { return _lineNumber; }
 		}
 		
 		/// <include file='IniReader.xml' path='//Property[@name="LinePosition"]/docs/*' />
 		public int LinePosition
 		{
-			get { return column; }
+			get { return _column; }
 		}
 		
 		/// <include file='IniReader.xml' path='//Property[@name="IgnoreComments"]/docs/*' />
 		public bool IgnoreComments
 		{
-			get { return ignoreComments; }
-			set { ignoreComments = value; }
+			get { return _ignoreComments; }
+			set { _ignoreComments = value; }
 		}
 		
 		/// <include file='IniReader.xml' path='//Property[@name="ReadState"]/docs/*' />
-		public IniReadState ReadState
+		public INIReadState ReadState
 		{
-			get { return readState; }
+			get { return _readState; }
 		}
 		
 		/// <include file='IniReader.xml' path='//Property[@name="LineContinuation"]/docs/*' />
 		public bool LineContinuation
 		{
-			get { return lineContinuation; }
-			set { lineContinuation = value; }
+			get { return _lineContinuation; }
+			set { _lineContinuation = value; }
 		}
 		
 		/// <include file='IniReader.xml' path='//Property[@name="AcceptCommentAfterKey"]/docs/*' />
 		public bool AcceptCommentAfterKey
 		{
-			get { return acceptCommentAfterKey; }
-			set { acceptCommentAfterKey = value; }
+			get { return _acceptCommentAfterKey; }
+			set { _acceptCommentAfterKey = value; }
 		}
 
 		/// <include file='IniReader.xml' path='//Property[@name="AcceptNoAssignmentOperator"]/docs/*' />
 		public bool AcceptNoAssignmentOperator
 		{
-			get { return acceptNoAssignmentOperator; }
-			set { acceptNoAssignmentOperator = value; }
+			get { return _acceptNoAssignmentOperator; }
+			set { _acceptNoAssignmentOperator = value; }
 		}
 
 		/// <include file='IniReader.xml' path='//Property[@name="ConsumeAllKeyText"]/docs/*' />
 		public bool ConsumeAllKeyText
 		{
-			get { return consumeAllKeyText; }
-			set { consumeAllKeyText = value; }
+			get { return _consumeAllKeyText; }
+			set { _consumeAllKeyText = value; }
 		}
 		#endregion
 		
@@ -151,13 +151,13 @@ namespace Nini.Ini
 		/// <include file='IniReader.xml' path='//Constructor[@name="ConstructorPath"]/docs/*' />
 		public INIReader (string filePath)
 		{
-			textReader = new StreamReader (filePath);
+			_textReader = new StreamReader (filePath);
 		}
 		
 		/// <include file='IniReader.xml' path='//Constructor[@name="ConstructorTextReader"]/docs/*' />
 		public INIReader (TextReader reader)
 		{
-			textReader = reader;
+			_textReader = reader;
 		}
 		
 		/// <include file='IniReader.xml' path='//Constructor[@name="ConstructorStream"]/docs/*' />
@@ -173,9 +173,9 @@ namespace Nini.Ini
 		{
 			bool result = false;
 			
-			if (readState != IniReadState.EndOfFile 
-				|| readState != IniReadState.Closed) {
-				readState = IniReadState.Interactive;
+			if (_readState != INIReadState.EndOfFile 
+				|| _readState != INIReadState.Closed) {
+				_readState = INIReadState.Interactive;
 				result = ReadNext ();
 			}
 			
@@ -191,7 +191,7 @@ namespace Nini.Ini
 			{
 				result = Read ();
 
-				if (iniType == IniType.Section || !result) {
+				if (_iniType == INIType.Section || !result) {
 					break;
 				}
 			}
@@ -208,11 +208,11 @@ namespace Nini.Ini
 			{
 				result = Read ();
 
-				if (iniType == IniType.Section) {
+				if (_iniType == INIType.Section) {
 					result = false;
 					break;
 				}
-				if (iniType == IniType.Key || !result) {
+				if (_iniType == INIType.Key || !result) {
 					break;
 				}
 			}
@@ -224,10 +224,10 @@ namespace Nini.Ini
 		public void Close ()
 		{
 			Reset ();
-			readState = IniReadState.Closed;
+			_readState = INIReadState.Closed;
 			
-			if (textReader != null) {
-				textReader.Close ();
+			if (_textReader != null) {
+				_textReader.Close ();
 			}
 		}
 
@@ -240,8 +240,8 @@ namespace Nini.Ini
 		/// <include file='IniReader.xml' path='//Method[@name="GetCommentDelimiters"]/docs/*' />
 		public char[] GetCommentDelimiters ()
 		{
-			char[] result = new char[commentDelimiters.Length];
-			Array.Copy (commentDelimiters, 0, result, 0, commentDelimiters.Length);
+			char[] result = new char[_commentDelimiters.Length];
+			Array.Copy (_commentDelimiters, 0, result, 0, _commentDelimiters.Length);
 
 			return result;
 		}
@@ -253,14 +253,14 @@ namespace Nini.Ini
 				throw new ArgumentException ("Must supply at least one delimiter");
 			}
 			
-			commentDelimiters = delimiters;
+			_commentDelimiters = delimiters;
 		}
 		
 		/// <include file='IniReader.xml' path='//Method[@name="GetAssignDelimiters"]/docs/*' />
 		public char[] GetAssignDelimiters ()
 		{
-			char[] result = new char[assignDelimiters.Length];
-			Array.Copy (assignDelimiters, 0, result, 0, assignDelimiters.Length);
+			char[] result = new char[_assignDelimeters.Length];
+			Array.Copy (_assignDelimeters, 0, result, 0, _assignDelimeters.Length);
 
 			return result;
 		}
@@ -272,7 +272,7 @@ namespace Nini.Ini
 				throw new ArgumentException ("Must supply at least one delimiter");
 			}
 			
-			assignDelimiters = delimiters;
+			_assignDelimeters = delimiters;
 		}
 		#endregion
 		
@@ -280,9 +280,9 @@ namespace Nini.Ini
 		/// <include file='IniReader.xml' path='//Method[@name="DisposeBoolean"]/docs/*' />
 		protected virtual void Dispose (bool disposing)
 		{
-			if (!disposed) {
-				textReader.Close ();
-				disposed = true;
+			if (!_disposed) {
+				_textReader.Close ();
+				_disposed = true;
 
 				if (disposing) {
 					GC.SuppressFinalize (this);
@@ -305,11 +305,11 @@ namespace Nini.Ini
 		/// </summary>
 		private void Reset ()
 		{
-			this.name.Remove (0, this.name.Length);
-			this.value.Remove (0, this.value.Length);
-			this.comment.Remove (0, this.comment.Length);
-			iniType = IniType.Empty;
-			hasComment = false;
+			this._name.Remove (0, this._name.Length);
+			this._value.Remove (0, this._value.Length);
+			this._comment.Remove (0, this._comment.Length);
+			_iniType = INIType.Empty;
+			_hasComment = false;
 		}
 		
 		/// <summary>
@@ -318,12 +318,12 @@ namespace Nini.Ini
 		private bool ReadNext ()
 		{
 			bool result = true;
-			int ch = PeekChar ();
+			int ch = PeekCharacter ();
 			Reset ();
 			
 			if (IsComment (ch)) {
-				iniType = IniType.Empty;
-				ReadChar (); // consume comment character
+				_iniType = INIType.Empty;
+				ReadCharacter (); // consume comment character
 				ReadComment ();
 
 				return result;
@@ -338,13 +338,13 @@ namespace Nini.Ini
 					ReadNext ();
 					break;
 				case '\n':
-					ReadChar ();
+					ReadCharacter ();
 					break;
 				case '[':
 					ReadSection ();
 					break;
 				case -1:
-					readState = IniReadState.EndOfFile;
+					_readState = INIReadState.EndOfFile;
 					result = false;
 					break;
 				default:
@@ -362,15 +362,15 @@ namespace Nini.Ini
 		{
 			int ch = -1;
 			SkipWhitespace ();
-			hasComment = true;
+			_hasComment = true;
 
 			do
 			{
-				ch = ReadChar ();
-				this.comment.Append ((char)ch);
+				ch = ReadCharacter ();
+				this._comment.Append ((char)ch);
 			} while (!EndOfLine (ch));
 			
-			RemoveTrailingWhitespace (this.comment);
+			RemoveTrailingWhitespace (this._comment);
 		}
 		
 		/// <summary>
@@ -390,32 +390,32 @@ namespace Nini.Ini
 		private void ReadKey ()
 		{
 			int ch = -1;
-			iniType = IniType.Key;
+			_iniType = INIType.Key;
 			
 			while (true)
 			{
-				ch = PeekChar ();
+				ch = PeekCharacter ();
 
 				if (IsAssign (ch)) {
-					ReadChar ();
+					ReadCharacter ();
 					break;
 				}
 				
 				if (EndOfLine (ch)) {
-					if (acceptNoAssignmentOperator) {
+					if (_acceptNoAssignmentOperator) {
 						break;
 					}
 					throw new INIException (this, 
 						String.Format ("Expected assignment operator ({0})", 
-										assignDelimiters[0]));
+										_assignDelimeters[0]));
 				}
 
-				this.name.Append ((char)ReadChar ());
+				this._name.Append ((char)ReadCharacter ());
 			}
 			
 			ReadKeyValue ();
 			SearchForComment ();
-			RemoveTrailingWhitespace (this.name);
+			RemoveTrailingWhitespace (this._name);
 		}
 		
 		/// <summary>
@@ -430,14 +430,14 @@ namespace Nini.Ini
 
 			while (true)
 			{
-				ch = PeekChar ();
+				ch = PeekCharacter ();
 
 				if (!IsWhitespace (ch)) {
 					characters++;
 				}
 				
 				if (!this.ConsumeAllKeyText && ch == '"') {
-					ReadChar ();
+					ReadCharacter ();
 
 					if (!foundQuote && characters == 1) {				
 						foundQuote = true;
@@ -452,33 +452,33 @@ namespace Nini.Ini
 				}
 				
 				// Handle line continuation
-				if (lineContinuation && ch == '\\') 
+				if (_lineContinuation && ch == '\\') 
 				{
 					StringBuilder buffer = new StringBuilder ();
-					buffer.Append ((char)ReadChar ()); // append '\'
+					buffer.Append ((char)ReadCharacter ()); // append '\'
 					
-					while (PeekChar () != '\n' && IsWhitespace (PeekChar ()))
+					while (PeekCharacter () != '\n' && IsWhitespace (PeekCharacter ()))
 					{
-						if (PeekChar () != '\r') {
-							buffer.Append ((char)ReadChar ());
+						if (PeekCharacter () != '\r') {
+							buffer.Append ((char)ReadCharacter ());
 						} else {
-							ReadChar (); // consume '\r'
+							ReadCharacter (); // consume '\r'
 						}
 					}
 					
-					if (PeekChar () == '\n') {
+					if (PeekCharacter () == '\n') {
 						// continue reading key value on next line
-						ReadChar ();
+						ReadCharacter ();
 						continue;
 					} else {
 						// Replace consumed characters
-						this.value.Append (buffer.ToString ());
+						this._value.Append (buffer.ToString ());
 					}
 				}
 
 				if (!this.ConsumeAllKeyText) {
 					// If accepting comments then don't consume as key value
-					if (acceptCommentAfterKey && IsComment (ch) && !foundQuote) {
+					if (_acceptCommentAfterKey && IsComment (ch) && !foundQuote) {
 						break;
 					}
 				}
@@ -488,11 +488,11 @@ namespace Nini.Ini
 					break;
 				}
 
-				this.value.Append ((char)ReadChar ());
+				this._value.Append ((char)ReadCharacter ());
 			}
 			
 			if (!foundQuote) {
-				RemoveTrailingWhitespace (this.value);
+				RemoveTrailingWhitespace (this._value);
 			}
 		}
 		
@@ -502,12 +502,12 @@ namespace Nini.Ini
 		private void ReadSection ()
 		{
 			int ch = -1;
-			iniType = IniType.Section;
-			ch = ReadChar (); // consume "["
+			_iniType = INIType.Section;
+			ch = ReadCharacter (); // consume "["
 
 			while (true)
 			{
-				ch = PeekChar ();
+				ch = PeekCharacter ();
 				if (ch == ']') {
 					break;
 				}
@@ -515,11 +515,11 @@ namespace Nini.Ini
 					throw new INIException (this, "Expected section end (])");
 				}
 
-				this.name.Append ((char)ReadChar ());
+				this._name.Append ((char)ReadCharacter ());
 			}
 
 			ConsumeToEnd (); // all after '[' is garbage			
-			RemoveTrailingWhitespace (this.name);
+			RemoveTrailingWhitespace (this._name);
 		}
 		
 		/// <summary>
@@ -527,19 +527,19 @@ namespace Nini.Ini
 		/// </summary>
 		private void SearchForComment ()
 		{
-			int ch = ReadChar ();
+			int ch = ReadCharacter ();
 			
 			while (!EndOfLine (ch))
 			{
 				if (IsComment (ch)) {
-					if (ignoreComments) {
+					if (_ignoreComments) {
 						ConsumeToEnd ();
 					} else {
 						ReadComment ();
 					}
 					break;
 				}
-				ch = ReadChar ();
+				ch = ReadCharacter ();
 			}
 		}
 
@@ -552,22 +552,22 @@ namespace Nini.Ini
 
 			do
 			{
-				ch = ReadChar ();
+				ch = ReadCharacter ();
 			} while (!EndOfLine (ch));
 		}
 		
 		/// <summary>
 		/// Returns and consumes the next character from the stream.
 		/// </summary>
-		private int ReadChar ()
+		private int ReadCharacter ()
 		{
-			int result = textReader.Read ();
+			int result = _textReader.Read ();
 			
 			if (result == '\n') {
-				lineNumber++;
-				column = 1;
+				_lineNumber++;
+				_column = 1;
 			} else {
-				column++;
+				_column++;
 			}
 			
 			return result;
@@ -576,9 +576,9 @@ namespace Nini.Ini
 		/// <summary>
 		/// Returns the next upcoming character from the stream.
 		/// </summary>
-		private int PeekChar ()
+		private int PeekCharacter ()
 		{
-			return textReader.Peek ();
+			return _textReader.Peek ();
 		}
 		
 		/// <summary>
@@ -586,7 +586,7 @@ namespace Nini.Ini
 		/// </summary>
 		private bool IsComment (int ch)
 		{
-			return HasCharacter (commentDelimiters, ch);
+			return HasCharacter (_commentDelimiters, ch);
 		}
 		
 		/// <summary>
@@ -594,7 +594,7 @@ namespace Nini.Ini
 		/// </summary>
 		private bool IsAssign (int ch)
 		{
-			return HasCharacter (assignDelimiters, ch);
+			return HasCharacter (_assignDelimeters, ch);
 		}
 
 		/// <summary>
@@ -629,13 +629,13 @@ namespace Nini.Ini
 		/// </summary>
 		private void SkipWhitespace ()
 		{
-			while (IsWhitespace (PeekChar ()))
+			while (IsWhitespace (PeekCharacter ()))
 			{
-				if (EndOfLine (PeekChar ())) {
+				if (EndOfLine (PeekCharacter ())) {
 					break;
 				}
 
-				ReadChar ();
+				ReadCharacter ();
 			}
 		}
 

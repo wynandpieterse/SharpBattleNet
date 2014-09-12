@@ -12,24 +12,23 @@ using System;
 using System.IO;
 using System.Text;
 using System.Collections;
-using Nini.Util;
 
-namespace Nini.Config
+namespace SharpBattleNet.External.Configuration.Source.CommandLine
 {
 	/// <include file='ArgvConfigSource.xml' path='//Class[@name="ArgvConfigSource"]/docs/*' />
 	public class CommandLineConfigurationSource : ConfigurationSourceBase
 	{
 		#region Private variables
-		CommandLineArgumentParser parser = null;
-		string[] arguments = null;
+		private CommandLineArgumentParser _parser = null;
+		private string[] _arguments = null;
 		#endregion
 
 		#region Constructors
 		/// <include file='ArgvConfigSource.xml' path='//Constructor[@name="Constructor"]/docs/*' />
 		public CommandLineConfigurationSource (string[] arguments)
 		{
-			parser = new CommandLineArgumentParser (arguments);
-			this.arguments = arguments;
+			_parser = new CommandLineArgumentParser (arguments);
+			this._arguments = arguments;
 		}
 		#endregion
 		
@@ -59,7 +58,7 @@ namespace Nini.Config
 		public void AddSwitch (string configName, string longName, 
 								string shortName)
 		{
-			IConfiguration config = GetConfig (configName);
+			IConfiguration config = GetConfiguration (configName);
 			
 			if (shortName != null && 
 				(shortName.Length < 1 || shortName.Length > 2)) {
@@ -67,18 +66,18 @@ namespace Nini.Config
 			}
 
 			// Look for the long name first
-			if (parser[longName] != null) {
-				config.Set (longName, parser[longName]);
-			} else if (shortName != null && parser[shortName] != null) {
-				config.Set (longName, parser[shortName]);
+			if (_parser[longName] != null) {
+				config.Set (longName, _parser[longName]);
+			} else if (shortName != null && _parser[shortName] != null) {
+				config.Set (longName, _parser[shortName]);
 			}
 		}
 		
 		/// <include file='ArgvConfigSource.xml' path='//Method[@name="GetArguments"]/docs/*' />
 		public string[] GetArguments ()
 		{
-			string[] result = new string[this.arguments.Length];
-			Array.Copy (this.arguments, 0, result, 0, this.arguments.Length);
+			string[] result = new string[this._arguments.Length];
+			Array.Copy (this._arguments, 0, result, 0, this._arguments.Length);
 
 			return result;
 		}
@@ -88,15 +87,15 @@ namespace Nini.Config
 		/// <summary>
 		/// Returns an IConfig.  If it does not exist then it is added.
 		/// </summary>
-		private IConfiguration GetConfig (string name)
+		private IConfiguration GetConfiguration (string name)
 		{
 			IConfiguration result = null;
 			
-			if (this.Configs[name] == null) {
+			if (this.Configurations[name] == null) {
 				result = new ConfigurationBase (name, this);
-				this.Configs.Add (result);
+				this.Configurations.Add (result);
 			} else {
-				result = this.Configs[name];
+				result = this.Configurations[name];
 			}
 			
 			return result;

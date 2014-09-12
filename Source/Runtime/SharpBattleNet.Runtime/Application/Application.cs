@@ -55,7 +55,9 @@ namespace SharpBattleNet.Runtime.Application
         {
             _injectionKernel = new StandardKernel();
 
-            // TODO : Add framework modules here
+            // Add standard application modules
+            _injectionKernel.Load(new ConfigurationModule(_name));
+            _injectionKernel.Load(new LoggingModule(_name));
 
             _injectionKernel.Load(_injectionModules);
 

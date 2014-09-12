@@ -67,7 +67,9 @@
     <Compile Include="Application\Details\Service\ServiceApplicationHandler.cs" />
     <Compile Include="Application\IApplicationListener.cs" />
     <Compile Include="Application\ICommandLineParser.cs" />
+    <Compile Include="ConfigurationModule.cs" />
     <Compile Include="FrameworkProgram.cs" />
+    <Compile Include="LoggingModule.cs" />
     <Compile Include="Utilities\Extensions\AssemblyExtensions.cs" />
     <Compile Include="Utilities\Debugging\Guard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

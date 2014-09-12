@@ -33,6 +33,7 @@
 namespace SharpBattleNet.Runtime.Networking.UDP.Listener
 {
     #region Usings
+    using SharpBattleNet.Runtime.Networking.Listeners;
     using System;
     #endregion
     

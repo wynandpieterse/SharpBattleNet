@@ -9,6 +9,8 @@ using SharpBattleNet.Runtime.Networking.Connection;
 using SharpBattleNet.External.BufferPool;
 using System.Reflection;
 using SharpBattleNet.Runtime.Utilities.Extensions;
+using SharpBattleNet.Runtime.Networking.PacketHandeling.Execution;
+using SharpBattleNet.Runtime.Networking.PacketHandeling.Serialization;
 
 namespace SharpBattleNet.Runtime.Networking.PacketHandeling.Dispatching.Details
 {
@@ -35,46 +37,12 @@ namespace SharpBattleNet.Runtime.Networking.PacketHandeling.Dispatching.Details
             return;
         }
 
-        private void ProcessType(Type type)
-        {
-            PacketAttribute attribute = type.GetCustomAttribute<PacketAttribute>();
-            if(null != attribute)
-            {
-                Type interfaceType = type.GetInterface("IPacket");
-                if(null == interfaceType)
-                {
-
-                }
-                else
-                {
-
-                }
-            }
-
-            return;
-        }
-
-        private void ProcessAssembly(Assembly assembly)
-        {
-            assembly.GetTypes().ForEachAsync(ProcessType);
-            return;
-        }
-
-        private void ProcessAssemblyEvent(object sender, AssemblyLoadEventArgs e)
-        {
-            ProcessAssembly(e.LoadedAssembly);
-            return;
-        }
-
         public void Initialize(IConnection connection)
         {
             Guard.AgainstNull(connection);
 
             _connection = connection;
             _state = PacketDispatcherState.Header;
-
-            AppDomain.CurrentDomain.AssemblyLoad += ProcessAssemblyEvent;
-            AppDomain.CurrentDomain.GetAssemblies().ForEachAsync(ProcessAssembly);
 
             return;
         }

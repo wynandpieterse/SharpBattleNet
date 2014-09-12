@@ -30,7 +30,7 @@
 //
 #endregion
 
-namespace SharpBattleNet.Server.MasterServer
+namespace SharpBattleNet.MasterServer
 {
     #region Usings
     using System;

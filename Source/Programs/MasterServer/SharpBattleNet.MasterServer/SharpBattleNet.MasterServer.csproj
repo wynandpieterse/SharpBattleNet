@@ -62,6 +62,10 @@
     <Compile Include="TestPacket.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\External\SharpBattleNet.External.BufferPool\SharpBattleNet.External.BufferPool.csproj">
+      <Project>{c81e12fd-6309-40cb-9fe5-39735c2d1ff9}</Project>
+      <Name>SharpBattleNet.External.BufferPool</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Runtime\SharpBattleNet.Runtime.Networking.Packets\SharpBattleNet.Runtime.Networking.Packets.csproj">
       <Project>{cd359f42-c4e6-4c6a-a1a7-c56951c8cc8a}</Project>
       <Name>SharpBattleNet.Runtime.Networking.Packets</Name>

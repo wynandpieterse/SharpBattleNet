@@ -33,6 +33,7 @@
 namespace SharpBattleNet.Runtime.Networking.UDP.Connection
 {
     #region Usings
+    using SharpBattleNet.Runtime.Networking.Connection;
     using System;
     using System.Net;
     #endregion

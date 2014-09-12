@@ -126,6 +126,10 @@
       <Project>{fdb8d2c5-fd13-40e7-b629-ce71a68bb7b7}</Project>
       <Name>SharpBattleNet.Runtime</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SharpBattleNet.DiabloIIRealmServer\SharpBattleNet.DiabloIIRealmServer.csproj">
+      <Project>{72992102-9792-4899-b500-c0dc47736529}</Project>
+      <Name>SharpBattleNet.DiabloIIRealmServer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

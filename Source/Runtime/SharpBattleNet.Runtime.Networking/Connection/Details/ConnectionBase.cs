@@ -46,7 +46,7 @@ namespace SharpBattleNet.Runtime.Networking.Connection.Details
     /// Contains the base logic that will be usefull for all connection derived
     /// protocols.
     /// </summary>
-    internal abstract class ConnectionBase : IConnection
+    public abstract class ConnectionBase : IConnection
     {
         private readonly ISocketEventPool _socketEventBag = null;
         private readonly ISocketBufferPool _socketBufferPool = null;

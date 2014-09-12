@@ -34,7 +34,8 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Listener
 {
     #region Usings
     using SharpBattleNet.Runtime.Networking.Connection;
-using System;
+    using SharpBattleNet.Runtime.Networking.Listeners;
+    using System;
     using System.Net;
     #endregion
 

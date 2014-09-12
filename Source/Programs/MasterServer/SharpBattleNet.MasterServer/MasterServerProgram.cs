@@ -30,19 +30,19 @@
 //
 #endregion
 
-namespace SharpBattleNet.Server.MasterServer
+namespace SharpBattleNet.MasterServer
 {
     #region Usings
     using System;
     using System.Net;
     using System.Net.Sockets;
     using SharpBattleNet.Runtime;
-    using SharpBattleNet.Runtime.Networking.Listeners.TCP;
     using SharpBattleNet.Runtime.Networking.Connection;
-    using SharpBattleNet.Runtime.Networking.Connection.TCP;
     using SharpBattleNet.Runtime.Networking.Listeners;
     using SharpBattleNet.External.BufferPool;
     using System.Text;
+    using SharpBattleNet.Runtime.Networking.TCP.Listener;
+    using SharpBattleNet.Runtime.Networking.TCP.Connection;
     #endregion
 
     internal sealed class MasterServerProgram : IProgram, IListenerAcceptor, IConnectionNotifications, IConnectableTCPConnectionListener

@@ -38,6 +38,7 @@ namespace SharpBattleNet.Runtime.Networking.UDP.Connection.Details
     using SharpBattleNet.Runtime.Networking.Connection.Details;
     using SharpBattleNet.Runtime.Networking.Utilities.Collections;
     using SharpBattleNet.Runtime.Utilities.Debugging;
+    using SharpBattleNet.Runtime.Networking.Connection;
     #endregion
 
     /// <summary>

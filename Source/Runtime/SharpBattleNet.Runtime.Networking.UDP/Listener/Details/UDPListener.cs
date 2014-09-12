@@ -41,6 +41,5 @@ namespace SharpBattleNet.Runtime.Networking.UDP.Listener.Details
     /// </summary>
     internal sealed class UDPListener : IUDPListener
     {
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
     }
 }

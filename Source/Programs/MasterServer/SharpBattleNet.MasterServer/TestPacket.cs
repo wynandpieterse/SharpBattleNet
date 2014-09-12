@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SharpBattleNet.Runtime.Networking.Connection;
-using SharpBattleNet.Runtime.Networking.PacketHandeling.Utilities;
 using SharpBattleNet.External.BufferPool;
+using SharpBattleNet.Runtime.Networking.PacketHandeling.Execution;
+using SharpBattleNet.Runtime.Networking.PacketHandeling.Serialization;
 
-namespace SharpBattleNet.Server.MasterServer
+namespace SharpBattleNet.MasterServer
 {
     public sealed class HeaderExecutor : IPacketHeaderExecutor
     {
@@ -21,7 +22,6 @@ namespace SharpBattleNet.Server.MasterServer
         }
     }
 
-    [Packet]
     public sealed class TestPacket : IPacket
     {
         internal class In : IPacketIn

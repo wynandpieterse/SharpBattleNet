@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SharpBattleNet.Runtime.Networking.Connection;
+using SharpBattleNet.Runtime.Networking.PacketHandeling.Serialization;
 
 namespace SharpBattleNet.Runtime.Networking.PacketHandeling.Execution
 {

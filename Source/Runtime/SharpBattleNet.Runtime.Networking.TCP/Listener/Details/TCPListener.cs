@@ -39,7 +39,8 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Listener.Details
     using SharpBattleNet.Runtime.Networking.Utilities.Collections;
     using SharpBattleNet.Runtime.Utilities.Debugging;
     using SharpBattleNet.Runtime.Networking.Connection;
-    using SharpBattleNet.Runtime.Networking.Connection.TCP;
+    using SharpBattleNet.Runtime.Networking.TCP.Connection;
+    using SharpBattleNet.Runtime.Networking.Listeners;
     #endregion
 
     /// <summary>
@@ -47,8 +48,6 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Listener.Details
     /// </summary>
     internal sealed class TCPListener : ITCPListener
     {
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
         private readonly ISocketEventPool _socketEvents = null;
         private readonly IListenerTCPConnectionFactory _listenerFactory = null;
         private readonly IListenerAcceptor _acceptor = null;
@@ -127,8 +126,6 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Listener.Details
                 // Again, we dont really care about these SAEA objects not making
                 // it back into the pool, they will be collected by the GC when
                 // it sees that it no longer contains any references.
-
-                _logger.Trace("Failed to re-insert an accept socket event descriptor back into the pool");
             }
 
             return;
@@ -156,17 +153,15 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Listener.Details
             {
                 if (SocketError.ConnectionReset == socketEvent.SocketError)
                 {
-                    _logger.Trace("TCP connection was resetted from client {0}, Possible DOS attack", socketEvent.AcceptSocket.RemoteEndPoint);
+                    
                 }
                 else
                 {
-                    _logger.Trace("TCP connection from {0} failed. Stated socket error is {1}", socketEvent.AcceptSocket.RemoteEndPoint, socketEvent.SocketError);
+                    
                 }
             }
             else
             {
-                _logger.Trace("Got new TCP connection from {0}", socketEvent.AcceptSocket.RemoteEndPoint);
-
                 try
                 {
                     connection = _listenerFactory.Accepted(socketEvent.AcceptSocket, _notificationListener);
@@ -223,8 +218,6 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Listener.Details
             }
             catch (ObjectDisposedException ex)
             {
-                _logger.Trace("TCP acceptor socket for address {0} was disposed during operation", _listener.LocalEndPoint);
-
                 if (null != socketEvent)
                 {
                     RecycleSocketEvent(socketEvent);
@@ -251,8 +244,6 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Listener.Details
         /// </param>
         private void Start()
         {
-            _logger.Info("New TCP listener created for local address {0}", _listenEndpoint);
-
             _listener = new Socket(_listenEndpoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
             try
@@ -262,12 +253,10 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Listener.Details
             }
             catch (ObjectDisposedException ex)
             {
-                _logger.Debug(String.Format("TCP listener for address {0} was disposed before starting", _listenEndpoint), ex);
                 return;
             }
             catch (SocketException ex)
             {
-                _logger.Warn(String.Format("TCP listener failed to bind on address {0}", _listenEndpoint), ex);
                 return;
             }
 

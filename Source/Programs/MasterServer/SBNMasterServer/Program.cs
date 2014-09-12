@@ -30,13 +30,13 @@
 //
 #endregion
 
-namespace SharpBattleNet.Program.MasterServer
+namespace SBNMasterServer
 {
     #region Usings
     using System;
     using Ninject;
     using SharpBattleNet.Runtime;
-    using SharpBattleNet.Server.MasterServer;
+    using SharpBattleNet.MasterServer;
     using SharpBattleNet.Runtime.Networking;
     #endregion
 

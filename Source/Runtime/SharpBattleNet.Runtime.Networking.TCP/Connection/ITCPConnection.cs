@@ -33,6 +33,7 @@
 namespace SharpBattleNet.Runtime.Networking.TCP.Connection
 {
     #region Usings
+    using SharpBattleNet.Runtime.Networking.Connection;
     using System;
     #endregion
 

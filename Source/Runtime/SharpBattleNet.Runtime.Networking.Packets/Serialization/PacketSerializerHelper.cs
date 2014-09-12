@@ -1,12 +1,12 @@
-﻿using SharpBattleNet.Framework.External.BufferPool;
-using SharpBattleNet.Framework.Networking.Connection;
+﻿using SharpBattleNet.External.BufferPool;
+using SharpBattleNet.Runtime.Networking.Connection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharpBattleNet.Framework.Networking.PacketHandeling.Utilities
+namespace SharpBattleNet.Runtime.Networking.PacketHandeling.Serialization
 {
     public abstract class PacketSerializerHelper<TPacketIn, TPacketOut> : IPacketSerializer
     {

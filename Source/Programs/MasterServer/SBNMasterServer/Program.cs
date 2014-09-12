@@ -35,9 +35,9 @@ namespace SharpBattleNet.Program.MasterServer
     #region Usings
     using System;
     using Ninject;
-    using SharpBattleNet.Framework;
+    using SharpBattleNet.Runtime;
     using SharpBattleNet.Server.MasterServer;
-    using SharpBattleNet.Framework.Networking;
+    using SharpBattleNet.Runtime.Networking;
     #endregion
 
     /// <summary>

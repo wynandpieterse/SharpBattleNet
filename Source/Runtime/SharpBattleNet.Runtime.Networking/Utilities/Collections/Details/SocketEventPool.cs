@@ -30,7 +30,7 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Networking.Utilities.Collections.Details
+namespace SharpBattleNet.Runtime.Networking.Utilities.Collections.Details
 {
     #region Usings
     using System;

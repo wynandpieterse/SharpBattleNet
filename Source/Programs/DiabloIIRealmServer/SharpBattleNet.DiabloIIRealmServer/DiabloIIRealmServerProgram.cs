@@ -30,11 +30,11 @@
 //
 #endregion
 
-namespace SharpBattleNet.Server.DiabloIIRealmServer
+namespace SharpBattleNet.DiabloIIRealmServer
 {
     #region Usings
     using System;
-    using SharpBattleNet.Framework;
+    using SharpBattleNet.Runtime;
     #endregion
 
     internal sealed class DiabloIIRealmServerProgram : IProgram

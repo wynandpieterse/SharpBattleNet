@@ -30,14 +30,14 @@
 //
 #endregion
 
-namespace SharpBattleNet.Program.WarCraftIIIRouterServer
+namespace SBNWarCraftIIIRouteServer
 {
     #region Usings
     using System;
     using Ninject;
-    using SharpBattleNet.Framework;
-    using SharpBattleNet.Framework.Networking;
-    using SharpBattleNet.Server.WarCraftIIIRouterServer;
+    using SharpBattleNet.Runtime;
+    using SharpBattleNet.Runtime.Networking;
+    using SharpBattleNet.WarCraftIIIRouterServer;
     #endregion
 
     /// <summary>

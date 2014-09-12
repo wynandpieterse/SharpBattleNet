@@ -30,14 +30,14 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework
+namespace SharpBattleNet.Runtime
 {
     #region Usings
     using System;
     using System.Reflection;
     using Ninject;
-    using SharpBattleNet.Framework.Utilities.Extensions;
-    using SharpBattleNet.Framework.Utilities.Debugging;
+    using SharpBattleNet.Runtime.Utilities.Extensions;
+    using SharpBattleNet.Runtime.Utilities.Debugging;
     #endregion
 
     /// <summary>

@@ -30,7 +30,7 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Utilities.Debugging
+namespace SharpBattleNet.Runtime.Utilities.Debugging
 {
     #region Usings
     using System;

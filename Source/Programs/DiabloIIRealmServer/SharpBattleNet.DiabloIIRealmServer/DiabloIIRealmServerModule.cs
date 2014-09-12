@@ -30,12 +30,12 @@
 //
 #endregion
 
-namespace SharpBattleNet.Server.DiabloIIRealmServer
+namespace SharpBattleNet.DiabloIIRealmServer
 {
     #region Usings
     using System;
     using Ninject.Modules;
-    using SharpBattleNet.Framework;
+    using SharpBattleNet.Runtime;
     #endregion
 
     public sealed class DiabloIIRealmServerModule : NinjectModule

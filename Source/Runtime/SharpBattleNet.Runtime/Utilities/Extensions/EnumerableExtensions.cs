@@ -1,4 +1,4 @@
-﻿namespace SharpBattleNet.Framework.Utilities.Extensions
+﻿namespace SharpBattleNet.Runtime.Utilities.Extensions
 {
     using System;
     using System.Collections.Generic;

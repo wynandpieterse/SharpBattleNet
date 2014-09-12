@@ -30,16 +30,16 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Networking.Connection.Details
+namespace SharpBattleNet.Runtime.Networking.Connection.Details
 {
     #region Usings
     using System;
     using System.Net;
     using System.Net.Sockets;
     using System.Text;
-    using SharpBattleNet.Framework.Networking.Utilities.Collections;
-    using SharpBattleNet.Framework.Utilities.Debugging;
-    using SharpBattleNet.Framework.External.BufferPool;
+    using SharpBattleNet.Runtime.Networking.Utilities.Collections;
+    using SharpBattleNet.Runtime.Utilities.Debugging;
+    using SharpBattleNet.External.BufferPool;
     #endregion
 
     /// <summary>

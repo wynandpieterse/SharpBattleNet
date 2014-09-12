@@ -30,7 +30,7 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Networking.Listeners.UDP
+namespace SharpBattleNet.Runtime.Networking.UDP.Listener
 {
     #region Usings
     using System;

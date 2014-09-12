@@ -30,12 +30,12 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Networking.Listeners
+namespace SharpBattleNet.Runtime.Networking.Listeners
 {
     #region Usings
     using System;
     using System.Net;
-    using SharpBattleNet.Framework.Networking.Connection;
+    using SharpBattleNet.Runtime.Networking.Connection;
     #endregion
 
     /// <summary>

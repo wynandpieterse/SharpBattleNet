@@ -36,12 +36,12 @@ namespace SharpBattleNet.Server.MasterServer
     using System;
     using System.Net;
     using System.Net.Sockets;
-    using SharpBattleNet.Framework;
-    using SharpBattleNet.Framework.Networking.Listeners.TCP;
-    using SharpBattleNet.Framework.Networking.Connection;
-    using SharpBattleNet.Framework.Networking.Connection.TCP;
-    using SharpBattleNet.Framework.Networking.Listeners;
-    using SharpBattleNet.Framework.External.BufferPool;
+    using SharpBattleNet.Runtime;
+    using SharpBattleNet.Runtime.Networking.Listeners.TCP;
+    using SharpBattleNet.Runtime.Networking.Connection;
+    using SharpBattleNet.Runtime.Networking.Connection.TCP;
+    using SharpBattleNet.Runtime.Networking.Listeners;
+    using SharpBattleNet.External.BufferPool;
     using System.Text;
     #endregion
 

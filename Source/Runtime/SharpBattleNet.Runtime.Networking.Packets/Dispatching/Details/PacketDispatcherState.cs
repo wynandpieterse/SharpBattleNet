@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharpBattleNet.Framework.Networking.PacketHandeling.Details
+namespace SharpBattleNet.Runtime.Networking.PacketHandeling.Dispatching.Details
 {
     public enum PacketDispatcherState : byte
     {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SharpBattleNet.Framework.Networking.Connection;
+using SharpBattleNet.Runtime.Networking.Connection;
 
-namespace SharpBattleNet.Framework.Networking.PacketHandeling.Utilities
+namespace SharpBattleNet.Runtime.Networking.PacketHandeling.Execution
 {
     public abstract class PacketExecutorHelper<TPacketIn> : IPacketExecutor
     {

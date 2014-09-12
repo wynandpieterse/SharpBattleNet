@@ -1,16 +1,16 @@
-﻿using SharpBattleNet.Framework.Utilities.Debugging;
+﻿using SharpBattleNet.Runtime.Utilities.Debugging;
 using System;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SharpBattleNet.Framework.Networking.Connection;
-using SharpBattleNet.Framework.External.BufferPool;
+using SharpBattleNet.Runtime.Networking.Connection;
+using SharpBattleNet.External.BufferPool;
 using System.Reflection;
-using SharpBattleNet.Framework.Utilities.Extensions;
+using SharpBattleNet.Runtime.Utilities.Extensions;
 
-namespace SharpBattleNet.Framework.Networking.PacketHandeling.Details
+namespace SharpBattleNet.Runtime.Networking.PacketHandeling.Dispatching.Details
 {
     internal sealed class PacketDispatcher : IPacketDispatcher
     {

@@ -1,12 +1,12 @@
-﻿using SharpBattleNet.Framework.Networking.PacketHandeling;
+﻿using SharpBattleNet.Runtime.Networking.PacketHandeling;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SharpBattleNet.Framework.Networking.Connection;
-using SharpBattleNet.Framework.Networking.PacketHandeling.Utilities;
-using SharpBattleNet.Framework.External.BufferPool;
+using SharpBattleNet.Runtime.Networking.Connection;
+using SharpBattleNet.Runtime.Networking.PacketHandeling.Utilities;
+using SharpBattleNet.External.BufferPool;
 
 namespace SharpBattleNet.Server.MasterServer
 {

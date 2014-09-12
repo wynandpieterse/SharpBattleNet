@@ -30,11 +30,11 @@
 //
 #endregion
 
-namespace SharpBattleNet.Server.WarCraftIIIRouterServer
+namespace SharpBattleNet.WarCraftIIIRouterServer
 {
     #region Usings
     using System;
-    using SharpBattleNet.Framework;
+    using SharpBattleNet.Runtime;
     #endregion
 
     internal sealed class WarCraftIIIRouterServerProgram : IProgram

@@ -30,7 +30,7 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Networking.Listeners.TCP
+namespace SharpBattleNet.Runtime.Networking.TCP.Listener
 {
     #region Usings
     using System;

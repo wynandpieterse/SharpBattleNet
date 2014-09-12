@@ -30,14 +30,14 @@
 //
 #endregion
 
-namespace SharpBattleNet.Program.DiabloIIGameServer
+namespace SBNDiabloIIGameServer
 {
     #region Usings
     using System;
     using Ninject;
-    using SharpBattleNet.Framework;
-    using SharpBattleNet.Framework.Networking;
-    using SharpBattleNet.Server.DiabloIIGameServer;
+    using SharpBattleNet.Runtime;
+    using SharpBattleNet.Runtime.Networking;
+    using SharpBattleNet.DiabloIIGameServer;
     #endregion
 
     /// <summary>

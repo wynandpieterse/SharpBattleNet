@@ -30,25 +30,25 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Networking
+namespace SharpBattleNet.Runtime.Networking
 {
     #region Usings
     using System;
     using Ninject.Modules;
     using Ninject.Extensions.Factory;
-    using SharpBattleNet.Framework.External.BufferPool;
-    using SharpBattleNet.Framework.Networking.Utilities.Collections;
-    using SharpBattleNet.Framework.Networking.Utilities.Collections.Details;
-    using SharpBattleNet.Framework.Networking.Connection.TCP;
-    using SharpBattleNet.Framework.Networking.Connection.TCP.Details;
-    using SharpBattleNet.Framework.Networking.Connection.UDP;
-    using SharpBattleNet.Framework.Networking.Connection.UDP.Details;
-    using SharpBattleNet.Framework.Networking.Listeners.TCP;
-    using SharpBattleNet.Framework.Networking.Listeners.TCP.Details;
-    using SharpBattleNet.Framework.Networking.Listeners.UDP;
-    using SharpBattleNet.Framework.Networking.Listeners.UDP.Details;
-    using SharpBattleNet.Framework.Networking.PacketHandeling;
-    using SharpBattleNet.Framework.Networking.PacketHandeling.Details;
+    using SharpBattleNet.External.BufferPool;
+    using SharpBattleNet.Runtime.Networking.Utilities.Collections;
+    using SharpBattleNet.Runtime.Networking.Utilities.Collections.Details;
+    using SharpBattleNet.Runtime.Networking.Connection.TCP;
+    using SharpBattleNet.Runtime.Networking.Connection.TCP.Details;
+    using SharpBattleNet.Runtime.Networking.Connection.UDP;
+    using SharpBattleNet.Runtime.Networking.Connection.UDP.Details;
+    using SharpBattleNet.Runtime.Networking.Listeners.TCP;
+    using SharpBattleNet.Runtime.Networking.Listeners.TCP.Details;
+    using SharpBattleNet.Runtime.Networking.Listeners.UDP;
+    using SharpBattleNet.Runtime.Networking.Listeners.UDP.Details;
+    using SharpBattleNet.Runtime.Networking.PacketHandeling;
+    using SharpBattleNet.Runtime.Networking.PacketHandeling.Details;
     #endregion
 
     /// <summary>

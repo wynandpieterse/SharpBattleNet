@@ -30,14 +30,14 @@
 //
 #endregion
 
-namespace SharpBattleNet.Framework.Networking.Connection.UDP.Details
+namespace SharpBattleNet.Runtime.Networking.UDP.Connection.Details
 {
     #region Usings
     using System;
     using System.Net;
-    using SharpBattleNet.Framework.Networking.Connection.Details;
-    using SharpBattleNet.Framework.Networking.Utilities.Collections;
-    using SharpBattleNet.Framework.Utilities.Debugging;
+    using SharpBattleNet.Runtime.Networking.Connection.Details;
+    using SharpBattleNet.Runtime.Networking.Utilities.Collections;
+    using SharpBattleNet.Runtime.Utilities.Debugging;
     #endregion
 
     /// <summary>

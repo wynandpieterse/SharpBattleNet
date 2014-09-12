@@ -55,7 +55,9 @@ namespace SharpBattleNet.Runtime.Application
         {
             _injectionKernel = new StandardKernel();
 
-            // TODO : Add framework modules here
+            // Add standard application modules
+            _injectionKernel.Load(new ConfigurationModule(_name));
+            _injectionKernel.Load(new LoggingModule(_name));
 
             _injectionKernel.Load(_injectionModules);
 
@@ -90,13 +92,50 @@ namespace SharpBattleNet.Runtime.Application
             return;
         }
 
-        public int Run()
+        public int UnguardedRun()
         {
             SetupNinject();
             SetupCommandLineParser();
             SetupApplicationHandler();
 
             return _applicationHandler.Run(_arguments);
+        }
+
+        private void UnhandledException(Exception ex)
+        {
+            return;
+        }
+
+        private void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
+        {
+            UnhandledException((Exception)e.ExceptionObject);
+
+            return;
+        }
+
+        private int GuardedRun()
+        {
+            try
+            {
+                AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
+
+                return UnguardedRun();
+            }
+            catch(Exception ex)
+            {
+                UnhandledException(ex);
+            }
+
+            return -1;
+        }
+
+        public int Run()
+        {
+            #if DEBUG
+                return UnguardedRun();
+            #else
+                return GuardedRun();
+            #endif
         }
 
         protected void Dispose(bool disposing)

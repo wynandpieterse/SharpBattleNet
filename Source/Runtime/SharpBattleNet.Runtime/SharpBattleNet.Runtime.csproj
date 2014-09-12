@@ -59,15 +59,17 @@
   <ItemGroup>
     <Compile Include="Application\Application.cs" />
     <Compile Include="Application\ApplicationMode.cs" />
-    <Compile Include="Application\Details\BaseApplicationHandler.cs" />
+    <Compile Include="Application\Details\ApplicationHandler.cs" />
     <Compile Include="Application\Details\CommandLineParser.cs" />
     <Compile Include="Application\Details\Console\ConsoleApplicationHandler.cs" />
     <Compile Include="Application\Details\GUI\GUIApplicationHandler.cs" />
     <Compile Include="Application\Details\IApplicationHandler.cs" />
     <Compile Include="Application\Details\Service\ServiceApplicationHandler.cs" />
     <Compile Include="Application\IApplicationListener.cs" />
-    <Compile Include="Application\ICommandLineParser.cs" />
+    <Compile Include="Application\Details\ICommandLineParser.cs" />
+    <Compile Include="ConfigurationModule.cs" />
     <Compile Include="FrameworkProgram.cs" />
+    <Compile Include="LoggingModule.cs" />
     <Compile Include="Utilities\Extensions\AssemblyExtensions.cs" />
     <Compile Include="Utilities\Debugging\Guard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

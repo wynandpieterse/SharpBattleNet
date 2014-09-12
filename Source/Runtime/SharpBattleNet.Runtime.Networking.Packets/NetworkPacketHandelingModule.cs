@@ -1,4 +1,4 @@
-#region Header
+﻿#region Header
 //
 //    _  _   ____        _   _   _         _   _      _   
 //  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
@@ -36,36 +36,22 @@ namespace SharpBattleNet.Runtime.Networking
     using System;
     using Ninject.Modules;
     using Ninject.Extensions.Factory;
-    using SharpBattleNet.External.BufferPool;
-    using SharpBattleNet.Runtime.Networking.Utilities.Collections;
-    using SharpBattleNet.Runtime.Networking.Utilities.Collections.Details;
+    using SharpBattleNet.Runtime.Networking.PacketHandeling.Dispatching;
+    using SharpBattleNet.Runtime.Networking.PacketHandeling.Dispatching.Details;
     #endregion
 
     /// <summary>
     /// Ninject module to load all IoC objects for the network framework library.
     /// </summary>
-    public sealed class NetworkModule : NinjectModule
+    public sealed class NetworkPacketHandelingModule : NinjectModule
     {
         /// <summary>
-        /// Creates a pool of bytes that the networking subsystem will use to
-        /// receive and send messages for performance reason in regard to
-        /// garbage collection.
+        /// Binds all the details that handle packet dispatching.
         /// </summary>
-        /// <returns>
-        /// The pool object to use for byte buffer allocations
-        /// </returns>
-        private SocketBufferPool CreateSocketBufferPool()
+        private void BindPacketHandeling()
         {
-            return new SocketBufferPool(1 * 1024 * 1024, 64, 8);
-        }
-
-        /// <summary>
-        /// Binds all utility classes to the container.
-        /// </summary>
-        private void BindUtilities()
-        {
-            Bind<ISocketEventPool>().To<SocketEventPool>().InSingletonScope();
-            Bind<ISocketBufferPool>().ToConstant<SocketBufferPool>(CreateSocketBufferPool()).InSingletonScope();
+            Bind<IPacketDispatcherFactory>().ToFactory();
+            Bind<IPacketDispatcher>().To<PacketDispatcher>();
 
             return;
         }
@@ -75,7 +61,7 @@ namespace SharpBattleNet.Runtime.Networking
         /// </summary>
         public override void Load()
         {
-            BindUtilities();
+            BindPacketHandeling();
 
             return;
         }

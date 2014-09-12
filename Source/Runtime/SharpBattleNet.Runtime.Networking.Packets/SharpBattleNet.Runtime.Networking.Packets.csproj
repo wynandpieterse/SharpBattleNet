@@ -63,6 +63,7 @@
     <Compile Include="Execution\IPacketHeaderExecutor.cs" />
     <Compile Include="Execution\PacketExecutorHelper.cs" />
     <Compile Include="IPacket.cs" />
+    <Compile Include="NetworkPacketHandelingModule.cs" />
     <Compile Include="PacketDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\IPacketIn.cs" />
@@ -75,6 +76,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\..\External\SharpBattleNet.External.BufferPool\SharpBattleNet.External.BufferPool.csproj">
+      <Project>{c81e12fd-6309-40cb-9fe5-39735c2d1ff9}</Project>
+      <Name>SharpBattleNet.External.BufferPool</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharpBattleNet.Runtime.Networking\SharpBattleNet.Runtime.Networking.csproj">
       <Project>{b838d207-fad1-4ee1-95b5-dcb240d1a0aa}</Project>
       <Name>SharpBattleNet.Runtime.Networking</Name>

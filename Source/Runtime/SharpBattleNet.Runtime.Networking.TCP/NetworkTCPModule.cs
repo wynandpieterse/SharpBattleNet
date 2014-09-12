@@ -1,4 +1,4 @@
-#region Header
+﻿#region Header
 //
 //    _  _   ____        _   _   _         _   _      _   
 //  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
@@ -36,36 +36,38 @@ namespace SharpBattleNet.Runtime.Networking
     using System;
     using Ninject.Modules;
     using Ninject.Extensions.Factory;
-    using SharpBattleNet.External.BufferPool;
-    using SharpBattleNet.Runtime.Networking.Utilities.Collections;
-    using SharpBattleNet.Runtime.Networking.Utilities.Collections.Details;
+    using SharpBattleNet.Runtime.Networking.TCP.Connection;
+    using SharpBattleNet.Runtime.Networking.TCP.Connection.Details;
+    using SharpBattleNet.Runtime.Networking.TCP.Listener;
+    using SharpBattleNet.Runtime.Networking.TCP.Listener.Details;
     #endregion
 
     /// <summary>
     /// Ninject module to load all IoC objects for the network framework library.
     /// </summary>
-    public sealed class NetworkModule : NinjectModule
+    public sealed class NetworkTCPModule : NinjectModule
     {
         /// <summary>
-        /// Creates a pool of bytes that the networking subsystem will use to
-        /// receive and send messages for performance reason in regard to
-        /// garbage collection.
+        /// Binds all connection classes to the container.
         /// </summary>
-        /// <returns>
-        /// The pool object to use for byte buffer allocations
-        /// </returns>
-        private SocketBufferPool CreateSocketBufferPool()
+        private void BindConnectionFactories()
         {
-            return new SocketBufferPool(1 * 1024 * 1024, 64, 8);
+            Bind<IConnectableTCPConnectionFactory>().ToFactory();
+            Bind<IConnectableTCPConnection>().To<ConnectibleTCPConnection>();
+
+            Bind<IListenerTCPConnectionFactory>().ToFactory();
+            Bind<IListenerTCPConnection>().To<ListenerTCPConnection>();
+
+            return;
         }
 
         /// <summary>
-        /// Binds all utility classes to the container.
+        /// Binds all the listener classes to the container.
         /// </summary>
-        private void BindUtilities()
+        private void BindListeners()
         {
-            Bind<ISocketEventPool>().To<SocketEventPool>().InSingletonScope();
-            Bind<ISocketBufferPool>().ToConstant<SocketBufferPool>(CreateSocketBufferPool()).InSingletonScope();
+            Bind<ITCPListenerFactory>().ToFactory();
+            Bind<ITCPListener>().To<TCPListener>();
 
             return;
         }
@@ -75,7 +77,8 @@ namespace SharpBattleNet.Runtime.Networking
         /// </summary>
         public override void Load()
         {
-            BindUtilities();
+            BindConnectionFactories();
+            BindListeners();
 
             return;
         }

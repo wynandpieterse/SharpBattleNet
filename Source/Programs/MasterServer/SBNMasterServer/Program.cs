@@ -64,6 +64,10 @@ namespace SBNMasterServer
             using(var application = new Application(ApplicationMode.Console, "MasterServer", args))
             {
                 application.AddDependencyModule(new MasterServerModule());
+                application.AddDependencyModule(new NetworkModule());
+                application.AddDependencyModule(new NetworkTCPModule());
+                application.AddDependencyModule(new NetworkUDPModule());
+                application.AddDependencyModule(new NetworkPacketHandelingModule());
 
                 return application.Run();
             }

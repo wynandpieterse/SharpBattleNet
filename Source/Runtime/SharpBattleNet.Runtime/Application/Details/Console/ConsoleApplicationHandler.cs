@@ -9,7 +9,7 @@ using SharpBattleNet.Runtime.Utilities.Extensions;
 
 namespace SharpBattleNet.Runtime.Application.Details.Console
 {
-    internal sealed class ConsoleApplicationHandler : BaseApplicationHandler
+    internal sealed class ConsoleApplicationHandler : ApplicationHandler
     {
         private bool _disposed = false;
 

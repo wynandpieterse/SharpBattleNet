@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharpBattleNet.Runtime.Application.Details.Service
 {
-    internal sealed class ServiceApplicationHandler : BaseApplicationHandler
+    internal sealed class ServiceApplicationHandler : ApplicationHandler
     {
         private bool _disposed = false;
 

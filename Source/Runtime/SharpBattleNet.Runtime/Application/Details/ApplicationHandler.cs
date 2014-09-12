@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace SharpBattleNet.Runtime.Application.Details
 {
-    internal abstract class BaseApplicationHandler : IApplicationHandler
+    internal abstract class ApplicationHandler : IApplicationHandler
     {
         private ICommandLineParser _commandLineParser = null;
         private IApplicationListener _applicationListener = null;
 
         private bool _disposed = false;
 
-        public BaseApplicationHandler(ICommandLineParser commandLineParser, IApplicationListener applicationListener)
+        public ApplicationHandler(ICommandLineParser commandLineParser, IApplicationListener applicationListener)
         {
             Guard.AgainstNull(commandLineParser);
             Guard.AgainstNull(applicationListener);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharpBattleNet.Runtime.Application.Details.GUI
 {
-    internal sealed class GUIApplicationHandler : BaseApplicationHandler
+    internal sealed class GUIApplicationHandler : ApplicationHandler
     {
         private bool _disposed = false;
 

@@ -30,28 +30,50 @@
 //
 #endregion
 
-namespace SharpBattleNet.Runtime
+namespace SharpBattleNet.DiabloIIGameServer
 {
     #region Usings
     using System;
+    using SharpBattleNet.Runtime;
+    using SharpBattleNet.Runtime.Application;
     #endregion
 
-    /// <summary>
-    /// Used by the framework to call server framework assemblies. Provides
-    /// a way for the server assembly to initialize and stop itself.
-    /// </summary>
-    public interface IProgram
+    internal sealed class DiabloIIGameServerApplication : IApplicationListener
     {
-        /// <summary>
-        /// The framework calls this to let the server assembly initialize
-        /// itself to the required state.
-        /// </summary>
-        void Start();
+        private bool _disposed = false;
 
-        /// <summary>
-        /// The framework calls this to let the server assembly shutdown
-        /// all its required subsystems.
-        /// </summary>
-        void Stop();
+        public void Start()
+        {
+            return;
+        }
+
+        public void Stop()
+        {
+            return;
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if(false == _disposed)
+            {
+                if(true == disposing)
+                {
+
+                }
+
+                _disposed = true;
+            }
+
+            return;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+
+            GC.SuppressFinalize(this);
+
+            return;
+        }
     }
 }

@@ -58,7 +58,7 @@
   <ItemGroup>
     <Compile Include="MasterServerModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MasterServerProgram.cs" />
+    <Compile Include="MasterServerApplication.cs" />
     <Compile Include="TestPacket.cs" />
   </ItemGroup>
   <ItemGroup>

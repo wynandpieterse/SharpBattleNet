@@ -47,7 +47,7 @@ namespace SharpBattleNet.Runtime
     public sealed class FrameworkProgram
     {
         private IKernel _injectionKernel = null;
-        private IProgram _server = null;
+        //private IProgram _server = null;
 
         /// <summary>
         /// Prints the #Battle.Net header to the console.
@@ -105,12 +105,12 @@ namespace SharpBattleNet.Runtime
                 }
                 else
                 {
-                    _injectionKernel.Load(new FrameworkModule(programName));
+                   // _injectionKernel.Load(new FrameworkModule(programName));
                 }
             }
 
-            _server = _injectionKernel.Get<IProgram>();
-            _server.Start();
+            //_server = _injectionKernel.Get<IProgram>();
+            //_server.Start();
 
             return;
         }
@@ -120,10 +120,10 @@ namespace SharpBattleNet.Runtime
         /// </summary>
         private void Stop()
         {
-            if (null != _server)
-            {
-                _server.Stop();
-            }
+           // if (null != _server)
+            //{
+             //   _server.Stop();
+           // }
 
             if (null != _injectionKernel)
             {

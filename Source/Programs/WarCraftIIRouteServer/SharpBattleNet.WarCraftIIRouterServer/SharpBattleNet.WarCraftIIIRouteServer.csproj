@@ -58,7 +58,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WarCraftIIIRouterServerModule.cs" />
-    <Compile Include="WarCraftIIIRouterServerProgram.cs" />
+    <Compile Include="WarCraftIIIRouterServerApplication.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Runtime\SharpBattleNet.Runtime.Networking.Packets\SharpBattleNet.Runtime.Networking.Packets.csproj">

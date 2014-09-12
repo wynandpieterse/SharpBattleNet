@@ -36,13 +36,14 @@ namespace SharpBattleNet.WarCraftIIIRouterServer
     using System;
     using Ninject.Modules;
     using SharpBattleNet.Runtime;
+    using SharpBattleNet.Runtime.Application;
     #endregion
 
     public sealed class WarCraftIIIRouterServerModule : NinjectModule
     {
         public override void Load()
         {
-            Bind<IProgram>().To<WarCraftIIIRouterServerProgram>();
+            Bind<IApplicationListener>().To<WarCraftIIIRouterServerApplication>();
 
             return;
         }

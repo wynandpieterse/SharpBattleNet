@@ -55,11 +55,16 @@ namespace SharpBattleNet.Runtime.Application
         {
             _injectionKernel = new StandardKernel();
 
-            // Add default framework modules
-            _injectionModules.Add(new FrameworkModule(_name));
+            // TODO : Add framework modules here
 
             _injectionKernel.Load(_injectionModules);
 
+            return;
+        }
+
+        private void SetupCommandLineParser()
+        {
+            _injectionKernel.Bind<ICommandLineParser>().To<CommandLineParser>().InSingletonScope();
             return;
         }
 
@@ -88,6 +93,7 @@ namespace SharpBattleNet.Runtime.Application
         public int Run()
         {
             SetupNinject();
+            SetupCommandLineParser();
             SetupApplicationHandler();
 
             return _applicationHandler.Run(_arguments);

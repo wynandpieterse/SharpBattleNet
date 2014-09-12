@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8DB14FFE-D08D-428B-AFBB-52337352FDF5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SharpBattleNet.DiabloIIGameServer</RootNamespace>
+    <AssemblyName>SharpBattleNet.DiabloIIGameServer</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <BaseIntermediateOutputPath>../../../../Intermediate/Code/SharpBattleNet.DiabloIIGameServer/</BaseIntermediateOutputPath>
+    <OutputPath>$(BaseIntermediateOutputPath)$(Configuration)</OutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <BaseIntermediateOutputPath>../../../../Intermediate/Code/SharpBattleNet.DiabloIIGameServer/</BaseIntermediateOutputPath>
+    <OutputPath>$(BaseIntermediateOutputPath)$(Configuration)</OutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\..\packages\Castle.Core.3.2.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\..\..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Extensions.Factory">
+      <HintPath>..\..\..\packages\Ninject.Extensions.Factory.3.2.1.0\lib\net45-full\Ninject.Extensions.Factory.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DiabloIIGameServerModule.cs" />
+    <Compile Include="DiabloIIGameServerApplication.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Runtime\SharpBattleNet.Runtime.Networking.Packets\SharpBattleNet.Runtime.Networking.Packets.csproj">
+      <Project>{cd359f42-c4e6-4c6a-a1a7-c56951c8cc8a}</Project>
+      <Name>SharpBattleNet.Runtime.Networking.Packets</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Runtime\SharpBattleNet.Runtime.Networking.TCP\SharpBattleNet.Runtime.Networking.TCP.csproj">
+      <Project>{c4e425c6-1817-4190-8358-6a822fd6d504}</Project>
+      <Name>SharpBattleNet.Runtime.Networking.TCP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Runtime\SharpBattleNet.Runtime.Networking.UDP\SharpBattleNet.Runtime.Networking.UDP.csproj">
+      <Project>{57f854bc-99db-4719-b435-7e8f3785b9e2}</Project>
+      <Name>SharpBattleNet.Runtime.Networking.UDP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Runtime\SharpBattleNet.Runtime.Networking\SharpBattleNet.Runtime.Networking.csproj">
+      <Project>{b838d207-fad1-4ee1-95b5-dcb240d1a0aa}</Project>
+      <Name>SharpBattleNet.Runtime.Networking</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Runtime\SharpBattleNet.Runtime\SharpBattleNet.Runtime.csproj">
+      <Project>{fdb8d2c5-fd13-40e7-b629-ce71a68bb7b7}</Project>
+      <Name>SharpBattleNet.Runtime</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

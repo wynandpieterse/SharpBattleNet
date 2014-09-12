@@ -59,6 +59,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Runtime.Netw
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Runtime.Networking.UDP", "Runtime\SharpBattleNet.Runtime.Networking.UDP\SharpBattleNet.Runtime.Networking.UDP.csproj", "{57F854BC-99DB-4719-B435-7E8F3785B9E2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.External.Configuration", "External\SharpBattleNet.External.Configuration\SharpBattleNet.External.Configuration.csproj", "{57E90E05-47C2-4076-BBC7-F606634900C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -121,6 +123,10 @@ Global
 		{57F854BC-99DB-4719-B435-7E8F3785B9E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57F854BC-99DB-4719-B435-7E8F3785B9E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57F854BC-99DB-4719-B435-7E8F3785B9E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57E90E05-47C2-4076-BBC7-F606634900C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57E90E05-47C2-4076-BBC7-F606634900C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57E90E05-47C2-4076-BBC7-F606634900C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57E90E05-47C2-4076-BBC7-F606634900C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -147,5 +153,6 @@ Global
 		{CD359F42-C4E6-4C6A-A1A7-C56951C8CC8A} = {81CC1977-69B2-4838-9233-6A4D87FBB94F}
 		{C4E425C6-1817-4190-8358-6A822FD6D504} = {81CC1977-69B2-4838-9233-6A4D87FBB94F}
 		{57F854BC-99DB-4719-B435-7E8F3785B9E2} = {81CC1977-69B2-4838-9233-6A4D87FBB94F}
+		{57E90E05-47C2-4076-BBC7-F606634900C6} = {BE6B5269-B011-412A-BFBC-FE7DF3CB279F}
 	EndGlobalSection
 EndGlobal

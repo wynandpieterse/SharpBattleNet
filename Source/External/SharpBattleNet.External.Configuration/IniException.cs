@@ -23,10 +23,10 @@ namespace Nini.Ini
 #else
 	[Serializable]
 #endif
-	public class IniException : SystemException /*, ISerializable */
+	public class INIException : SystemException /*, ISerializable */
 	{
 		#region Private variables
-		IniReader iniReader = null;
+		INIReader iniReader = null;
 		string message = "";
 		#endregion
 
@@ -63,27 +63,27 @@ namespace Nini.Ini
 
 		#region Constructors
 		/// <include file='IniException.xml' path='//Constructor[@name="Constructor"]/docs/*' />
-		public IniException ()
+		public INIException ()
 			: base ()
 		{
 			this.message  = "An error has occurred";
 		}
 		
 		/// <include file='IniException.xml' path='//Constructor[@name="ConstructorException"]/docs/*' />
-		public IniException (string message, Exception exception)
+		public INIException (string message, Exception exception)
 			: base (message, exception)
 		{
 		}
 
 		/// <include file='IniException.xml' path='//Constructor[@name="ConstructorMessage"]/docs/*' />
-		public IniException (string message)
+		public INIException (string message)
 			: base (message)
 		{
 			this.message  = message;
 		}
 		
 		/// <include file='IniException.xml' path='//Constructor[@name="ConstructorTextReader"]/docs/*' />
-		internal IniException (IniReader reader, string message)
+		internal INIException (INIReader reader, string message)
 			: this (message)
 		{
 			iniReader = reader;
@@ -93,7 +93,7 @@ namespace Nini.Ini
 #if (NET_COMPACT_1_0)
 #else
 		/// <include file='IniException.xml' path='//Constructor[@name="ConstructorSerialize"]/docs/*' />
-		protected IniException (SerializationInfo info, StreamingContext context)
+		protected INIException (SerializationInfo info, StreamingContext context)
 			: base (info, context)
 		{
 		}

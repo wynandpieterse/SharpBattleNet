@@ -19,7 +19,7 @@ using System.Collections.Specialized;
 namespace Nini.Config
 {
 	/// <include file='DotNetConfigSource.xml' path='//Class[@name="DotNetConfigSource"]/docs/*' />
-	public class DotNetConfigSource : ConfigSourceBase
+	public class DotNetConfigurationSource : ConfigurationSourceBase
 	{
 		#region Private variables
 		string[] sections = null;
@@ -29,14 +29,14 @@ namespace Nini.Config
 
 		#region Constructors
 		/// <include file='DotNetConfigSource.xml' path='//Constructor[@name="ConstructorWeb"]/docs/*' />
-		public DotNetConfigSource (string[] sections)
+		public DotNetConfigurationSource (string[] sections)
 		{
 			this.sections = sections;
 			Load ();
 		}
 
 		/// <include file='DotNetConfigSource.xml' path='//Constructor[@name="Constructor"]/docs/*' />
-		public DotNetConfigSource ()
+		public DotNetConfigurationSource ()
 		{
 			configDoc = new XmlDocument ();
 			configDoc.LoadXml ("<configuration><configSections/></configuration>");
@@ -44,13 +44,13 @@ namespace Nini.Config
 		}
 
 		/// <include file='DotNetConfigSource.xml' path='//Constructor[@name="ConstructorPath"]/docs/*' />
-		public DotNetConfigSource (string path)
+		public DotNetConfigurationSource (string path)
 		{
 			Load (path);
 		}
 		
 		/// <include file='DotNetConfigSource.xml' path='//Constructor[@name="ConstructorXmlReader"]/docs/*' />
-		public DotNetConfigSource (XmlReader reader)
+		public DotNetConfigurationSource (XmlReader reader)
 		{
 			Load (reader);
 		}
@@ -173,7 +173,7 @@ namespace Nini.Config
 		private void MergeConfigsIntoDocument ()
 		{
 			RemoveSections ();
-			foreach (IConfig config in this.Configs)
+			foreach (IConfiguration config in this.Configs)
 			{
 				string[] keys = config.GetKeys ();
 
@@ -237,12 +237,12 @@ namespace Nini.Config
 				return;
 			}
 
-			ConfigBase config = null;
+			ConfigurationBase config = null;
 			foreach (XmlNode node in sections.ChildNodes)
 			{
 				if (node.NodeType == XmlNodeType.Element
 					&& node.Name == "section") {
-					config = new ConfigBase 
+					config = new ConfigurationBase 
 							(node.Attributes["name"].Value, this);
 				
 					this.Configs.Add (config);
@@ -258,10 +258,10 @@ namespace Nini.Config
 		private void LoadOtherSection (XmlNode rootNode, string nodeName)
 		{
 			XmlNode section = GetChildElement (rootNode, nodeName);
-			ConfigBase config = null;
+			ConfigurationBase config = null;
 			
 			if (section != null) {
-				config = new ConfigBase (section.Name, this);
+				config = new ConfigurationBase (section.Name, this);
 				
 				this.Configs.Add (config);
 				LoadKeys (rootNode, config);
@@ -271,7 +271,7 @@ namespace Nini.Config
 		/// <summary>
 		/// Loads all keys for a config.
 		/// </summary>
-		private void LoadKeys (XmlNode rootNode, ConfigBase config)
+		private void LoadKeys (XmlNode rootNode, ConfigurationBase config)
 		{
 			XmlNode section = GetChildElement (rootNode, config.Name);
 
@@ -403,7 +403,7 @@ namespace Nini.Config
 		/// </summary>
 		private void LoadCollection (string name, NameValueCollection collection)
 		{
-			ConfigBase config = new ConfigBase (name, this);
+			ConfigurationBase config = new ConfigurationBase (name, this);
 
 			if (collection == null) {
 				throw new ArgumentException ("Section was not found");
@@ -503,10 +503,10 @@ namespace Nini.Config
 					&& node.Name == "section") {
 					
 					string sectionName = node.Attributes["name"].Value;
-					IConfig config = this.Configs[sectionName];
+					IConfiguration config = this.Configs[sectionName];
 					if (config == null) {
 						// The section is new so add it
-						config = new ConfigBase (sectionName, this);
+						config = new ConfigurationBase (sectionName, this);
 						this.Configs.Add (config);
 					}				
 					RemoveConfigKeys (config);
@@ -519,7 +519,7 @@ namespace Nini.Config
 		/// </summary>
 		private void RemoveConfigs ()
 		{
-			IConfig config = null;
+			IConfiguration config = null;
 			for (int i = this.Configs.Count - 1; i > -1; i--)
 			{
 				config = this.Configs[i];
@@ -533,7 +533,7 @@ namespace Nini.Config
 		/// <summary>
 		/// Removes all XML keys that were removed as config keys.
 		/// </summary>
-		private void RemoveConfigKeys (IConfig config)
+		private void RemoveConfigKeys (IConfiguration config)
 		{
 			XmlNode section = GetChildElement (config.Name);
 			

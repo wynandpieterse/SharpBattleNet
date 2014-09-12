@@ -16,7 +16,7 @@ using System.Collections;
 namespace Nini.Config
 {
 	/// <include file='XmlConfigSource.xml' path='//Class[@name="XmlConfigSource"]/docs/*' />
-	public class XmlConfigSource : ConfigSourceBase
+	public class XMLConfigurationSource : ConfigurationSourceBase
 	{
 		#region Private variables
 		XmlDocument configDoc = null;
@@ -25,7 +25,7 @@ namespace Nini.Config
 
 		#region Constructors
 		/// <include file='XmlConfigSource.xml' path='//Constructor[@name="Constructor"]/docs/*' />
-		public XmlConfigSource ()
+		public XMLConfigurationSource ()
 		{
 			configDoc = new XmlDocument ();
 			configDoc.LoadXml ("<Nini/>");
@@ -33,13 +33,13 @@ namespace Nini.Config
 		}
 
 		/// <include file='XmlConfigSource.xml' path='//Constructor[@name="ConstructorPath"]/docs/*' />
-		public XmlConfigSource (string path)
+		public XMLConfigurationSource (string path)
 		{
 			Load (path);
 		}
 
 		/// <include file='XmlConfigSource.xml' path='//Constructor[@name="ConstructorXmlReader"]/docs/*' />
-		public XmlConfigSource (XmlReader reader)
+		public XMLConfigurationSource (XmlReader reader)
 		{
 			Load (reader);
 		}
@@ -141,7 +141,7 @@ namespace Nini.Config
 		private void MergeConfigsIntoDocument ()
 		{
 			RemoveSections ();
-			foreach (IConfig config in this.Configs)
+			foreach (IConfiguration config in this.Configs)
 			{
 				string[] keys = config.GetKeys ();
 
@@ -231,13 +231,13 @@ namespace Nini.Config
 		/// </summary>
 		private void LoadSections (XmlNode rootNode)
 		{
-			ConfigBase config = null;
+			ConfigurationBase config = null;
 
 			foreach (XmlNode child in rootNode.ChildNodes)
 			{
 				if (child.NodeType == XmlNodeType.Element
 					&& child.Name == "Section") {
-					config = new ConfigBase (child.Attributes["Name"].Value, this);
+					config = new ConfigurationBase (child.Attributes["Name"].Value, this);
 					this.Configs.Add (config);
 					LoadKeys (child, config);
 				}
@@ -247,7 +247,7 @@ namespace Nini.Config
 		/// <summary>
 		/// Loads all keys for a config.
 		/// </summary>
-		private void LoadKeys (XmlNode node, ConfigBase config)
+		private void LoadKeys (XmlNode node, ConfigurationBase config)
 		{
 			foreach (XmlNode child in node.ChildNodes)
 			{
@@ -368,10 +368,10 @@ namespace Nini.Config
 					&& node.Name == "Section") {
 
 					string sectionName = node.Attributes["Name"].Value;
-					IConfig config = this.Configs[sectionName];
+					IConfiguration config = this.Configs[sectionName];
 					if (config == null) {
 						// The section is new so add it
-						config = new ConfigBase (sectionName, this);
+						config = new ConfigurationBase (sectionName, this);
 						this.Configs.Add (config);
 					}				
 					RemoveConfigKeys (config);
@@ -384,7 +384,7 @@ namespace Nini.Config
 		/// </summary>
 		private void RemoveConfigs ()
 		{
-			IConfig config = null;
+			IConfiguration config = null;
 			for (int i = this.Configs.Count - 1; i > -1; i--)
 			{
 				config = this.Configs[i];
@@ -398,7 +398,7 @@ namespace Nini.Config
 		/// <summary>
 		/// Removes all XML keys that were removed as config keys.
 		/// </summary>
-		private void RemoveConfigKeys (IConfig config)
+		private void RemoveConfigKeys (IConfiguration config)
 		{
 			XmlNode section = GetSectionByName (config.Name);
 

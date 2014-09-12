@@ -15,26 +15,26 @@ using System.Collections;
 namespace Nini.Config
 {
 	/// <include file='IConfigSource.xml' path='//Interface[@name="IConfigSource"]/docs/*' />
-	public abstract class ConfigSourceBase : IConfigSource
+	public abstract class ConfigurationSourceBase : IConfigurationSource
 	{
 		#region Private variables
 		ArrayList sourceList = new ArrayList ();
-		ConfigCollection configList = null;
+		ConfigurationCollection configList = null;
 		bool autoSave = false;
 		AliasText alias = new AliasText ();
 		#endregion
 
 		#region Constructors
 		/// <include file='ConfigSourceBase.xml' path='//Constructor[@name="Constructor"]/docs/*' />
-		public ConfigSourceBase ()
+		public ConfigurationSourceBase ()
 		{
-			configList = new ConfigCollection (this);
+			configList = new ConfigurationCollection (this);
 		}
 		#endregion
 		
 		#region Public properties
 		/// <include file='IConfigSource.xml' path='//Property[@name="Configs"]/docs/*' />
-		public ConfigCollection Configs
+		public ConfigurationCollection Configs
 		{
 			get { return configList; }
 		}
@@ -55,26 +55,26 @@ namespace Nini.Config
 		
 		#region Public methods
 		/// <include file='IConfigSource.xml' path='//Method[@name="Merge"]/docs/*' />
-		public void Merge (IConfigSource source)
+		public void Merge (IConfigurationSource source)
 		{
 			if (!sourceList.Contains (source))  {
 				sourceList.Add (source);
 			}
 			
-			foreach (IConfig config in source.Configs)
+			foreach (IConfiguration config in source.Configs)
 			{
 				this.Configs.Add (config);
 			}
 		}
 		
 		/// <include file='IConfigSource.xml' path='//Method[@name="AddConfig"]/docs/*' />
-		public virtual IConfig AddConfig (string name)
+		public virtual IConfiguration AddConfig (string name)
 		{
 			return configList.Add (name);
 		}
 
 		/// <include file='IConfigSource.xml' path='//Method[@name="GetExpanded"]/docs/*' />
-		public string GetExpanded (IConfig config, string key)
+		public string GetExpanded (IConfiguration config, string key)
 		{
 			return Expand (config, key, false);
 		}
@@ -96,7 +96,7 @@ namespace Nini.Config
 		{
 			string[] keys = null;
 
-			foreach (IConfig config in configList)
+			foreach (IConfiguration config in configList)
 			{
 				keys = config.GetKeys ();
 				for (int i = 0; i < keys.Length; i++)
@@ -143,7 +143,7 @@ namespace Nini.Config
 		/// <summary>
 		/// Expands key values from the given IConfig.
 		/// </summary>
-		private string Expand (IConfig config, string key, bool setValue)
+		private string Expand (IConfiguration config, string key, bool setValue)
 		{
 			string result = config.Get (key);
 			if (result == null) {
@@ -187,14 +187,14 @@ namespace Nini.Config
 		/// <summary>
 		/// Returns the replacement value of a config.
 		/// </summary>
-		private string ExpandValue (IConfig config, string search)
+		private string ExpandValue (IConfiguration config, string search)
 		{
 			string result = null;
 			
 			string[] replaces = search.Split ('|');
 			
 			if (replaces.Length > 1) {
-				IConfig newConfig = this.Configs[replaces[0]];
+				IConfiguration newConfig = this.Configs[replaces[0]];
 				if (newConfig == null) {
 					throw new ArgumentException ("Expand config not found: "
 												 + replaces[0]);

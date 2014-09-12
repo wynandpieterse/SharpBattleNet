@@ -3,7 +3,7 @@ using System;
 namespace Nini.Ini
 {
 		/// <include file='IniItem.xml' path='//Class[@name="IniItem"]/docs/*' />
-		public class IniItem
+		public class INIItem
 		{
 			#region Private variables
 			IniType iniType = IniType.Empty;
@@ -42,7 +42,7 @@ namespace Nini.Ini
 			#endregion
 			
 			/// <include file='IniItem.xml' path='//Constructor[@name="Constructor"]/docs/*' />
-			internal protected IniItem (string name, string value, IniType type, string comment)
+			internal protected INIItem (string name, string value, IniType type, string comment)
 			{
 				iniName = name;
 				iniValue = value;

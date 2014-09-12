@@ -46,7 +46,7 @@ namespace Nini.Ini
 	#endregion
 
 	/// <include file='IniReader.xml' path='//Class[@name="IniReader"]/docs/*' />
-	public class IniReader : IDisposable
+	public class INIReader : IDisposable
 	{
 		#region Private variables
 		int lineNumber = 1;
@@ -149,19 +149,19 @@ namespace Nini.Ini
 		
 		#region Constructors
 		/// <include file='IniReader.xml' path='//Constructor[@name="ConstructorPath"]/docs/*' />
-		public IniReader (string filePath)
+		public INIReader (string filePath)
 		{
 			textReader = new StreamReader (filePath);
 		}
 		
 		/// <include file='IniReader.xml' path='//Constructor[@name="ConstructorTextReader"]/docs/*' />
-		public IniReader (TextReader reader)
+		public INIReader (TextReader reader)
 		{
 			textReader = reader;
 		}
 		
 		/// <include file='IniReader.xml' path='//Constructor[@name="ConstructorStream"]/docs/*' />
-		public IniReader (Stream stream)
+		public INIReader (Stream stream)
 			: this (new StreamReader (stream))
 		{
 		}
@@ -295,7 +295,7 @@ namespace Nini.Ini
 		/// <summary>
 		/// Destructor.
 		/// </summary>
-		~IniReader ()
+		~INIReader ()
 		{
 			Dispose (false);
 		}
@@ -405,7 +405,7 @@ namespace Nini.Ini
 					if (acceptNoAssignmentOperator) {
 						break;
 					}
-					throw new IniException (this, 
+					throw new INIException (this, 
 						String.Format ("Expected assignment operator ({0})", 
 										assignDelimiters[0]));
 				}
@@ -448,7 +448,7 @@ namespace Nini.Ini
 				}
 				
 				if (foundQuote && EndOfLine (ch)) {
-					throw new IniException (this, "Expected closing quote (\")");
+					throw new INIException (this, "Expected closing quote (\")");
 				}
 				
 				// Handle line continuation
@@ -512,7 +512,7 @@ namespace Nini.Ini
 					break;
 				}
 				if (EndOfLine (ch)) {
-					throw new IniException (this, "Expected section end (])");
+					throw new INIException (this, "Expected section end (])");
 				}
 
 				this.name.Append ((char)ReadChar ());

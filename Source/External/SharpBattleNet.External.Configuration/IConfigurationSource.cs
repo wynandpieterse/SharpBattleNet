@@ -14,10 +14,10 @@ using System.IO;
 namespace Nini.Config
 {
 	/// <include file='IConfigSource.xml' path='//Interface[@name="IConfigSource"]/docs/*' />
-	public interface IConfigSource
+	public interface IConfigurationSource
 	{
 		/// <include file='IConfigSource.xml' path='//Property[@name="Configs"]/docs/*' />
-		ConfigCollection Configs { get; }
+		ConfigurationCollection Configs { get; }
 		
 		/// <include file='IConfigSource.xml' path='//Property[@name="AutoSave"]/docs/*' />
 		bool AutoSave { get; set; }
@@ -26,7 +26,7 @@ namespace Nini.Config
 		AliasText Alias { get; }
 		
 		/// <include file='IConfigSource.xml' path='//Method[@name="Merge"]/docs/*' />
-		void Merge (IConfigSource source);
+		void Merge (IConfigurationSource source);
 		
 		/// <include file='IConfigSource.xml' path='//Method[@name="Save"]/docs/*' />
 		void Save ();
@@ -35,10 +35,10 @@ namespace Nini.Config
 		void Reload ();
 		
 		/// <include file='IConfigSource.xml' path='//Method[@name="AddConfig"]/docs/*' />
-		IConfig AddConfig (string name);
+		IConfiguration AddConfig (string name);
 
 		/// <include file='IConfigSource.xml' path='//Method[@name="GetExpanded"]/docs/*' />
-		string GetExpanded (IConfig config, string key);
+		string GetExpanded (IConfiguration config, string key);
 
 		/// <include file='IConfigSource.xml' path='//Method[@name="ExpandKeyValues"]/docs/*' />
 		void ExpandKeyValues ();

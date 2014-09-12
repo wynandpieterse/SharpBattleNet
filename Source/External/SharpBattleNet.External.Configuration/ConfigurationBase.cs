@@ -47,11 +47,11 @@ namespace Nini.Config
 	#endregion
 
 	/// <include file='IConfig.xml' path='//Interface[@name="IConfig"]/docs/*' />
-	public class ConfigBase : IConfig
+	public class ConfigurationBase : IConfiguration
 	{
 		#region Private variables
 		string configName = null;
-		IConfigSource configSource = null;
+		IConfigurationSource configSource = null;
 		AliasText aliasText = null;
 		IFormatProvider format = NumberFormatInfo.CurrentInfo;
 		#endregion
@@ -62,7 +62,7 @@ namespace Nini.Config
 		
 		#region Constructors
 		/// <include file='ConfigBase.xml' path='//Constructor[@name="ConfigBase"]/docs/*' />
-		public ConfigBase (string name, IConfigSource source)
+		public ConfigurationBase (string name, IConfigurationSource source)
 		{
 			configName = name;
 			configSource = source;
@@ -83,7 +83,7 @@ namespace Nini.Config
 		}
 		
 		/// <include file='IConfig.xml' path='//Property[@name="ConfigSource"]/docs/*' />
-		public IConfigSource ConfigSource
+		public IConfigurationSource ConfigSource
 		{
 			get { return configSource; }
 		}

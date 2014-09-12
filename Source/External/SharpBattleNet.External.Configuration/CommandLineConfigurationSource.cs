@@ -17,18 +17,18 @@ using Nini.Util;
 namespace Nini.Config
 {
 	/// <include file='ArgvConfigSource.xml' path='//Class[@name="ArgvConfigSource"]/docs/*' />
-	public class ArgvConfigSource : ConfigSourceBase
+	public class CommandLineConfigurationSource : ConfigurationSourceBase
 	{
 		#region Private variables
-		ArgvParser parser = null;
+		CommandLineArgumentParser parser = null;
 		string[] arguments = null;
 		#endregion
 
 		#region Constructors
 		/// <include file='ArgvConfigSource.xml' path='//Constructor[@name="Constructor"]/docs/*' />
-		public ArgvConfigSource (string[] arguments)
+		public CommandLineConfigurationSource (string[] arguments)
 		{
-			parser = new ArgvParser (arguments);
+			parser = new CommandLineArgumentParser (arguments);
 			this.arguments = arguments;
 		}
 		#endregion
@@ -59,7 +59,7 @@ namespace Nini.Config
 		public void AddSwitch (string configName, string longName, 
 								string shortName)
 		{
-			IConfig config = GetConfig (configName);
+			IConfiguration config = GetConfig (configName);
 			
 			if (shortName != null && 
 				(shortName.Length < 1 || shortName.Length > 2)) {
@@ -88,12 +88,12 @@ namespace Nini.Config
 		/// <summary>
 		/// Returns an IConfig.  If it does not exist then it is added.
 		/// </summary>
-		private IConfig GetConfig (string name)
+		private IConfiguration GetConfig (string name)
 		{
-			IConfig result = null;
+			IConfiguration result = null;
 			
 			if (this.Configs[name] == null) {
-				result = new ConfigBase (name, this);
+				result = new ConfigurationBase (name, this);
 				this.Configs.Add (result);
 			} else {
 				result = this.Configs[name];

@@ -15,7 +15,7 @@ using Nini.Util;
 namespace Nini.Ini
 {
 	/// <include file='IniSectionCollection.xml' path='//Class[@name="IniSectionCollection"]/docs/*' />
-	public class IniSectionCollection : ICollection, IEnumerable
+	public class INISectionCollection : ICollection, IEnumerable
 	{
 		#region Private variables
 		OrderedList list = new OrderedList ();
@@ -23,15 +23,15 @@ namespace Nini.Ini
 
 		#region Public properties	
 		/// <include file='IniSectionCollection.xml' path='//Property[@name="ItemIndex"]/docs/*' />
-		public IniSection this[int index]
+		public INISection this[int index]
 		{
-			get { return (IniSection)list[index]; }
+			get { return (INISection)list[index]; }
 		}
 		
 		/// <include file='IniSectionCollection.xml' path='//Property[@name="ItemName"]/docs/*' />
-		public IniSection this[string configName]
+		public INISection this[string configName]
 		{
-			get { return (IniSection)list[configName]; }
+			get { return (INISection)list[configName]; }
 		}
 
 		/// <include file='IniSectionCollection.xml' path='//Property[@name="Count"]/docs/*' />
@@ -55,7 +55,7 @@ namespace Nini.Ini
 
 		#region Public methods
 		/// <include file='IniSectionCollection.xml' path='//Method[@name="Add"]/docs/*' />
-		public void Add (IniSection section)
+		public void Add (INISection section)
 		{
 			if (list.Contains (section)) {
 				throw new ArgumentException ("IniSection already exists");
@@ -77,7 +77,7 @@ namespace Nini.Ini
 		}
 		
 		/// <include file='IniSectionCollection.xml' path='//Method[@name="CopyToStrong"]/docs/*' />
-		public void CopyTo (IniSection[] array, int index)
+		public void CopyTo (INISection[] array, int index)
 		{
 			((ICollection)list).CopyTo (array, index);
 		}

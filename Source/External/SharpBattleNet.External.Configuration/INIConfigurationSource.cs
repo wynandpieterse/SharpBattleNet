@@ -16,10 +16,10 @@ using Nini.Ini;
 namespace Nini.Config
 {
 	/// <include file='IniConfigSource.xml' path='//Class[@name="IniConfigSource"]/docs/*' />
-	public class IniConfigSource : ConfigSourceBase
+	public class INIConfigurationSource : ConfigurationSourceBase
 	{
 		#region Private variables
-		IniDocument iniDocument = null;
+		INIDocument iniDocument = null;
 		string savePath = null;
 		bool caseSensitive = true;
 		#endregion
@@ -29,31 +29,31 @@ namespace Nini.Config
 
 		#region Constructors
 		/// <include file='IniConfigSource.xml' path='//Constructor[@name="Constructor"]/docs/*' />
-		public IniConfigSource ()
+		public INIConfigurationSource ()
 		{
-			iniDocument = new IniDocument ();
+			iniDocument = new INIDocument ();
 		}
 
 		/// <include file='IniConfigSource.xml' path='//Constructor[@name="ConstructorPath"]/docs/*' />
-		public IniConfigSource (string filePath)
+		public INIConfigurationSource (string filePath)
 		{
 			Load (filePath);
 		}
 		
 		/// <include file='IniConfigSource.xml' path='//Constructor[@name="ConstructorTextReader"]/docs/*' />
-		public IniConfigSource (TextReader reader)
+		public INIConfigurationSource (TextReader reader)
 		{
 			Load (reader);
 		}
 
 		/// <include file='IniConfigSource.xml' path='//Constructor[@name="ConstructorIniDocument"]/docs/*' />
-		public IniConfigSource (IniDocument document)
+		public INIConfigurationSource (INIDocument document)
 		{
 			Load (document);
 		}
 		
 		/// <include file='IniConfigSource.xml' path='//Constructor[@name="ConstructorStream"]/docs/*' />
-		public IniConfigSource (Stream stream)
+		public INIConfigurationSource (Stream stream)
 		{
 			Load (stream);
 		}
@@ -85,11 +85,11 @@ namespace Nini.Config
 		/// <include file='IniConfigSource.xml' path='//Method[@name="LoadTextReader"]/docs/*' />
 		public void Load (TextReader reader)
 		{
-			Load (new IniDocument (reader));
+			Load (new INIDocument (reader));
 		}
 
 		/// <include file='IniConfigSource.xml' path='//Method[@name="LoadIniDocument"]/docs/*' />
-		public void Load (IniDocument document)
+		public void Load (INIDocument document)
 		{
 			this.Configs.Clear ();
 
@@ -150,7 +150,7 @@ namespace Nini.Config
 							+ "the loaded the source from a file");
 			}
 
-			iniDocument = new IniDocument (savePath);
+			iniDocument = new INIDocument (savePath);
 			MergeDocumentIntoConfigs ();
 			base.Reload ();
 		}
@@ -174,13 +174,13 @@ namespace Nini.Config
 		private void MergeConfigsIntoDocument ()
 		{
 			RemoveSections ();
-			foreach (IConfig config in this.Configs)
+			foreach (IConfiguration config in this.Configs)
 			{
 				string[] keys = config.GetKeys ();
 
 				// Create a new section if one doesn't exist
 				if (iniDocument.Sections[config.Name] == null) {
-					IniSection section = new IniSection (config.Name);
+					INISection section = new INISection (config.Name);
 					iniDocument.Sections.Add (section);
 				}
 				RemoveKeys (config.Name);
@@ -197,7 +197,7 @@ namespace Nini.Config
 		/// </summary>
 		private void RemoveSections ()
 		{
-			IniSection section = null;
+			INISection section = null;
 			for (int i = 0; i < iniDocument.Sections.Count; i++)
 			{
 				section = iniDocument.Sections[i];
@@ -212,7 +212,7 @@ namespace Nini.Config
 		/// </summary>
 		private void RemoveKeys (string sectionName)
 		{
-			IniSection section = iniDocument.Sections[sectionName];
+			INISection section = iniDocument.Sections[sectionName];
 
 			if (section != null) {
 				foreach (string key in section.GetKeys ())
@@ -229,14 +229,14 @@ namespace Nini.Config
 		/// </summary>
 		private void Load ()
 		{
-			IniConfig config = null;
-			IniSection section = null;
-			IniItem item = null;
+			INIConfiguration config = null;
+			INISection section = null;
+			INIItem item = null;
 
 			for (int j = 0; j < iniDocument.Sections.Count; j++)
 			{
 				section = iniDocument.Sections[j];
-				config = new IniConfig (section.Name, this);
+				config = new INIConfiguration (section.Name, this);
 
 				for (int i = 0; i < section.ItemCount; i++)
 				{
@@ -260,15 +260,15 @@ namespace Nini.Config
 			// Remove all missing configs first
 			RemoveConfigs ();
 
-			IniSection section = null;
+			INISection section = null;
 			for (int i = 0; i < iniDocument.Sections.Count; i++)
 			{
 				section = iniDocument.Sections[i];
 
-				IConfig config = this.Configs[section.Name];
+				IConfiguration config = this.Configs[section.Name];
 				if (config == null) {
 					// The section is new so add it
-					config = new ConfigBase (section.Name, this);
+					config = new ConfigurationBase (section.Name, this);
 					this.Configs.Add (config);
 				}				
 				RemoveConfigKeys (config);
@@ -280,7 +280,7 @@ namespace Nini.Config
 		/// </summary>
 		private void RemoveConfigs ()
 		{
-			IConfig config = null;
+			IConfiguration config = null;
 			for (int i = this.Configs.Count - 1; i > -1; i--)
 			{
 				config = this.Configs[i];
@@ -294,9 +294,9 @@ namespace Nini.Config
 		/// <summary>
 		/// Removes all INI keys that were removed as config keys.
 		/// </summary>
-		private void RemoveConfigKeys (IConfig config)
+		private void RemoveConfigKeys (IConfiguration config)
 		{
-			IniSection section = iniDocument.Sections[config.Name];
+			INISection section = iniDocument.Sections[config.Name];
 
 			// Remove old keys
 			string[] configKeys = config.GetKeys ();

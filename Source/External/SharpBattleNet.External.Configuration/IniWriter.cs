@@ -30,7 +30,7 @@ namespace Nini.Ini
 	#endregion
 
 	/// <include file='IniWriter.xml' path='//Class[@name="IniWriter"]/docs/*' />
-	public class IniWriter : IDisposable
+	public class INIWriter : IDisposable
 	{
 		#region Private variables
 		int indentation = 0;
@@ -98,13 +98,13 @@ namespace Nini.Ini
 		
 		#region Constructors
 		/// <include file='IniWriter.xml' path='//Constructor[@name="ConstructorPath"]/docs/*' />
-		public IniWriter(string filePath)
+		public INIWriter(string filePath)
 			: this (new FileStream (filePath, FileMode.Create, FileAccess.Write, FileShare.None))
 		{
 		}
 		
 		/// <include file='IniWriter.xml' path='//Constructor[@name="ConstructorTextWriter"]/docs/*' />
-		public IniWriter (TextWriter writer)
+		public INIWriter (TextWriter writer)
 		{
 			textWriter = writer;
 			StreamWriter streamWriter = writer as StreamWriter;
@@ -114,7 +114,7 @@ namespace Nini.Ini
 		}
 		
 		/// <include file='IniWriter.xml' path='//Constructor[@name="ConstructorStream"]/docs/*' />
-		public IniWriter (Stream stream)
+		public INIWriter (Stream stream)
 			: this (new StreamWriter (stream))
 		{
 		}
@@ -223,7 +223,7 @@ namespace Nini.Ini
 		/// <summary>
 		/// Destructor.
 		/// </summary>
-		~IniWriter ()
+		~INIWriter ()
 		{
 			Dispose (false);
 		}

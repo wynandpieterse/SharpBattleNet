@@ -30,7 +30,7 @@ namespace Nini.Config
 	#endregion
 
 	/// <include file='RegistryConfigSource.xml' path='//Class[@name="RegistryConfigSource"]/docs/*' />
-	public class RegistryConfigSource : ConfigSourceBase
+	public class RegistryConfigSource : ConfigurationSourceBase
 	{
 		#region Private variables
 		RegistryKey defaultKey = null;
@@ -50,7 +50,7 @@ namespace Nini.Config
 		
 		#region Public methods
 		/// <include file='RegistryConfigSource.xml' path='//Method[@name="AddConfig"]/docs/*' />
-		public override IConfig AddConfig (string name)
+		public override IConfiguration AddConfig (string name)
 		{
 			if (this.DefaultKey == null) {
 				throw new ApplicationException ("You must set DefaultKey");
@@ -60,7 +60,7 @@ namespace Nini.Config
 		}
 
 		/// <include file='RegistryConfigSource.xml' path='//Method[@name="AddConfigKey"]/docs/*' />
-		public IConfig AddConfig (string name, RegistryKey key)
+		public IConfiguration AddConfig (string name, RegistryKey key)
 		{
 			RegistryConfig result = new RegistryConfig (name, this);
 			result.Key = key;
@@ -168,7 +168,7 @@ namespace Nini.Config
 		/// </summary>
 		private void MergeConfigsIntoDocument ()
 		{
-			foreach (IConfig config in this.Configs)
+			foreach (IConfiguration config in this.Configs)
 			{
 				if (config is RegistryConfig) {
 					RegistryConfig registryConfig = (RegistryConfig)config;
@@ -236,7 +236,7 @@ namespace Nini.Config
 		/// <summary>
 		/// Registry Config class.
 		/// </summary>
-		private class RegistryConfig : ConfigBase
+		private class RegistryConfig : ConfigurationBase
 		{
 			#region Private variables
 			RegistryKey key = null;
@@ -247,7 +247,7 @@ namespace Nini.Config
 			/// <summary>
 			/// Constructor.
 			/// </summary>
-			public RegistryConfig (string name, IConfigSource source)
+			public RegistryConfig (string name, IConfigurationSource source)
 				: base (name, source)
 			{
 			}

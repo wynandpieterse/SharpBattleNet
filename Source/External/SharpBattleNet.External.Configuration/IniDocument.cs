@@ -33,10 +33,10 @@ namespace Nini.Ini
 	#endregion
 
 	/// <include file='IniDocument.xml' path='//Class[@name="IniDocument"]/docs/*' />
-	public class IniDocument
+	public class INIDocument
 	{
 		#region Private variables
-		IniSectionCollection sections = new IniSectionCollection ();
+		INISectionCollection sections = new INISectionCollection ();
 		ArrayList initialComment = new ArrayList ();
 		IniFileType fileType = IniFileType.Standard;
 		#endregion
@@ -52,56 +52,56 @@ namespace Nini.Ini
 
 		#region Constructors
 		/// <include file='IniDocument.xml' path='//Constructor[@name="ConstructorPath"]/docs/*' />
-		public IniDocument (string filePath)
+		public INIDocument (string filePath)
 		{
 			fileType = IniFileType.Standard;
 			Load (filePath);
 		}
 
 		/// <include file='IniDocument.xml' path='//Constructor[@name="ConstructorPathType"]/docs/*' />
-		public IniDocument (string filePath, IniFileType type)
+		public INIDocument (string filePath, IniFileType type)
 		{
 			fileType = type;
 			Load (filePath);
 		}
 
 		/// <include file='IniDocument.xml' path='//Constructor[@name="ConstructorTextReader"]/docs/*' />
-		public IniDocument (TextReader reader)
+		public INIDocument (TextReader reader)
 		{
 			fileType = IniFileType.Standard;
 			Load (reader);
 		}
 
 		/// <include file='IniDocument.xml' path='//Constructor[@name="ConstructorTextReaderType"]/docs/*' />
-		public IniDocument (TextReader reader, IniFileType type)
+		public INIDocument (TextReader reader, IniFileType type)
 		{
 			fileType = type;
 			Load (reader);
 		}
 		
 		/// <include file='IniDocument.xml' path='//Constructor[@name="ConstructorStream"]/docs/*' />
-		public IniDocument (Stream stream)
+		public INIDocument (Stream stream)
 		{
 			fileType = IniFileType.Standard;
 			Load (stream);
 		}
 
 		/// <include file='IniDocument.xml' path='//Constructor[@name="ConstructorStreamType"]/docs/*' />
-		public IniDocument (Stream stream, IniFileType type)
+		public INIDocument (Stream stream, IniFileType type)
 		{
 			fileType = type;
 			Load (stream);
 		}
 
 		/// <include file='IniDocument.xml' path='//Constructor[@name="ConstructorIniReader"]/docs/*' />
-		public IniDocument (IniReader reader)
+		public INIDocument (INIReader reader)
 		{
 			fileType = IniFileType.Standard;
 			Load (reader);
 		}
 
 		/// <include file='IniDocument.xml' path='//Constructor[@name="Constructor"]/docs/*' />
-		public IniDocument ()
+		public INIDocument ()
 		{
 		}
 		#endregion
@@ -126,13 +126,13 @@ namespace Nini.Ini
 		}
 
 		/// <include file='IniDocument.xml' path='//Method[@name="LoadIniReader"]/docs/*' />
-		public void Load (IniReader reader)
+		public void Load (INIReader reader)
 		{
 			LoadReader (reader);
 		}
 
 		/// <include file='IniSection.xml' path='//Property[@name="Comment"]/docs/*' />
-		public IniSectionCollection Sections
+		public INISectionCollection Sections
 		{
 			get { return sections; }
 		}
@@ -140,9 +140,9 @@ namespace Nini.Ini
 		/// <include file='IniDocument.xml' path='//Method[@name="SaveTextWriter"]/docs/*' />
 		public void Save (TextWriter textWriter)
 		{
-			IniWriter writer = GetIniWriter (textWriter, fileType);
-			IniItem item = null;
-			IniSection section = null;
+			INIWriter writer = GetIniWriter (textWriter, fileType);
+			INIItem item = null;
+			INISection section = null;
 			
 			foreach (string comment in initialComment)
 			{
@@ -190,11 +190,11 @@ namespace Nini.Ini
 		/// <summary>
 		/// Loads the file not saving comments.
 		/// </summary>
-		private void LoadReader (IniReader reader)
+		private void LoadReader (INIReader reader)
 		{
 			reader.IgnoreComments = false;
 			bool sectionFound = false;
-			IniSection section = null;
+			INISection section = null;
 			
 			try {
 				while (reader.Read ())
@@ -215,7 +215,7 @@ namespace Nini.Ini
 						if (sections[reader.Name] != null) {
 							sections.Remove (reader.Name);
 						}
-						section = new IniSection (reader.Name, reader.Comment);
+						section = new INISection (reader.Name, reader.Comment);
 						sections.Add (section);
 
 						break;
@@ -237,9 +237,9 @@ namespace Nini.Ini
 		/// <summary>
 		/// Returns a proper INI reader depending upon the type parameter.
 		/// </summary>
-		private IniReader GetIniReader (TextReader reader, IniFileType type)
+		private INIReader GetIniReader (TextReader reader, IniFileType type)
 		{
-			IniReader result = new IniReader (reader);
+			INIReader result = new INIReader (reader);
 
 			switch (type)
 			{
@@ -273,9 +273,9 @@ namespace Nini.Ini
 		/// <summary>
 		/// Returns a proper IniWriter depending upon the type parameter.
 		/// </summary>
-		private IniWriter GetIniWriter (TextWriter reader, IniFileType type)
+		private INIWriter GetIniWriter (TextWriter reader, IniFileType type)
 		{
-			IniWriter result = new IniWriter (reader);
+			INIWriter result = new INIWriter (reader);
 
 			switch (type)
 			{

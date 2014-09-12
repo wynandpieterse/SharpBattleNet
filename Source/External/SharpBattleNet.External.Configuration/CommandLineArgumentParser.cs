@@ -18,7 +18,7 @@ using System.Text.RegularExpressions;
 namespace Nini.Util
 {
 	/// <include file='ArgvParser.xml' path='//Class[@name="ArgvParser"]/docs/*' />
-	public class ArgvParser
+	public class CommandLineArgumentParser
 	{
 		#region Private variables
 		StringDictionary parameters;
@@ -26,7 +26,7 @@ namespace Nini.Util
 		
 		#region Constructors
 		/// <include file='ArgvParser.xml' path='//Constructor[@name="Constructor"]/docs/*' />
-		public ArgvParser(string args)
+		public CommandLineArgumentParser(string args)
 		{
 
 			Regex Extractor = new Regex(@"(['""][^""]+['""])\s*|([^\s]+)\s*",
@@ -46,7 +46,7 @@ namespace Nini.Util
 		}
 		
 		/// <include file='ArgvParser.xml' path='//Constructor[@name="ConstructorArray"]/docs/*' />
-		public ArgvParser (string[] args)
+		public CommandLineArgumentParser (string[] args)
 		{
 			Extract (args);
 		}

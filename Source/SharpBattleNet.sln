@@ -59,7 +59,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Runtime.Netw
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.Runtime.Networking.UDP", "Runtime\SharpBattleNet.Runtime.Networking.UDP\SharpBattleNet.Runtime.Networking.UDP.csproj", "{57F854BC-99DB-4719-B435-7E8F3785B9E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.External.Configuration", "SharpBattleNet.External.Configuration\SharpBattleNet.External.Configuration.csproj", "{57E90E05-47C2-4076-BBC7-F606634900C6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBattleNet.External.Configuration", "External\SharpBattleNet.External.Configuration\SharpBattleNet.External.Configuration.csproj", "{57E90E05-47C2-4076-BBC7-F606634900C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

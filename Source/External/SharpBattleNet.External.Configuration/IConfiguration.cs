@@ -13,10 +13,10 @@ using System;
 namespace Nini.Config
 {
 	/// <include file='IConfig.xml' path='//Interface[@name="IConfig"]/docs/*' />
-	public interface IConfig
+	public interface IConfiguration
 	{
 		/// <include file='IConfig.xml' path='//Property[@name="ConfigSource"]/docs/*' />
-		IConfigSource ConfigSource { get; }
+		IConfigurationSource ConfigSource { get; }
 		
 		/// <include file='IConfig.xml' path='//Property[@name="Name"]/docs/*' />
 		string Name { get; set; }

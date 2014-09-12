@@ -15,7 +15,7 @@ using Nini.Util;
 namespace Nini.Ini
 {
 	/// <include file='IniSection.xml' path='//Class[@name="IniSection"]/docs/*' />
-	public class IniSection
+	public class INISection
 	{
 		#region Private variables
 		OrderedList configList = new OrderedList ();
@@ -26,14 +26,14 @@ namespace Nini.Ini
 
 		#region Constructors
 		/// <include file='IniSection.xml' path='//Constructor[@name="ConstructorComment"]/docs/*' />
-		public IniSection (string name, string comment)
+		public INISection (string name, string comment)
 		{
 			this.name = name;
 			this.comment = comment;
 		}
 		
 		/// <include file='IniSection.xml' path='//Constructor[@name="Constructor"]/docs/*' />
-		public IniSection (string name)
+		public INISection (string name)
 			: this (name, null)
 		{
 		}
@@ -67,7 +67,7 @@ namespace Nini.Ini
 			string result = null;
 
 			if (Contains (key)) {
-				IniItem item = (IniItem)configList[key];
+				INIItem item = (INIItem)configList[key];
 				result = item.Value;
 			}
 
@@ -75,20 +75,20 @@ namespace Nini.Ini
 		}
 		
 		/// <include file='IniSection.xml' path='//Method[@name="GetItem"]/docs/*' />
-		public IniItem GetItem (int index)
+		public INIItem GetItem (int index)
 		{
-			return (IniItem)configList[index];
+			return (INIItem)configList[index];
 		}
 		
 		/// <include file='IniSection.xml' path='//Method[@name="GetKeys"]/docs/*' />
 		public string[] GetKeys ()
 		{
 			ArrayList list = new ArrayList ();
-			IniItem item = null;
+			INIItem item = null;
 			
 			for (int i = 0; i < configList.Count; i++)
 			{
-				item = (IniItem)configList[i]; 
+				item = (INIItem)configList[i]; 
 				if (item.Type == IniType.Key) {
 					list.Add (item.Name);
 				}
@@ -108,14 +108,14 @@ namespace Nini.Ini
 		/// <include file='IniSection.xml' path='//Method[@name="SetKeyComment"]/docs/*' />
 		public void Set (string key, string value, string comment)
 		{
-			IniItem item = null;
+			INIItem item = null;
 
 			if (Contains (key)) {
-				item = (IniItem)configList[key];
+				item = (INIItem)configList[key];
 				item.Value = value;
 				item.Comment = comment;
 			} else {
-				item = new IniItem (key, value, IniType.Key, comment);
+				item = new INIItem (key, value, IniType.Key, comment);
 				configList.Add (key, item);
 			}
 		}
@@ -130,7 +130,7 @@ namespace Nini.Ini
 		public void Set (string comment)
 		{
 			string name = "#comment" + commentCount;
-			IniItem item = new IniItem (name, null, 
+			INIItem item = new INIItem (name, null, 
 										IniType.Empty, comment);
 			configList.Add (name, item);
 			

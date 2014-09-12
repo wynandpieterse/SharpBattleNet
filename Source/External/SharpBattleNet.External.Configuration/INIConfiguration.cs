@@ -16,18 +16,18 @@ using Nini.Util;
 namespace Nini.Config
 {
 	/// <include file='IniConfig.xml' path='//Class[@name="IniConfig"]/docs/*' />
-	public class IniConfig : ConfigBase
+	public class INIConfiguration : ConfigurationBase
 	{
 		#region Private variables
-		IniConfigSource parent = null;
+		INIConfigurationSource parent = null;
 		#endregion
 		
 		#region Constructors
 		/// <include file='IniConfig.xml' path='//Constructor[@name="Constructor"]/docs/*' />
-		public IniConfig (string name, IConfigSource source)
+		public INIConfiguration (string name, IConfigurationSource source)
 			: base(name, source)
 		{
-			parent = (IniConfigSource)source;
+			parent = (INIConfigurationSource)source;
 		}
 		#endregion
 

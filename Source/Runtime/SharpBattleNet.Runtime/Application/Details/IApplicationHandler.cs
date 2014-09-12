@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace SharpBattleNet.Runtime.Application.Details
 {
-    internal abstract class BaseApplicationHandler : IApplicationHandler
+    internal interface IApplicationHandler : IDisposable
     {
-        public int Run(string[] arguments)
-        {
-            return 0;
-        }
+        int Run(string[] arguments);
     }
 }

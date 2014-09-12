@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharpBattleNet.Runtime.Application.Details.Console
 {
-    class ConsoleApplicationHandler
+    internal sealed class ConsoleApplicationHandler : BaseApplicationHandler
     {
     }
 }

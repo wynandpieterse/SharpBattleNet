@@ -61,8 +61,9 @@
     <Compile Include="Application\ApplicationMode.cs" />
     <Compile Include="Application\Details\BaseApplicationHandler.cs" />
     <Compile Include="Application\Details\Console\ConsoleApplicationHandler.cs" />
+    <Compile Include="Application\Details\GUI\GUIApplicationHandler.cs" />
+    <Compile Include="Application\Details\IApplicationHandler.cs" />
     <Compile Include="Application\Details\Service\ServiceApplicationHandler.cs" />
-    <Compile Include="Application\IApplicationHandler.cs" />
     <Compile Include="Application\IApplicationListener.cs" />
     <Compile Include="Application\ICommandLineParser.cs" />
     <Compile Include="FrameworkProgram.cs" />

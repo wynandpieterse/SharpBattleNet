@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharpBattleNet.Runtime.Application.Details.Service
 {
-    class ServiceApplicationHandler
+    internal sealed class ServiceApplicationHandler : BaseApplicationHandler
     {
     }
 }

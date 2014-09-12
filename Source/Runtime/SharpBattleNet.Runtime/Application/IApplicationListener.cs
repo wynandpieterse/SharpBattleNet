@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace SharpBattleNet.Runtime.Application
 {
-    class IApplicationListener
+    public interface IApplicationListener : IDisposable
     {
+        void Start();
+        void Stop();
     }
 }

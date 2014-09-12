@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharpBattleNet.Runtime.Application
+namespace SharpBattleNet.Runtime.Application.Details.GUI
 {
-    class IApplicationHandler
+    internal sealed class GUIApplicationHandler : BaseApplicationHandler
     {
     }
 }

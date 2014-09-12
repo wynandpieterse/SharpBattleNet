@@ -1,5 +1,9 @@
 ﻿using Ninject;
 using Ninject.Modules;
+using SharpBattleNet.Runtime.Application.Details;
+using SharpBattleNet.Runtime.Application.Details.Console;
+using SharpBattleNet.Runtime.Application.Details.GUI;
+using SharpBattleNet.Runtime.Application.Details.Service;
 using SharpBattleNet.Runtime.Utilities.Debugging;
 using System;
 using System.Collections.Generic;
@@ -19,6 +23,8 @@ namespace SharpBattleNet.Runtime.Application
 
         private IKernel _injectionKernel = null;
         private List<INinjectModule> _injectionModules = null;
+
+        private IApplicationHandler _applicationHandler = null;
 
         public Application(ApplicationMode mode, string name, string[] arguments)
         {
@@ -57,9 +63,34 @@ namespace SharpBattleNet.Runtime.Application
             return;
         }
 
+        private void SetupApplicationHandler()
+        {
+            switch(_mode)
+            {
+                case ApplicationMode.Console:
+                    _injectionKernel.Bind<IApplicationHandler>().To<ConsoleApplicationHandler>().InSingletonScope();;
+                    break;
+                case ApplicationMode.GUI:
+                    _injectionKernel.Bind<IApplicationHandler>().To<GUIApplicationHandler>().InSingletonScope();
+                    break;
+                case ApplicationMode.Service:
+                    _injectionKernel.Bind<IApplicationHandler>().To<ServiceApplicationHandler>().InSingletonScope();
+                    break;
+                default:
+                    break;
+            }
+
+            _applicationHandler = _injectionKernel.Get<IApplicationHandler>();
+
+            return;
+        }
+
         public int Run()
         {
-            return 0;
+            SetupNinject();
+            SetupApplicationHandler();
+
+            return _applicationHandler.Run(_arguments);
         }
 
         protected void Dispose(bool disposing)

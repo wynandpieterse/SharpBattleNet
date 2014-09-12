@@ -100,7 +100,8 @@ namespace SharpBattleNet.MasterServer
             byte[] buffer = new byte[1024];
             dataBuffer.CopyTo(buffer, 0, bytesReceived);
 
-            Console.WriteLine("Got data from {0}", remoteAddress);
+            string message = Encoding.ASCII.GetString(buffer, 0, bytesReceived);
+            Console.WriteLine("Got data from {0} : {1}", remoteAddress, message);
 
             return;
         }

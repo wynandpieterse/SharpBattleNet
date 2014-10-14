@@ -60,7 +60,7 @@ namespace SBNWarCraftIIIRouteServer
         /// </returns>
         private static int Main(string[] args)
         {
-            using(var application = new Application(ApplicationMode.Console, "WarCraftIIIRouterServer", args))
+            using(var application = new Application("WarCraftIIIRouterServer", args))
             {
                 application.AddDependencyModule(new WarCraftIIIRouterServerModule());
 

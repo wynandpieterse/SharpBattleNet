@@ -1,13 +1,12 @@
 ﻿using Ninject;
 using Ninject.Modules;
 using SharpBattleNet.Runtime.Application.Details;
-using SharpBattleNet.Runtime.Application.Details.Console;
-using SharpBattleNet.Runtime.Application.Details.GUI;
-using SharpBattleNet.Runtime.Application.Details.Service;
 using SharpBattleNet.Runtime.Utilities.Debugging;
+using SharpBattleNet.Runtime.Utilities.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,7 +14,6 @@ namespace SharpBattleNet.Runtime.Application
 {
     public sealed class Application : IDisposable
     {
-        private readonly ApplicationMode _mode = ApplicationMode.Undefined;
         private readonly string _name = "";
         private readonly string[] _arguments = null;
 
@@ -23,15 +21,13 @@ namespace SharpBattleNet.Runtime.Application
 
         private IKernel _injectionKernel = null;
         private List<INinjectModule> _injectionModules = null;
+        private IApplicationListener _application = null;
 
-        private IApplicationHandler _applicationHandler = null;
-
-        public Application(ApplicationMode mode, string name, string[] arguments)
+        public Application(string name, string[] arguments)
         {
             Guard.AgainstEmptyString(name);
             Guard.AgainstNull(arguments);
 
-            _mode = mode;
             _name = name;
             _arguments = arguments;
 
@@ -70,35 +66,31 @@ namespace SharpBattleNet.Runtime.Application
             return;
         }
 
-        private void SetupApplicationHandler()
+        private void SetupApplication()
         {
-            switch(_mode)
-            {
-                case ApplicationMode.Console:
-                    _injectionKernel.Bind<IApplicationHandler>().To<ConsoleApplicationHandler>().InSingletonScope();;
-                    break;
-                case ApplicationMode.GUI:
-                    _injectionKernel.Bind<IApplicationHandler>().To<GUIApplicationHandler>().InSingletonScope();
-                    break;
-                case ApplicationMode.Service:
-                    _injectionKernel.Bind<IApplicationHandler>().To<ServiceApplicationHandler>().InSingletonScope();
-                    break;
-                default:
-                    break;
-            }
+            var currentAssembly = Assembly.GetEntryAssembly();
 
-            _applicationHandler = _injectionKernel.Get<IApplicationHandler>();
+            Console.Title = string.Format("{0} - {1}", currentAssembly.GetAssemblyTitle(), currentAssembly.GetAssemblyFileVersion());
+            Console.WindowWidth = 120;
+            Console.WindowHeight = 40;
+
+            _application = _injectionKernel.Get<IApplicationListener>();
 
             return;
+        }
+
+        private int RunCommandLoop()
+        {
+            return _application.Run();
         }
 
         public int UnguardedRun()
         {
             SetupNinject();
             SetupCommandLineParser();
-            SetupApplicationHandler();
+            SetupApplication();
 
-            return _applicationHandler.Run(_arguments);
+            return RunCommandLoop();
         }
 
         private void UnhandledException(Exception ex)
@@ -138,12 +130,15 @@ namespace SharpBattleNet.Runtime.Application
             #endif
         }
 
-        protected void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if(false == _disposed)
             {
                 if(true == disposing)
                 {
+                    _application.Dispose();
+                    _application = null;
+
                     _injectionKernel.Dispose();
                     _injectionKernel = null;
                 }

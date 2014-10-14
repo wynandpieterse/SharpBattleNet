@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharpBattleNet.Runtime.Application
 {
-    public interface ICommandLineParser
+    internal interface ICommandLineParser
     {
     }
 }

@@ -99,6 +99,16 @@ namespace SharpBattleNet.Runtime.Application
             return;
         }
 
+        private void ConfigureConsoleLogging()
+        {
+            return;
+        }
+
+        private void ConfigureFileLogging()
+        {
+            return;
+        }
+
         private void ConfigureLogging()
         {
 

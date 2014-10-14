@@ -1,10 +1,8 @@
 ﻿using Ninject;
 using Ninject.Modules;
 using SharpBattleNet.Runtime.Application.Details;
-using SharpBattleNet.Runtime.Application.Details.Console;
-using SharpBattleNet.Runtime.Application.Details.GUI;
-using SharpBattleNet.Runtime.Application.Details.Service;
 using SharpBattleNet.Runtime.Utilities.Debugging;
+using SharpBattleNet.Runtime.Utilities.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -129,7 +127,7 @@ namespace SharpBattleNet.Runtime.Application
             #endif
         }
 
-        protected void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if(false == _disposed)
             {

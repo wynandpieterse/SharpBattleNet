@@ -21,6 +21,7 @@ namespace SharpBattleNet.Runtime.Application
 
         private IKernel _injectionKernel = null;
         private List<INinjectModule> _injectionModules = null;
+        private IApplicationListener _application = null;
 
         public Application(string name, string[] arguments)
         {
@@ -73,11 +74,14 @@ namespace SharpBattleNet.Runtime.Application
             Console.WindowWidth = 120;
             Console.WindowHeight = 40;
 
+            _application = _injectionKernel.Get<IApplicationListener>();
+
             return;
         }
 
         private int RunCommandLoop()
         {
+            _application.Start();
             Console.ReadLine();
             return 0;
         }
@@ -86,6 +90,7 @@ namespace SharpBattleNet.Runtime.Application
         {
             SetupNinject();
             SetupCommandLineParser();
+            SetupApplication();
 
             return RunCommandLoop();
         }
@@ -133,6 +138,8 @@ namespace SharpBattleNet.Runtime.Application
             {
                 if(true == disposing)
                 {
+                    _application.Stop();
+
                     _injectionKernel.Dispose();
                     _injectionKernel = null;
                 }

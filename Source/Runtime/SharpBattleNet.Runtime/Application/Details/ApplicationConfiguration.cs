@@ -11,13 +11,26 @@ namespace SharpBattleNet.Runtime.Application.Details
 {
     internal sealed class ApplicationConfiguration : IApplicationConfiguration
     {
+        private readonly IKernel _injectionKernel = null;
+        private readonly string _applicationName = "";
+        private readonly string _writeDirectory = "";
+
         private bool _disposed = false;
 
-        public void Configure(IKernel injectionKernel, string applicationName, string writeDirectory)
+        public ApplicationConfiguration(IKernel injectionKernel, string applicationName, string writeDirectory)
         {
-            string configurationFile = applicationName + ".ini";
+            _injectionKernel = injectionKernel;
+            _applicationName = applicationName;
+            _writeDirectory = writeDirectory;
+
+            return;
+        }
+
+        public void Configure()
+        {
+            string configurationFile = _applicationName + ".ini";
             string configurationBasePath = "../Configuration/" + configurationFile;
-            string configurationPath = Path.Combine(writeDirectory, configurationFile);
+            string configurationPath = Path.Combine(_writeDirectory, configurationFile);
             DateTime configurationBaseTime = default(DateTime);
             DateTime configurationTime = default(DateTime);
 
@@ -37,7 +50,7 @@ namespace SharpBattleNet.Runtime.Application.Details
                 }
             }
 
-            injectionKernel.Bind<IConfigSource>().ToConstant(new IniConfigSource(configurationPath)).InSingletonScope();
+            _injectionKernel.Bind<IConfigSource>().ToConstant(new IniConfigSource(configurationPath)).InSingletonScope();
 
             return;
         }

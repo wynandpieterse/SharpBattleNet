@@ -70,18 +70,18 @@ namespace SharpBattleNet.Runtime.Application
 
         private void ConfigureConfiguration()
         {
-            _appConfiguration = new ApplicationConfiguration();
+            _appConfiguration = new ApplicationConfiguration(_injectionKernel, _name, _writeDirectory);
 
-            _appConfiguration.Configure(_injectionKernel, _name, _writeDirectory);
+            _appConfiguration.Configure();
 
             return;
         }
 
         private void ConfigureLogging()
         {
-            _appLogging = new ApplicationLogging();
+            _appLogging = new ApplicationLogging(_injectionKernel, _name, _writeDirectory);
 
-            _appLogging.Configure(_injectionKernel, _name, _writeDirectory);
+            _appLogging.Configure();
 
             return;
         }

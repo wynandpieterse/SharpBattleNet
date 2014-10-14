@@ -9,6 +9,6 @@ namespace SharpBattleNet.Runtime.Application.Details
 {
     internal interface IApplicationConfiguration : IDisposable
     {
-        void Configure(IKernel injectionKernel, string applicationName, string writeDirectory);
+        void Configure();
     }
 }

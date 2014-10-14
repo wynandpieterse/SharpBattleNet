@@ -15,15 +15,18 @@ namespace SharpBattleNet.Runtime.Application.Details
 {
     internal sealed class ApplicationLogging : IApplicationLogging
     {
+        private readonly IKernel _injectionKernel = null;
+        private readonly string _applicationName = "";
+        private readonly string _writeDirectory = "";
+
         private bool _disposed = false;
 
-        private IKernel _injectionKernel = null;
-        private LoggingConfiguration _loggingConfiguration = null;
-        private string _applicationName = "";
-        private string _writeDirectory = "";
-
-        public ApplicationLogging()
+        public ApplicationLogging(IKernel injectionKernel, string applicationName, string writeDirectory)
         {
+            _injectionKernel = injectionKernel;
+            _applicationName = applicationName;
+            _writeDirectory = writeDirectory;
+
             return;
         }
 
@@ -65,7 +68,7 @@ namespace SharpBattleNet.Runtime.Application.Details
         /// Configure NLog to output to the console.
         /// </summary>
         /// <param name="config">The NLog configuration object to configure.</param>
-        private void ConfigureConsoleLogging()
+        private void ConfigureConsoleLogging(LoggingConfiguration configuration)
         {
             var configSource = _injectionKernel.Get<IConfigSource>();
             var source = configSource.Configs["General"];
@@ -75,7 +78,7 @@ namespace SharpBattleNet.Runtime.Application.Details
                 if (true == source.GetBoolean("LogConsole"))
                 {
                     var consoleTarget = new ColoredConsoleTarget();
-                    _loggingConfiguration.AddTarget("console", consoleTarget);
+                    configuration.AddTarget("console", consoleTarget);
 
                     consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Fatal", ConsoleOutputColor.Red, ConsoleOutputColor.NoChange));
                     consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Error", ConsoleOutputColor.DarkRed, ConsoleOutputColor.NoChange));
@@ -88,7 +91,7 @@ namespace SharpBattleNet.Runtime.Application.Details
                     consoleTarget.Layout = @"${message}";
 
                     var consoleRule = new LoggingRule("*", GetLogLevel(source.Get("LogConsoleLevel")), consoleTarget);
-                    _loggingConfiguration.LoggingRules.Add(consoleRule);
+                    configuration.LoggingRules.Add(consoleRule);
                 }
             }
 
@@ -100,7 +103,7 @@ namespace SharpBattleNet.Runtime.Application.Details
         /// directory.
         /// </summary>
         /// <param name="config">The NLog configuration object to configure.</param>
-        private void ConfigureFileLogging()
+        private void ConfigureFileLogging(LoggingConfiguration configuration)
         {
             var configSource = _injectionKernel.Get<IConfigSource>();
             var source = configSource.Configs["General"];
@@ -117,27 +120,27 @@ namespace SharpBattleNet.Runtime.Application.Details
                     Directory.CreateDirectory(logDirectory);
 
                     var fileTarget = new FileTarget();
-                    _loggingConfiguration.AddTarget("file", fileTarget);
+                    configuration.AddTarget("file", fileTarget);
 
                     fileTarget.FileName = logFilename;
                     fileTarget.Layout = @"${processtime} ${threadid} ${level} ${logger} ${message}";
 
                     var fileRule = new LoggingRule("*", GetLogLevel(source.Get("LogFileLevel")), fileTarget);
-                    _loggingConfiguration.LoggingRules.Add(fileRule);
+                    configuration.LoggingRules.Add(fileRule);
                 }
             }
 
             return;
         }
 
-        public void Configure(IKernel injectionKernel, string applicationName, string writeDirectory)
+        public void Configure()
         {
-            _loggingConfiguration = new LoggingConfiguration();
+            var configuration = new LoggingConfiguration();
 
-            ConfigureConsoleLogging();
-            ConfigureFileLogging();
+            ConfigureConsoleLogging(configuration);
+            ConfigureFileLogging(configuration);
 
-            LogManager.Configuration = _loggingConfiguration;
+            LogManager.Configuration = configuration;
 
             return;
         }

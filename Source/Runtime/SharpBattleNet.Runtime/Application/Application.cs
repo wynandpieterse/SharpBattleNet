@@ -5,6 +5,7 @@ using SharpBattleNet.Runtime.Utilities.Debugging;
 using SharpBattleNet.Runtime.Utilities.Extensions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -22,6 +23,11 @@ namespace SharpBattleNet.Runtime.Application
         private IKernel _injectionKernel = null;
         private List<INinjectModule> _injectionModules = null;
         private IApplicationListener _application = null;
+
+        private bool _configuredWriteDirectory = false;
+        private string _writeDirectory = null;
+        private string _writeLogDirectory = null;
+        private string _writeConfigurationDirectory = null;
 
         public Application(string name, string[] arguments)
         {
@@ -47,6 +53,25 @@ namespace SharpBattleNet.Runtime.Application
             return;
         }
 
+        private void ConfigureWriteDirectory()
+        {
+            string userApplicationData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+
+            string battleNetDirectory = Path.Combine(userApplicationData, "SharpBattleNet");
+            string applicationDirectory = Path.Combine(battleNetDirectory, _name);
+
+            _writeDirectory = applicationDirectory;
+            _writeLogDirectory = Path.Combine(applicationDirectory, "Logs");
+            _writeConfigurationDirectory = Path.Combine(applicationDirectory, "Configuration");
+
+            Directory.CreateDirectory(_writeLogDirectory);
+            Directory.CreateDirectory(_writeConfigurationDirectory);
+
+            _configuredWriteDirectory = true;
+
+            return;
+        }
+
         private void ConfigureConfiguration()
         {
             return;
@@ -54,6 +79,8 @@ namespace SharpBattleNet.Runtime.Application
 
         private void ConfigureLogging()
         {
+
+
             return;
         }
 
@@ -61,6 +88,7 @@ namespace SharpBattleNet.Runtime.Application
         {
             _injectionKernel = new StandardKernel();
 
+            ConfigureWriteDirectory();
             ConfigureConfiguration();
             ConfigureLogging();
 

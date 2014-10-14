@@ -64,6 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\Application.cs" />
+    <Compile Include="Application\ApplicationConfiguration.cs" />
+    <Compile Include="Application\ApplicationLogging.cs" />
     <Compile Include="Application\Details\CommandLineParser.cs" />
     <Compile Include="Application\IApplicationListener.cs" />
     <Compile Include="Application\Details\ICommandLineParser.cs" />

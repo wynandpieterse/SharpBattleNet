@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SharpBattleNet.Runtime.Application
 {
-    internal interface IApplicationLogging
+    internal interface IApplicationLogging : IDisposable
     {
+        void Configure(string applicationName, string writeDirectory);
     }
 }

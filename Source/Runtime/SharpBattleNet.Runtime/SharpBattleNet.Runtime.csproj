@@ -58,13 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\Application.cs" />
-    <Compile Include="Application\ApplicationMode.cs" />
-    <Compile Include="Application\Details\ApplicationHandler.cs" />
     <Compile Include="Application\Details\CommandLineParser.cs" />
-    <Compile Include="Application\Details\Console\ConsoleApplicationHandler.cs" />
-    <Compile Include="Application\Details\GUI\GUIApplicationHandler.cs" />
-    <Compile Include="Application\Details\IApplicationHandler.cs" />
-    <Compile Include="Application\Details\Service\ServiceApplicationHandler.cs" />
     <Compile Include="Application\IApplicationListener.cs" />
     <Compile Include="Application\Details\ICommandLineParser.cs" />
     <Compile Include="App_Packages\LibLog.1.3\Logging.cs" />

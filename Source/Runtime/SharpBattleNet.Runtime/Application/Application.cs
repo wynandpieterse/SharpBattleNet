@@ -181,18 +181,27 @@ namespace SharpBattleNet.Runtime.Application
         {
             Guard.AgainstNull(config);
 
-            DateTime currentTime = DateTime.Now;
-            string logDate = string.Format("{0}-{1}-{2}-{3}-{4}-{5}", currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Second);
-            string logFilename = Path.Combine(_writeLogDirectory, string.Format("Log-{0}.log", logDate));
+            var configSource = _injectionKernel.Get<IConfigSource>();
+            var source = configSource.Configs["General"];
 
-            var fileTarget = new FileTarget();
-            config.AddTarget("file", fileTarget);
+            if (null != source)
+            {
+                if (true == source.GetBoolean("LogFile"))
+                {
+                    DateTime currentTime = DateTime.Now;
+                    string logDate = string.Format("{0}-{1}-{2}-{3}-{4}-{5}", currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Second);
+                    string logFilename = Path.Combine(_writeLogDirectory, string.Format("Log-{0}.log", logDate));
 
-            fileTarget.FileName = logFilename;
-            fileTarget.Layout = @"${processtime} ${threadid} ${level} ${logger} ${message}";
+                    var fileTarget = new FileTarget();
+                    config.AddTarget("file", fileTarget);
 
-            var fileRule = new LoggingRule("*", LogLevel.Debug, fileTarget);
-            config.LoggingRules.Add(fileRule);
+                    fileTarget.FileName = logFilename;
+                    fileTarget.Layout = @"${processtime} ${threadid} ${level} ${logger} ${message}";
+
+                    var fileRule = new LoggingRule("*", GetLogLevel(source.Get("LogFileLevel"), fileTarget);
+                    config.LoggingRules.Add(fileRule);
+                }
+            }
 
             return;
         }

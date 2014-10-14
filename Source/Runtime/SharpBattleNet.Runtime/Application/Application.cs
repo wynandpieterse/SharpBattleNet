@@ -1,10 +1,12 @@
-﻿using Ninject;
+﻿using Nini.Config;
+using Ninject;
 using Ninject.Modules;
 using SharpBattleNet.Runtime.Application.Details;
 using SharpBattleNet.Runtime.Utilities.Debugging;
 using SharpBattleNet.Runtime.Utilities.Extensions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -22,6 +24,10 @@ namespace SharpBattleNet.Runtime.Application
         private IKernel _injectionKernel = null;
         private List<INinjectModule> _injectionModules = null;
         private IApplicationListener _application = null;
+
+        private bool _configuredWriteDirectory = false;
+        private string _writeDirectory = null;
+        private string _writeLogDirectory = null;
 
         public Application(string name, string[] arguments)
         {
@@ -47,13 +53,66 @@ namespace SharpBattleNet.Runtime.Application
             return;
         }
 
+        private void ConfigureWriteDirectory()
+        {
+            string userApplicationData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+
+            string battleNetDirectory = Path.Combine(userApplicationData, "SharpBattleNet");
+            string applicationDirectory = Path.Combine(battleNetDirectory, _name);
+
+            _writeDirectory = applicationDirectory;
+            _writeLogDirectory = Path.Combine(applicationDirectory, "Logs");
+
+            Directory.CreateDirectory(_writeLogDirectory);
+
+            _configuredWriteDirectory = true;
+
+            return;
+        }
+
+        private void ConfigureConfiguration()
+        {
+            string configurationFile = _name + ".ini";
+            string configurationBasePath = "../Configuration/" + configurationFile;
+            string configurationPath = Path.Combine(_writeDirectory, configurationFile);
+            DateTime configurationBaseTime = default(DateTime);
+            DateTime configurationTime = default(DateTime);
+
+            if(false == File.Exists(configurationPath))
+            {
+                File.Copy(configurationBasePath, configurationPath);
+            }
+            else
+            {
+                configurationBaseTime = File.GetLastWriteTimeUtc(configurationBasePath);
+                configurationTime = File.GetLastWriteTimeUtc(configurationPath);
+
+                if(configurationBaseTime > configurationTime)
+                {
+                    File.Delete(configurationPath);
+                    File.Copy(configurationBasePath, configurationPath);
+                }
+            }
+
+            _injectionKernel.Bind<IConfigSource>().ToConstant(new IniConfigSource(configurationPath)).InSingletonScope();
+
+            return;
+        }
+
+        private void ConfigureLogging()
+        {
+
+
+            return;
+        }
+
         private void SetupNinject()
         {
             _injectionKernel = new StandardKernel();
 
-            // Add standard application modules
-            _injectionKernel.Load(new ConfigurationModule(_name));
-            _injectionKernel.Load(new LoggingModule(_name));
+            ConfigureWriteDirectory();
+            ConfigureConfiguration();
+            ConfigureLogging();
 
             _injectionKernel.Load(_injectionModules);
 

@@ -198,7 +198,7 @@ namespace SharpBattleNet.Runtime.Application
                     fileTarget.FileName = logFilename;
                     fileTarget.Layout = @"${processtime} ${threadid} ${level} ${logger} ${message}";
 
-                    var fileRule = new LoggingRule("*", GetLogLevel(source.Get("LogFileLevel"), fileTarget);
+                    var fileRule = new LoggingRule("*", GetLogLevel(source.Get("LogFileLevel")), fileTarget);
                     config.LoggingRules.Add(fileRule);
                 }
             }

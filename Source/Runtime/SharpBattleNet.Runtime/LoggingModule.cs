@@ -1,4 +1,5 @@
 ﻿using Ninject.Modules;
+using SharpBattleNet.Runtime.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +21,6 @@ namespace SharpBattleNet.Runtime
 
         public override void Load()
         {
-
-
             return;
         }
     }

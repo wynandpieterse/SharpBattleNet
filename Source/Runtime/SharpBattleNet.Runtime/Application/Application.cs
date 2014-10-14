@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using Nini.Config;
+using Ninject;
 using Ninject.Modules;
 using SharpBattleNet.Runtime.Application.Details;
 using SharpBattleNet.Runtime.Utilities.Debugging;
@@ -27,7 +28,6 @@ namespace SharpBattleNet.Runtime.Application
         private bool _configuredWriteDirectory = false;
         private string _writeDirectory = null;
         private string _writeLogDirectory = null;
-        private string _writeConfigurationDirectory = null;
 
         public Application(string name, string[] arguments)
         {
@@ -62,10 +62,8 @@ namespace SharpBattleNet.Runtime.Application
 
             _writeDirectory = applicationDirectory;
             _writeLogDirectory = Path.Combine(applicationDirectory, "Logs");
-            _writeConfigurationDirectory = Path.Combine(applicationDirectory, "Configuration");
 
             Directory.CreateDirectory(_writeLogDirectory);
-            Directory.CreateDirectory(_writeConfigurationDirectory);
 
             _configuredWriteDirectory = true;
 
@@ -74,6 +72,17 @@ namespace SharpBattleNet.Runtime.Application
 
         private void ConfigureConfiguration()
         {
+            string configurationFile = _name + ".ini";
+            string configurationBasePath = "../Configuration/" + configurationFile;
+            string configurationPath = Path.Combine(_writeDirectory, configurationFile);
+
+            if(false == File.Exists(configurationPath))
+            {
+                File.Copy(configurationBasePath, configurationPath);
+            }
+
+            _injectionKernel.Bind<IConfigSource>().ToConstant(new IniConfigSource(configurationPath)).InSingletonScope();
+
             return;
         }
 

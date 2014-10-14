@@ -62,18 +62,15 @@ namespace SharpBattleNet.MasterServer
             return;
         }
 
-        public void Start()
+        public int Run()
         {
             _listener = _listenerFactory.Listen(new IPEndPoint(IPAddress.Any, 6112), this, this);
 
             _connect = _connectionFactory.Connect(new IPEndPoint(IPAddress.Loopback, 6112), this, this);
 
-            return;
-        }
+            Console.ReadLine();
 
-        public void Stop()
-        {
-            return;
+            return 0;
         }
 
         public bool ShouldAccept(EndPoint remoteEndpoint, IConnection remoteConnection)

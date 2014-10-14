@@ -8,7 +8,6 @@ namespace SharpBattleNet.Runtime.Application
 {
     public interface IApplicationListener : IDisposable
     {
-        void Start();
-        void Stop();
+        int Run();
     }
 }

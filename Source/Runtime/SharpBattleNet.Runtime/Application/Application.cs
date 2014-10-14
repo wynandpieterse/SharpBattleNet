@@ -81,9 +81,7 @@ namespace SharpBattleNet.Runtime.Application
 
         private int RunCommandLoop()
         {
-            _application.Start();
-            Console.ReadLine();
-            return 0;
+            return _application.Run();
         }
 
         public int UnguardedRun()
@@ -138,7 +136,8 @@ namespace SharpBattleNet.Runtime.Application
             {
                 if(true == disposing)
                 {
-                    _application.Stop();
+                    _application.Dispose();
+                    _application = null;
 
                     _injectionKernel.Dispose();
                     _injectionKernel = null;

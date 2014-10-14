@@ -47,13 +47,22 @@ namespace SharpBattleNet.Runtime.Application
             return;
         }
 
+        private void ConfigureConfiguration()
+        {
+            return;
+        }
+
+        private void ConfigureLogging()
+        {
+            return;
+        }
+
         private void SetupNinject()
         {
             _injectionKernel = new StandardKernel();
 
-            // Add standard application modules
-            _injectionKernel.Load(new ConfigurationModule(_name));
-            _injectionKernel.Load(new LoggingModule(_name));
+            ConfigureConfiguration();
+            ConfigureLogging();
 
             _injectionKernel.Load(_injectionModules);
 

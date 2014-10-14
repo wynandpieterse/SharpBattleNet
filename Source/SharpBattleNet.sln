@@ -14,6 +14,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{F9C13DB9-49FB-4909-8078-10BB0434DEDF}"
+	ProjectSection(SolutionItems) = preProject
+		..\Configuration\DiabloIIGameServer.ini = ..\Configuration\DiabloIIGameServer.ini
+		..\Configuration\DiabloIIRealmServer.ini = ..\Configuration\DiabloIIRealmServer.ini
+		..\Configuration\MasterServer.ini = ..\Configuration\MasterServer.ini
+		..\Configuration\WarCraftIIIRouteServer.ini = ..\Configuration\WarCraftIIIRouteServer.ini
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Code", "Code", "{4081D085-F3AC-41EA-A8A3-E16335BF5B30}"
 EndProject

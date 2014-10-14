@@ -75,10 +75,23 @@ namespace SharpBattleNet.Runtime.Application
             string configurationFile = _name + ".ini";
             string configurationBasePath = "../Configuration/" + configurationFile;
             string configurationPath = Path.Combine(_writeDirectory, configurationFile);
+            DateTime configurationBaseTime = default(DateTime);
+            DateTime configurationTime = default(DateTime);
 
             if(false == File.Exists(configurationPath))
             {
                 File.Copy(configurationBasePath, configurationPath);
+            }
+            else
+            {
+                configurationBaseTime = File.GetLastWriteTimeUtc(configurationBasePath);
+                configurationTime = File.GetLastWriteTimeUtc(configurationPath);
+
+                if(configurationBaseTime > configurationTime)
+                {
+                    File.Delete(configurationPath);
+                    File.Copy(configurationBasePath, configurationPath);
+                }
             }
 
             _injectionKernel.Bind<IConfigSource>().ToConstant(new IniConfigSource(configurationPath)).InSingletonScope();

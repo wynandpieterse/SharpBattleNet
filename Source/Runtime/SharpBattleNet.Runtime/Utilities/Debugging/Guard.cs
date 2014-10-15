@@ -77,5 +77,19 @@ namespace SharpBattleNet.Runtime.Utilities.Debugging
 
             return;
         }
+
+        /// <summary>
+        /// Guards agains an object that is disposed.
+        /// </summary>
+        /// <param name="disposed">Wheter the class is disposed or not.</param>
+        public static void AgainstDispose(bool disposed)
+        {
+            if(true == disposed)
+            {
+                throw new ObjectDisposedException("Object has been disposed. Cannot use it anymore.");
+            }
+
+            return;
+        }
     }
 }

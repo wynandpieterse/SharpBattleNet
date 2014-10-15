@@ -42,7 +42,7 @@ namespace SharpBattleNet.Runtime.Networking.Connection
     /// systems. Used by the packet handlers to communicate with remote
     /// systems.
     /// </summary>
-    public interface IConnection
+    public interface IConnection : IDisposable
     {
         /// <summary>
         /// Sends the specified buffer to the remote address.

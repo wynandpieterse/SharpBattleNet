@@ -86,13 +86,18 @@ namespace SharpBattleNet.Runtime.Application
                 {
                     configuration.Configure();
 
-                    using(var logging = new ApplicationLogging(injectionKernel, _name, _writeDirectory))
+                    using(var commandLine = new CommandLineParser(injectionKernel, _name, _writeDirectory))
                     {
-                        logging.Configure();
+                        commandLine.Parse(_arguments);
 
-                        using(var application = injectionKernel.Get<IApplicationListener>())
+                        using(var logging = new ApplicationLogging(injectionKernel, _name, _writeDirectory))
                         {
-                            return application.Run();
+                            logging.Configure();
+
+                            using(var application = injectionKernel.Get<IApplicationListener>())
+                            {
+                                return application.Run();
+                            }
                         }
                     }
                 }

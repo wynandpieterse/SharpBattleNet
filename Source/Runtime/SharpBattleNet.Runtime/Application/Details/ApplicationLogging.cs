@@ -65,28 +65,33 @@ namespace SharpBattleNet.Runtime.Application.Details
         {
             var configSource = _injectionKernel.Get<IConfigSource>();
             var source = configSource.Configs["General"];
-
-            if (null != source)
+            var level = "";
+            
+            if(null == source)
             {
-                if (true == source.GetBoolean("LogConsole", true))
-                {
-                    var consoleTarget = new ColoredConsoleTarget();
-                    configuration.AddTarget("console", consoleTarget);
-
-                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Fatal", ConsoleOutputColor.Red, ConsoleOutputColor.NoChange));
-                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Error", ConsoleOutputColor.DarkRed, ConsoleOutputColor.NoChange));
-                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Warn", ConsoleOutputColor.Yellow, ConsoleOutputColor.NoChange));
-                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Info", ConsoleOutputColor.White, ConsoleOutputColor.NoChange));
-                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Debug", ConsoleOutputColor.Gray, ConsoleOutputColor.NoChange));
-                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Trace", ConsoleOutputColor.DarkGray, ConsoleOutputColor.NoChange));
-
-                    consoleTarget.UseDefaultRowHighlightingRules = false;
-                    consoleTarget.Layout = @"${message}";
-
-                    var consoleRule = new LoggingRule("*", GetLogLevel(source.Get("LogConsoleLevel", "Trace")), consoleTarget);
-                    configuration.LoggingRules.Add(consoleRule);
-                }
+                level = "Trace";
             }
+            else
+            {
+                level = source.Get("LogConsoleLevel", "Trace");
+            }
+
+            // Console logging should always be available
+            var consoleTarget = new ColoredConsoleTarget();
+            configuration.AddTarget("console", consoleTarget);
+
+            consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Fatal", ConsoleOutputColor.Red, ConsoleOutputColor.NoChange));
+            consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Error", ConsoleOutputColor.DarkRed, ConsoleOutputColor.NoChange));
+            consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Warn", ConsoleOutputColor.Yellow, ConsoleOutputColor.NoChange));
+            consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Info", ConsoleOutputColor.White, ConsoleOutputColor.NoChange));
+            consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Debug", ConsoleOutputColor.Gray, ConsoleOutputColor.NoChange));
+            consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Trace", ConsoleOutputColor.DarkGray, ConsoleOutputColor.NoChange));
+
+            consoleTarget.UseDefaultRowHighlightingRules = false;
+            consoleTarget.Layout = @"${message}";
+
+            var consoleRule = new LoggingRule("*", GetLogLevel(level), consoleTarget);
+            configuration.LoggingRules.Add(consoleRule);
 
             return;
         }
@@ -100,28 +105,30 @@ namespace SharpBattleNet.Runtime.Application.Details
         {
             var configSource = _injectionKernel.Get<IConfigSource>();
             var source = configSource.Configs["General"];
+            var level = "";
 
-            if (null != source)
+            if (null == source)
             {
-                if (true == source.GetBoolean("LogFile", true))
-                {
-                    DateTime currentTime = DateTime.Now;
-                    string logDate = string.Format("{0}-{1}-{2}-{3}-{4}-{5}", currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Second);
-                    string logDirectory = Path.Combine(_writeDirectory, "Logs");
-                    string logFilename = Path.Combine(logDirectory, string.Format("Log-{0}.log", logDate));
-
-                    Directory.CreateDirectory(logDirectory);
-
-                    var fileTarget = new FileTarget();
-                    configuration.AddTarget("file", fileTarget);
-
-                    fileTarget.FileName = logFilename;
-                    fileTarget.Layout = @"${processtime} ${threadid} ${level} ${logger} ${message}";
-
-                    var fileRule = new LoggingRule("*", GetLogLevel(source.Get("LogFileLevel", "Trace")), fileTarget);
-                    configuration.LoggingRules.Add(fileRule);
-                }
+                level = "Trace";
             }
+            else
+            {
+                level = source.Get("LogFileLevel", "Trace");
+            }
+
+            // File logging should always be available
+            DateTime currentTime = DateTime.Now;
+            string logDate = string.Format("{0}-{1}-{2}-{3}-{4}-{5}", currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Second);
+            string logFilename = Path.Combine(_writeDirectory, string.Format("Log-{0}.log", logDate));
+
+            var fileTarget = new FileTarget();
+            configuration.AddTarget("file", fileTarget);
+
+            fileTarget.FileName = logFilename;
+            fileTarget.Layout = @"${processtime} ${threadid} ${level} ${logger} ${message}";
+
+            var fileRule = new LoggingRule("*", GetLogLevel(level), fileTarget);
+            configuration.LoggingRules.Add(fileRule);
 
             return;
         }

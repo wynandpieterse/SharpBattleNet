@@ -25,23 +25,31 @@ namespace SharpBattleNet.Runtime.Application.Details
             DateTime configurationBaseTime = default(DateTime);
             DateTime configurationTime = default(DateTime);
 
-            if (false == File.Exists(configurationPath))
+            try
             {
-                File.Copy(configurationBasePath, configurationPath);
-            }
-            else
-            {
-                configurationBaseTime = File.GetLastWriteTimeUtc(configurationBasePath);
-                configurationTime = File.GetLastWriteTimeUtc(configurationPath);
-
-                if (configurationBaseTime > configurationTime)
+                if (false == File.Exists(configurationPath))
                 {
-                    File.Delete(configurationPath);
                     File.Copy(configurationBasePath, configurationPath);
                 }
-            }
+                else
+                {
+                    configurationBaseTime = File.GetLastWriteTimeUtc(configurationBasePath);
+                    configurationTime = File.GetLastWriteTimeUtc(configurationPath);
 
-            _injectionKernel.Bind<IConfigSource>().ToConstant(new IniConfigSource(configurationPath)).InSingletonScope();
+                    if (configurationBaseTime > configurationTime)
+                    {
+                        File.Delete(configurationPath);
+                        File.Copy(configurationBasePath, configurationPath);
+                    }
+                }
+
+                _injectionKernel.Bind<IConfigSource>().ToConstant(new IniConfigSource(configurationPath)).InSingletonScope();
+            }
+            catch(Exception)
+            {
+                Console.WriteLine("Failed to initialize user-specific configuration. Using base configuration as default.");
+                _injectionKernel.Bind<IConfigSource>().ToConstant(new IniConfigSource(configurationBasePath)).InSingletonScope();
+            }
 
             return;
         }

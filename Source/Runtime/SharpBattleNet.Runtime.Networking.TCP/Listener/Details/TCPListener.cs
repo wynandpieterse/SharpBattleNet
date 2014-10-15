@@ -51,6 +51,8 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Listener.Details
         private readonly IConnectionSink _notificationListener = null;
         private readonly EndPoint _listenEndpoint = null;
 
+        private bool _disposed = false;
+
         private Socket _listener = null;
 
         public TCPListener(EndPoint listenEndpoint, IListenerSink acceptor, IConnectionSink notificationListener, ISocketEventPool socketEvents, IListenerTCPConnectionFactory listenerFactory)
@@ -199,5 +201,32 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Listener.Details
         }
 
         #endregion
+
+        protected void Dispose(bool disposing)
+        {
+            if (false == _disposed)
+            {
+                if (true == disposing)
+                {
+                    // Dispose managed resources
+                }
+
+                // Dispose unmanaged resources
+            }
+
+            _disposed = true;
+
+            // Call base dispose
+
+            return;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+
+            return;
+        }
     }
 }

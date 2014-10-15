@@ -69,7 +69,6 @@
     <Compile Include="Application\Details\ApplicationParser.cs" />
     <Compile Include="Application\IApplicationListener.cs" />
     <Compile Include="App_Packages\LibLog.1.3\Logging.cs" />
-    <Compile Include="FrameworkProgram.cs" />
     <Compile Include="Utilities\Extensions\AssemblyExtensions.cs" />
     <Compile Include="Utilities\Debugging\Guard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

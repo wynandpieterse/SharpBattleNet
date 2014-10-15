@@ -47,11 +47,6 @@ namespace SharpBattleNet.Runtime.Networking.UDP.Connection.Details
         private readonly ISocketBufferPool _socketBufferPool = null;
         private readonly IConnectionSink _notificationListener = null;
 
-        /// <summary>
-        /// Construct an empty <see cref="TCPConnectionBase"/>. Should
-        /// be called by derived classes.
-        /// </summary>
-        /// <param name="socketEventBag"></param>
         protected UDPConnectionBase(IConnectionSink notificationListener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
             : base(notificationListener, socketEventBag, socketBufferPool)
         {

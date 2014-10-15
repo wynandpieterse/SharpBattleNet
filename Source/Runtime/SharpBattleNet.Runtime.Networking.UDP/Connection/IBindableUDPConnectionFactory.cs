@@ -38,16 +38,8 @@ namespace SharpBattleNet.Runtime.Networking.UDP.Connection
     using System.Net;
     #endregion
     
-    /// <summary>
-    /// Constructs <see cref="IBindableUDPConnection"/> objects that are
-    /// ready to be used.
-    /// </summary>
     public interface IBindableUDPConnectionFactory
     {
-        /// <summary>
-        /// Constructs a brand new <see cref="IBindableUDPConnection"/> object.
-        /// </summary>
-        /// <returns>A <see cref="IBindableUDPConnection"/> object.</returns>
         IBindableUDPConnection Bind(EndPoint address, IConnectionSink notificationListener);
     }
 }

@@ -7,25 +7,23 @@ using System.Threading.Tasks;
 
 namespace SharpBattleNet.Runtime.Application.Details
 {
-    internal sealed class CommandLineParser : ICommandLineParser
+    internal sealed class CommandLineParser : IDisposable
     {
         private readonly IKernel _injectionKernel = null;
-        private readonly string _applicationName = "";
-        private readonly string _writeDirectory = "";
+        private readonly string[] _arguments = null;
 
         private bool _disposed = false;
 
-        public CommandLineParser(IKernel injectionKernel, string applicationName, string writeDirectory)
+        private void Parse()
         {
-            _injectionKernel = injectionKernel;
-            _applicationName = applicationName;
-            _writeDirectory = writeDirectory;
-
             return;
         }
 
-        public void Parse(string[] arguments)
+        public CommandLineParser(IKernel injectionKernel, string[] arguments)
         {
+            _injectionKernel = injectionKernel;
+            _arguments = arguments;
+
             return;
         }
 

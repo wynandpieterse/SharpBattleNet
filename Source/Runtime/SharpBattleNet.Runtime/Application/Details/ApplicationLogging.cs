@@ -13,22 +13,13 @@ using System.Threading.Tasks;
 
 namespace SharpBattleNet.Runtime.Application.Details
 {
-    internal sealed class ApplicationLogging : IApplicationLogging
+    internal sealed class ApplicationLogging : IDisposable
     {
         private readonly IKernel _injectionKernel = null;
         private readonly string _applicationName = "";
         private readonly string _writeDirectory = "";
 
         private bool _disposed = false;
-
-        public ApplicationLogging(IKernel injectionKernel, string applicationName, string writeDirectory)
-        {
-            _injectionKernel = injectionKernel;
-            _applicationName = applicationName;
-            _writeDirectory = writeDirectory;
-
-            return;
-        }
 
         /// <summary>
         /// Returns a NLog log level depending on the passed in string.
@@ -133,7 +124,7 @@ namespace SharpBattleNet.Runtime.Application.Details
             return;
         }
 
-        public void Configure()
+        private void Configure()
         {
             var configuration = new LoggingConfiguration();
 
@@ -141,6 +132,17 @@ namespace SharpBattleNet.Runtime.Application.Details
             ConfigureFileLogging(configuration);
 
             LogManager.Configuration = configuration;
+
+            return;
+        }
+
+        public ApplicationLogging(IKernel injectionKernel, string applicationName, string writeDirectory)
+        {
+            _injectionKernel = injectionKernel;
+            _applicationName = applicationName;
+            _writeDirectory = writeDirectory;
+
+            Configure();
 
             return;
         }

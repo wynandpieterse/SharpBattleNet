@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SharpBattleNet.Runtime.Application.Details
 {
-    internal sealed class ApplicationConfiguration : IApplicationConfiguration
+    internal sealed class ApplicationConfiguration : IDisposable
     {
         private readonly IKernel _injectionKernel = null;
         private readonly string _applicationName = "";
@@ -17,16 +17,7 @@ namespace SharpBattleNet.Runtime.Application.Details
 
         private bool _disposed = false;
 
-        public ApplicationConfiguration(IKernel injectionKernel, string applicationName, string writeDirectory)
-        {
-            _injectionKernel = injectionKernel;
-            _applicationName = applicationName;
-            _writeDirectory = writeDirectory;
-
-            return;
-        }
-
-        public void Configure()
+        private void Configure()
         {
             string configurationFile = _applicationName + ".ini";
             string configurationBasePath = "../Configuration/" + configurationFile;
@@ -51,6 +42,17 @@ namespace SharpBattleNet.Runtime.Application.Details
             }
 
             _injectionKernel.Bind<IConfigSource>().ToConstant(new IniConfigSource(configurationPath)).InSingletonScope();
+
+            return;
+        }
+
+        public ApplicationConfiguration(IKernel injectionKernel, string applicationName, string writeDirectory)
+        {
+            _injectionKernel = injectionKernel;
+            _applicationName = applicationName;
+            _writeDirectory = writeDirectory;
+
+            Configure();
 
             return;
         }

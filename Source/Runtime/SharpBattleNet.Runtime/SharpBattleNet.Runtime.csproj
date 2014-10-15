@@ -67,10 +67,7 @@
     <Compile Include="Application\Details\ApplicationConfiguration.cs" />
     <Compile Include="Application\Details\ApplicationLogging.cs" />
     <Compile Include="Application\Details\CommandLineParser.cs" />
-    <Compile Include="Application\IApplicationConfiguration.cs" />
     <Compile Include="Application\IApplicationListener.cs" />
-    <Compile Include="Application\IApplicationLogging.cs" />
-    <Compile Include="Application\ICommandLineParser.cs" />
     <Compile Include="App_Packages\LibLog.1.3\Logging.cs" />
     <Compile Include="FrameworkProgram.cs" />
     <Compile Include="Utilities\Extensions\AssemblyExtensions.cs" />

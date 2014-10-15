@@ -39,7 +39,7 @@ namespace SharpBattleNet.MasterServer
     using SharpBattleNet.Runtime;
     using SharpBattleNet.Runtime.Networking.Connection;
     using SharpBattleNet.Runtime.Networking.Listeners;
-    using SharpBattleNet.External.BufferPool;
+    using SharpBattleNet.Runtime.Utilities.BufferPool;
     using System.Text;
     using SharpBattleNet.Runtime.Networking.TCP.Listener;
     using SharpBattleNet.Runtime.Networking.TCP.Connection;

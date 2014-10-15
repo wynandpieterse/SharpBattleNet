@@ -36,7 +36,7 @@ namespace SharpBattleNet.Runtime.Networking
     using System;
     using Ninject.Modules;
     using Ninject.Extensions.Factory;
-    using SharpBattleNet.External.BufferPool;
+    using SharpBattleNet.Runtime.Utilities.BufferPool;
     using SharpBattleNet.Runtime.Networking.Utilities.Collections;
     using SharpBattleNet.Runtime.Networking.Utilities.Collections.Details;
     #endregion

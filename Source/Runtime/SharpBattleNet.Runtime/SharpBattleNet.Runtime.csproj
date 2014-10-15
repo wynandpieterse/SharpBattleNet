@@ -68,6 +68,11 @@
     <Compile Include="Application\Details\ApplicationLogging.cs" />
     <Compile Include="Application\Details\ApplicationParser.cs" />
     <Compile Include="Application\IApplicationListener.cs" />
+    <Compile Include="Utilities\BufferPool\BufferInterfaces.cs" />
+    <Compile Include="Utilities\BufferPool\BufferObjects.cs" />
+    <Compile Include="Utilities\BufferPool\MemoryInterfaces.cs" />
+    <Compile Include="Utilities\BufferPool\MemoryObjects.cs" />
+    <Compile Include="Utilities\BufferPool\StreamObjects.cs" />
     <Compile Include="Utilities\Extensions\AssemblyExtensions.cs" />
     <Compile Include="Utilities\Debugging\Guard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

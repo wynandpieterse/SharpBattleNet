@@ -1,4 +1,4 @@
-﻿using SharpBattleNet.External.BufferPool;
+﻿using SharpBattleNet.Runtime.Utilities.BufferPool;
 using SharpBattleNet.Runtime.Networking.Connection;
 using System;
 using System.Collections.Generic;

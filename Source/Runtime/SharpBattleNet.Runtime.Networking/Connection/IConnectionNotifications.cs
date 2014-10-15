@@ -33,7 +33,7 @@
 namespace SharpBattleNet.Runtime.Networking.Connection
 {
     #region Usings
-    using SharpBattleNet.External.BufferPool;
+    using SharpBattleNet.Runtime.Utilities.BufferPool;
     using System;
     using System.Net;
     #endregion

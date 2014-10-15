@@ -39,7 +39,7 @@ namespace SharpBattleNet.Runtime.Networking.Connection.Details
     using System.Text;
     using SharpBattleNet.Runtime.Networking.Utilities.Collections;
     using SharpBattleNet.Runtime.Utilities.Debugging;
-    using SharpBattleNet.External.BufferPool;
+    using SharpBattleNet.Runtime.Utilities.BufferPool;
     #endregion
 
     /// <summary>

@@ -36,16 +36,8 @@ namespace SharpBattleNet.Runtime.Application
     using System;
     #endregion
 
-    /// <summary>
-    /// User base applications should implement these so that the runtime application component can call it to run when the base layers have been completely
-    /// initialized and are ready.
-    /// </summary>
     public interface IApplicationListener : IDisposable
     {
-        /// <summary>
-        /// Called by the application framework to start running the user supplied application.
-        /// </summary>
-        /// <returns>This code is passed straight back to the operating system on exit.</returns>
         int Run();
     }
 }

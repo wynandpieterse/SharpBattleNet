@@ -53,9 +53,6 @@ namespace SharpBattleNet.Runtime.Application.Details
     using SharpBattleNet.Runtime.Utilities.Logging.Providers;
     #endregion
 
-    /// <summary>
-    /// Helper class that the application uses the configure all the logging systems for the application.
-    /// </summary>
     internal sealed class ApplicationLogging : IDisposable
     {
         private readonly IKernel _injectionKernel = null;
@@ -64,15 +61,6 @@ namespace SharpBattleNet.Runtime.Application.Details
 
         private bool _disposed = false;
 
-        /// <summary>
-        /// Returns a NLog log level depending on the passed in string.
-        /// </summary>
-        /// <param name="level">
-        /// The string to parse for log levels.
-        /// </param>
-        /// <returns>
-        /// An <see cref="LogLevel"/> enumartion converted from the level argument.
-        /// </returns>
         private LogLevel GetLogLevel(string level)
         {
             Guard.AgainstNull(level);
@@ -97,10 +85,6 @@ namespace SharpBattleNet.Runtime.Application.Details
             return LogLevel.Off;
         }
 
-        /// <summary>
-        /// Configure NLog to output to the console.
-        /// </summary>
-        /// <param name="config">The NLog configuration object to configure.</param>
         private void ConfigureConsoleLogging(LoggingConfiguration configuration)
         {
             var configSource = _injectionKernel.Get<IConfigSource>();
@@ -136,11 +120,6 @@ namespace SharpBattleNet.Runtime.Application.Details
             return;
         }
 
-        /// <summary>
-        /// Configures the NLog subsystem to log to a file inside the write
-        /// directory.
-        /// </summary>
-        /// <param name="config">The NLog configuration object to configure.</param>
         private void ConfigureFileLogging(LoggingConfiguration configuration)
         {
             var configSource = _injectionKernel.Get<IConfigSource>();
@@ -173,9 +152,6 @@ namespace SharpBattleNet.Runtime.Application.Details
             return;
         }
 
-        /// <summary>
-        /// Configure the logging subsystem for outputting to the both the file target and console target.
-        /// </summary>
         private void Configure()
         {
             var configuration = new LoggingConfiguration();
@@ -190,12 +166,6 @@ namespace SharpBattleNet.Runtime.Application.Details
             return;
         }
 
-        /// <summary>
-        /// Configure applications logging inside the constructor.
-        /// </summary>
-        /// <param name="injectionKernel">The Ninject kernel that binds the application.</param>
-        /// <param name="applicationName">The application name as passed in by the executable that created us.</param>
-        /// <param name="writeDirectory">The directory where all written files can go.</param>
         public ApplicationLogging(IKernel injectionKernel, string applicationName, string writeDirectory)
         {
             _injectionKernel = injectionKernel;
@@ -207,10 +177,6 @@ namespace SharpBattleNet.Runtime.Application.Details
             return;
         }
 
-        /// <summary>
-        /// Called by the garbage colllector or the application to dispose all managed and unmanaged resources back to the operating system.
-        /// </summary>
-        /// <param name="disposing">True when the application called the method, false otherwise.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (false == _disposed)
@@ -230,9 +196,6 @@ namespace SharpBattleNet.Runtime.Application.Details
             return;
         }
 
-        /// <summary>
-        /// Called when the object is to be disposed, so that all resources can be freed.
-        /// </summary>
         public void Dispose()
         {
             Dispose(true);

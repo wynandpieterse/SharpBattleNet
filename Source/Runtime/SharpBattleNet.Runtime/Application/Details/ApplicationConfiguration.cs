@@ -42,9 +42,6 @@ namespace SharpBattleNet.Runtime.Application.Details
     using Nini.Config;
     #endregion
 
-    /// <summary>
-    /// Helper class that configures all the configuration options that are available to the users of the application.
-    /// </summary>
     internal sealed class ApplicationConfiguration : IDisposable
     {
         private readonly IKernel _injectionKernel = null;
@@ -53,10 +50,6 @@ namespace SharpBattleNet.Runtime.Application.Details
 
         private bool _disposed = false;
 
-        /// <summary>
-        /// Configures Nini as our default configuration provider. Copies over the configuration file if it is newer than the one the user has at this moment, and
-        /// also makes sure that we can write to it if ever needed.
-        /// </summary>
         private void Configure()
         {
             string configurationFile = _applicationName + ".ini";
@@ -94,12 +87,6 @@ namespace SharpBattleNet.Runtime.Application.Details
             return;
         }
 
-        /// <summary>
-        /// Constructor that configures the default configuration provider.
-        /// </summary>
-        /// <param name="injectionKernel">The Ninject kernel that binds the application.</param>
-        /// <param name="applicationName">The application name as passed in the executable that created us.</param>
-        /// <param name="writeDirectory">The directory to where the application can write files if needed.</param>
         public ApplicationConfiguration(IKernel injectionKernel, string applicationName, string writeDirectory)
         {
             _injectionKernel = injectionKernel;
@@ -111,10 +98,6 @@ namespace SharpBattleNet.Runtime.Application.Details
             return;
         }
 
-        /// <summary>
-        /// Called by the garbage colllector or the application to dispose all managed and unmanaged resources back to the operating system.
-        /// </summary>
-        /// <param name="disposing">True when the application called the method, false otherwise.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (false == _disposed)
@@ -134,9 +117,6 @@ namespace SharpBattleNet.Runtime.Application.Details
             return;
         }
 
-        /// <summary>
-        /// Called when the object is to be disposed, so that all resources can be freed.
-        /// </summary>
         public void Dispose()
         {
             Dispose(true);

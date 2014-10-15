@@ -38,9 +38,6 @@ namespace SharpBattleNet.Runtime.Application.Details
     using Ninject;
     #endregion
 
-    /// <summary>
-    /// Used by the application initialization block to scan the command line and apply any changes that were found there.
-    /// </summary>
     internal sealed class ApplicationParser : IDisposable
     {
         private readonly IKernel _injectionKernel = null;
@@ -48,19 +45,11 @@ namespace SharpBattleNet.Runtime.Application.Details
 
         private bool _disposed = false;
 
-        /// <summary>
-        /// Does the actual parsing of the command line.
-        /// </summary>
         private void Parse()
         {
             return;
         }
 
-        /// <summary>
-        /// Constructs this helper class that scans the command line and apply the options that were found there.
-        /// </summary>
-        /// <param name="injectionKernel">The Ninject kernel that is used to bind the application.</param>
-        /// <param name="arguments">The command line arguments passed by the operating system on the commnad line.</param>
         public ApplicationParser(IKernel injectionKernel, string[] arguments)
         {
             _injectionKernel = injectionKernel;
@@ -69,10 +58,6 @@ namespace SharpBattleNet.Runtime.Application.Details
             return;
         }
 
-        /// <summary>
-        /// Called by the garbage colllector or the application to dispose all managed and unmanaged resources back to the operating system.
-        /// </summary>
-        /// <param name="disposing">True when the application called the method, false otherwise.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (false == _disposed)
@@ -92,9 +77,6 @@ namespace SharpBattleNet.Runtime.Application.Details
             return;
         }
 
-        /// <summary>
-        /// Called when the object is to be disposed, so that all resources can be freed.
-        /// </summary>
         public void Dispose()
         {
             Dispose(true);

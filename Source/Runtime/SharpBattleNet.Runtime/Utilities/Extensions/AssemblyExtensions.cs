@@ -39,16 +39,8 @@ namespace SharpBattleNet.Runtime.Utilities.Extensions
     using System.Runtime.InteropServices;
     #endregion
 
-    /// <summary>
-    /// Provides extension methods for <see cref="Assembly"/>.
-    /// </summary>
     public static class AssemblyExtensions
     {
-        /// <summary>
-        /// Returns the assembly title object.
-        /// </summary>
-        /// <param name="assembly"></param>
-        /// <returns></returns>
         public static string GetAssemblyTitle(this Assembly assembly)
         {
             var query = from titles in assembly.GetCustomAttributes<AssemblyTitleAttribute>()

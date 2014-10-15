@@ -1,38 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#region Header
+//
+//    _  _   ____        _   _   _         _   _      _   
+//  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
+// |_  .. _ |  _ \ / _` | __| __| |/ _ \  |  \| |/ _ \ __|
+// |_      _| |_) | (_| | |_| |_| |  __/_ | |\  |  __/ |_ 
+//   |_||_| |____/ \__,_|\__|\__|_|\___(_)_ | \_|\___|\__|
+//
+// The MIT License
+// 
+// Copyright(c) 2014 Wynand Pieters. https://github.com/wpieterse/SharpBattleNet
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
+#endregion
 
 namespace SharpBattleNet.Runtime.Utilities.Logging
 {
-    /// <summary>
-    /// Simple interface that represent a logger.
-    /// </summary>
+    #region Usings
+    using System;
+    #endregion
+
     public interface ILog
     {
-        /// <summary>
-        /// Log a message the specified log level.
-        /// </summary>
-        /// <param name="logLevel">The log level.</param>
-        /// <param name="messageFunc">The message function.</param>
-        /// <remarks>
-        /// Note to implementors: the message func should not be called if the loglevel is not enabled
-        /// so as not to incur perfomance penalties.
-        /// </remarks>
         bool Log(Level logLevel, Func<string> messageFunc);
-
-        /// <summary>
-        /// Log a message and exception at the specified log level.
-        /// </summary>
-        /// <typeparam name="TException">The type of the exception.</typeparam>
-        /// <param name="logLevel">The log level.</param>
-        /// <param name="messageFunc">The message function.</param>
-        /// <param name="exception">The exception.</param>
-        /// <remarks>
-        /// Note to implementors: the message func should not be called if the loglevel is not enabled
-        /// so as not to incur perfomance penalties.
-        /// </remarks>
         void Log<TException>(Level logLevel, Func<string> messageFunc, TException exception) where TException : Exception;
     }
 }

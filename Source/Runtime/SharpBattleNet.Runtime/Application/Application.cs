@@ -50,6 +50,27 @@ namespace SharpBattleNet.Runtime.Application
             return;
         }
 
+        private void ConfigureConsole()
+        {
+            var currentAssembly = Assembly.GetEntryAssembly();
+
+            Console.Title = string.Format("{0} - {1}", currentAssembly.GetAssemblyTitle(), currentAssembly.GetAssemblyFileVersion());
+            Console.WindowWidth = 120;
+            Console.WindowHeight = 40;
+
+            Console.WriteLine(@"    _  _   ____        _   _   _         _   _      _    ");
+            Console.WriteLine(@"  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_  ");
+            Console.WriteLine(@" |_  ..  _|  _ \ / _` | __| __| |/ _ \  |  \| |/ _ \ __| ");
+            Console.WriteLine(@" |_      _| |_) | (_| | |_| |_| |  __/_ | |\  |  __/ |_  ");
+            Console.WriteLine(@"   |_||_| |____/ \__,_|\__|\__|_|\___(_)_ | \_|\___|\__| ");
+
+            Console.WriteLine();
+            Console.WriteLine("{0} - {1}", currentAssembly.GetAssemblyTitle(), currentAssembly.GetAssemblyFileVersion());
+            Console.WriteLine();
+
+            return;
+        }
+
         private void ConfigureWriteDirectory()
         {
             string userApplicationData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
@@ -58,17 +79,6 @@ namespace SharpBattleNet.Runtime.Application
 
             _writeDirectory = applicationDirectory;
             Directory.CreateDirectory(_writeDirectory);
-
-            return;
-        }
-
-        private void ConfigureConsole()
-        {
-            var currentAssembly = Assembly.GetEntryAssembly();
-
-            Console.Title = string.Format("{0} - {1}", currentAssembly.GetAssemblyTitle(), currentAssembly.GetAssemblyFileVersion());
-            Console.WindowWidth = 120;
-            Console.WindowHeight = 40;
 
             return;
         }

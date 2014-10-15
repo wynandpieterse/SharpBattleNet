@@ -51,15 +51,7 @@ namespace SharpBattleNet.Runtime
             Guard.AgainstNull(currentAssembly);
 
             // TODO : Find a way to handle this nicely inside services/daeomons.
-            Console.WriteLine(@"    _  _   ____        _   _   _         _   _      _    ");
-            Console.WriteLine(@"  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_  ");
-            Console.WriteLine(@" |_  ..  _|  _ \ / _` | __| __| |/ _ \  |  \| |/ _ \ __| ");
-            Console.WriteLine(@" |_      _| |_) | (_| | |_| |_| |  __/_ | |\  |  __/ |_  ");
-            Console.WriteLine(@"   |_||_| |____/ \__,_|\__|\__|_|\___(_)_ | \_|\___|\__| ");
-
-            Console.WriteLine();
-            Console.WriteLine("{0} - {1}", currentAssembly.GetAssemblyTitle(), currentAssembly.GetAssemblyFileVersion());
-            Console.WriteLine();
+            
 
             return;
         }

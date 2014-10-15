@@ -136,7 +136,7 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Listener.Details
                         _acceptor.Accepted(socketEvent.AcceptSocket.RemoteEndPoint, connection);
                     }
                 }
-                catch(Exception ex)
+                catch(Exception)
                 {
                     socketEvent.AcceptSocket.Close();
                 }
@@ -166,7 +166,7 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Listener.Details
                     HandleAccept(socketEvent);
                 }
             }
-            catch (ObjectDisposedException ex)
+            catch (ObjectDisposedException)
             {
                 if (null != socketEvent)
                 {
@@ -187,11 +187,11 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Listener.Details
                 _listener.Bind(_listenEndpoint);
                 _listener.Listen(64);
             }
-            catch (ObjectDisposedException ex)
+            catch (ObjectDisposedException)
             {
                 return;
             }
-            catch (SocketException ex)
+            catch (SocketException)
             {
                 return;
             }
@@ -202,7 +202,7 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Listener.Details
 
         #endregion
 
-        protected void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (false == _disposed)
             {

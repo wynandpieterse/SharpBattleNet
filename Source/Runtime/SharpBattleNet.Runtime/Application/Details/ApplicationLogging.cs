@@ -177,7 +177,7 @@ namespace SharpBattleNet.Runtime.Application.Details
             return;
         }
 
-        protected void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (false == _disposed)
             {

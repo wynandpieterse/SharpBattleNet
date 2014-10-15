@@ -34,7 +34,9 @@ namespace SharpBattleNet.Runtime.Networking.Utilities.Collections.Details
 {
     #region Usings
     using System;
+    using System.Collections;
     using System.Collections.Concurrent;
+    using System.Net;
     using System.Net.Sockets;
     #endregion
 

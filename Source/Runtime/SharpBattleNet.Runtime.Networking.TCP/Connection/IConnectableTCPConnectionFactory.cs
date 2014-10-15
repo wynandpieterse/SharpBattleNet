@@ -50,6 +50,6 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Connection
         /// function on the returned object.
         /// </summary>
         /// <returns></returns>
-        IConnectableTCPConnection Connect(EndPoint addressToConnect, IConnectableTCPConnectionListener listener, IConnectionNotifications notificationListener);
+        IConnectableTCPConnection Connect(EndPoint addressToConnect, IConnectableTCPConnectionListener listener, IConnectionSink notificationListener);
     }
 }

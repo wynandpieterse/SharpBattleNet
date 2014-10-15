@@ -34,12 +34,15 @@ namespace SharpBattleNet.Runtime.Networking.Utilities.Collections.Details
 {
     #region Usings
     using System;
+
+    using SharpBattleNet;
+    using SharpBattleNet.Runtime;
+    using SharpBattleNet.Runtime.Utilities;
     using SharpBattleNet.Runtime.Utilities.BufferPool;
     #endregion
 
     /// <summary>
-    /// Marker interface implementation. Contained inside the Ninject IoC
-    /// container.
+    /// Marker interface implementation.
     /// </summary>
     internal sealed class SocketBufferPool : BufferPool, ISocketBufferPool
     {

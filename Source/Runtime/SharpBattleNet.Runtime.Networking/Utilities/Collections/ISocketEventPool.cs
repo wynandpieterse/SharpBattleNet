@@ -34,16 +34,15 @@ namespace SharpBattleNet.Runtime.Networking.Utilities.Collections
 {
     #region Usings
     using System;
-    using System.Collections.Concurrent;
+    using System.Net;
     using System.Net.Sockets;
+    using System.Collections;
+    using System.Collections.Concurrent;
     #endregion
 
     /// <summary>
-    /// Specializes the <see cref="IProducerConsumerCollection{T}"/> interface
-    /// to handle <see cref="SocketAsyncEventArgs"/>. Because receives and
-    /// sends plus connections can happen a lot of times in a network system,
-    /// this pool of <see cref="SocketAsyncEventArgs"/> objects can save a lot
-    /// of presure on the garbage collector.
+    /// Specializes the <see cref="IProducerConsumerCollection"/> for socket asynchronous event objects. Because these operations happens quite a lot in a busy network
+    /// application, performance will improve drastically if these objects are cached for a later time because there will be less garbage collection.
     /// </summary>
     public interface ISocketEventPool : IProducerConsumerCollection<SocketAsyncEventArgs>
     {

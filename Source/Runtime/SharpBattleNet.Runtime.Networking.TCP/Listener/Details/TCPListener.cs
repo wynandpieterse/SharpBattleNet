@@ -50,8 +50,8 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Listener.Details
     {
         private readonly ISocketEventPool _socketEvents = null;
         private readonly IListenerTCPConnectionFactory _listenerFactory = null;
-        private readonly IListenerAcceptor _acceptor = null;
-        private readonly IConnectionNotifications _notificationListener = null;
+        private readonly IListenerSink _acceptor = null;
+        private readonly IConnectionSink _notificationListener = null;
         private readonly EndPoint _listenEndpoint = null;
 
         private Socket _listener = null;
@@ -67,7 +67,7 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Listener.Details
         /// Factory that is used to create new TCP listener connections when
         /// a client is accepted.
         /// </param>
-        public TCPListener(EndPoint listenEndpoint, IListenerAcceptor acceptor, IConnectionNotifications notificationListener, ISocketEventPool socketEvents, IListenerTCPConnectionFactory listenerFactory)
+        public TCPListener(EndPoint listenEndpoint, IListenerSink acceptor, IConnectionSink notificationListener, ISocketEventPool socketEvents, IListenerTCPConnectionFactory listenerFactory)
         {
             Guard.AgainstNull(socketEvents);
             Guard.AgainstNull(listenerFactory);

@@ -35,12 +35,33 @@ namespace SharpBattleNet.Runtime.Networking.Listeners
     #region Usings
     using System;
     using System.Net;
+
+    using SharpBattleNet;
+    using SharpBattleNet.Runtime;
+    using SharpBattleNet.Runtime.Networking;
     using SharpBattleNet.Runtime.Networking.Connection;
     #endregion
 
-    public interface IListenerAcceptor
+    /// <summary>
+    /// Interface that clients should implement to receive notifications when clients wish to connect with us.
+    /// </summary>
+    public interface IListenerSink
     {
+        /// <summary>
+        /// Called by the listener when there is a pending connection happening. This gives the application a chance to check if the connection is allowed based on
+        /// various stuff the user application wishes to do like firewall and ban-checking.
+        /// </summary>
+        /// <param name="remoteEndpoint">The remote address the connection is originating from.</param>
+        /// <param name="remoteConnection">The connection object that was created for the pending connection.</param>
+        /// <returns>True if the connection should be accepted, false otherwise.</returns>
         bool ShouldAccept(EndPoint remoteEndpoint, IConnection remoteConnection);
+
+        /// <summary>
+        /// Called when the accept process is complete for the client. This gives the user application a final chance to register the user and add any user related
+        /// variables into the connection for consumption later on.
+        /// </summary>
+        /// <param name="remoteEndpoint">The remote end-point this connection originated from.</param>
+        /// <param name="remoteConnection">The connection that will be used for this client.</param>
         void Accepted(EndPoint remoteEndpoint, IConnection remoteConnection);
     }
 }

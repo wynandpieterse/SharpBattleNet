@@ -68,7 +68,7 @@ namespace SharpBattleNet.Runtime.Application.Details
 
             if (null != source)
             {
-                if (true == source.GetBoolean("LogConsole"))
+                if (true == source.GetBoolean("LogConsole", true))
                 {
                     var consoleTarget = new ColoredConsoleTarget();
                     configuration.AddTarget("console", consoleTarget);
@@ -83,7 +83,7 @@ namespace SharpBattleNet.Runtime.Application.Details
                     consoleTarget.UseDefaultRowHighlightingRules = false;
                     consoleTarget.Layout = @"${message}";
 
-                    var consoleRule = new LoggingRule("*", GetLogLevel(source.Get("LogConsoleLevel")), consoleTarget);
+                    var consoleRule = new LoggingRule("*", GetLogLevel(source.Get("LogConsoleLevel", "Trace")), consoleTarget);
                     configuration.LoggingRules.Add(consoleRule);
                 }
             }
@@ -103,7 +103,7 @@ namespace SharpBattleNet.Runtime.Application.Details
 
             if (null != source)
             {
-                if (true == source.GetBoolean("LogFile"))
+                if (true == source.GetBoolean("LogFile", true))
                 {
                     DateTime currentTime = DateTime.Now;
                     string logDate = string.Format("{0}-{1}-{2}-{3}-{4}-{5}", currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Second);
@@ -118,7 +118,7 @@ namespace SharpBattleNet.Runtime.Application.Details
                     fileTarget.FileName = logFilename;
                     fileTarget.Layout = @"${processtime} ${threadid} ${level} ${logger} ${message}";
 
-                    var fileRule = new LoggingRule("*", GetLogLevel(source.Get("LogFileLevel")), fileTarget);
+                    var fileRule = new LoggingRule("*", GetLogLevel(source.Get("LogFileLevel", "Trace")), fileTarget);
                     configuration.LoggingRules.Add(fileRule);
                 }
             }

@@ -57,6 +57,7 @@ namespace SharpBattleNet.Runtime.Networking.PacketHandeling.Dispatching.Details
         private readonly uint _program = 0;
         private readonly IPacketHeaderExecutor _headerExecutor = null;
 
+        private bool _disposed = false;
         private IConnection _connection = null;
         private PacketDispatcherState _state = PacketDispatcherState.Uninitialized;
         private ConcurrentDictionary<Tuple<int, int>, IPacketSerializer> _packetSerializers = null;
@@ -103,6 +104,40 @@ namespace SharpBattleNet.Runtime.Networking.PacketHandeling.Dispatching.Details
         public void Process(IBuffer recievedBuffer)
         {
 
+
+            return;
+        }
+
+        /// <summary>
+        /// Called by the garbage colllector or the application to dispose all managed and unmanaged resources back to the operating system.
+        /// </summary>
+        /// <param name="disposing">True when the application called the method, false otherwise.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (false == _disposed)
+            {
+                if (true == disposing)
+                {
+                    // Dispose managed resources
+                }
+
+                // Dispose unmanaged resources
+            }
+
+            _disposed = true;
+
+            // Call base dispose
+
+            return;
+        }
+
+        /// <summary>
+        /// Called when the object is to be disposed, so that all resources can be freed.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
 
             return;
         }

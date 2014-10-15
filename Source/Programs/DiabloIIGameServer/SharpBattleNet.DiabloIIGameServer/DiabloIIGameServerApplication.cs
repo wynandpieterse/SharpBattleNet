@@ -42,14 +42,9 @@ namespace SharpBattleNet.DiabloIIGameServer
     {
         private bool _disposed = false;
 
-        public void Start()
+        public int Run()
         {
-            return;
-        }
-
-        public void Stop()
-        {
-            return;
+            return 0;
         }
 
         private void Dispose(bool disposing)

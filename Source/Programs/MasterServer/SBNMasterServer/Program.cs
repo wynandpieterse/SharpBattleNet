@@ -61,7 +61,7 @@ namespace SBNMasterServer
         /// </returns>
         private static int Main(string[] args)
         {
-            using(var application = new Application(ApplicationMode.Console, "MasterServer", args))
+            using(var application = new Application("MasterServer", args))
             {
                 application.AddDependencyModule(new MasterServerModule());
                 application.AddDependencyModule(new NetworkModule());

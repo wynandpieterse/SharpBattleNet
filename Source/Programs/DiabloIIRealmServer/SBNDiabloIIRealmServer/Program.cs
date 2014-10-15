@@ -56,7 +56,7 @@ namespace SBNDiabloIIRealmServer
         /// </returns>
         private static int Main(string[] args)
         {
-            using(var application = new Application(ApplicationMode.Console, "DiabloIIRealmServer", args))
+            using(var application = new Application("DiabloIIRealmServer", args))
             {
                 application.AddDependencyModule(new DiabloIIRealmServerModule());
 

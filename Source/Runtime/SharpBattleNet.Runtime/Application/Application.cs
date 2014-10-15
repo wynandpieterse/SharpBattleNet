@@ -1,13 +1,17 @@
-﻿using Ninject;
+﻿using Nini.Config;
+using Ninject;
 using Ninject.Modules;
+using NLog;
+using NLog.Config;
+using NLog.Targets;
 using SharpBattleNet.Runtime.Application.Details;
-using SharpBattleNet.Runtime.Application.Details.Console;
-using SharpBattleNet.Runtime.Application.Details.GUI;
-using SharpBattleNet.Runtime.Application.Details.Service;
 using SharpBattleNet.Runtime.Utilities.Debugging;
+using SharpBattleNet.Runtime.Utilities.Extensions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,23 +19,18 @@ namespace SharpBattleNet.Runtime.Application
 {
     public sealed class Application : IDisposable
     {
-        private readonly ApplicationMode _mode = ApplicationMode.Undefined;
         private readonly string _name = "";
         private readonly string[] _arguments = null;
 
         private bool _disposed = false;
-
-        private IKernel _injectionKernel = null;
         private List<INinjectModule> _injectionModules = null;
+        private string _writeDirectory = null;
 
-        private IApplicationHandler _applicationHandler = null;
-
-        public Application(ApplicationMode mode, string name, string[] arguments)
+        public Application(string name, string[] arguments)
         {
             Guard.AgainstEmptyString(name);
             Guard.AgainstNull(arguments);
 
-            _mode = mode;
             _name = name;
             _arguments = arguments;
 
@@ -51,62 +50,108 @@ namespace SharpBattleNet.Runtime.Application
             return;
         }
 
-        private void SetupNinject()
+        private void ConfigureConsole()
         {
-            _injectionKernel = new StandardKernel();
+            var currentAssembly = Assembly.GetEntryAssembly();
 
-            // TODO : Add framework modules here
+            Console.Title = string.Format("{0} - {1}", currentAssembly.GetAssemblyTitle(), currentAssembly.GetAssemblyFileVersion());
+            Console.WindowWidth = 120;
+            Console.WindowHeight = 40;
 
-            _injectionKernel.Load(_injectionModules);
+            Console.WriteLine(@"    _  _   ____        _   _   _         _   _      _    ");
+            Console.WriteLine(@"  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_  ");
+            Console.WriteLine(@" |_  ..  _|  _ \ / _` | __| __| |/ _ \  |  \| |/ _ \ __| ");
+            Console.WriteLine(@" |_      _| |_) | (_| | |_| |_| |  __/_ | |\  |  __/ |_  ");
+            Console.WriteLine(@"   |_||_| |____/ \__,_|\__|\__|_|\___(_)_ | \_|\___|\__| ");
+
+            Console.WriteLine();
+            Console.WriteLine("{0} - {1}", currentAssembly.GetAssemblyTitle(), currentAssembly.GetAssemblyFileVersion());
+            Console.WriteLine();
 
             return;
         }
 
-        private void SetupCommandLineParser()
+        private void ConfigureWriteDirectory()
         {
-            _injectionKernel.Bind<ICommandLineParser>().To<CommandLineParser>().InSingletonScope();
+            string userApplicationData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            string battleNetDirectory = Path.Combine(userApplicationData, "SharpBattleNet");
+            string applicationDirectory = Path.Combine(battleNetDirectory, _name);
+
+            _writeDirectory = applicationDirectory;
+            Directory.CreateDirectory(_writeDirectory);
+
             return;
         }
 
-        private void SetupApplicationHandler()
+        public int UnguardedRun()
         {
-            switch(_mode)
+            using(var injectionKernel = new StandardKernel())
             {
-                case ApplicationMode.Console:
-                    _injectionKernel.Bind<IApplicationHandler>().To<ConsoleApplicationHandler>().InSingletonScope();;
-                    break;
-                case ApplicationMode.GUI:
-                    _injectionKernel.Bind<IApplicationHandler>().To<GUIApplicationHandler>().InSingletonScope();
-                    break;
-                case ApplicationMode.Service:
-                    _injectionKernel.Bind<IApplicationHandler>().To<ServiceApplicationHandler>().InSingletonScope();
-                    break;
-                default:
-                    break;
+                ConfigureConsole();
+                ConfigureWriteDirectory();
+
+                injectionKernel.Load(_injectionModules);
+
+                using(var configuration = new ApplicationConfiguration(injectionKernel, _name, _writeDirectory))
+                {
+                    using(var logging = new ApplicationLogging(injectionKernel, _name, _writeDirectory))
+                    {
+                        using (var commandLine = new ApplicationParser(injectionKernel, _arguments))
+                        {
+                            using(var application = injectionKernel.Get<IApplicationListener>())
+                            {
+                                return application.Run();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void UnhandledException(Exception ex)
+        {
+            return;
+        }
+
+        private void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
+        {
+            UnhandledException((Exception)e.ExceptionObject);
+
+            return;
+        }
+
+        private int GuardedRun()
+        {
+            try
+            {
+                AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
+
+                return UnguardedRun();
+            }
+            catch(Exception ex)
+            {
+                UnhandledException(ex);
             }
 
-            _applicationHandler = _injectionKernel.Get<IApplicationHandler>();
-
-            return;
+            return -1;
         }
 
         public int Run()
         {
-            SetupNinject();
-            SetupCommandLineParser();
-            SetupApplicationHandler();
-
-            return _applicationHandler.Run(_arguments);
+            #if DEBUG
+                return UnguardedRun();
+            #else
+                return GuardedRun();
+            #endif
         }
 
-        protected void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if(false == _disposed)
             {
                 if(true == disposing)
                 {
-                    _injectionKernel.Dispose();
-                    _injectionKernel = null;
+                    
                 }
 
                 _disposed = true;

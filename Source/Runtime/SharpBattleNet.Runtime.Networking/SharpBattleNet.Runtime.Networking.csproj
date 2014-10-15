@@ -58,7 +58,7 @@
   <ItemGroup>
     <Compile Include="Connection\Details\ConnectionBase.cs" />
     <Compile Include="Connection\IConnection.cs" />
-    <Compile Include="Connection\IConnectionNotifications.cs" />
+    <Compile Include="Connection\IConnectionSink.cs" />
     <Compile Include="Listeners\IListener.cs" />
     <Compile Include="Listeners\IListenerAcceptor.cs" />
     <Compile Include="NetworkModule.cs" />

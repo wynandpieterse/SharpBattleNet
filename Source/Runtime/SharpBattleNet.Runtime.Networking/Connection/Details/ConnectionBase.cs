@@ -57,7 +57,7 @@ namespace SharpBattleNet.Runtime.Networking.Connection.Details
         private readonly ILog _logger = LogProvider.For<ConnectionBase>();
         private readonly ISocketEventPool _socketEventBag = null;
         private readonly ISocketBufferPool _socketBufferPool = null;
-        private readonly IConnectionSink _notificationListener = null;
+        private readonly IConnectionSink _connectionSink = null;
 
         private bool _disposed = false;
 
@@ -66,16 +66,16 @@ namespace SharpBattleNet.Runtime.Networking.Connection.Details
         /// <summary>
         /// Constructs the connection object. Called by subclasses. Initializes a few variables that are usefull to all of the connection classes.
         /// </summary>
-        /// <param name="notificationListener">The event sink to call when important connection events happen.</param>
+        /// <param name="_connectionSink">The event sink to call when important connection events happen.</param>
         /// <param name="socketEventBag">Async socket event collection for increasing operation performance.</param>
         /// <param name="socketBufferPool">Async socket buffer pool for increasing operation performance.</param>
-        public ConnectionBase(IConnectionSink notificationListener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
+        public ConnectionBase(IConnectionSink connectionSink, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
         {
-            Guard.AgainstNull(notificationListener);
+            Guard.AgainstNull(_connectionSink);
             Guard.AgainstNull(socketEventBag);
             Guard.AgainstNull(socketBufferPool);
 
-            _notificationListener = notificationListener;
+            _connectionSink = connectionSink;
             _socketEventBag = socketEventBag;
             _socketBufferPool = socketBufferPool;
 
@@ -172,7 +172,7 @@ namespace SharpBattleNet.Runtime.Networking.Connection.Details
                 else
                 {
                     // Handle receive inside sink
-                    _notificationListener.OnReceive(socketEvent.RemoteEndPoint, socketEvent.UserToken as IBuffer, socketEvent.BytesTransferred);
+                    _connectionSink.OnReceive(socketEvent.RemoteEndPoint, socketEvent.UserToken as IBuffer, socketEvent.BytesTransferred);
 
                     // Start new receive cycle
                     RecycleReceiveEvent(socketEvent);
@@ -194,11 +194,11 @@ namespace SharpBattleNet.Runtime.Networking.Connection.Details
             // Handle exceptional conditions
             if(true == finished)
             {
-                _notificationListener.OnFinished();
+                _connectionSink.OnFinished();
             }
             else if(true == failed)
             {
-                _notificationListener.OnException(exception);
+                _connectionSink.OnException(exception);
             }
 
             // Dispose if need be
@@ -225,6 +225,10 @@ namespace SharpBattleNet.Runtime.Networking.Connection.Details
             return;
         }
 
+        /// <summary>
+        /// Called by the garbage colllector or the application to dispose all managed and unmanaged resources back to the operating system.
+        /// </summary>
+        /// <param name="disposing">True when the application called the method, false otherwise.</param>
         protected virtual void Dispose(bool disposing)
         {
             if(false == _disposed)
@@ -249,6 +253,9 @@ namespace SharpBattleNet.Runtime.Networking.Connection.Details
             return;
         }
 
+        /// <summary>
+        /// Called when the object is to be disposed, so that all resources can be freed.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);

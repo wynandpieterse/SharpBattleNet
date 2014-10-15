@@ -108,7 +108,7 @@ namespace SharpBattleNet.Runtime.Application.Details
                     DateTime currentTime = DateTime.Now;
                     string logDate = string.Format("{0}-{1}-{2}-{3}-{4}-{5}", currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Second);
                     string logDirectory = Path.Combine(_writeDirectory, "Logs");
-                    string logFilename = Path.Combine(_writeDirectory, string.Format("Log-{0}.log", logDate));
+                    string logFilename = Path.Combine(logDirectory, string.Format("Log-{0}.log", logDate));
 
                     Directory.CreateDirectory(logDirectory);
 

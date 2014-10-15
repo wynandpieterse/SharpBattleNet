@@ -36,9 +36,6 @@ namespace SharpBattleNet.Runtime.Networking.UDP.Listener.Details
     using System;
     #endregion
 
-    /// <summary>
-    /// Concretely implements <see cref="IUDPListener"/>.
-    /// </summary>
     internal sealed class UDPListener : IUDPListener
     {
     }

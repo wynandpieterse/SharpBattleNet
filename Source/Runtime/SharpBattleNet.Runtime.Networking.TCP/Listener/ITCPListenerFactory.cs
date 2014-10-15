@@ -39,16 +39,8 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Listener
     using System.Net;
     #endregion
 
-    /// <summary>
-    /// Constructs <see cref="ITCPListener"/> objects.
-    /// </summary>
     public interface ITCPListenerFactory
     {
-        /// <summary>
-        /// Constructs a new <see cref="ITCPListener"/> object ready for
-        /// use.
-        /// </summary>
-        /// <returns>A new <see cref="ITCPListener"/>.</returns>
         ITCPListener Listen(EndPoint listenEndpoint, IListenerSink acceptor, IConnectionSink notificationListener);
     }
 }

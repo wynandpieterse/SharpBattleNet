@@ -41,20 +41,12 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Connection.Details
     using SharpBattleNet.Runtime.Networking.Connection;
     #endregion
 
-    /// <summary>
-    /// Provides common TCP connection functionality.
-    /// </summary>
     internal abstract class TCPConnectionBase : ConnectionBase, ITCPConnection
     {
         private readonly ISocketEventPool _socketEventBag = null;
         private readonly ISocketBufferPool _socketBufferPool = null;
         private readonly IConnectionSink _notificationListener = null;
 
-        /// <summary>
-        /// Construct an empty <see cref="TCPConnectionBase"/>. Should
-        /// be called by derived classes.
-        /// </summary>
-        /// <param name="socketEventBag"></param>
         protected TCPConnectionBase(IConnectionSink notificationListener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
             : base(notificationListener, socketEventBag, socketBufferPool)
         {
@@ -127,11 +119,6 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Connection.Details
             return;
         }
 
-        /// <summary>
-        /// Implements the <see cref="ITCPConnection.Disconnect"/> 
-        /// method. Closes the socket and disconnects from the remote
-        /// side.
-        /// </summary>
         public void Disconnect()
         {
             if(null != Socket)

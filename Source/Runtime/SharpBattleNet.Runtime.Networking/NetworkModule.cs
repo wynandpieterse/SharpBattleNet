@@ -53,15 +53,8 @@ namespace SharpBattleNet.Runtime.Networking
     using SharpBattleNet.Runtime.Networking.Utilities.Collections.Details;
     #endregion
 
-    /// <summary>
-    /// Called by Ninject to install the dependencies required for basic network operations.
-    /// </summary>
     public sealed class NetworkModule : NinjectModule
     {
-        /// <summary>
-        /// Creates the buffer pool that will be used for all socket receive/send operations.
-        /// </summary>
-        /// <returns>The constructed socket buffer pool.</returns>
         private SocketBufferPool CreateSocketBufferPool()
         {
             var configSource = Kernel.Get<IConfigSource>();
@@ -88,9 +81,6 @@ namespace SharpBattleNet.Runtime.Networking
             return new SocketBufferPool(slabSize, initialSlabs, subsequentSlabs);
         }
 
-        /// <summary>
-        /// Binds all utility classes to the container.
-        /// </summary>
         private void BindUtilities()
         {
             Bind<ISocketEventPool>().To<SocketEventPool>().InSingletonScope();
@@ -99,9 +89,6 @@ namespace SharpBattleNet.Runtime.Networking
             return;
         }
 
-        /// <summary>
-        /// Called by Ninject to bind all desired objects.
-        /// </summary>
         public override void Load()
         {
             BindUtilities();

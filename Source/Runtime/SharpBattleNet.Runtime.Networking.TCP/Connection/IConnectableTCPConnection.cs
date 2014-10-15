@@ -38,9 +38,6 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Connection
     using System.Net.Sockets;
     #endregion
 
-    /// <summary>
-    /// Contains the contract that clients can use to connect to a TCP server.
-    /// </summary>
     public interface IConnectableTCPConnection : ITCPConnection
     {
     }

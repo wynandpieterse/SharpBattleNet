@@ -41,19 +41,8 @@ namespace SBNDiabloIIRealmServer
     using SharpBattleNet.Runtime.Networking;
     #endregion
 
-    /// <summary>
-    /// Contains the initialization logic for D2RS.
-    /// </summary>
     internal static class Program
     {
-        /// <summary>
-        /// Called by Windows when the program is started.
-        /// </summary>
-        /// <param name="args">Parameters passed on the command line.</param>
-        /// <returns>
-        /// Wheter the program exited successfully or failed. A value of 1
-        /// indicates success while a value of 0 indicated failure.
-        /// </returns>
         private static int Main(string[] args)
         {
             using(var application = new Application("DiabloIIRealmServer", args))

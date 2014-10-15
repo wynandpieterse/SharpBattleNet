@@ -41,11 +41,6 @@ namespace SharpBattleNet.Runtime.Networking.Utilities.Collections
     using SharpBattleNet.Runtime.Utilities.BufferPool;
     #endregion
 
-    /// <summary>
-    /// Marker interface to help working with buffer pools from the runtime library. Will allocate a big slab to be used for allocations by various socket operations
-    /// like send and receive. This will remove the presure on the garbage collector because there will be less fragmentation of memory as the operating system has
-    /// to only lock a sinlge contiguous region for network allocations.
-    /// </summary>
     public interface ISocketBufferPool : IBufferPool
     {
     }

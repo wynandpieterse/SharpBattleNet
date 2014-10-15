@@ -37,9 +37,6 @@ namespace SharpBattleNet.Runtime.Networking.UDP.Connection
     using System;
     #endregion
 
-    /// <summary>
-    /// Base interface for all UDP related stuff.
-    /// </summary>
     public interface IUDPConnection : IConnection
     {
     }

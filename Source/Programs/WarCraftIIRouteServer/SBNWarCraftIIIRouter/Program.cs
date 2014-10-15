@@ -41,23 +41,8 @@ namespace SBNWarCraftIIIRouteServer
     using SharpBattleNet.Runtime.Application;
     #endregion
 
-    /// <summary>
-    /// Main entry point for WarCraft III router servers. Contains the initialization logic that calls out to the framework
-    /// binary and initializes all the stuff that the route server requires.
-    /// </summary>
     internal static class Program
     {
-        /// <summary>
-        /// Called by Windows when the program is started. This is the main entry point for WarCraft III route server.
-        /// </summary>
-        /// <param name="args">
-        /// Command line parameters passed in from windows. These can be used to configure the program from the command
-        /// line if it is required.
-        /// </param>
-        /// <returns>
-        /// An integer value that states wheter the program exited successfully or not. A value of 1 indicates success
-        /// while a value of 0 indicates failure.
-        /// </returns>
         private static int Main(string[] args)
         {
             using(var application = new Application("WarCraftIIIRouterServer", args))

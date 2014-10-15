@@ -1,65 +1,74 @@
-﻿using SharpBattleNet.Runtime.Utilities.Logging.Providers;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#region Header
+//
+//    _  _   ____        _   _   _         _   _      _   
+//  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
+// |_  .. _ |  _ \ / _` | __| __| |/ _ \  |  \| |/ _ \ __|
+// |_      _| |_) | (_| | |_| |_| |  __/_ | |\  |  __/ |_ 
+//   |_||_| |____/ \__,_|\__|\__|_|\___(_)_ | \_|\___|\__|
+//
+// The MIT License
+// 
+// Copyright(c) 2014 Wynand Pieters. https://github.com/wpieterse/SharpBattleNet
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
+#endregion
 
 namespace SharpBattleNet.Runtime.Utilities.Logging
 {
-    /// <summary>
-    /// Provides a mechanism to create instances of <see cref="ILog" /> objects.
-    /// </summary>
+    #region Usings
+    using System;
+    using System.Diagnostics;
+
+    using SharpBattleNet;
+    using SharpBattleNet.Runtime;
+    using SharpBattleNet.Runtime.Utilities;
+    using SharpBattleNet.Runtime.Utilities.Logging;
+    using SharpBattleNet.Runtime.Utilities.Logging.Providers;
+    #endregion
+
     public static class LogProvider
     {
         private static ILogProvider _currentLogProvider;
 
-        /// <summary>
-        /// Gets a logger for the specified type.
-        /// </summary>
-        /// <typeparam name="T">The type whose name will be used for the logger.</typeparam>
-        /// <returns>An instance of <see cref="ILog"/></returns>
         public static ILog For<T>()
         {
             return GetLogger(typeof(T));
         }
 
-        /// <summary>
-        /// Gets a logger for the current class.
-        /// </summary>
-        /// <returns>An instance of <see cref="ILog"/></returns>
         public static ILog GetCurrentClassLogger()
         {
             var stackFrame = new StackFrame(1, false);
             return GetLogger(stackFrame.GetMethod().DeclaringType);
         }
 
-        /// <summary>
-        /// Gets a logger for the specified type.
-        /// </summary>
-        /// <param name="type">The type whose name will be used for the logger.</param>
-        /// <returns>An instance of <see cref="ILog"/></returns>
         public static ILog GetLogger(Type type)
         {
             return GetLogger(type.FullName);
         }
 
-        /// <summary>
-        /// Gets a logger with the specified name.
-        /// </summary>
-        /// <param name="name">The name.</param>
-        /// <returns>An instance of <see cref="ILog"/></returns>
         public static ILog GetLogger(string name)
         {
             ILogProvider logProvider = _currentLogProvider ?? ResolveLogProvider();
             return logProvider == null ? new NoOpLogger() : (ILog)new LoggerExecutionWrapper(logProvider.GetLogger(name));
         }
 
-        /// <summary>
-        /// Sets the current log provider.
-        /// </summary>
-        /// <param name="logProvider">The log provider.</param>
         public static void SetCurrentLogProvider(ILogProvider logProvider)
         {
             _currentLogProvider = logProvider;

@@ -50,9 +50,6 @@ namespace SharpBattleNet.Runtime.Networking.Listeners.Details
     using SharpBattleNet.Runtime.Networking.Utilities.Collections;
     #endregion
 
-    /// <summary>
-    /// Provides common functionality to all listeners that are provided by the networking library.
-    /// </summary>
     public abstract class ListenerBase : IListener
     {
         private readonly ILog _logger = LogProvider.For<ListenerBase>();
@@ -63,13 +60,6 @@ namespace SharpBattleNet.Runtime.Networking.Listeners.Details
 
         private bool _disposed = false;
 
-        /// <summary>
-        /// Constructs the base listener class. Consumes a few variables that will be usefull to subclasses like event pools, and listener and connection sinks.
-        /// </summary>
-        /// <param name="listenSink">The sink to notify about listen events.</param>
-        /// <param name="connectionSink">The sink to notify about connection events inside listen created connections.</param>
-        /// <param name="socketEventBag">Async socket event bag for increasing operation performance.</param>
-        /// <param name="socketBufferPool">Async socket buffer pool for increasing operation performance.</param>
         public ListenerBase(IListenerSink listenSink, IConnectionSink connectionSink, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
         {
             Guard.AgainstNull(_connectionSink);
@@ -85,10 +75,6 @@ namespace SharpBattleNet.Runtime.Networking.Listeners.Details
             return;
         }
 
-        /// <summary>
-        /// Called by the garbage colllector or the application to dispose all managed and unmanaged resources back to the operating system.
-        /// </summary>
-        /// <param name="disposing">True when the application called the method, false otherwise.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (false == _disposed)
@@ -108,9 +94,6 @@ namespace SharpBattleNet.Runtime.Networking.Listeners.Details
             return;
         }
 
-        /// <summary>
-        /// Called when the object is to be disposed, so that all resources can be freed.
-        /// </summary>
         public void Dispose()
         {
             Dispose(true);

@@ -37,22 +37,9 @@ namespace SharpBattleNet.Runtime.Networking.Connection
     using System.Net;
     #endregion
 
-    /// <summary>
-    /// Base connection interface. All connection classes will derive from this one. Provides common functionality that is usefull to both TCP and UDP connection stuff.
-    /// </summary>
     public interface IConnection : IDisposable
     {
-        /// <summary>
-        /// Send the specified buffer to the remote location.
-        /// </summary>
-        /// <param name="buffer">The buffer to send to the remote location.</param>
-        /// <param name="bufferLenght">The amount of data to send from the buffer, starting at 0. If this is 0, the whole buffer will be sent.</param>
-        /// <param name="destination">The remote location where the data should be sent to.</param>
         void Send(byte[] buffer, int bufferLenght = 0, EndPoint destination = null);
-
-        /// <summary>
-        /// Starts receiving data asynchronously on this socket. Will notify the event sink on another thread when there is new data that was read.
-        /// </summary>
         void StartReceiving();
     }
 }

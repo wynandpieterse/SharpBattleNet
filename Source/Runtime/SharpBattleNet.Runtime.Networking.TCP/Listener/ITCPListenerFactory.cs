@@ -49,6 +49,6 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Listener
         /// use.
         /// </summary>
         /// <returns>A new <see cref="ITCPListener"/>.</returns>
-        ITCPListener Listen(EndPoint listenEndpoint, IListenerAcceptor acceptor, IConnectionSink notificationListener);
+        ITCPListener Listen(EndPoint listenEndpoint, IListenerSink acceptor, IConnectionSink notificationListener);
     }
 }

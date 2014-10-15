@@ -47,7 +47,7 @@ namespace SharpBattleNet.MasterServer
     using SharpBattleNet.Runtime.Utilities.Logging;
     #endregion
 
-    internal sealed class MasterServerApplication : IApplicationListener, IListenerAcceptor, IConnectionSink, IConnectableTCPConnectionListener
+    internal sealed class MasterServerApplication : IApplicationListener, IListenerSink, IConnectionSink, IConnectableTCPConnectionListener
     {
         private readonly ILog _logger = LogProvider.For<MasterServerApplication>();
 

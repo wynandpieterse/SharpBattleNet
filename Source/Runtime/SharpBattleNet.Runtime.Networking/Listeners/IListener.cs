@@ -35,15 +35,19 @@ namespace SharpBattleNet.Runtime.Networking.Listeners
     #region Usings
     using System;
     using System.Net;
+
+    using SharpBattleNet;
+    using SharpBattleNet.Runtime;
+    using SharpBattleNet.Runtime.Networking;
     using SharpBattleNet.Runtime.Networking.Connection;
     #endregion
 
     /// <summary>
-    /// Basic listener subsystem for use by servers. The derived classes
-    /// should be used to implement concrete functionality inside the system.
+    /// Base interface for storing listener references inside client applications. Use derived interfaces to start listening for connections on their respective
+    /// protocols.
     /// </summary>
-    public interface IListener
+    public interface IListener : IDisposable
     {
-        
+        // Sentinel interface. Subclasses implement all functionality.
     }
 }

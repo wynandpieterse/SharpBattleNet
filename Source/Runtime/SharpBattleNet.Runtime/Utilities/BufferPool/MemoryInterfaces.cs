@@ -16,7 +16,7 @@
 */
 #endregion
 
-namespace SharpBattleNet.External.BufferPool
+namespace SharpBattleNet.Runtime.Utilities.BufferPool
 {
     /// <summary>
     /// Represents a block of memory

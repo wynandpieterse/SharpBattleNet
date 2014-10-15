@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace SharpBattleNet.External.BufferPool
+namespace SharpBattleNet.Runtime.Utilities.BufferPool
 {
     class BufferStream : Stream
     {

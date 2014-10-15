@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SharpBattleNet.Runtime.Networking.Connection;
-using SharpBattleNet.External.BufferPool;
+using SharpBattleNet.Runtime.Utilities.BufferPool;
 using SharpBattleNet.Runtime.Networking.PacketHandeling.Execution;
 using SharpBattleNet.Runtime.Networking.PacketHandeling.Serialization;
 

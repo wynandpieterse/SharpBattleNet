@@ -34,7 +34,7 @@ namespace SharpBattleNet.Runtime.Networking.Utilities.Collections
 {
     #region Usings
     using System;
-    using SharpBattleNet.External.BufferPool;
+    using SharpBattleNet.Runtime.Utilities.BufferPool;
     #endregion
 
     /// <summary>

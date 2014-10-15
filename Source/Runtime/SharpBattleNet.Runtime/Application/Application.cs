@@ -181,7 +181,7 @@ namespace SharpBattleNet.Runtime.Application
             #endif
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected void Dispose(bool disposing)
         {
             if (false == _disposed)
             {

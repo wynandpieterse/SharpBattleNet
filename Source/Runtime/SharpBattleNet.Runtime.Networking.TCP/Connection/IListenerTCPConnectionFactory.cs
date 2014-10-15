@@ -50,6 +50,6 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Connection
         /// <returns>
         /// A listener socket that can be used to receive client commands
         /// </returns>
-        IListenerTCPConnection Accepted(Socket acceptedSocket, IConnectionNotifications notificationListener);
+        IListenerTCPConnection Accepted(Socket acceptedSocket, IConnectionSink notificationListener);
     }
 }

@@ -48,6 +48,6 @@ namespace SharpBattleNet.Runtime.Networking.UDP.Connection
         /// Constructs a brand new <see cref="IBindableUDPConnection"/> object.
         /// </summary>
         /// <returns>A <see cref="IBindableUDPConnection"/> object.</returns>
-        IBindableUDPConnection Bind(EndPoint address, IConnectionNotifications notificationListener);
+        IBindableUDPConnection Bind(EndPoint address, IConnectionSink notificationListener);
     }
 }

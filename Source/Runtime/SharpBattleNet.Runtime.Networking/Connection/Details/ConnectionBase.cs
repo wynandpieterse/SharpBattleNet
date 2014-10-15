@@ -57,7 +57,7 @@ namespace SharpBattleNet.Runtime.Networking.Connection.Details
         private readonly ILog _logger = LogProvider.For<ConnectionBase>();
         private readonly ISocketEventPool _socketEventBag = null;
         private readonly ISocketBufferPool _socketBufferPool = null;
-        private readonly IConnectionNotifications _notificationListener = null;
+        private readonly IConnectionSink _notificationListener = null;
 
         private bool _disposed = false;
 
@@ -69,7 +69,7 @@ namespace SharpBattleNet.Runtime.Networking.Connection.Details
         /// <param name="notificationListener">The event sink to call when important connection events happen.</param>
         /// <param name="socketEventBag">Async socket event collection for increasing operation performance.</param>
         /// <param name="socketBufferPool">Async socket buffer pool for increasing operation performance.</param>
-        public ConnectionBase(IConnectionNotifications notificationListener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
+        public ConnectionBase(IConnectionSink notificationListener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
         {
             Guard.AgainstNull(notificationListener);
             Guard.AgainstNull(socketEventBag);

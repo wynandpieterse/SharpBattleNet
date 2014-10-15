@@ -4,6 +4,8 @@ using NLog;
 using NLog.Config;
 using NLog.Targets;
 using SharpBattleNet.Runtime.Utilities.Debugging;
+using SharpBattleNet.Runtime.Utilities.Logging;
+using SharpBattleNet.Runtime.Utilities.Logging.Providers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -106,7 +108,7 @@ namespace SharpBattleNet.Runtime.Application.Details
                     DateTime currentTime = DateTime.Now;
                     string logDate = string.Format("{0}-{1}-{2}-{3}-{4}-{5}", currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Second);
                     string logDirectory = Path.Combine(_writeDirectory, "Logs");
-                    string logFilename = Path.Combine(_writeDirectory, string.Format("Log-{0}.log", logDate));
+                    string logFilename = Path.Combine(logDirectory, string.Format("Log-{0}.log", logDate));
 
                     Directory.CreateDirectory(logDirectory);
 
@@ -132,6 +134,8 @@ namespace SharpBattleNet.Runtime.Application.Details
             ConfigureFileLogging(configuration);
 
             LogManager.Configuration = configuration;
+
+            _injectionKernel.Bind<ILogProvider>().To<NLogLogProvider>().InSingletonScope();
 
             return;
         }

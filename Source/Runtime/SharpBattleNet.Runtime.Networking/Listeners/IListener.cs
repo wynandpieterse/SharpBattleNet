@@ -42,12 +42,7 @@ namespace SharpBattleNet.Runtime.Networking.Listeners
     using SharpBattleNet.Runtime.Networking.Connection;
     #endregion
 
-    /// <summary>
-    /// Base interface for storing listener references inside client applications. Use derived interfaces to start listening for connections on their respective
-    /// protocols.
-    /// </summary>
     public interface IListener : IDisposable
     {
-        // Sentinel interface. Subclasses implement all functionality.
     }
 }

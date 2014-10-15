@@ -49,9 +49,6 @@ namespace SharpBattleNet.Runtime.Networking.Connection.Details
     using SharpBattleNet.Runtime.Networking.Utilities.Collections;
     #endregion
 
-    /// <summary>
-    /// Base class for all connections. Contains usefull logic like retrieving and recycling receive events, and handeling asynchronous receive operations.
-    /// </summary>
     public abstract class ConnectionBase : IConnection
     {
         private readonly ILog _logger = LogProvider.For<ConnectionBase>();
@@ -63,12 +60,6 @@ namespace SharpBattleNet.Runtime.Networking.Connection.Details
 
         protected Socket Socket { get; set; }
 
-        /// <summary>
-        /// Constructs the connection object. Called by subclasses. Initializes a few variables that are usefull to all of the connection classes.
-        /// </summary>
-        /// <param name="_connectionSink">The event sink to call when important connection events happen.</param>
-        /// <param name="socketEventBag">Async socket event collection for increasing operation performance.</param>
-        /// <param name="socketBufferPool">Async socket buffer pool for increasing operation performance.</param>
         public ConnectionBase(IConnectionSink connectionSink, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
         {
             Guard.AgainstNull(_connectionSink);
@@ -82,23 +73,9 @@ namespace SharpBattleNet.Runtime.Networking.Connection.Details
             return;
         }
 
-        /// <summary>
-        /// Sends the specified buffer of data to the endpoint specified in the address field.
-        /// </summary>
-        /// <param name="buffer">The data to send to the other side.</param>
-        /// <param name="bufferLenght">The amount of data to send from the buffer beginning at 0. If this value is 0, the whole buffer is sent.</param>
-        /// <param name="address">The remote end-point to send this packet to. If null, uses the end-point specified at connection time.</param>
         public abstract void Send(byte[] buffer, int bufferLenght = 0, EndPoint address = null);
-
-        /// <summary>
-        /// Starts asynchronously receiving data on this connection. This will run in the background and notify the user via the event sink.
-        /// </summary>
         public abstract void StartReceiving();
 
-        /// <summary>
-        /// Requests and empty asynchronous receive event object. Will create a new one if there are non available on the stack.
-        /// </summary>
-        /// <returns>An empty socket event argument that can be used with socket receive operations.</returns>
         protected SocketAsyncEventArgs RequestReceiveEvent()
         {
             SocketAsyncEventArgs socketEvent = null;
@@ -118,10 +95,6 @@ namespace SharpBattleNet.Runtime.Networking.Connection.Details
             return socketEvent;
         }
 
-        /// <summary>
-        /// Recycles a previously requested socket asynchronous event object.
-        /// </summary>
-        /// <param name="socketEvent">The object to return back to the pool.</param>
         protected void RecycleReceiveEvent(SocketAsyncEventArgs socketEvent)
         {
             Guard.AgainstNull(socketEvent);
@@ -147,11 +120,6 @@ namespace SharpBattleNet.Runtime.Networking.Connection.Details
             return;
         }
 
-        /// <summary>
-        /// Called by the operating system when there is new data available on the socket. This will pass the data back to the user supplied event sink for further
-        /// processing there. This is called on another thread, so care should be taken to synchronize access to resources from here on.
-        /// </summary>
-        /// <param name="socketEvent">Contains all the parameters about the receive operation.</param>
         protected void HandleReceive(SocketAsyncEventArgs socketEvent)
         {
             bool failed = false;
@@ -210,11 +178,6 @@ namespace SharpBattleNet.Runtime.Networking.Connection.Details
             return;
         }
 
-        /// <summary>
-        /// Called by the operating system when there is data available for processing in the receive queue.
-        /// </summary>
-        /// <param name="sender">The originator of the event. Null because it came from the operating system.</param>
-        /// <param name="socketEvent">Contains all data of the receive event.</param>
         protected void HandleReceiveEvent(object sender, SocketAsyncEventArgs socketEvent)
         {
             Guard.AgainstDispose(_disposed);
@@ -225,10 +188,6 @@ namespace SharpBattleNet.Runtime.Networking.Connection.Details
             return;
         }
 
-        /// <summary>
-        /// Called by the garbage colllector or the application to dispose all managed and unmanaged resources back to the operating system.
-        /// </summary>
-        /// <param name="disposing">True when the application called the method, false otherwise.</param>
         protected virtual void Dispose(bool disposing)
         {
             if(false == _disposed)
@@ -253,9 +212,6 @@ namespace SharpBattleNet.Runtime.Networking.Connection.Details
             return;
         }
 
-        /// <summary>
-        /// Called when the object is to be disposed, so that all resources can be freed.
-        /// </summary>
         public void Dispose()
         {
             Dispose(true);

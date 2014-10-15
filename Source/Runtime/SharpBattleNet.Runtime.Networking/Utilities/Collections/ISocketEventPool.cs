@@ -40,10 +40,6 @@ namespace SharpBattleNet.Runtime.Networking.Utilities.Collections
     using System.Collections.Concurrent;
     #endregion
 
-    /// <summary>
-    /// Specializes the <see cref="IProducerConsumerCollection"/> for socket asynchronous event objects. Because these operations happens quite a lot in a busy network
-    /// application, performance will improve drastically if these objects are cached for a later time because there will be less garbage collection.
-    /// </summary>
     public interface ISocketEventPool : IProducerConsumerCollection<SocketAsyncEventArgs>
     {
     }

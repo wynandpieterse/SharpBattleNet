@@ -41,17 +41,8 @@ namespace SharpBattleNet.Runtime.Networking.Utilities.Collections.Details
     using SharpBattleNet.Runtime.Utilities.BufferPool;
     #endregion
 
-    /// <summary>
-    /// Marker interface implementation.
-    /// </summary>
     internal sealed class SocketBufferPool : BufferPool, ISocketBufferPool
     {
-        /// <summary>
-        /// Initializes a new instance of the SocketBufferPool class
-        /// </summary>
-        /// <param name="slabSize">Length, in bytes, of a slab in the BufferPool</param>
-        /// <param name="initialSlabs">Number of slabs to create initially</param>
-        /// <param name="subsequentSlabs">Number of additional slabs to create at a time</param>
         public SocketBufferPool(long slabSize, int initialSlabs, int subsequentSlabs)
             : base(slabSize, initialSlabs, subsequentSlabs)
         {

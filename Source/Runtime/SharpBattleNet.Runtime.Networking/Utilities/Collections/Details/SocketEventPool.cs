@@ -40,9 +40,6 @@ namespace SharpBattleNet.Runtime.Networking.Utilities.Collections.Details
     using System.Net.Sockets;
     #endregion
 
-    /// <summary>
-    /// Implements <see cref="ISocketEventPool"/>.
-    /// </summary>
     internal sealed class SocketEventPool : ConcurrentBag<SocketAsyncEventArgs>, ISocketEventPool
     {
     }

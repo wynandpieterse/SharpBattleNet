@@ -42,37 +42,11 @@ namespace SharpBattleNet.Runtime.Networking.Connection
     using SharpBattleNet.Runtime.Utilities.BufferPool;
     #endregion
 
-    /// <summary>
-    /// User should subclass this interface to receive notifications about whats happening inside a connection class. These methods will be called from the thread pool
-    /// when new notifications arive, so you should be carefull to handle synchronization.
-    /// </summary>
     public interface IConnectionSink
     {
-        /// <summary>
-        /// Called when data was sent from a connection to another end-point.
-        /// </summary>
-        /// <param name="remoteAddress">The address to where the data was sent.</param>
-        /// <param name="dataBuffer">The data that was sent to the remote endpoint.</param>
-        /// <param name="dataSent">The total amount of data that the operating system managed to send.</param>
         void OnSend(EndPoint remoteAddress, byte[] dataBuffer, int dataSent);
-
-        /// <summary>
-        /// Called when new data was received by the operating system, and ready to process by the application.
-        /// </summary>
-        /// <param name="remoteAddress">The remote address from where the data was receieved.</param>
-        /// <param name="dataBuffer">The buffer containing the data that was received.</param>
-        /// <param name="dataReceived">The amount of bytes received in this operation.</param>
         void OnReceive(EndPoint remoteAddress, IBuffer dataBuffer, int dataReceived);
-
-        /// <summary>
-        /// Called when the connection was closed normally.
-        /// </summary>
         void OnFinished();
-
-        /// <summary>
-        /// Called when an exception condition was encountered in one of the connection operation. See the exception parameter for more details.
-        /// </summary>
-        /// <param name="exception">The exception that was passed to this sink, containing more details about the problem.</param>
         void OnException(Exception exception);
     }
 }

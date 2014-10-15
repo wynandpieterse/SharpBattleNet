@@ -37,19 +37,8 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Connection
     using System;
     #endregion
 
-    /// <summary>
-    /// Provides logic that handles TCP connections. See subclasses for more
-    /// information.
-    /// </summary>
-    /// <seealso cref="IConnectableTCPConnection"/>
-    /// <seealso cref="IListenerTCPConnection"/>
     public interface ITCPConnection : IConnection
     {
-        /// <summary>
-        /// Can be called by code to disconnect the TCP connection. Closes
-        /// this endpoint and sends a message to the remote endpoint that
-        /// the connection has closed.
-        /// </summary>
         void Disconnect();
     }
 }

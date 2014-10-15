@@ -42,14 +42,8 @@ namespace SharpBattleNet.Runtime.Networking
     using SharpBattleNet.Runtime.Networking.UDP.Listener.Details;
     #endregion
 
-    /// <summary>
-    /// Ninject module to load all IoC objects for the network framework library.
-    /// </summary>
     public sealed class NetworkUDPModule : NinjectModule
     {
-        /// <summary>
-        /// Binds all connection classes to the container.
-        /// </summary>
         private void BindConnectionFactories()
         {
             Bind<IBindableUDPConnectionFactory>().ToFactory();
@@ -58,9 +52,6 @@ namespace SharpBattleNet.Runtime.Networking
             return;
         }
 
-        /// <summary>
-        /// Binds all the listener classes to the container.
-        /// </summary>
         private void BindListeners()
         {
             Bind<IUDPListenerFactory>().ToFactory();
@@ -69,9 +60,6 @@ namespace SharpBattleNet.Runtime.Networking
             return;
         }
 
-        /// <summary>
-        /// Called by Ninject to bind all desired objects.
-        /// </summary>
         public override void Load()
         {
             BindConnectionFactories();

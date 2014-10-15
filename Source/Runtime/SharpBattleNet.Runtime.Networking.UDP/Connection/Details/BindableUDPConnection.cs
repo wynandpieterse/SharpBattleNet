@@ -41,24 +41,14 @@ namespace SharpBattleNet.Runtime.Networking.UDP.Connection.Details
     using SharpBattleNet.Runtime.Networking.Connection;
     #endregion
 
-    /// <summary>
-    /// Implements the <see cref="IBindableUDPConnection"/> class.
-    /// </summary>
     internal sealed class BindableUDPConnection : UDPConnectionBase, IBindableUDPConnection
     {
         private readonly ISocketEventPool _socketEventBag = null;
         private readonly ISocketBufferPool _socketBufferPool = null;
         private readonly EndPoint _addressToBind = null;
-        private readonly IConnectionNotifications _notificationListener = null;
+        private readonly IConnectionSink _notificationListener = null;
 
-        /// <summary>
-        /// Constructs an empty <see cref="BindableUDPConnection"/>.
-        /// </summary>
-        /// <param name="socketEventBag">
-        /// Pool of <see cref="SocketAsyncEventArgs"/> object. Usefull
-        /// for performance reasons.
-        /// </param>
-        public BindableUDPConnection(EndPoint addressToBind, IConnectionNotifications notificationListener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
+        public BindableUDPConnection(EndPoint addressToBind, IConnectionSink notificationListener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
             : base(notificationListener, socketEventBag, socketBufferPool)
         {
             Guard.AgainstNull(addressToBind);

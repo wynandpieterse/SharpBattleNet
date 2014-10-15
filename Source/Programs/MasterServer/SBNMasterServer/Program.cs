@@ -41,24 +41,8 @@ namespace SBNMasterServer
     using SharpBattleNet.Runtime.Networking;
     #endregion
 
-    /// <summary>
-    /// Contains the main program logic for the master server. It calls out to the master server framework library and
-    /// initializes everything required to run the master server.
-    /// </summary>
     internal static class Program
     {
-        /// <summary>
-        /// Called by Windows when the program is started. Contains all the initialization logic. Inside this function
-        /// the master server is initialized, runned and eventually returns when the program execution has finishes.
-        /// </summary>
-        /// <param name="args">
-        /// Parameters passed on the command line from Windows. Can be used to customize the program and provide values
-        /// for configuration items.
-        /// </param>
-        /// <returns>
-        /// An integer value which indicates if the program exited successfully or not. A value of 1 indicates success
-        /// while a value of 0 indicates failure.
-        /// </returns>
         private static int Main(string[] args)
         {
             using(var application = new Application("MasterServer", args))

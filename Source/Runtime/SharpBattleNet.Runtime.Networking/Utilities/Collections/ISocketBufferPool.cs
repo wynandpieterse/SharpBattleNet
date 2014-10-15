@@ -34,13 +34,13 @@ namespace SharpBattleNet.Runtime.Networking.Utilities.Collections
 {
     #region Usings
     using System;
-    using SharpBattleNet.External.BufferPool;
+
+    using SharpBattleNet;
+    using SharpBattleNet.Runtime;
+    using SharpBattleNet.Runtime.Utilities;
+    using SharpBattleNet.Runtime.Utilities.BufferPool;
     #endregion
 
-    /// <summary>
-    /// Marker interface to make working with buffer pools from ServerToolkit
-    /// project easier inside the networking library.
-    /// </summary>
     public interface ISocketBufferPool : IBufferPool
     {
     }

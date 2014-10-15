@@ -34,78 +34,48 @@ namespace SharpBattleNet.Runtime.Networking.Connection.Details
 {
     #region Usings
     using System;
+    using System.Text;
     using System.Net;
     using System.Net.Sockets;
-    using System.Text;
-    using SharpBattleNet.Runtime.Networking.Utilities.Collections;
+
+    using SharpBattleNet;
+    using SharpBattleNet.Runtime;
+    using SharpBattleNet.Runtime.Utilities;
     using SharpBattleNet.Runtime.Utilities.Debugging;
-    using SharpBattleNet.External.BufferPool;
+    using SharpBattleNet.Runtime.Utilities.BufferPool;
+    using SharpBattleNet.Runtime.Utilities.Logging;
+    using SharpBattleNet.Runtime.Networking;
+    using SharpBattleNet.Runtime.Networking.Utilities;
+    using SharpBattleNet.Runtime.Networking.Utilities.Collections;
     #endregion
 
-    /// <summary>
-    /// Contains the base logic that will be usefull for all connection derived
-    /// protocols.
-    /// </summary>
     public abstract class ConnectionBase : IConnection
     {
+        private readonly ILog _logger = LogProvider.For<ConnectionBase>();
         private readonly ISocketEventPool _socketEventBag = null;
         private readonly ISocketBufferPool _socketBufferPool = null;
-        private readonly IConnectionNotifications _notificationListener = null;
+        private readonly IConnectionSink _connectionSink = null;
+
+        private bool _disposed = false;
 
         protected Socket Socket { get; set; }
 
-        /// <summary>
-        /// Constructs an empty <see cref="ConnectionBase"/> object.
-        /// </summary>
-        /// <param name="socketEventBag">
-        /// Reference to a pool of <see cref="SocketAsyncEventArgs"/>. Mainly
-        /// used for performance benefits.
-        /// </param>
-        public ConnectionBase(IConnectionNotifications notificationListener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
+        public ConnectionBase(IConnectionSink connectionSink, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
         {
-            Guard.AgainstNull(notificationListener);
+            Guard.AgainstNull(_connectionSink);
             Guard.AgainstNull(socketEventBag);
             Guard.AgainstNull(socketBufferPool);
 
-            _notificationListener = notificationListener;
+            _connectionSink = connectionSink;
             _socketEventBag = socketEventBag;
             _socketBufferPool = socketBufferPool;
 
             return;
         }
 
-        /// <summary>
-        /// Sends the specified buffer to the specified destination.
-        /// </summary>
-        /// <param name="buffer">The data to be sent to the other side.</param>
-        /// <param name="bufferLenght">
-        /// The ammount of data to send from buffer from index 0. If the value
-        /// of this parameter is 0, the length is deducted from the buffer itself.
-        /// </param>
-        /// <param name="address">The remote endpoint to send the data to.</param>
-        public virtual void Send(byte[] buffer, int bufferLenght = 0, EndPoint address = null)
-        {
-            return;
-        }
+        public abstract void Send(byte[] buffer, int bufferLenght = 0, EndPoint address = null);
+        public abstract void StartReceiving();
 
-        /// <summary>
-        /// Starts asynchronously receiving data on the socket. This should be
-        /// called after the socket is bound and connected.
-        /// </summary>
-        public virtual void StartReceiving()
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Creates an empty <see cref="SocketAsyncEventArgs"/> that can
-        /// be used to receive data. Sets the event callback and requests
-        /// a buffer from the buffer pool to receive the data in.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="SocketAsyncEventArgs"/> that can be used for receive
-        /// operations.
-        /// </returns>
         protected SocketAsyncEventArgs RequestReceiveEvent()
         {
             SocketAsyncEventArgs socketEvent = null;
@@ -125,20 +95,14 @@ namespace SharpBattleNet.Runtime.Networking.Connection.Details
             return socketEvent;
         }
 
-        /// <summary>
-        /// Returns the specified <see cref="SocketAsyncEventArgs"/> back
-        /// to the pool. Clears the event callback and sets the buffer
-        /// back to null.
-        /// </summary>
-        /// <param name="socketEvent">
-        /// The <see cref="SocketAsyncEventArgs"/> to return to the pool.
-        /// </param>
         protected void RecycleReceiveEvent(SocketAsyncEventArgs socketEvent)
         {
             Guard.AgainstNull(socketEvent);
             Guard.AgainstNull(socketEvent.UserToken);
 
             IBuffer buffer = socketEvent.UserToken as IBuffer;
+
+            Guard.AgainstNull(buffer);
 
             buffer.Dispose();
 
@@ -150,50 +114,108 @@ namespace SharpBattleNet.Runtime.Networking.Connection.Details
             {
                 // Don't worry too much if it fails, as the GC will re-collect it when it sees
                 // no more references to it.
+                _logger.Debug("Failed to release socket event back to event pool.");
             }
 
             return;
         }
 
-        /// <summary>
-        /// Handles a receive operation from the network subsystem. Retrieves
-        /// the data recieved and buffers them, then passes the data buffer on
-        /// to the packet handler to do its magic.
-        /// </summary>
-        /// <param name="socketEvent">
-        /// Contains operating system specific information about the receive
-        /// event.
-        /// </param>
         protected void HandleReceive(SocketAsyncEventArgs socketEvent)
         {
+            bool failed = false;
+            bool finished = false;
+            Exception exception = null;
+
             Guard.AgainstNull(socketEvent);
             Guard.AgainstNull(socketEvent.RemoteEndPoint);
             Guard.AgainstNull(socketEvent.UserToken);
 
-            // A receive of 0 usually means that the stream was closed.
-            if (socketEvent.BytesTransferred == 0)
+            try
             {
-                return;
+                // A receive of 0 usually means that the stream was closed.
+                if (0 == socketEvent.BytesTransferred)
+                {
+                    finished = true;
+                }
+                else
+                {
+                    // Handle receive inside sink
+                    _connectionSink.OnReceive(socketEvent.RemoteEndPoint, socketEvent.UserToken as IBuffer, socketEvent.BytesTransferred);
+
+                    // Start new receive cycle
+                    RecycleReceiveEvent(socketEvent);
+                    StartReceiving();
+                }
+            }
+            catch(ObjectDisposedException)
+            {
+                // Socket was probably disposed before
+                finished = true;
+            }
+            catch(Exception ex)
+            {
+                // Unknown failure
+                failed = true;
+                exception = ex;
             }
 
-            _notificationListener.OnReceive(socketEvent.RemoteEndPoint, socketEvent.UserToken as IBuffer, socketEvent.BytesTransferred);
+            // Handle exceptional conditions
+            if(true == finished)
+            {
+                _connectionSink.OnFinished();
+            }
+            else if(true == failed)
+            {
+                _connectionSink.OnException(exception);
+            }
 
-            RecycleReceiveEvent(socketEvent);
-            StartReceiving();
+            // Dispose if need be
+            if(true == failed || true == finished)
+            {
+                Dispose();
+            }
 
             return;
         }
 
-        /// <summary>
-        /// Handles an asynchronous network receive event.
-        /// </summary>
-        /// <param name="sender">The originator of the event.</param>
-        /// <param name="socketEvent">Contains details about the receive event.</param>
         protected void HandleReceiveEvent(object sender, SocketAsyncEventArgs socketEvent)
         {
+            Guard.AgainstDispose(_disposed);
             Guard.AgainstNull(socketEvent);
 
             HandleReceive(socketEvent);
+
+            return;
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if(false == _disposed)
+            {
+                if(true == disposing)
+                {
+                    // Dispose managed resources
+                    if(null != Socket)
+                    {
+                        Socket.Dispose();
+                        Socket = null;
+                    }
+                }
+
+                // Dispose unmanaged resources
+            }
+
+            _disposed = true;
+
+            // Call base dispose
+
+            return;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
 
             return;
         }

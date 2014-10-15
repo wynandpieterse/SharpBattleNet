@@ -39,15 +39,18 @@ namespace SharpBattleNet.MasterServer
     using SharpBattleNet.Runtime;
     using SharpBattleNet.Runtime.Networking.Connection;
     using SharpBattleNet.Runtime.Networking.Listeners;
-    using SharpBattleNet.External.BufferPool;
+    using SharpBattleNet.Runtime.Utilities.BufferPool;
     using System.Text;
     using SharpBattleNet.Runtime.Networking.TCP.Listener;
     using SharpBattleNet.Runtime.Networking.TCP.Connection;
     using SharpBattleNet.Runtime.Application;
+    using SharpBattleNet.Runtime.Utilities.Logging;
     #endregion
 
-    internal sealed class MasterServerApplication : IApplicationListener, IListenerAcceptor, IConnectionNotifications, IConnectableTCPConnectionListener
+    internal sealed class MasterServerApplication : IApplicationListener, IListenerSink, IConnectionSink, IConnectableTCPConnectionListener
     {
+        private readonly ILog _logger = LogProvider.For<MasterServerApplication>();
+
         private readonly ITCPListenerFactory _listenerFactory = null;
         private ITCPListener _listener = null;
         private readonly IConnectableTCPConnectionFactory _connectionFactory = null;
@@ -75,7 +78,7 @@ namespace SharpBattleNet.MasterServer
 
         public bool ShouldAccept(EndPoint remoteEndpoint, IConnection remoteConnection)
         {
-            Console.WriteLine("Got accept request : {0}", remoteEndpoint);
+            _logger.Info(String.Format("Got accept request : {0}", remoteEndpoint));
             return true;
         }
 
@@ -83,7 +86,7 @@ namespace SharpBattleNet.MasterServer
         {
             remoteConnection.StartReceiving();
 
-            Console.WriteLine("Accepted remote connection : {0}", remoteEndpoint);
+            _logger.Info(String.Format("Accepted remote connection : {0}", remoteEndpoint));
             return;
         }
 
@@ -98,7 +101,7 @@ namespace SharpBattleNet.MasterServer
             dataBuffer.CopyTo(buffer, 0, bytesReceived);
 
             string message = Encoding.ASCII.GetString(buffer, 0, bytesReceived);
-            Console.WriteLine("Got data from {0} : {1}", remoteAddress, message);
+            _logger.Info(String.Format("Got data from {0} : {1}", remoteAddress, message));
 
             return;
         }
@@ -122,7 +125,7 @@ namespace SharpBattleNet.MasterServer
         {
             connection.StartReceiving();
 
-            Console.WriteLine("Connection to {0} successfull", remoteEndpoint);
+            _logger.Info(String.Format("Connection to {0} successfull", remoteEndpoint));
 
             return true;
         }

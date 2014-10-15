@@ -40,24 +40,13 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Connection.Details
     using SharpBattleNet.Runtime.Networking.Connection;
     #endregion
 
-    /// <summary>
-    /// Implements <see cref="IListenerTCPConnection"/> to provide listeners
-    /// with a way to communicate with the outside world.
-    /// </summary>
     internal sealed class ListenerTCPConnection : TCPConnectionBase, IListenerTCPConnection
     {
         private readonly ISocketEventPool _socketEventBag = null;
         private readonly ISocketBufferPool _socketBufferPool = null;
-        private readonly IConnectionNotifications _notificationListener = null;
+        private readonly IConnectionSink _notificationListener = null;
 
-        /// <summary>
-        /// Constructs an empty <see cref="ListenerTCPConnection"/> object.
-        /// </summary>
-        /// <param name="socketEventBag">
-        /// Collection of <see cref="SocketAsyncEventArgs"/> object. Usefull
-        /// for performance reasons.
-        /// </param>
-        public ListenerTCPConnection(Socket acceptedSocket, IConnectionNotifications notificationListener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
+        public ListenerTCPConnection(Socket acceptedSocket, IConnectionSink notificationListener, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
             : base(notificationListener, socketEventBag, socketBufferPool)
         {
             Guard.AgainstNull(acceptedSocket);

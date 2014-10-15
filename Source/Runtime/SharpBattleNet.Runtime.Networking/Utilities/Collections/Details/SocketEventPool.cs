@@ -34,13 +34,12 @@ namespace SharpBattleNet.Runtime.Networking.Utilities.Collections.Details
 {
     #region Usings
     using System;
+    using System.Collections;
     using System.Collections.Concurrent;
+    using System.Net;
     using System.Net.Sockets;
     #endregion
 
-    /// <summary>
-    /// Implements <see cref="ISocketEventPool"/>.
-    /// </summary>
     internal sealed class SocketEventPool : ConcurrentBag<SocketAsyncEventArgs>, ISocketEventPool
     {
     }

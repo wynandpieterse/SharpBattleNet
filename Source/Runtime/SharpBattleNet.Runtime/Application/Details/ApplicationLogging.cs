@@ -1,18 +1,58 @@
-﻿using Nini.Config;
-using Ninject;
-using NLog;
-using NLog.Config;
-using NLog.Targets;
-using SharpBattleNet.Runtime.Utilities.Debugging;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#region Header
+//
+//    _  _   ____        _   _   _         _   _      _   
+//  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
+// |_  .. _ |  _ \ / _` | __| __| |/ _ \  |  \| |/ _ \ __|
+// |_      _| |_) | (_| | |_| |_| |  __/_ | |\  |  __/ |_ 
+//   |_||_| |____/ \__,_|\__|\__|_|\___(_)_ | \_|\___|\__|
+//
+// The MIT License
+// 
+// Copyright(c) 2014 Wynand Pieters. https://github.com/wpieterse/SharpBattleNet
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
+#endregion
 
 namespace SharpBattleNet.Runtime.Application.Details
 {
+    #region Usings
+    using System;
+    using System.IO;
+
+    using Ninject;
+
+    using Nini;
+    using Nini.Config;
+
+    using NLog;
+    using NLog.Config;
+    using NLog.Targets;
+
+    using SharpBattleNet;
+    using SharpBattleNet.Runtime;
+    using SharpBattleNet.Runtime.Utilities;
+    using SharpBattleNet.Runtime.Utilities.Debugging;
+    using SharpBattleNet.Runtime.Utilities.Logging;
+    using SharpBattleNet.Runtime.Utilities.Logging.Providers;
+    #endregion
+
     internal sealed class ApplicationLogging : IDisposable
     {
         private readonly IKernel _injectionKernel = null;
@@ -21,16 +61,6 @@ namespace SharpBattleNet.Runtime.Application.Details
 
         private bool _disposed = false;
 
-        /// <summary>
-        /// Returns a NLog log level depending on the passed in string.
-        /// </summary>
-        /// <param name="level">
-        /// The string to parse for log levels.
-        /// </param>
-        /// <returns>
-        /// An <see cref="LogLevel"/> enumartion converted from the level
-        /// argument.
-        /// </returns>
         private LogLevel GetLogLevel(string level)
         {
             Guard.AgainstNull(level);
@@ -55,71 +85,69 @@ namespace SharpBattleNet.Runtime.Application.Details
             return LogLevel.Off;
         }
 
-        /// <summary>
-        /// Configure NLog to output to the console.
-        /// </summary>
-        /// <param name="config">The NLog configuration object to configure.</param>
         private void ConfigureConsoleLogging(LoggingConfiguration configuration)
         {
             var configSource = _injectionKernel.Get<IConfigSource>();
             var source = configSource.Configs["General"];
-
-            if (null != source)
+            var level = "";
+            
+            if(null == source)
             {
-                if (true == source.GetBoolean("LogConsole"))
-                {
-                    var consoleTarget = new ColoredConsoleTarget();
-                    configuration.AddTarget("console", consoleTarget);
-
-                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Fatal", ConsoleOutputColor.Red, ConsoleOutputColor.NoChange));
-                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Error", ConsoleOutputColor.DarkRed, ConsoleOutputColor.NoChange));
-                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Warn", ConsoleOutputColor.Yellow, ConsoleOutputColor.NoChange));
-                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Info", ConsoleOutputColor.White, ConsoleOutputColor.NoChange));
-                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Debug", ConsoleOutputColor.Gray, ConsoleOutputColor.NoChange));
-                    consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Trace", ConsoleOutputColor.DarkGray, ConsoleOutputColor.NoChange));
-
-                    consoleTarget.UseDefaultRowHighlightingRules = false;
-                    consoleTarget.Layout = @"${message}";
-
-                    var consoleRule = new LoggingRule("*", GetLogLevel(source.Get("LogConsoleLevel")), consoleTarget);
-                    configuration.LoggingRules.Add(consoleRule);
-                }
+                level = "Trace";
             }
+            else
+            {
+                level = source.Get("LogConsoleLevel", "Trace");
+            }
+
+            // Console logging should always be available
+            var consoleTarget = new ColoredConsoleTarget();
+            configuration.AddTarget("console", consoleTarget);
+
+            consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Fatal", ConsoleOutputColor.Red, ConsoleOutputColor.NoChange));
+            consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Error", ConsoleOutputColor.DarkRed, ConsoleOutputColor.NoChange));
+            consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Warn", ConsoleOutputColor.Yellow, ConsoleOutputColor.NoChange));
+            consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Info", ConsoleOutputColor.White, ConsoleOutputColor.NoChange));
+            consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Debug", ConsoleOutputColor.Gray, ConsoleOutputColor.NoChange));
+            consoleTarget.RowHighlightingRules.Add(new ConsoleRowHighlightingRule("level == LogLevel.Trace", ConsoleOutputColor.DarkGray, ConsoleOutputColor.NoChange));
+
+            consoleTarget.UseDefaultRowHighlightingRules = false;
+            consoleTarget.Layout = @"${message}";
+
+            var consoleRule = new LoggingRule("*", GetLogLevel(level), consoleTarget);
+            configuration.LoggingRules.Add(consoleRule);
 
             return;
         }
 
-        /// <summary>
-        /// Configures the NLog subsystem to log to a file inside the write
-        /// directory.
-        /// </summary>
-        /// <param name="config">The NLog configuration object to configure.</param>
         private void ConfigureFileLogging(LoggingConfiguration configuration)
         {
             var configSource = _injectionKernel.Get<IConfigSource>();
             var source = configSource.Configs["General"];
+            var level = "";
 
-            if (null != source)
+            if (null == source)
             {
-                if (true == source.GetBoolean("LogFile"))
-                {
-                    DateTime currentTime = DateTime.Now;
-                    string logDate = string.Format("{0}-{1}-{2}-{3}-{4}-{5}", currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Second);
-                    string logDirectory = Path.Combine(_writeDirectory, "Logs");
-                    string logFilename = Path.Combine(_writeDirectory, string.Format("Log-{0}.log", logDate));
-
-                    Directory.CreateDirectory(logDirectory);
-
-                    var fileTarget = new FileTarget();
-                    configuration.AddTarget("file", fileTarget);
-
-                    fileTarget.FileName = logFilename;
-                    fileTarget.Layout = @"${processtime} ${threadid} ${level} ${logger} ${message}";
-
-                    var fileRule = new LoggingRule("*", GetLogLevel(source.Get("LogFileLevel")), fileTarget);
-                    configuration.LoggingRules.Add(fileRule);
-                }
+                level = "Trace";
             }
+            else
+            {
+                level = source.Get("LogFileLevel", "Trace");
+            }
+
+            // File logging should always be available
+            DateTime currentTime = DateTime.Now;
+            string logDate = string.Format("{0}-{1}-{2}-{3}-{4}-{5}", currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Second);
+            string logFilename = Path.Combine(_writeDirectory, string.Format("Log-{0}.log", logDate));
+
+            var fileTarget = new FileTarget();
+            configuration.AddTarget("file", fileTarget);
+
+            fileTarget.FileName = logFilename;
+            fileTarget.Layout = @"${processtime} ${threadid} ${level} ${logger} ${message}";
+
+            var fileRule = new LoggingRule("*", GetLogLevel(level), fileTarget);
+            configuration.LoggingRules.Add(fileRule);
 
             return;
         }
@@ -132,6 +160,8 @@ namespace SharpBattleNet.Runtime.Application.Details
             ConfigureFileLogging(configuration);
 
             LogManager.Configuration = configuration;
+
+            _injectionKernel.Bind<ILogProvider>().To<NLogLogProvider>().InSingletonScope();
 
             return;
         }
@@ -147,17 +177,21 @@ namespace SharpBattleNet.Runtime.Application.Details
             return;
         }
 
-        private void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (false == _disposed)
             {
                 if (true == disposing)
                 {
-                    
+                    // Dispose managed resources
                 }
 
-                _disposed = true;
+                // Dispose unmanaged resources
             }
+
+            _disposed = true;
+
+            // Call base dispose
 
             return;
         }
@@ -165,7 +199,6 @@ namespace SharpBattleNet.Runtime.Application.Details
         public void Dispose()
         {
             Dispose(true);
-
             GC.SuppressFinalize(this);
 
             return;

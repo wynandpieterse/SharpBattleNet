@@ -1,42 +1,51 @@
-﻿#region License
-/*
-   Copyright 2011 Sunny Ahuwanya (www.ahuwanya.net)
+﻿#region Header
+//
+//    _  _   ____        _   _   _         _   _      _   
+//  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
+// |_  .. _ |  _ \ / _` | __| __| |/ _ \  |  \| |/ _ \ __|
+// |_      _| |_) | (_| | |_| |_| |  __/_ | |\  |  __/ |_ 
+//   |_||_| |____/ \__,_|\__|\__|_|\___(_)_ | \_|\___|\__|
+//
+// The MIT License
+// 
+// Copyright(c) 2014 Wynand Pieters. https://github.com/wpieterse/SharpBattleNet
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-*/
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
 #endregion
 
-namespace SharpBattleNet.External.BufferPool
+namespace SharpBattleNet.Runtime.Utilities.BufferPool
 {
+    #region Usings
     using System;
-    using System.Collections.Generic;
-    using System.Runtime.CompilerServices;
     using System.Threading;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Runtime;
+    using System.Runtime.CompilerServices;
+    #endregion
 
-    /// <summary>
-    /// Represents a defined block in memory
-    /// </summary>
     internal sealed class MemoryBlock : IMemoryBlock
     {
         readonly long startLoc, length;
         readonly IMemorySlab owner;
 
-        /// <summary>
-        /// Initializes a new instance of the MemoryBlock class
-        /// </summary>
-        /// <param name="startLocation">Offset where memory block starts in slab</param>
-        /// <param name="length">Length of memory block</param>
-        /// <param name="slab">Slab to be associated with the memory block</param>
         internal MemoryBlock(long startLocation, long length, IMemorySlab slab)
         {
             if (startLocation < 0)
@@ -58,9 +67,6 @@ namespace SharpBattleNet.External.BufferPool
             //TODO: If this class is converted to a struct, consider implementing IComparer, IComparable -- first figure out what sorted dictionary uses those Comparer things for
         }
 
-        /// <summary>
-        /// Gets the offset in the slab where the memory block begins.
-        /// </summary>
         public long StartLocation
         {
             get
@@ -69,10 +75,6 @@ namespace SharpBattleNet.External.BufferPool
             }
         }
 
-        /// <summary>
-        /// Gets the offset in the slab where the memory block ends.
-        /// </summary>
-        /// <remarks> EndLocation = StartLocation + Length - 1</remarks>
         public long EndLocation
         {
             get
@@ -81,18 +83,11 @@ namespace SharpBattleNet.External.BufferPool
             }
         }
 
-        /// <summary>
-        /// Gets the length of the memory block, in bytes.
-        /// </summary>
-        /// <remarks> Length = EndLocation - StartLocation + 1</remarks>
         public long Length
         {
             get { return length; }
         }
 
-        /// <summary>
-        /// Gets the containing slab
-        /// </summary>
         public IMemorySlab Slab
         {
             get { return owner; }
@@ -100,9 +95,6 @@ namespace SharpBattleNet.External.BufferPool
 
     }
 
-    /// <summary>
-    /// Represents a large fixed-length memory block where smaller variable-length memory blocks are dynamically allocated
-    /// </summary>
     internal sealed class MemorySlab : IMemorySlab
     {
         private readonly bool is64BitMachine;
@@ -117,11 +109,6 @@ namespace SharpBattleNet.External.BufferPool
         private long largest;
         private byte[] array;
 
-        /// <summary>
-        /// Initializes a new instance of the MemorySlab class
-        /// </summary>
-        /// <param name="size">Size, in bytes, of slab</param>
-        /// <param name="pool">BufferPool associated with the slab</param>
         internal MemorySlab(long size, BufferPool pool)
         {
 
@@ -157,17 +144,11 @@ namespace SharpBattleNet.External.BufferPool
             //}
         }
 
-        /// <summary>
-        /// Gets the last known largest unallocated contiguous block size.
-        /// </summary>
         public long LargestFreeBlockSize
         {
             get { return GetLargest(); }
         }
 
-        /// <summary>
-        /// Gets the size, in bytes, of the memory slab.
-        /// </summary>
         public long Size
         {
             get
@@ -176,9 +157,6 @@ namespace SharpBattleNet.External.BufferPool
             }
         }
 
-        /// <summary>
-        /// Gets the underlying byte array that is wrapped by the memory slab
-        /// </summary>
         public byte[] Array
         {
             get
@@ -187,25 +165,11 @@ namespace SharpBattleNet.External.BufferPool
             }
         }
 
-        /// <summary>
-        /// Attempts to allocate a memory block of a specified length.
-        /// </summary>
-        /// <param name="length">Length, in bytes, of memory block</param>
-        /// <param name="allocatedBlock">Allocated memory block</param>
-        /// <returns>True, if memory block was allocated. False, if otherwise</returns>
         public bool TryAllocate(long length, out IMemoryBlock allocatedBlock)
         {
             return TryAllocate(length, length, out allocatedBlock) > 0;
         }
 
-        /// <summary>
-        /// Attempts to allocate a memory block of length between minLength and maxLength (both inclusive)
-        /// </summary>
-        /// <param name="minLength">The minimum acceptable length</param>
-        /// <param name="maxLength">The maximum acceptable length</param>
-        /// <param name="allocatedBlock">Allocated memory block</param>
-        /// <returns>Length of allocated block if successful, zero otherwise</returns>
-        /// <remarks>This overload is useful when multiple threads are concurrently working on the slab and the caller wants to allocate a block up to a desired size</remarks>
         public long TryAllocate(long minLength, long maxLength, out IMemoryBlock allocatedBlock)
         {
             if (minLength > maxLength) throw new ArgumentException("minLength is greater than maxLength", "minLength");
@@ -271,11 +235,6 @@ namespace SharpBattleNet.External.BufferPool
 
         }
 
-        /// <summary>
-        /// Frees an allocated memory block.
-        /// </summary>
-        /// <param name="allocatedBlock">Allocated memory block to be freed</param>
-        /// <remarks>This method does not verify if the allocatedBlock is indeed from this slab. Callers should make sure that the allocatedblock belongs to the right slab.</remarks>
         public void Free(IMemoryBlock allocatedBlock)
         {
             //NOTE: This method can call the pool to do some cleanup (which holds locks), therefore do not call this method from within any lock
@@ -337,10 +296,6 @@ namespace SharpBattleNet.External.BufferPool
 
         }
 
-        /// <summary>
-        /// Sets a new value as the largest unallocated contiguous block size
-        /// </summary>
-        /// <param name="value">Integral value of new largest unallocated block size</param>
         private void SetLargest(long value)
         {
             if (is64BitMachine)
@@ -355,13 +310,6 @@ namespace SharpBattleNet.External.BufferPool
 
         }
 
-        /// <summary>
-        /// Marks an allocated block as unallocated
-        /// </summary>
-        /// <param name="offset">Offset of block in slab</param>
-        /// <param name="length">Length of block</param>
-        /// <param name="suppressSetLargest">True to not have this method update LargestFreeBlockSize</param>
-        /// <remarks>Set suppressSetLargest when the caller will the LargestFreeBlockSize after this method is called</remarks>
         private void AddFreeBlock(long offset, long length, bool suppressSetLargest)
         {
             dictStartLoc.Add(offset, new FreeSpace(offset, length));
@@ -389,39 +337,17 @@ namespace SharpBattleNet.External.BufferPool
         }
 
         
-        /// <summary>
-        /// Marks an unallocated contiguous block as allocated
-        /// </summary>
-        /// <param name="block">newly allocated block</param>
-        /// <param name="suppressSetLargest">True to not have this method update LargestFreeBlockSize</param>
-        /// <remarks>Set suppressSetLargest when the caller will the LargestFreeBlockSize after this method is called</remarks>
         private void RemoveFreeBlock(FreeSpace block, bool suppressSetLargest)
         {
             ShrinkOrRemoveFreeMemoryBlock(block, 0, suppressSetLargest);
         }
 
-        /// <summary>
-        /// Marks an unallocated contiguous block as allocated, and then marks an allocated block as unallocated
-        /// </summary>
-        /// <param name="block">newly allocated block</param>
-        /// <param name="shrinkTo">The length of the smaller free memory block</param>
         private void ShrinkFreeMemoryBlock(FreeSpace block, long shrinkTo)
         {
             ShrinkOrRemoveFreeMemoryBlock(block, shrinkTo, false);
         }
 
 
-        /// <summary>
-        /// Marks an unallocated contiguous block as allocated, and then marks an allocated block as unallocated
-        /// </summary>
-        /// <param name="block">newly allocated block</param>
-        /// <param name="shrinkTo">The length of the smaller free memory block</param>
-        /// <param name="suppressSetLargest">True to not have this method update LargestFreeBlockSize</param>
-        /// <remarks>
-        /// Set suppressSetLargest when the caller will the LargestFreeBlockSize after this method is called</remarks>
-        /// <remarks>
-        /// Do not call this method directly, instead call ShrinkFreeMemoryBlock() or the FreeMemoryBlock()
-        /// </remarks>
         private void ShrinkOrRemoveFreeMemoryBlock(FreeSpace block, long shrinkTo, bool suppressSetLargest)
         {
             //NOTE: Do not call this method directly, instead call ShrinkFreeMemoryBlock() or RemoveFreeBlock()
@@ -475,10 +401,6 @@ namespace SharpBattleNet.External.BufferPool
             }
         }
 
-        /// <summary>
-        /// Gets the largest unallocated contiguous block size in the slab
-        /// </summary>
-        /// <returns>The size of the largest free contiguous block</returns>
         [MethodImpl(MethodImplOptions.NoInlining)]
         private long GetLargest()
         {
@@ -495,9 +417,6 @@ namespace SharpBattleNet.External.BufferPool
             }
         }
 
-        /// <summary>
-        /// Represents an unallocated memory block within the slab
-        /// </summary>
         private struct FreeSpace
         {
             public FreeSpace(long offset, long length)

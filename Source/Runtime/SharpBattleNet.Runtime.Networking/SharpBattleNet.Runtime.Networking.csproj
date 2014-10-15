@@ -41,6 +41,10 @@
     <Reference Include="Castle.Core">
       <HintPath>..\..\packages\Castle.Core.3.2.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Nini, Version=1.1.0.0, Culture=neutral, PublicKeyToken=691faec150a7fa7b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Trove.Nini.1.1.0.0\lib\net20\Nini.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
@@ -58,7 +62,8 @@
   <ItemGroup>
     <Compile Include="Connection\Details\ConnectionBase.cs" />
     <Compile Include="Connection\IConnection.cs" />
-    <Compile Include="Connection\IConnectionNotifications.cs" />
+    <Compile Include="Connection\IConnectionSink.cs" />
+    <Compile Include="Listeners\Details\ListenerBase.cs" />
     <Compile Include="Listeners\IListener.cs" />
     <Compile Include="Listeners\IListenerAcceptor.cs" />
     <Compile Include="NetworkModule.cs" />
@@ -72,10 +77,6 @@
     <None Include="Packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\External\SharpBattleNet.External.BufferPool\SharpBattleNet.External.BufferPool.csproj">
-      <Project>{c81e12fd-6309-40cb-9fe5-39735c2d1ff9}</Project>
-      <Name>SharpBattleNet.External.BufferPool</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SharpBattleNet.Runtime\SharpBattleNet.Runtime.csproj">
       <Project>{fdb8d2c5-fd13-40e7-b629-ce71a68bb7b7}</Project>
       <Name>SharpBattleNet.Runtime</Name>

@@ -30,19 +30,19 @@
 //
 #endregion
 
-namespace SharpBattleNet.Runtime.Networking.Connection
+namespace SharpBattleNet.Runtime.Utilities.Logging
 {
     #region Usings
-    using SharpBattleNet.External.BufferPool;
     using System;
-    using System.Net;
     #endregion
 
-    public interface IConnectionNotifications
+    public enum Level
     {
-        void OnSend(EndPoint remoteAddress, byte[] dataBuffer, int dataSent);
-        void OnReceive(EndPoint remoteAddress, IBuffer dataBuffer, int dataReceived);
-        void OnFinished();
-        void OnException(Exception exception);
+        Trace,
+        Debug,
+        Info,
+        Warn,
+        Error,
+        Fatal
     }
 }

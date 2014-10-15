@@ -36,17 +36,8 @@ namespace SharpBattleNet.Runtime.Utilities.Debugging
     using System;
     #endregion
     
-    /// <summary>
-    /// Usefull methods to test class pre- and post-conditions.
-    /// </summary>
     public static class Guard
     {
-        /// <summary>
-        /// Guards agains a value that is null.
-        /// </summary>
-        /// <param name="valueToTest">
-        /// The value to test.
-        /// </param>
         public static void AgainstNull(object valueToTest)
         {
             if (null == valueToTest)
@@ -57,12 +48,6 @@ namespace SharpBattleNet.Runtime.Utilities.Debugging
             return;
         }
 
-        /// <summary>
-        /// Guards agains null, empty and whitespace strings.
-        /// </summary>
-        /// <param name="valueToTest">
-        /// The string to test.
-        /// </param>
         public static void AgainstEmptyString(string valueToTest)
         {
             if (string.IsNullOrEmpty(valueToTest))
@@ -73,6 +58,16 @@ namespace SharpBattleNet.Runtime.Utilities.Debugging
             if (string.IsNullOrWhiteSpace(valueToTest))
             {
                 throw new ArgumentException("The passed in string is empty or contains only white-spaces");
+            }
+
+            return;
+        }
+
+        public static void AgainstDispose(bool disposed)
+        {
+            if(true == disposed)
+            {
+                throw new ObjectDisposedException("Object has been disposed. Cannot use it anymore.");
             }
 
             return;

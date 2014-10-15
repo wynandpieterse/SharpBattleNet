@@ -1,31 +1,46 @@
-﻿#region License
-/*
-   Copyright 2011 Sunny Ahuwanya (www.ahuwanya.net)
+﻿#region Header
+//
+//    _  _   ____        _   _   _         _   _      _   
+//  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
+// |_  .. _ |  _ \ / _` | __| __| |/ _ \  |  \| |/ _ \ __|
+// |_      _| |_) | (_| | |_| |_| |  __/_ | |\  |  __/ |_ 
+//   |_||_| |____/ \__,_|\__|\__|_|\___(_)_ | \_|\___|\__|
+//
+// The MIT License
+// 
+// Copyright(c) 2014 Wynand Pieters. https://github.com/wpieterse/SharpBattleNet
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-*/
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
 #endregion
 
-namespace SharpBattleNet.External.BufferPool
+namespace SharpBattleNet.Runtime.Utilities.BufferPool
 {
+    #region Usings
     using System;
-    using System.Collections.Generic;
-    using System.Runtime.CompilerServices;
     using System.Threading;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Runtime;
+    using System.Runtime.CompilerServices;
+    #endregion
 
-    /// <summary>
-    /// Represents an efficiently allocated buffer for asynchronous read/write operations.
-    /// </summary>
     public sealed class ManagedBuffer : IBuffer
     {
         private bool disposed = false;
@@ -34,10 +49,6 @@ namespace SharpBattleNet.External.BufferPool
         byte[] slabArray;
         readonly long size;
 
-        /// <summary>
-        /// Initializes a new instance of the ManagedBuffer class, specifying the memory block that the ManagedBuffer reads and writes to.
-        /// </summary>
-        /// <param name="allocatedMemoryBlocks">Underlying allocated memory block</param>
         internal ManagedBuffer(IList<IMemoryBlock> allocatedMemoryBlocks)
         {
             if (allocatedMemoryBlocks == null) throw new ArgumentNullException("allocatedMemoryBlocks");
@@ -52,11 +63,6 @@ namespace SharpBattleNet.External.BufferPool
         }
 
 
-        /// <summary>
-        /// Initializes a new instance of the ManagedBuffer class, specifying the slab to be associated with the ManagedBuffer.
-        /// This constructor creates an empty (zero-length) buffer.
-        /// </summary>
-        /// <param name="slab">The Memory Slab to be associated with the ManagedBuffer</param>
         internal ManagedBuffer(IMemorySlab slab)
         {
             if (slab == null) throw new ArgumentNullException("slab");
@@ -66,70 +72,38 @@ namespace SharpBattleNet.External.BufferPool
         }
 
 
-        /// <summary>
-        /// Gets a value indicating whether the buffer is disposed.
-        /// </summary>
         public bool IsDisposed
         {
             get { return disposed; }
         }
 
-        /// <summary>
-        /// Gets the total size of the buffer, in bytes.
-        /// </summary>        
         public long Size
         {
             get { return size; }
         }
 
-        /// <summary>
-        /// Gets the number of segments in the buffer.
-        /// </summary>
         public int SegmentCount
         {
             get { return memoryBlocks == null ? 1 : memoryBlocks.Count; }
         }
 
-        /// <summary>
-        /// Gets the underlying memory block(s)
-        /// </summary>
-        /// <remarks>This property is provided for testing purposes</remarks>
         internal IList<IMemoryBlock> MemoryBlocks
         {
             get { return memoryBlocks ?? new List<IMemoryBlock>(); }
         } 
 
-
-        //NOTE: This overload cannot return segments larger than int.MaxValue;
-        //TODO: Write test: MULTI_ARRAY_SEGMENTS: NOTE: This method should be able to accept length > int.MaxValue after implementing multi-array-segments
-
-        /// <summary>
-        /// Gets buffer segments that can be passed on to an asynchronous socket operation.
-        /// </summary>
-        /// <returns>A list of ArraySegments(of Byte) containing buffer segments.</returns>
         public IList<ArraySegment<byte>> GetSegments()
         {
             if (disposed) throw new ObjectDisposedException(this.ToString());
             return GetSegments(0, this.Size);            
         }
 
-        /// <summary>
-        /// Gets buffer segments that can be passed on to an asynchronous socket operation.
-        /// </summary>
-        /// <param name="length">Total length of segments.</param>
-        /// <returns>A list of ArraySegments(of Byte) containing buffer segments.</returns>
         public IList<ArraySegment<byte>> GetSegments(long length)
         {
             if (disposed) throw new ObjectDisposedException(this.ToString());
             return GetSegments(0, length);
         }
 
-        /// <summary>
-        /// Gets buffer segments that can be passed on to an asynchronous socket operation.
-        /// </summary>
-        /// <param name="offset">Offset in the buffer where segments start.</param>
-        /// <param name="length">Total length of segments.</param>
-        /// <returns>A list of ArraySegments(of Byte) containing buffer segments.</returns>
         public IList<ArraySegment<byte>> GetSegments(long offset, long length)
         {
             if (disposed) throw new ObjectDisposedException(this.ToString());
@@ -201,11 +175,6 @@ namespace SharpBattleNet.External.BufferPool
             }
         }
 
-        /// <summary>
-        /// Copies data from the buffer to a byte array.
-        /// </summary>
-        /// <param name="destinationArray">The one-dimensional byte array which receives the data.</param>
-        /// <remarks>The size of the buffer must be less than or equal to the destinationArray length.</remarks>
         public void CopyTo(byte[] destinationArray)
         {
             if (disposed) throw new ObjectDisposedException(this.ToString());
@@ -213,16 +182,6 @@ namespace SharpBattleNet.External.BufferPool
             CopyTo(destinationArray, 0, this.Size);
         }
 
-
-        //TODO: Write a version of CopyTo with a sourceIndex: CopyTo(long index, byte[] array, long arrayIndex, long length)
-        //TODO: Rename the parameters of CopyTo (see List.CopyTo as a guideline)
-
-        /// <summary>
-        /// Copies data from the buffer to a byte array
-        /// </summary>
-        /// <param name="destinationArray">The one-dimensional byte array which receives the data.</param>
-        /// <param name="destinationIndex">The index in the destinationArray at which storing begins.</param>
-        /// <param name="length">The number of bytes to copy.</param>
         public void CopyTo(byte[] destinationArray, long destinationIndex, long length)
         {
             if (disposed) throw new ObjectDisposedException(this.ToString());
@@ -253,34 +212,18 @@ namespace SharpBattleNet.External.BufferPool
             System.Diagnostics.Debug.Assert(true, "Execution should never reach this point, the returns above should be responsible for exiting the method");
         }
 
-        /// <summary>
-        /// Copies data from a byte array into the buffer.
-        /// </summary>
-        /// <param name="sourceArray">The one-dimensional byte array that contains the data.</param>
-        /// <remarks>The length of the sourceArray must be less than or equal to the buffer size.</remarks>
         [Obsolete("Use the FillWith method instead -- this method will be removed in a later version", true)]
         public void CopyFrom(byte[] sourceArray)
         {
             FillWith(sourceArray);
         }
 
-        /// <summary>
-        /// Copies data from a byte array into the buffer.
-        /// </summary>
-        /// <param name="sourceArray">The one-dimensional byte array that contains the data.</param>
-        /// <param name="sourceIndex">The index in the sourceArray at which copying begins.</param>
-        /// <param name="length">The number of bytes to copy.</param>
         [Obsolete("Use the FillWith method instead -- this method will be removed in a later version", true)]
         public void CopyFrom(byte[] sourceArray, long sourceIndex, long length)
         {
             FillWith(sourceArray, sourceIndex, length);
         }
 
-        /// <summary>
-        /// Copies data from a byte array into the buffer.
-        /// </summary>
-        /// <param name="sourceArray">The one-dimensional byte array that contains the data.</param>
-        /// <remarks>The length of the sourceArray must be less than or equal to the buffer size.</remarks>
         public void FillWith(byte[] sourceArray)
         {
             if (disposed) throw new ObjectDisposedException(this.ToString());
@@ -288,15 +231,6 @@ namespace SharpBattleNet.External.BufferPool
             FillWith(sourceArray, 0, sourceArray.Length);
         }
 
-        //TODO: Write a version of FIllWith with a destinationIndex: FillWith(long index, byte[] array, long arrayIndex, long length)
-        //TODO: Rename the parameters of FillWith (see List.CopyTo as a guideline)
-
-        /// <summary>
-        /// Copies data from a byte array into the buffer.
-        /// </summary>
-        /// <param name="sourceArray">The one-dimensional byte array that contains the data.</param>
-        /// <param name="sourceIndex">The index in the sourceArray at which copying begins.</param>
-        /// <param name="length">The number of bytes to copy.</param>
         public void FillWith(byte[] sourceArray, long sourceIndex, long length)
         {
             if (disposed) throw new ObjectDisposedException(this.ToString());
@@ -330,19 +264,11 @@ namespace SharpBattleNet.External.BufferPool
 
         }
 
-        /// <summary>
-        /// Releases resources used by the buffer.
-        /// </summary>
-        /// <remarks>This method frees the memory blocks used by the buffer.</remarks>
         public void Dispose()
         {
             Dispose(true);
         }
 
-        /// <summary>
-        /// Releases resources used by the buffer.
-        /// </summary>
-        /// <param name="disposing">True, to indicate you want to release all resources. False to release only native resources.</param>
         private void Dispose(bool disposing)
         {
             if (disposing)
@@ -399,24 +325,10 @@ namespace SharpBattleNet.External.BufferPool
 
     }
 
-    /// <summary>
-    /// Provides a pool of buffers that can be used to efficiently allocate memory for asynchronous socket operations
-    /// </summary>
     public class BufferPool : IBufferPool
     {
-        /// <summary>
-        /// The minimum size of a slab.
-        /// </summary>
         public const int MinimumSlabSize = 92160; //90 KB to force slab into LOH
-
-        // The MaximumSlabSize restriction is in place because of ArraySegment's (T[], int, int) constructor.
-        // If a slab exceeds the MaximumSlabSize, an array segment cannot access data beyond the int.MaxValue location
-
-        /// <summary>
-        /// The maximum size of a slab.
-        /// </summary>
         public const long MaximumSlabSize = ((long)int.MaxValue) + 1; 
-
         private readonly IMemorySlab firstSlab;
         private readonly long slabSize;
         private readonly int initialSlabs, subsequentSlabs;
@@ -427,12 +339,6 @@ namespace SharpBattleNet.External.BufferPool
 
         private const int MAX_SEGMENTS_PER_BUFFER = 16; //Maximum number of segments in a buffer.
 
-        /// <summary>
-        /// Initializes a new instance of the BufferPool class
-        /// </summary>
-        /// <param name="slabSize">Length, in bytes, of a slab in the BufferPool</param>
-        /// <param name="initialSlabs">Number of slabs to create initially</param>
-        /// <param name="subsequentSlabs">Number of additional slabs to create at a time</param>
         public BufferPool(long slabSize, int initialSlabs, int subsequentSlabs)
         {
 
@@ -462,48 +368,27 @@ namespace SharpBattleNet.External.BufferPool
             //}
         }
 
-        //TODO: Look for a better name for this property, consider SlabMinimumCount
-
-        /// <summary>
-        /// Gets the initial number of slabs created
-        /// </summary>
         public int InitialSlabs
         {
             get { return initialSlabs; }
         }
 
-        //TODO: Look for a better name for this property. SlabIncrements is probably a good one.
-        //TODO: Also change behavior so that if the slabIncrements have already been met then do not add new slabs.
-
-        /// <summary>
-        /// Gets the additional number of slabs to be created at a time
-        /// </summary>
         public int SubsequentSlabs
         {
             get { return subsequentSlabs; }
         }
 
-        /// <summary>
-        /// Gets the slab size, in bytes
-        /// </summary>
         public long SlabSize
         {
             get { return slabSize; }
         }
 
-        /// <summary>
-        /// Gets the number of slabs in the buffer pool
-        /// </summary>
-        /// <remarks>This property is provided for testing purposes</remarks>
         internal long SlabCount
         {
             //NOTE: Some synchronization might be necessary if this method becomes public
             get { return slabs.Count; }
         }
 
-
-        //Pair of Get/Set methods for the optimization singleSlabPool field. This property is accessed instead of the field
-        //to prevent the compiler from performing optimizations that may render the field unreliable
         [MethodImpl(MethodImplOptions.NoInlining)]
         private bool GetSingleSlabPool()
         {
@@ -517,23 +402,11 @@ namespace SharpBattleNet.External.BufferPool
             Interlocked.Exchange(ref singleSlabPool, value == true ? -1 : 0);
         }
 
-
-        /// <summary>
-        /// Creates a buffer of the specified size
-        /// </summary>
-        /// <param name="size">Buffer size, in bytes</param>
-        /// <returns>IBuffer object of requested size</returns>        
         public IBuffer GetBuffer(long size)
         {
             return GetBuffer(size, null);
         }
 
-        /// <summary>
-        /// Creates a buffer of the specified size, filled with the contents of a specified byte array
-        /// </summary>
-        /// <param name="size">Buffer size, in bytes</param>
-        /// <param name="filledWith">Byte array to copy to buffer</param>
-        /// <returns>IBuffer object of requested size</returns>
         public IBuffer GetBuffer(long size, byte[] filledWith)
         {
             if (size < 0) throw new ArgumentException("size must be greater than 0");
@@ -679,9 +552,6 @@ namespace SharpBattleNet.External.BufferPool
 
         }
 
-        /// <summary>
-        /// Searches for empty slabs and frees one if there are more than InitialSlabs number of slabs.
-        /// </summary>
         internal void TryFreeSlabs()
         {
             //NOTE: This method can free a slab just before it gets allocated but that's alright because eventually
@@ -714,14 +584,6 @@ namespace SharpBattleNet.External.BufferPool
             }
         }
 
-        /// <summary>
-        /// Helper method that searches for free blocks in an array of slabs and returns allocated blocks
-        /// </summary>
-        /// <param name="totalLength">Requested total length of all memory blocks</param>
-        /// <param name="maxBlocks">Maximum number of memory blocks to allocate</param>
-        /// <param name="slabs">Array of slabs to search</param>
-        /// <param name="allocatedBlocks">List of allocated memory block</param>
-        /// <returns>True if memory block was successfully allocated. False, if otherwise</returns>
         private static long TryAllocateBlocksInSlabs(long totalLength, int maxBlocks, IMemorySlab[] slabs, ref List<IMemoryBlock> allocatedBlocks)
         {
             allocatedBlocks = new List<IMemoryBlock>();
@@ -768,12 +630,6 @@ namespace SharpBattleNet.External.BufferPool
             return allocatedSizeTally;
         }
 
-        /// <summary>
-        /// Helper method that gets a filled buffer constructed from a list of memory blocks
-        /// </summary>
-        /// <param name="allocatedBlocks">The memoryblocks that comprise the buffer</param>
-        /// <param name="filledWith">If not null, the contents the memory block will be filled with</param>
-        /// <returns>An optionally filled IBuffer object</returns>
         private static IBuffer GetFilledBuffer(IList<IMemoryBlock> allocatedBlocks, byte[] filledWith)
         {
             IBuffer newBuffer = new ManagedBuffer(allocatedBlocks);

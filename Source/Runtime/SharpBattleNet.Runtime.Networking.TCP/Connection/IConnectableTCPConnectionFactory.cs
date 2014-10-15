@@ -38,18 +38,8 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Connection
     using System.Net;
     #endregion
 
-    /// <summary>
-    /// Constructs <see cref="IConnectableTCPConnection"/> that can be
-    /// used to connect to remote endpoints.
-    /// </summary>
     public interface IConnectableTCPConnectionFactory
     {
-        /// <summary>
-        /// Constructs a <see cref="IConnectableTCPConnection"/> that
-        /// can be used straight away. Remember to call the Start()
-        /// function on the returned object.
-        /// </summary>
-        /// <returns></returns>
-        IConnectableTCPConnection Connect(EndPoint addressToConnect, IConnectableTCPConnectionListener listener, IConnectionNotifications notificationListener);
+        IConnectableTCPConnection Connect(EndPoint addressToConnect, IConnectableTCPConnectionListener listener, IConnectionSink notificationListener);
     }
 }

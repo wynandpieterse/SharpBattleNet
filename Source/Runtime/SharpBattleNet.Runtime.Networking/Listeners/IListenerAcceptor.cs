@@ -35,10 +35,14 @@ namespace SharpBattleNet.Runtime.Networking.Listeners
     #region Usings
     using System;
     using System.Net;
+
+    using SharpBattleNet;
+    using SharpBattleNet.Runtime;
+    using SharpBattleNet.Runtime.Networking;
     using SharpBattleNet.Runtime.Networking.Connection;
     #endregion
 
-    public interface IListenerAcceptor
+    public interface IListenerSink
     {
         bool ShouldAccept(EndPoint remoteEndpoint, IConnection remoteConnection);
         void Accepted(EndPoint remoteEndpoint, IConnection remoteConnection);

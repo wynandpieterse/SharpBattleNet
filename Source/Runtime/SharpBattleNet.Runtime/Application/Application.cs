@@ -23,13 +23,7 @@ namespace SharpBattleNet.Runtime.Application
         private readonly string[] _arguments = null;
 
         private bool _disposed = false;
-
-        private IKernel _injectionKernel = null;
         private List<INinjectModule> _injectionModules = null;
-        private IApplicationListener _application = null;
-        private IApplicationConfiguration _appConfiguration = null;
-        private IApplicationLogging _appLogging = null;
-
         private string _writeDirectory = null;
 
         public Application(string name, string[] arguments)
@@ -68,44 +62,7 @@ namespace SharpBattleNet.Runtime.Application
             return;
         }
 
-        private void ConfigureConfiguration()
-        {
-            _appConfiguration = new ApplicationConfiguration(_injectionKernel, _name, _writeDirectory);
-
-            _appConfiguration.Configure();
-
-            return;
-        }
-
-        private void ConfigureLogging()
-        {
-            _appLogging = new ApplicationLogging(_injectionKernel, _name, _writeDirectory);
-
-            _appLogging.Configure();
-
-            return;
-        }
-
-        private void SetupNinject()
-        {
-            _injectionKernel = new StandardKernel();
-
-            ConfigureWriteDirectory();
-            ConfigureConfiguration();
-            ConfigureLogging();
-
-            _injectionKernel.Load(_injectionModules);
-
-            return;
-        }
-
-        private void SetupCommandLineParser()
-        {
-            _injectionKernel.Bind<ICommandLineParser>().To<CommandLineParser>().InSingletonScope();
-            return;
-        }
-
-        private void SetupApplication()
+        private void ConfigureConsole()
         {
             var currentAssembly = Assembly.GetEntryAssembly();
 
@@ -113,23 +70,33 @@ namespace SharpBattleNet.Runtime.Application
             Console.WindowWidth = 120;
             Console.WindowHeight = 40;
 
-            _application = _injectionKernel.Get<IApplicationListener>();
-
             return;
-        }
-
-        private int RunCommandLoop()
-        {
-            return _application.Run();
         }
 
         public int UnguardedRun()
         {
-            SetupNinject();
-            SetupCommandLineParser();
-            SetupApplication();
+            using(var injectionKernel = new StandardKernel())
+            {
+                ConfigureConsole();
+                ConfigureWriteDirectory();
 
-            return RunCommandLoop();
+                injectionKernel.Load(_injectionModules);
+
+                using(var configuration = new ApplicationConfiguration(injectionKernel, _name, _writeDirectory))
+                {
+                    configuration.Configure();
+
+                    using(var logging = new ApplicationLogging(injectionKernel, _name, _writeDirectory))
+                    {
+                        logging.Configure();
+
+                        using(var application = injectionKernel.Get<IApplicationListener>())
+                        {
+                            return application.Run();
+                        }
+                    }
+                }
+            }
         }
 
         private void UnhandledException(Exception ex)
@@ -175,29 +142,7 @@ namespace SharpBattleNet.Runtime.Application
             {
                 if(true == disposing)
                 {
-                    if (null != _application)
-                    {
-                        _application.Dispose();
-                        _application = null;
-                    }
-
-                    if (null != _appLogging)
-                    {
-                        _appLogging.Dispose();
-                        _appLogging = null;
-                    }
-
-                    if (null != _appConfiguration)
-                    {
-                        _appConfiguration.Dispose();
-                        _appConfiguration = null;
-                    }
-
-                    if (null != _injectionKernel)
-                    {
-                        _injectionKernel.Dispose();
-                        _injectionKernel = null;
-                    }
+                    
                 }
 
                 _disposed = true;

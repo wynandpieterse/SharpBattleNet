@@ -73,6 +73,16 @@
     <Compile Include="Utilities\Debugging\Guard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Utilities\Logging\ILog.cs" />
+    <Compile Include="Utilities\Logging\ILogProvider.cs" />
+    <Compile Include="Utilities\Logging\Level.cs" />
+    <Compile Include="Utilities\Logging\LogggerExecutionWrapper.cs" />
+    <Compile Include="Utilities\Logging\LogExtensions.cs" />
+    <Compile Include="Utilities\Logging\LogProvider.cs" />
+    <Compile Include="Utilities\Logging\Providers\EntLibLogProvider.cs" />
+    <Compile Include="Utilities\Logging\Providers\Log4NetProvider.cs" />
+    <Compile Include="Utilities\Logging\Providers\NLogProvider.cs" />
+    <Compile Include="Utilities\Logging\Providers\SerilogLogProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Packages.config" />

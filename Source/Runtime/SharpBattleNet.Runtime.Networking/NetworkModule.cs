@@ -34,29 +34,58 @@ namespace SharpBattleNet.Runtime.Networking
 {
     #region Usings
     using System;
+
+    using Ninject;
     using Ninject.Modules;
+    using Ninject.Extensions;
     using Ninject.Extensions.Factory;
+
+    using Nini;
+    using Nini.Config;
+
+    using SharpBattleNet;
+    using SharpBattleNet.Runtime;
+    using SharpBattleNet.Runtime.Utilities;
     using SharpBattleNet.Runtime.Utilities.BufferPool;
+    using SharpBattleNet.Runtime.Networking;
+    using SharpBattleNet.Runtime.Networking.Utilities;
     using SharpBattleNet.Runtime.Networking.Utilities.Collections;
     using SharpBattleNet.Runtime.Networking.Utilities.Collections.Details;
     #endregion
 
     /// <summary>
-    /// Ninject module to load all IoC objects for the network framework library.
+    /// Called by Ninject to install the dependencies required for basic network operations.
     /// </summary>
     public sealed class NetworkModule : NinjectModule
     {
         /// <summary>
-        /// Creates a pool of bytes that the networking subsystem will use to
-        /// receive and send messages for performance reason in regard to
-        /// garbage collection.
+        /// Creates the buffer pool that will be used for all socket receive/send operations.
         /// </summary>
-        /// <returns>
-        /// The pool object to use for byte buffer allocations
-        /// </returns>
+        /// <returns>The constructed socket buffer pool.</returns>
         private SocketBufferPool CreateSocketBufferPool()
         {
-            return new SocketBufferPool(1 * 1024 * 1024, 64, 8);
+            var configSource = Kernel.Get<IConfigSource>();
+            var configSection = configSource.Configs["Network"];
+
+            int slabSize = configSection.GetInt("BufferSlabSize", 1 * 1024 * 1024);
+            if(slabSize < 1024)
+            {
+                slabSize = 1024;
+            }
+
+            int initialSlabs = configSection.GetInt("BufferInitialSlabs", 64);
+            if(initialSlabs < 1)
+            {
+                initialSlabs = 1;
+            }
+
+            int subsequentSlabs = configSection.GetInt("BufferSubsequentSlabs", 8);
+            if(subsequentSlabs < 1)
+            {
+                subsequentSlabs = 1;
+            }
+
+            return new SocketBufferPool(slabSize, initialSlabs, subsequentSlabs);
         }
 
         /// <summary>

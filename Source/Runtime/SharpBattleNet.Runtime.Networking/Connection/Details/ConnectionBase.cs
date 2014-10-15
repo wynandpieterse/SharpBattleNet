@@ -62,7 +62,7 @@ namespace SharpBattleNet.Runtime.Networking.Connection.Details
 
         public ConnectionBase(IConnectionSink connectionSink, ISocketEventPool socketEventBag, ISocketBufferPool socketBufferPool)
         {
-            Guard.AgainstNull(_connectionSink);
+            Guard.AgainstNull(connectionSink);
             Guard.AgainstNull(socketEventBag);
             Guard.AgainstNull(socketBufferPool);
 

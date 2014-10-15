@@ -36,16 +36,8 @@ namespace SharpBattleNet.Runtime.Networking.PacketHandeling.Dispatching
     using System;
     #endregion
 
-    /// <summary>
-    /// Factory for creating new packet dispatchers. Used by user application to create a new packet dispatcher that will be used for the certain connection from a client.
-    /// </summary>
     public interface IPacketDispatcherFactory
     {
-        /// <summary>
-        /// Creates a new packet dispatcher that listens for packets that contains the specified programs ID.
-        /// </summary>
-        /// <param name="program">The program ID to make sure the packets are routed to the correct handlers.</param>
-        /// <returns>New packet dispatcher that can be used by the users application to handle packets.</returns>
         IPacketDispatcher Create(uint program);
     }
 }

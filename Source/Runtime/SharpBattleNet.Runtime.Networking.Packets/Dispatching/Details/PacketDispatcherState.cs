@@ -36,24 +36,10 @@ namespace SharpBattleNet.Runtime.Networking.PacketHandeling.Dispatching.Details
     using System;
     #endregion
 
-    /// <summary>
-    /// The state that the current packet dispatcher is in. Used for different code flows inside the packet dispatcher.
-    /// </summary>
     public enum PacketDispatcherState : byte
     {
-        /// <summary>
-        /// The packet dispatcher is not yet initialized.
-        /// </summary>
         Uninitialized = 0,
-
-        /// <summary>
-        /// The packet dispatcher is busy processing the header of a packet.
-        /// </summary>
         Header = 1,
-        
-        /// <summary>
-        /// The packet dispatcher is busy processing the body of a packet.
-        /// </summary>
         Data = 2
     }
 }

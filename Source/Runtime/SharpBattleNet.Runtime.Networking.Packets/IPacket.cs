@@ -36,14 +36,8 @@ namespace SharpBattleNet.Runtime.Networking.PacketHandeling
     using System;
     #endregion
 
-    /// <summary>
-    /// Describes a base packet that contains all the logic for handeling a packet for the packet dispatcher.
-    /// </summary>
     public interface IPacket
     {
-        /// <summary>
-        /// Contains all the details of this packet. This is used by the packet dispatcher to build a map of all available packets.
-        /// </summary>
         PacketDetails Details { get; }
     }
 }

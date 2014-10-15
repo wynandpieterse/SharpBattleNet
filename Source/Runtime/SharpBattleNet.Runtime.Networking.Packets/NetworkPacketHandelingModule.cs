@@ -40,14 +40,8 @@ namespace SharpBattleNet.Runtime.Networking
     using SharpBattleNet.Runtime.Networking.PacketHandeling.Dispatching.Details;
     #endregion
 
-    /// <summary>
-    /// Ninject module to load all IoC objects for the network framework library.
-    /// </summary>
     public sealed class NetworkPacketHandelingModule : NinjectModule
     {
-        /// <summary>
-        /// Binds all the details that handle packet dispatching.
-        /// </summary>
         private void BindPacketHandeling()
         {
             Bind<IPacketDispatcherFactory>().ToFactory();
@@ -56,9 +50,6 @@ namespace SharpBattleNet.Runtime.Networking
             return;
         }
 
-        /// <summary>
-        /// Called by Ninject to bind all desired objects.
-        /// </summary>
         public override void Load()
         {
             BindPacketHandeling();

@@ -49,9 +49,6 @@ namespace SharpBattleNet.Runtime.Networking.PacketHandeling.Dispatching.Details
     using SharpBattleNet.Runtime.Networking.PacketHandeling.Serialization;
     #endregion
 
-    /// <summary>
-    /// Implements <see cref="IPacketDispatcher"/>.
-    /// </summary>
     internal sealed class PacketDispatcher : IPacketDispatcher
     {
         private readonly uint _program = 0;
@@ -63,11 +60,6 @@ namespace SharpBattleNet.Runtime.Networking.PacketHandeling.Dispatching.Details
         private ConcurrentDictionary<Tuple<int, int>, IPacketSerializer> _packetSerializers = null;
         private ConcurrentDictionary<Tuple<int, int>, IPacketExecutor> _packetExecutors = null;
 
-        /// <summary>
-        /// Constructs the packet dispatcher and initializes it into an empty state. The user application must call initialize to start the engine.
-        /// </summary>
-        /// <param name="program">The program ID uniquely specified which packets the dispatcher will handle for the user application.</param>
-        /// <param name="headerExecutor">The executor that will handle the packets when the dispatcher is in header execution mode.</param>
         public PacketDispatcher(uint program, IPacketHeaderExecutor headerExecutor)
         {
             Guard.AgainstNull(headerExecutor);
@@ -81,11 +73,6 @@ namespace SharpBattleNet.Runtime.Networking.PacketHandeling.Dispatching.Details
             return;
         }
 
-        /// <summary>
-        /// Initializes the packet dispatcher. This incorporates the connection into the packet dispatcher so that it knows who to pass through to the handlers
-        /// when new messages arive.
-        /// </summary>
-        /// <param name="connection">The connection that owns this packet dispatcher.</param>
         public void Initialize(IConnection connection)
         {
             Guard.AgainstNull(connection);
@@ -96,22 +83,11 @@ namespace SharpBattleNet.Runtime.Networking.PacketHandeling.Dispatching.Details
             return;
         }
 
-        /// <summary>
-        /// Processes a new messages that was received on the network stream. If there is enough data available, passes the packet through the process until the
-        /// packet is handled inside user code.
-        /// </summary>
-        /// <param name="recievedBuffer">The data that was received from the network connection. Do not dispose, will be handled by the network subsystem.</param>
         public void Process(IBuffer recievedBuffer)
         {
-
-
             return;
         }
 
-        /// <summary>
-        /// Called by the garbage colllector or the application to dispose all managed and unmanaged resources back to the operating system.
-        /// </summary>
-        /// <param name="disposing">True when the application called the method, false otherwise.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (false == _disposed)
@@ -131,9 +107,6 @@ namespace SharpBattleNet.Runtime.Networking.PacketHandeling.Dispatching.Details
             return;
         }
 
-        /// <summary>
-        /// Called when the object is to be disposed, so that all resources can be freed.
-        /// </summary>
         public void Dispose()
         {
             Dispose(true);

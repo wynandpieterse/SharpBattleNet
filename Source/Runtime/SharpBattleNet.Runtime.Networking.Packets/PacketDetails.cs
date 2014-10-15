@@ -43,35 +43,13 @@ namespace SharpBattleNet.Runtime.Networking.PacketHandeling
     using SharpBattleNet.Runtime.Networking.PacketHandeling.Serialization;
     #endregion
 
-    /// <summary>
-    /// Contains the various details about a packet. These are queried from the packet classes at runtime to construct a packet map that will later be used by the
-    /// packet dispatcher to pass packets down to the serializes and executors.
-    /// </summary>
     public sealed class PacketDetails
     {
-        /// <summary>
-        /// The program that contains this packet.
-        /// </summary>
         public uint Program { get; set; }
-
-        /// <summary>
-        /// The unique message ID of this packet. Will usually be on the header of the received packet.
-        /// </summary>
         public uint MessageID { get; set; }
-
-        /// <summary>
-        /// The serializer/deserializer of the packet that will transform the stream of data into something more meaningfull.
-        /// </summary>
         public IPacketSerializer Serializer { get; set; }
-
-        /// <summary>
-        /// The handler of the packet after it has been serialized. This is the logic of the packet.
-        /// </summary>
         public IPacketExecutor Executor { get; set; }
 
-        /// <summary>
-        /// Initializes all variables inside here to their default values.
-        /// </summary>
         public PacketDetails()
         {
             Program = 0;

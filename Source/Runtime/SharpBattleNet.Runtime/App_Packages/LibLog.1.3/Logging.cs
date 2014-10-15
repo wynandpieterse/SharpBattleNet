@@ -45,7 +45,7 @@ namespace SharpBattleNet.Runtime.Logging
         /// Note to implementors: the message func should not be called if the loglevel is not enabled
         /// so as not to incur perfomance penalties.
         /// </remarks>
-        bool Log(LogLevel logLevel, Func<string> messageFunc);
+        bool Log(Level logLevel, Func<string> messageFunc);
 
         /// <summary>
         /// Log a message and exception at the specified log level.
@@ -58,13 +58,13 @@ namespace SharpBattleNet.Runtime.Logging
         /// Note to implementors: the message func should not be called if the loglevel is not enabled
         /// so as not to incur perfomance penalties.
         /// </remarks>
-        void Log<TException>(LogLevel logLevel, Func<string> messageFunc, TException exception) where TException : Exception;
+        void Log<TException>(Level logLevel, Func<string> messageFunc, TException exception) where TException : Exception;
     }
 
     /// <summary>
     /// The log level.
     /// </summary>
-    public enum LogLevel
+    public enum Level
     {
         Trace,
         Debug,
@@ -79,115 +79,115 @@ namespace SharpBattleNet.Runtime.Logging
         public static bool IsDebugEnabled(this ILog logger)
         {
             GuardAgainstNullLogger(logger);
-            return logger.Log(LogLevel.Debug, null);
+            return logger.Log(Level.Debug, null);
         }
 
         public static bool IsErrorEnabled(this ILog logger)
         {
             GuardAgainstNullLogger(logger);
-            return logger.Log(LogLevel.Error, null);
+            return logger.Log(Level.Error, null);
         }
 
         public static bool IsFatalEnabled(this ILog logger)
         {
             GuardAgainstNullLogger(logger);
-            return logger.Log(LogLevel.Fatal, null);
+            return logger.Log(Level.Fatal, null);
         }
 
         public static bool IsInfoEnabled(this ILog logger)
         {
             GuardAgainstNullLogger(logger);
-            return logger.Log(LogLevel.Info, null);
+            return logger.Log(Level.Info, null);
         }
 
         public static bool IsTraceEnabled(this ILog logger)
         {
             GuardAgainstNullLogger(logger);
-            return logger.Log(LogLevel.Trace, null);
+            return logger.Log(Level.Trace, null);
         }
 
         public static bool IsWarnEnabled(this ILog logger)
         {
             GuardAgainstNullLogger(logger);
-            return logger.Log(LogLevel.Warn, null);
+            return logger.Log(Level.Warn, null);
         }
 
         public static void Debug(this ILog logger, Func<string> messageFunc)
         {
             GuardAgainstNullLogger(logger);
-            logger.Log(LogLevel.Debug, messageFunc);
+            logger.Log(Level.Debug, messageFunc);
         }
 
         public static void Debug(this ILog logger, string message)
         {
             GuardAgainstNullLogger(logger);
-            logger.Log(LogLevel.Debug, () => message);
+            logger.Log(Level.Debug, () => message);
         }
 
         public static void DebugFormat(this ILog logger, string message, params object[] args)
         {
             GuardAgainstNullLogger(logger);
-            logger.Log(LogLevel.Debug, () => string.Format(CultureInfo.InvariantCulture, message, args));
+            logger.Log(Level.Debug, () => string.Format(CultureInfo.InvariantCulture, message, args));
         }
 
         public static void Error(this ILog logger, string message)
         {
             GuardAgainstNullLogger(logger);
-            logger.Log(LogLevel.Error, () => message);
+            logger.Log(Level.Error, () => message);
         }
 
         public static void ErrorFormat(this ILog logger, string message, params object[] args)
         {
             GuardAgainstNullLogger(logger);
-            logger.Log(LogLevel.Error, () => string.Format(CultureInfo.InvariantCulture, message, args));
+            logger.Log(Level.Error, () => string.Format(CultureInfo.InvariantCulture, message, args));
         }
 
         public static void ErrorException(this ILog logger, string message, Exception exception)
         {
             GuardAgainstNullLogger(logger);
-            logger.Log(LogLevel.Error, () => message, exception);
+            logger.Log(Level.Error, () => message, exception);
         }
 
         public static void Info(this ILog logger, Func<string> messageFunc)
         {
             GuardAgainstNullLogger(logger);
-            logger.Log(LogLevel.Info, messageFunc);
+            logger.Log(Level.Info, messageFunc);
         }
 
         public static void Info(this ILog logger, string message)
         {
             GuardAgainstNullLogger(logger);
-            logger.Log(LogLevel.Info, () => message);
+            logger.Log(Level.Info, () => message);
         }
 
         public static void InfoFormat(this ILog logger, string message, params object[] args)
         {
             GuardAgainstNullLogger(logger);
-            logger.Log(LogLevel.Info, () => string.Format(CultureInfo.InvariantCulture, message, args));
+            logger.Log(Level.Info, () => string.Format(CultureInfo.InvariantCulture, message, args));
         }
 
         public static void Warn(this ILog logger, Func<string> messageFunc)
         {
             GuardAgainstNullLogger(logger);
-            logger.Log(LogLevel.Warn, messageFunc);
+            logger.Log(Level.Warn, messageFunc);
         }
 
         public static void Warn(this ILog logger, string message)
         {
             GuardAgainstNullLogger(logger);
-            logger.Log(LogLevel.Warn, () => message);
+            logger.Log(Level.Warn, () => message);
         }
 
         public static void WarnFormat(this ILog logger, string message, params object[] args)
         {
             GuardAgainstNullLogger(logger);
-            logger.Log(LogLevel.Warn, () => string.Format(CultureInfo.InvariantCulture, message, args));
+            logger.Log(Level.Warn, () => string.Format(CultureInfo.InvariantCulture, message, args));
         }
 
         public static void WarnException(this ILog logger, string message, Exception ex)
         {
             GuardAgainstNullLogger(logger);
-            logger.Log(LogLevel.Warn, () => string.Format(CultureInfo.InvariantCulture, message), ex);
+            logger.Log(Level.Warn, () => string.Format(CultureInfo.InvariantCulture, message), ex);
         }
 
         private static void GuardAgainstNullLogger(ILog logger)
@@ -295,12 +295,12 @@ namespace SharpBattleNet.Runtime.Logging
 
         public class NoOpLogger : ILog
         {
-            public bool Log(LogLevel logLevel, Func<string> messageFunc)
+            public bool Log(Level logLevel, Func<string> messageFunc)
             {
                 return false;
             }
 
-            public void Log<TException>(LogLevel logLevel, Func<string> messageFunc, TException exception)
+            public void Log<TException>(Level logLevel, Func<string> messageFunc, TException exception)
                 where TException : Exception
             { }
         }
@@ -321,7 +321,7 @@ namespace SharpBattleNet.Runtime.Logging
             _logger = logger;
         }
 
-        public bool Log(LogLevel logLevel, Func<string> messageFunc)
+        public bool Log(Level logLevel, Func<string> messageFunc)
         {
             Func<string> wrappedMessageFunc = () =>
             {
@@ -331,14 +331,14 @@ namespace SharpBattleNet.Runtime.Logging
                 }
                 catch (Exception ex)
                 {
-                    Log(LogLevel.Error, () => FailedToGenerateLogMessage, ex);
+                    Log(Level.Error, () => FailedToGenerateLogMessage, ex);
                 }
                 return null;
             };
             return _logger.Log(logLevel, wrappedMessageFunc);
         }
 
-        public void Log<TException>(LogLevel logLevel, Func<string> messageFunc, TException exception) where TException : Exception
+        public void Log<TException>(Level logLevel, Func<string> messageFunc, TException exception) where TException : Exception
         {
             Func<string> wrappedMessageFunc = () =>
             {
@@ -348,7 +348,7 @@ namespace SharpBattleNet.Runtime.Logging
                 }
                 catch (Exception ex)
                 {
-                    Log(LogLevel.Error, () => FailedToGenerateLogMessage, ex);
+                    Log(Level.Error, () => FailedToGenerateLogMessage, ex);
                 }
                 return null;
             };
@@ -418,7 +418,7 @@ namespace SharpBattleNet.Runtime.Logging.LogProviders
                 _logger = logger;
             }
 
-            public bool Log(LogLevel logLevel, Func<string> messageFunc)
+            public bool Log(Level logLevel, Func<string> messageFunc)
             {
                 if (messageFunc == null)
                 {
@@ -426,35 +426,35 @@ namespace SharpBattleNet.Runtime.Logging.LogProviders
                 }
                 switch (logLevel)
                 {
-                    case LogLevel.Debug:
+                    case Level.Debug:
                         if (_logger.IsDebugEnabled)
                         {
                             _logger.Debug(messageFunc());
                             return true;
                         }
                         break;
-                    case LogLevel.Info:
+                    case Level.Info:
                         if (_logger.IsInfoEnabled)
                         {
                             _logger.Info(messageFunc());
                             return true;
                         }
                         break;
-                    case LogLevel.Warn:
+                    case Level.Warn:
                         if (_logger.IsWarnEnabled)
                         {
                             _logger.Warn(messageFunc());
                             return true;
                         }
                         break;
-                    case LogLevel.Error:
+                    case Level.Error:
                         if (_logger.IsErrorEnabled)
                         {
                             _logger.Error(messageFunc());
                             return true;
                         }
                         break;
-                    case LogLevel.Fatal:
+                    case Level.Fatal:
                         if (_logger.IsFatalEnabled)
                         {
                             _logger.Fatal(messageFunc());
@@ -472,36 +472,36 @@ namespace SharpBattleNet.Runtime.Logging.LogProviders
                 return false;
             }
 
-            public void Log<TException>(LogLevel logLevel, Func<string> messageFunc, TException exception)
+            public void Log<TException>(Level logLevel, Func<string> messageFunc, TException exception)
                 where TException : Exception
             {
                 switch (logLevel)
                 {
-                    case LogLevel.Debug:
+                    case Level.Debug:
                         if (_logger.IsDebugEnabled)
                         {
                             _logger.DebugException(messageFunc(), exception);
                         }
                         break;
-                    case LogLevel.Info:
+                    case Level.Info:
                         if (_logger.IsInfoEnabled)
                         {
                             _logger.InfoException(messageFunc(), exception);
                         }
                         break;
-                    case LogLevel.Warn:
+                    case Level.Warn:
                         if (_logger.IsWarnEnabled)
                         {
                             _logger.WarnException(messageFunc(), exception);
                         }
                         break;
-                    case LogLevel.Error:
+                    case Level.Error:
                         if (_logger.IsErrorEnabled)
                         {
                             _logger.ErrorException(messageFunc(), exception);
                         }
                         break;
-                    case LogLevel.Fatal:
+                    case Level.Fatal:
                         if (_logger.IsFatalEnabled)
                         {
                             _logger.FatalException(messageFunc(), exception);
@@ -516,19 +516,19 @@ namespace SharpBattleNet.Runtime.Logging.LogProviders
                 }
             }
 
-            private bool IsLogLevelEnable(LogLevel logLevel)
+            private bool IsLogLevelEnable(Level logLevel)
             {
                 switch (logLevel)
                 {
-                    case LogLevel.Debug:
+                    case Level.Debug:
                         return _logger.IsDebugEnabled;
-                    case LogLevel.Info:
+                    case Level.Info:
                         return _logger.IsInfoEnabled;
-                    case LogLevel.Warn:
+                    case Level.Warn:
                         return _logger.IsWarnEnabled;
-                    case LogLevel.Error:
+                    case Level.Error:
                         return _logger.IsErrorEnabled;
-                    case LogLevel.Fatal:
+                    case Level.Fatal:
                         return _logger.IsFatalEnabled;
                     default:
                         return _logger.IsTraceEnabled;
@@ -590,7 +590,7 @@ namespace SharpBattleNet.Runtime.Logging.LogProviders
                 _logger = logger;
             }
 
-            public bool Log(LogLevel logLevel, Func<string> messageFunc)
+            public bool Log(Level logLevel, Func<string> messageFunc)
             {
                 if (messageFunc == null)
                 {
@@ -598,28 +598,28 @@ namespace SharpBattleNet.Runtime.Logging.LogProviders
                 }
                 switch (logLevel)
                 {
-                    case LogLevel.Info:
+                    case Level.Info:
                         if (_logger.IsInfoEnabled)
                         {
                             _logger.Info(messageFunc());
                             return true;
                         }
                         break;
-                    case LogLevel.Warn:
+                    case Level.Warn:
                         if (_logger.IsWarnEnabled)
                         {
                             _logger.Warn(messageFunc());
                             return true;
                         }
                         break;
-                    case LogLevel.Error:
+                    case Level.Error:
                         if (_logger.IsErrorEnabled)
                         {
                             _logger.Error(messageFunc());
                             return true;
                         }
                         break;
-                    case LogLevel.Fatal:
+                    case Level.Fatal:
                         if (_logger.IsFatalEnabled)
                         {
                             _logger.Fatal(messageFunc());
@@ -637,30 +637,30 @@ namespace SharpBattleNet.Runtime.Logging.LogProviders
                 return false;
             }
 
-            public void Log<TException>(LogLevel logLevel, Func<string> messageFunc, TException exception)
+            public void Log<TException>(Level logLevel, Func<string> messageFunc, TException exception)
                 where TException : Exception
             {
                 switch (logLevel)
                 {
-                    case LogLevel.Info:
+                    case Level.Info:
                         if (_logger.IsDebugEnabled)
                         {
                             _logger.Info(messageFunc(), exception);
                         }
                         break;
-                    case LogLevel.Warn:
+                    case Level.Warn:
                         if (_logger.IsWarnEnabled)
                         {
                             _logger.Warn(messageFunc(), exception);
                         }
                         break;
-                    case LogLevel.Error:
+                    case Level.Error:
                         if (_logger.IsErrorEnabled)
                         {
                             _logger.Error(messageFunc(), exception);
                         }
                         break;
-                    case LogLevel.Fatal:
+                    case Level.Fatal:
                         if (_logger.IsFatalEnabled)
                         {
                             _logger.Fatal(messageFunc(), exception);
@@ -675,19 +675,19 @@ namespace SharpBattleNet.Runtime.Logging.LogProviders
                 }
             }
 
-            private bool IsLogLevelEnable(LogLevel logLevel)
+            private bool IsLogLevelEnable(Level logLevel)
             {
                 switch (logLevel)
                 {
-                    case LogLevel.Debug:
+                    case Level.Debug:
                         return _logger.IsDebugEnabled;
-                    case LogLevel.Info:
+                    case Level.Info:
                         return _logger.IsInfoEnabled;
-                    case LogLevel.Warn:
+                    case Level.Warn:
                         return _logger.IsWarnEnabled;
-                    case LogLevel.Error:
+                    case Level.Error:
                         return _logger.IsErrorEnabled;
-                    case LogLevel.Fatal:
+                    case Level.Fatal:
                         return _logger.IsFatalEnabled;
                     default:
                         return _logger.IsDebugEnabled;
@@ -811,7 +811,7 @@ namespace SharpBattleNet.Runtime.Logging.LogProviders
                 _shouldLog = shouldLog;
             }
 
-            public bool Log(LogLevel logLevel, Func<string> messageFunc)
+            public bool Log(Level logLevel, Func<string> messageFunc)
             {
                 var severity = MapSeverity(logLevel);
                 if (messageFunc == null)
@@ -822,7 +822,7 @@ namespace SharpBattleNet.Runtime.Logging.LogProviders
                 return true;
             }
 
-            public void Log<TException>(LogLevel logLevel, Func<string> messageFunc, TException exception)
+            public void Log<TException>(Level logLevel, Func<string> messageFunc, TException exception)
                 where TException : Exception
             {
                 var severity = MapSeverity(logLevel);
@@ -830,17 +830,17 @@ namespace SharpBattleNet.Runtime.Logging.LogProviders
                 _writeLog(_loggerName, message, severity);
             }
 
-            private static TraceEventType MapSeverity(LogLevel logLevel)
+            private static TraceEventType MapSeverity(Level logLevel)
             {
                 switch (logLevel)
                 {
-                    case LogLevel.Fatal:
+                    case Level.Fatal:
                         return TraceEventType.Critical;
-                    case LogLevel.Error:
+                    case Level.Error:
                         return TraceEventType.Error;
-                    case LogLevel.Warn:
+                    case Level.Warn:
                         return TraceEventType.Warning;
-                    case LogLevel.Info:
+                    case Level.Info:
                         return TraceEventType.Information;
                     default:
                         return TraceEventType.Verbose;
@@ -987,7 +987,7 @@ namespace SharpBattleNet.Runtime.Logging.LogProviders
                 _logger = logger;
             }
 
-            public bool Log(LogLevel logLevel, Func<string> messageFunc)
+            public bool Log(Level logLevel, Func<string> messageFunc)
             {
                 if (messageFunc == null)
                 {
@@ -996,35 +996,35 @@ namespace SharpBattleNet.Runtime.Logging.LogProviders
 
                 switch (logLevel)
                 {
-                    case LogLevel.Debug:
+                    case Level.Debug:
                         if (IsEnabled(_logger, DebugLevel))
                         {
                             Write(_logger, DebugLevel, messageFunc());
                             return true;
                         }
                         break;
-                    case LogLevel.Info:
+                    case Level.Info:
                         if (IsEnabled(_logger, InformationLevel))
                         {
                             Write(_logger, InformationLevel, messageFunc());
                             return true;
                         }
                         break;
-                    case LogLevel.Warn:
+                    case Level.Warn:
                         if (IsEnabled(_logger, WarningLevel))
                         {
                             Write(_logger, WarningLevel, messageFunc());
                             return true;
                         }
                         break;
-                    case LogLevel.Error:
+                    case Level.Error:
                         if (IsEnabled(_logger, ErrorLevel))
                         {
                             Write(_logger, ErrorLevel, messageFunc());
                             return true;
                         }
                         break;
-                    case LogLevel.Fatal:
+                    case Level.Fatal:
                         if (IsEnabled(_logger, FatalLevel))
                         {
                             Write(_logger, FatalLevel, messageFunc());
@@ -1042,36 +1042,36 @@ namespace SharpBattleNet.Runtime.Logging.LogProviders
                 return false;
             }
 
-            public void Log<TException>(LogLevel logLevel, Func<string> messageFunc, TException exception)
+            public void Log<TException>(Level logLevel, Func<string> messageFunc, TException exception)
                 where TException : Exception
             {
                 switch (logLevel)
                 {
-                    case LogLevel.Debug:
+                    case Level.Debug:
                         if (IsEnabled(_logger, DebugLevel))
                         {
                             WriteException(_logger, DebugLevel, exception, messageFunc());
                         }
                         break;
-                    case LogLevel.Info:
+                    case Level.Info:
                         if (IsEnabled(_logger, InformationLevel))
                         {
                             WriteException(_logger, InformationLevel, exception, messageFunc());
                         }
                         break;
-                    case LogLevel.Warn:
+                    case Level.Warn:
                         if (IsEnabled(_logger, WarningLevel))
                         {
                             WriteException(_logger, WarningLevel, exception, messageFunc());
                         }
                         break;
-                    case LogLevel.Error:
+                    case Level.Error:
                         if (IsEnabled(_logger, ErrorLevel))
                         {
                             WriteException(_logger, ErrorLevel, exception, messageFunc());
                         }
                         break;
-                    case LogLevel.Fatal:
+                    case Level.Fatal:
                         if (IsEnabled(_logger, FatalLevel))
                         {
                             WriteException(_logger, FatalLevel, exception, messageFunc());

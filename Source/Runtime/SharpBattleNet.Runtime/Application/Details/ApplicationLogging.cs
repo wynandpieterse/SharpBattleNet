@@ -3,6 +3,8 @@ using Ninject;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
+using SharpBattleNet.Runtime.Logging;
+using SharpBattleNet.Runtime.Logging.LogProviders;
 using SharpBattleNet.Runtime.Utilities.Debugging;
 using System;
 using System.Collections.Generic;
@@ -132,6 +134,8 @@ namespace SharpBattleNet.Runtime.Application.Details
             ConfigureFileLogging(configuration);
 
             LogManager.Configuration = configuration;
+
+            _injectionKernel.Bind<ILogProvider>().To<NLogLogProvider>().InSingletonScope();
 
             return;
         }

@@ -1,20 +1,61 @@
-﻿using Nini.Config;
-using Ninject;
-using NLog;
-using NLog.Config;
-using NLog.Targets;
-using SharpBattleNet.Runtime.Utilities.Debugging;
-using SharpBattleNet.Runtime.Utilities.Logging;
-using SharpBattleNet.Runtime.Utilities.Logging.Providers;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#region Header
+//
+//    _  _   ____        _   _   _         _   _      _   
+//  _| || |_| __ )  __ _| |_| |_| | ___   | \ | | ___| |_ 
+// |_  .. _ |  _ \ / _` | __| __| |/ _ \  |  \| |/ _ \ __|
+// |_      _| |_) | (_| | |_| |_| |  __/_ | |\  |  __/ |_ 
+//   |_||_| |____/ \__,_|\__|\__|_|\___(_)_ | \_|\___|\__|
+//
+// The MIT License
+// 
+// Copyright(c) 2014 Wynand Pieters. https://github.com/wpieterse/SharpBattleNet
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
+#endregion
 
 namespace SharpBattleNet.Runtime.Application.Details
 {
+    #region Usings
+    using System;
+    using System.IO;
+
+    using Ninject;
+
+    using Nini;
+    using Nini.Config;
+
+    using NLog;
+    using NLog.Config;
+    using NLog.Targets;
+
+    using SharpBattleNet;
+    using SharpBattleNet.Runtime;
+    using SharpBattleNet.Runtime.Utilities;
+    using SharpBattleNet.Runtime.Utilities.Debugging;
+    using SharpBattleNet.Runtime.Utilities.Logging;
+    using SharpBattleNet.Runtime.Utilities.Logging.Providers;
+    #endregion
+
+    /// <summary>
+    /// Helper class that the application uses the configure all the logging systems for the application.
+    /// </summary>
     internal sealed class ApplicationLogging : IDisposable
     {
         private readonly IKernel _injectionKernel = null;
@@ -30,8 +71,7 @@ namespace SharpBattleNet.Runtime.Application.Details
         /// The string to parse for log levels.
         /// </param>
         /// <returns>
-        /// An <see cref="LogLevel"/> enumartion converted from the level
-        /// argument.
+        /// An <see cref="LogLevel"/> enumartion converted from the level argument.
         /// </returns>
         private LogLevel GetLogLevel(string level)
         {
@@ -133,6 +173,9 @@ namespace SharpBattleNet.Runtime.Application.Details
             return;
         }
 
+        /// <summary>
+        /// Configure the logging subsystem for outputting to the both the file target and console target.
+        /// </summary>
         private void Configure()
         {
             var configuration = new LoggingConfiguration();
@@ -147,6 +190,12 @@ namespace SharpBattleNet.Runtime.Application.Details
             return;
         }
 
+        /// <summary>
+        /// Configure applications logging inside the constructor.
+        /// </summary>
+        /// <param name="injectionKernel">The Ninject kernel that binds the application.</param>
+        /// <param name="applicationName">The application name as passed in by the executable that created us.</param>
+        /// <param name="writeDirectory">The directory where all written files can go.</param>
         public ApplicationLogging(IKernel injectionKernel, string applicationName, string writeDirectory)
         {
             _injectionKernel = injectionKernel;
@@ -158,25 +207,35 @@ namespace SharpBattleNet.Runtime.Application.Details
             return;
         }
 
-        private void Dispose(bool disposing)
+        /// <summary>
+        /// Called by the garbage colllector or the application to dispose all managed and unmanaged resources back to the operating system.
+        /// </summary>
+        /// <param name="disposing">True when the application called the method, false otherwise.</param>
+        protected virtual void Dispose(bool disposing)
         {
             if (false == _disposed)
             {
                 if (true == disposing)
                 {
-                    
+                    // Dispose managed resources
                 }
 
-                _disposed = true;
+                // Dispose unmanaged resources
             }
+
+            _disposed = true;
+
+            // Call base dispose
 
             return;
         }
 
+        /// <summary>
+        /// Called when the object is to be disposed, so that all resources can be freed.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
-
             GC.SuppressFinalize(this);
 
             return;

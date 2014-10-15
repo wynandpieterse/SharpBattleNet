@@ -47,7 +47,7 @@ namespace SharpBattleNet.Runtime.Networking.PacketHandeling.Dispatching
     /// Base packet dispatcher interface that is used by network application to handle recieved data from a network connection. It passed these through various
     /// layers until it arives at the packet itself where the user can handle the packet according to the values received.
     /// </summary>
-    public interface IPacketDispatcher
+    public interface IPacketDispatcher : IDisposable
     {
         /// <summary>
         /// Initializes the packet dispatcher. This incorporates the connection into the packet dispatcher so that it knows who to pass through to the handlers

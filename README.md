@@ -47,4 +47,4 @@ helps with the development of these software.
  + ServerToolkit - BufferPool - [Tenor](https://github.com/tenor)
  + Gateway Installer - [HarpyWar](https://github.com/HarpyWar)
 
-Version 0.0.16
+Version 0.0.17.0

@@ -60,22 +60,35 @@ namespace SharpBattleNet.Runtime.Networking
             var configSource = Kernel.Get<IConfigSource>();
             var configSection = configSource.Configs["Network"];
 
-            int slabSize = configSection.GetInt("BufferSlabSize", 1 * 1024 * 1024);
-            if(slabSize < 1024)
+            int slabSize = 0;
+            int initialSlabs = 0;
+            int subsequentSlabs = 0;
+
+            if (null == configSection)
             {
                 slabSize = 1024;
-            }
-
-            int initialSlabs = configSection.GetInt("BufferInitialSlabs", 64);
-            if(initialSlabs < 1)
-            {
                 initialSlabs = 1;
-            }
-
-            int subsequentSlabs = configSection.GetInt("BufferSubsequentSlabs", 8);
-            if(subsequentSlabs < 1)
-            {
                 subsequentSlabs = 1;
+            }
+            else
+            {
+                slabSize = configSection.GetInt("BufferSlabSize", 1 * 1024 * 1024);
+                if (slabSize < 1024)
+                {
+                    slabSize = 1024;
+                }
+
+                initialSlabs = configSection.GetInt("BufferInitialSlabs", 64);
+                if (initialSlabs < 1)
+                {
+                    initialSlabs = 1;
+                }
+
+                subsequentSlabs = configSection.GetInt("BufferSubsequentSlabs", 8);
+                if (subsequentSlabs < 1)
+                {
+                    subsequentSlabs = 1;
+                }
             }
 
             return new SocketBufferPool(slabSize, initialSlabs, subsequentSlabs);

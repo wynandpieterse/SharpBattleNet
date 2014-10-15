@@ -97,7 +97,7 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Connection.Details
                     HandleReceive(socketEvent);
                 }
             }
-            catch (ObjectDisposedException ex)
+            catch (ObjectDisposedException)
             {
                 // TODO : Put OnError here for consumers
 
@@ -106,7 +106,7 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Connection.Details
                     RecycleReceiveEvent(socketEvent);
                 }
             }
-            catch (SocketException ex)
+            catch (SocketException)
             {
                 // TODO : Put OnError here for consumers
 

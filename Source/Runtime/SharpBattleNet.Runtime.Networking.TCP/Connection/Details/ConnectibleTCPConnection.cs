@@ -157,13 +157,13 @@ namespace SharpBattleNet.Runtime.Networking.TCP.Connection.Details
                     ProcessConnect(socketEvent);
                 }
             }
-            catch (ObjectDisposedException ex)
+            catch (ObjectDisposedException)
             {
                 _listener.ConnectionFailed(this, _addressToConnect);
 
                 return;
             }
-            catch (SocketException ex)
+            catch (SocketException)
             {
                 _listener.ConnectionFailed(this, _addressToConnect);
 
